@@ -1,34 +1,54 @@
-.timeline {
+:root {
+    --primary-color: #c92828; /* 主背景色 */
+    --accent-color: #4c8fd8; /* 主要強調色，可修改 */
+    --color-1: #dbe2f7;
+    --color-2: #ebe5e5;
+    --color-3: #e9ece7;
+    --color-4: #f8f8f8;
+    --color-5: #f0f9eb;
+  }
+  
+  .timeline {
     position: relative;
     padding: 2rem 0;
     list-style: none;
-}
-
-.timeline-item {
+  }
+  
+  .timeline-item {
     position: relative;
     margin: 0 0 2rem;
     padding: 2rem;
     border-radius: 6px;
-    background: #fff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    opacity: 0; /* 初始狀態為透明 */
-    transition: opacity 0.6s ease, transform 0.6s ease; /* 添加過渡效果 */
-}
-
-.timeline-item.animate__animated.animate__fadeInUp {
-    opacity: 1; /* 滾動到視窗內時，變為不透明 */
-    transform: translateY(0); /* 重置位移 */
-}
-
-.timeline-item::after {
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  
+  /* 使用 nth-child 選擇器分配顏色，可根據需要調整 */
+  .timeline-item:nth-child(1) {
+    background-color: var(--color-1);
+  }
+  .timeline-item:nth-child(2) {
+    background-color: var(--color-2);
+  }
+  .timeline-item:nth-child(3) {
+    background-color: var(--color-3);
+  }
+  .timeline-item:nth-child(4) {
+    background-color: var(--color-4);
+  }
+  .timeline-item:nth-child(5) {
+    background-color: var(--color-5);
+  }    
+  
+  .timeline-item::after {
     content: '';
     position: absolute;
     top: 0;
     bottom: 0;
     left: 30px;
     width: 4px;
-    background: #007bff;
-}
+    background: var(--accent-color);
+  }
 
 .timeline-icon {
     position: absolute;
