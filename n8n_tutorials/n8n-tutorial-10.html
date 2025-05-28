@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n 教學 (十)：部署與生產環境考量</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/resume.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../resume.html">簡歷</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">生活分享</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../contact.html">聯絡我</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="blog-post">
+            <h1>n8n 教學 (十)：部署與生產環境考量</h1>
+            <p class="post-meta">發布日期：2024年2月20日</p>
+            <div class="post-content">
+                <p>當您的 n8n workflow 開發完成並在測試環境中運行良好時，下一步就是將其部署到生產環境。本篇教學將探討 n8n 部署的常見方式以及在生產環境中需要考慮的因素。</p>
+
+                <h2>1. n8n 部署選項</h2>
+                <p>n8n 提供了多種部署方式，您可以根據您的需求和基礎設施選擇最合適的方案：</p>
+                <ul>
+                    <li>**Docker (推薦)**：最常見且推薦的部署方式，易於管理和擴展。</li>
+                    <li>**npm**：適用於 Node.js 環境，但生產環境中通常不推薦直接使用 npm 啟動。</li>
+                    <li>**Kubernetes**：對於需要高可用性和可擴展性的場景，可以使用 Kubernetes 進行容器編排。</li>
+                    <li>**雲端服務**：部署到 AWS ECS, Google Cloud Run, Azure Container Instances 等雲端容器服務。</li>
+                </ul>
+
+                <h2>2. 生產環境考量</h2>
+                <p>在生產環境中運行 n8n 時，需要考慮以下關鍵因素：</p>
+                <h3>安全性</h3>
+                <ul>
+                    <li>**環境變數**：敏感資訊（如 API Key、資料庫憑證）應透過環境變數傳遞，而不是硬編碼在 workflow 中。</li>
+                    <li>**基本認證**：為 n8n 介面設定用戶名和密碼，防止未經授權的訪問。</li>
+                    <li>**HTTPS**：確保您的 n8n 實例透過 HTTPS 訪問，保護資料傳輸安全。</li>
+                    <li>**網路隔離**：將 n8n 部署在安全的網路環境中，限制對其的訪問。</li>
+                </ul>
+
+                <h3>可靠性與高可用性</h3>
+                <ul>
+                    <li>**資料庫備份**：定期備份 n8n 的資料庫（儲存 workflow、執行歷史等）。</li>
+                    <li>**日誌監控**：設定日誌監控和警報，及時發現和解決問題。</li>
+                    <li>**負載均衡**：如果流量較大，考慮使用負載均衡器分發請求到多個 n8n 實例。</li>
+                    <li>**叢集模式**：n8n 支援叢集模式，可以提高可用性和處理能力。</li>
+                </ul>
+
+                <h3>性能與擴展性</h3>
+                <ul>
+                    <li>**資源分配**：為 n8n 實例分配足夠的 CPU、記憶體和儲存空間。</li>
+                    <li>**佇列模式**：對於大量並發執行的 workflow，可以啟用佇列模式，將執行任務委託給專門的執行器。</li>
+                    <li>**工作流程優化**：優化您的 workflow，減少不必要的請求和資料處理。</li>
+                </ul>
+
+                <h3>維護與更新</h3>
+                <ul>
+                    <li>**版本控制**：將您的 workflow 儲存在版本控制系統中（例如 Git）。</li>
+                    <li>**定期更新**：定期更新 n8n 到最新版本，以獲取新功能、性能改進和安全修復。</li>
+                    <li>**備份與恢復策略**：制定完善的備份和恢復策略，以應對突發情況。</li>
+                </ul>
+
+                <p>將 n8n 部署到生產環境需要仔細規劃和考慮。透過遵循這些最佳實踐，您可以確保您的自動化流程在生產環境中穩定、安全且高效地運行。</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 我的作品集. All rights reserved.</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

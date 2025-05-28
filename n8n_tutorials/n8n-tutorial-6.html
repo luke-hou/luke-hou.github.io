@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n 教學 (六)：HTTP 請求與 API 整合</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/resume.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../resume.html">簡歷</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">生活分享</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../contact.html">聯絡我</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="blog-post">
+            <h1>n8n 教學 (六)：HTTP 請求與 API 整合</h1>
+            <p class="post-meta">發布日期：2023年12月15日</p>
+            <div class="post-content">
+                <p>在自動化流程中，與外部服務進行 API 互動是常見的需求。n8n 提供了強大的 HTTP Request 節點，讓您可以輕鬆地發送各種 HTTP 請求並處理響應。</p>
+
+                <h2>1. HTTP Request 節點</h2>
+                <p>HTTP Request 節點允許您發送 GET, POST, PUT, DELETE 等 HTTP 請求，並配置請求頭、查詢參數、請求體等。</p>
+                <h3>配置 HTTP Request 節點</h3>
+                <ul>
+                    <li>**URL**：輸入您要請求的 API 端點。</li>
+                    <li>**Method**：選擇 HTTP 方法（例如 GET, POST）。</li>
+                    <li>**Headers**：添加任何必要的請求頭（例如 `Authorization`）。</li>
+                    <li>**Query Parameters**：添加 URL 查詢參數。</li>
+                    <li>**Body Parameters**：對於 POST 或 PUT 請求，配置請求體。</li>
+                </ul>
+                <pre><code>
+// 範例：發送 GET 請求到一個公共 API
+{
+  "nodes": [
+    {
+      "node": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "url": "https://jsonplaceholder.typicode.com/posts/1",
+        "method": "GET"
+      }
+    }
+  ]
+}
+                </code></pre>
+
+                <h2>2. 處理 API 響應</h2>
+                <p>HTTP Request 節點的輸出是 API 的響應。您可以使用其他節點（例如 Function 節點、Set 節點）來解析和處理這些響應資料。</p>
+                <h3>解析 JSON 響應</h3>
+                <p>如果 API 返回 JSON 格式的數據，n8n 會自動將其解析為可操作的 JavaScript 物件。</p>
+                <pre><code>
+// 範例：從 API 響應中提取數據
+const items = [];
+for (const item of $json.items) {
+  items.push({
+    json: {
+      title: item.json.title,
+      body: item.json.body.substring(0, 50) + '...' // 截取部分內容
+    }
+  });
+}
+return items;
+                </code></pre>
+
+                <h2>3. 認證與授權</h2>
+                <p>許多 API 需要認證才能訪問。HTTP Request 節點支援多種認證方式：</p>
+                <ul>
+                    <li>**Basic Auth**：基本認證（用戶名和密碼）。</li>
+                    <li>**OAuth2**：OAuth 2.0 授權。</li>
+                    <li>**API Key**：在請求頭或查詢參數中傳遞 API Key。</li>
+                </ul>
+                <p>您可以在 HTTP Request 節點的「Authentication」選項中配置這些認證方式。</p>
+
+                <h2>4. 錯誤處理</h2>
+                <p>當 API 請求失敗時（例如 4xx 或 5xx 狀態碼），您可以使用錯誤處理機制來捕獲並處理這些錯誤，例如發送通知或重試請求。</p>
+
+                <p>透過本篇教學，您應該能夠在 n8n 中靈活地進行 HTTP 請求和 API 整合，將您的自動化流程與各種外部服務連接起來。</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 我的作品集. All rights reserved.</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

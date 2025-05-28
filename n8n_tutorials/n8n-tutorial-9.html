@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n 教學 (九)：自定義節點與擴展</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/resume.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../resume.html">簡歷</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">生活分享</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../contact.html">聯絡我</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="blog-post">
+            <h1>n8n 教學 (九)：自定義節點與擴展</h1>
+            <p class="post-meta">發布日期：2024年2月5日</p>
+            <div class="post-content">
+                <p>n8n 提供了豐富的內建節點，但有時您可能需要與特定的內部系統或不常見的服務進行整合。在這種情況下，您可以透過建立自定義節點來擴展 n8n 的功能。</p>
+
+                <h2>1. 為什麼需要自定義節點？</h2>
+                <ul>
+                    <li>**整合專有系統**：連接到公司內部開發的應用程式或資料庫。</li>
+                    <li>**處理複雜邏輯**：實現內建節點無法滿足的複雜資料處理或業務邏輯。</li>
+                    <li>**優化重複操作**：將一系列重複的節點操作封裝成一個單一的自定義節點。</li>
+                    <li>**貢獻社群**：為 n8n 社群開發新的整合。</li>
+                </ul>
+
+                <h2>2. 自定義節點的結構</h2>
+                <p>一個 n8n 自定義節點通常由以下幾個部分組成：</p>
+                <ul>
+                    <li>**描述文件 (Description)**：定義節點的名稱、圖標、輸入/輸出、參數等。</li>
+                    <li>**執行程式碼 (Execute)**：包含節點實際執行的邏輯，通常是 JavaScript 或 TypeScript。</li>
+                    <li>**憑證 (Credentials)**：如果節點需要認證，則定義憑證類型和參數。</li>
+                </ul>
+
+                <h2>3. 建立您的第一個自定義節點</h2>
+                <p>以下是一個簡化的自定義節點範例，它接收一個名稱，然後輸出一個問候語。</p>
+                <h3>步驟 1：建立節點文件夾</h3>
+                <p>在 n8n 的自定義節點目錄下（通常是 `~/.n8n/custom_nodes` 或 Docker 映射的目錄），建立一個新的文件夾，例如 `my-greeting-node`。</p>
+
+                <h3>步驟 2：建立描述文件 (`MyGreeting.node.ts`)</h3>
+                <p>在 `my-greeting-node` 文件夾中建立 `MyGreeting.node.ts` (或 `.js`) 文件：</p>
+                <pre><code>
+import { INodeType, INodeTypeDescription } from 'n8n-workflow';
+
+export class MyGreeting implements INodeType {
+    description: INodeTypeDescription = {
+        displayName: '我的問候節點',
+        name: 'myGreeting',
+        icon: 'fa:hand-peace',
+        group: ['transform'],
+        version: 1,
+        description: '一個簡單的自定義問候節點',
+        defaults: {
+            name: 'My Greeting',
+        },
+        inputs: ['main'],
+        outputs: ['main'],
+        properties: [
+            {
+                displayName: '名稱',
+                name: 'userName',
+                type: 'string',
+                default: '世界',
+                placeholder: '輸入您的名稱',
+                description: '要問候的名稱',
+            },
+        ],
+    };
+
+    async execute({ items, getNodeParameter }: IExecuteFunctions): Promise<INodeExecutionData[][]> {
+        const returnData: INodeExecutionData[] = [];
+        for (const item of items) {
+            const userName = getNodeParameter('userName', item.item, '世界') as string;
+            const newItem: INodeExecutionData = {
+                json: {
+                    greeting: `你好，${userName}！`,
+                },
+            };
+            returnData.push(newItem);
+        }
+        return this.prepareOutputData(returnData);
+    }
+}
+                </code></pre>
+
+                <h3>步驟 3：安裝依賴並啟用節點</h3>
+                <p>在 n8n 容器或環境中，安裝 `n8n-workflow` 依賴，並在 `~/.n8n/config` 中配置 `N8N_CUSTOM_NODE_PATH` 指向您的自定義節點目錄。</p>
+                <p>重啟 n8n 後，您應該能在節點列表中找到「我的問候節點」。</p>
+
+                <h2>4. 更多進階主題</h2>
+                <ul>
+                    <li>**憑證整合**：為您的自定義節點添加 API 憑證。</li>
+                    <li>**二進制資料處理**：處理檔案上傳和下載。</li>
+                    <li>**錯誤處理**：在自定義節點中實現健壯的錯誤處理邏輯。</li>
+                    <li>**測試**：為您的自定義節點編寫測試。</li>
+                </ul>
+
+                <p>自定義節點是 n8n 強大擴展性的體現。透過學習如何建立自定義節點，您可以將 n8n 應用於更廣泛的自動化場景，滿足任何特定的整合需求。</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 我的作品集. All rights reserved.</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>
