@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI n8n 教學 (二)：第一個 Workflow 實作</title>
+    <title>n8n 教學 (二)：第一個 Workflow 實作</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="../css/style.css">
@@ -20,7 +20,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">AI n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
                         <li class="nav-item"><a class="nav-link" href="../n8n-new-series.html">n8n 新系列教學</a></li>
                         <li class="nav-item"><a class="nav-link" href="../resume.html">簡歷</a></li>
                         <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
@@ -34,67 +34,93 @@
 
     <main class="container">
         <section class="blog-post">
-            <h1>AI n8n 教學 (二)：第一個 Workflow 實作</h1>
+            <h1>n8n 教學 (二)：第一個 Workflow 實作</h1>
             <p class="post-meta">發布日期：2023年9月25日</p>
             <div class="post-content">
-                <p>在上一篇教學中，我們了解了 n8n 的基礎概念並完成了安裝。本篇教學將引導您建立您的第一個 n8n workflow，並執行一個簡單的自動化流程。</p>
+                <p class="">到官網首頁 <a href="https://supabase.com/">https://supabase.com/</a></p><p class="">點選 Start your project 綠色按鈕</p><figure class="image"><a href="2/image.png"><img style="width:954.984375px" src="2/image.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">點選最下方的 Sign Up Now 使用信箱進行註冊</p><figure class="image" style="text-align:left"><a href="2/image%201.png"><img style="width:562px" src="2/image%201.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">輸入信箱跟密碼進行註冊，然後到註冊信箱收信，完成信箱認證。</p><figure class="image" style="text-align:left"><a href="2/image%202.png"><img style="width:562px" src="2/image%202.png"/></a></figure><p class="">
+</p><p class="">點選 New Organization</p><figure class="image"><a href="2/image%203.png"><img style="width:939.9375px" src="2/image%203.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">輸入名稱，這邊先用 n8nTest，其他選項不變，然後按右下角 Create Organization。</p><figure class="image" style="text-align:left"><a href="2/image%204.png"><img style="width:668.3125px" src="2/image%204.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">Project name 先輸入 n8nProject</p><p class="">資料庫密碼要記好</p><p class="">Region 選地理位置最靠近你的</p><p class="">最後點選右下角 Create new project</p><figure class="image"><a href="2/image%205.png"><img style="width:668.3125px" src="2/image%205.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">完成後畫面</p><figure class="image"><a href="2/image%206.png"><img style="width:939.984375px" src="2/image%206.png"/></a></figure><p class="">
+</p><hr/><p class="">
+</p><p class="">接著要建立資料表，先將滑鼠移到左邊邊界，展開左邊選單，點選 SQL Editor</p><figure class="image" style="text-align:left"><a href="2/image%207.png"><img style="width:202px" src="2/image%207.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">點選 Create a new snippet</p><figure class="image" style="text-align:left"><a href="2/image%208.png"><img style="width:365px" src="2/image%208.png"/></a></figure><p class="">
+</p><p class="">貼上這段語法</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre class="code"><code class="language-SQL">drop table if exists nhi_drug_768;
 
-                <h2>1. 建立新的 Workflow</h2>
-                <p>登入 n8n 介面後，點擊左側導航欄的「Workflows」，然後點擊「New Workflow」按鈕。</p>
-                <p>您會看到一個空白的畫布，這是您構建自動化流程的地方。</p>
+-- Drop the match_{{tablename}} function if it exists -- Note: It&#x27;s good practice to specify argument types when dropping
+drop function if exists match_nhi_drug_768(vector, integer, jsonb);
 
-                <h2>2. 添加觸發器 (Trigger Node)</h2>
-                <p>每個 workflow 都需要一個觸發器來啟動。我們將使用「Webhook」觸發器作為範例。</p>
-                <ul>
-                    <li>點擊畫布上的「Add first node」或點擊左側的「+」按鈕。</li>
-                    <li>在搜尋框中輸入「Webhook」，然後選擇「Webhook」節點。</li>
-                    <li>配置 Webhook 節點：
-                        <ul>
-                            <li>**Webhook URL**：n8n 會自動生成一個唯一的 URL。</li>
-                            <li>**HTTP Method**：選擇「GET」或「POST」，這裡我們選擇「GET」。</li>
-                        </ul>
-                    </li>
-                </ul>
-                <p>配置完成後，點擊「Execute Workflow」旁邊的「Test Webhook」按鈕，然後在瀏覽器中打開生成的 Webhook URL。您應該會在 n8n 介面中看到 Webhook 節點接收到資料。</p>
+-- Enable the pgvector extension to work with embedding vectors
+create extension if not exists vector;
 
-                <h2>3. 添加功能節點 (Function Node)</h2>
-                <p>接下來，我們添加一個 Function 節點來處理接收到的資料。</p>
-                <ul>
-                    <li>點擊 Webhook 節點右側的「+」按鈕，然後搜尋並選擇「Function」節點。</li>
-                    <li>在 Function 節點的程式碼編輯器中輸入以下 JavaScript 程式碼：</li>
-                </ul>
-                <pre><code>
-// 範例：從 Webhook 接收的資料中提取訊息並添加新屬性
-const items = [];
-for (const item of $json.items) {
-  items.push({
-    json: {
-      message: `Hello, ${item.json.name || 'Guest'}! Your age is ${item.json.age || 'unknown'}.`,
-      timestamp: new Date().toISOString()
-    }
-  });
-}
-return items;
-                </code></pre>
-                <p>這段程式碼會從輸入資料中提取 `name` 和 `age` 屬性，並生成一個新的 `message` 和 `timestamp`。</p>
+-- Create a table to store your {{tablename}}
+create table nhi_drug_768 (
+  id bigserial primary key,
+  content text, -- corresponds to Document.pageContent
+  metadata jsonb, -- corresponds to Document.metadata
+  embedding vector(768) -- 確保這個維度匹配你的 Embedding 模型
+);
 
-                <h2>4. 添加響應節點 (Respond to Webhook)</h2>
-                <p>如果您的 Webhook 觸發器需要返回響應，可以使用「Respond to Webhook」節點。</p>
-                <ul>
-                    <li>點擊 Function 節點右側的「+」按鈕，然後搜尋並選擇「Respond to Webhook」節點。</li>
-                    <li>配置 Respond to Webhook 節點：
-                        <ul>
-                            <li>**Response Mode**：選擇「Last Node」。</li>
-                            <li>**JSON Body**：選擇「All Data」。</li>
-                        </ul>
-                    </li>
-                </ul>
-                <p>現在，再次測試您的 Webhook URL。您應該會看到瀏覽器返回 Function 節點處理後的 JSON 響應。</p>
+-- Create a function to search for documents_nhi_drug
+create function match_nhi_drug_768 (
+  query_embedding vector(768), -- 確保這個維度匹配你的 Embedding 模型
+  match_count int default null, -- Using integer alias
+  filter jsonb DEFAULT &#x27;{}&#x27;
+) returns table (
+  id bigint,
+  content text,
+  metadata jsonb,
+  similarity float
+)
 
-                <h2>5. 啟用 Workflow</h2>
-                <p>當您對 workflow 滿意時，點擊右上角的「Active」開關，將 workflow 啟用。啟用後，它將會自動運行並響應觸發事件。</p>
-
-                <p>恭喜您！您已經成功建立了您的第一個 n8n workflow。您可以繼續探索 n8n 的更多節點和功能，構建更複雜的自動化流程。</p>
+language plpgsql
+as $$
+#variable_conflict use_column
+begin
+  return query
+  select
+    d.id,                -- Using alias for clarity
+    d.content,
+    d.metadata,
+    1 - (d.embedding <=> query_embedding) as similarity -- Using alias
+  from nhi_drug_768 d   -- Defining alias d
+  where d.metadata @> filter
+  order by d.embedding <=> query_embedding
+  limit match_count;
+end;
+$$;
+</code></pre><figure class="image"><a href="2/image%209.png"><img style="width:939.96875px" src="2/image%209.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">
+</p><p class="">點選畫面中間最右側的綠色按鈕 Run</p><figure class="image" style="text-align:left"><a href="2/image%2010.png"><img style="width:369px" src="2/image%2010.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">點選 Run this query，等待數秒。</p><figure class="image" style="text-align:left"><a href="2/image%2011.png"><img style="width:578px" src="2/image%2011.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">在下方視窗 Results 可以看到成功訊息</p><figure class="image" style="text-align:left"><a href="2/image%2012.png"><img style="width:331px" src="2/image%2012.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">打開左側欄選單，點選 Table Editor</p><figure class="image" style="text-align:left"><a href="2/image%2013.png"><img style="width:207px" src="2/image%2013.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">看到我們創建的向量資料表已經完成。</p><p class="">接著點選畫面上方的咖啡色按鈕 RLS disabled</p><figure class="image"><a href="2/image%2014.png"><img style="width:939.984375px" src="2/image%2014.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">點選下方的 Enable RLS for this table</p><figure class="image" style="text-align:left"><a href="2/image%2015.png"><img style="width:432px" src="2/image%2015.png"/></a></figure><p class="">
+</p><p class="">點選綠色的 Enable RLS </p><figure class="image" style="text-align:left"><a href="2/image%2016.png"><img style="width:386px" src="2/image%2016.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">至此資料表設置完畢。</p><hr/><p class="">
+</p><p class="">再次打開左邊選單，點選 Project Settings</p><figure class="image" style="text-align:left"><a href="2/image%2017.png"><img style="width:214px" src="2/image%2017.png"/></a></figure><p class="">
+</p><p class="">點選 Data API</p><figure class="image" style="text-align:left"><a href="2/image%2018.png"><img style="width:269px" src="2/image%2018.png"/></a></figure><p class="">
+</p><p class="">找到 Project API Keys </p><p class="">點選 service_role 最右側的 Reveal 按鈕</p><figure class="image"><a href="2/image%2019.png"><img style="width:939.984375px" src="2/image%2019.png"/></a></figure><p class="">
+</p><p class="">點選後會產生 token，右側的按鈕會變成 Copy，點一下</p><figure class="image"><a href="2/image%2020.png"><img style="width:939.9375px" src="2/image%2020.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">把這個 API token 保存在安全的地方，勿外洩。</p><p class="">
+</p><p class="">至此 Supabase 的向量資料庫設置完畢。</p>
 <p><a href="../n8n-tutorials.html">回上一頁</a></p>
             </div>
         </section>

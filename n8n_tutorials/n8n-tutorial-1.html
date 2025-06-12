@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI n8n 教學 (一)：基礎概念與安裝</title>
+    <title>n8n 教學 (一)：基礎概念與安裝</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="../css/style.css">
@@ -20,7 +20,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">AI n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
                         <li class="nav-item"><a class="nav-link" href="../n8n-new-series.html">n8n 新系列教學</a></li>
                         <li class="nav-item"><a class="nav-link" href="../resume.html">簡歷</a></li>
                         <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
@@ -34,69 +34,33 @@
 
     <main class="container">
         <section class="blog-post">
-            <h1>AI n8n 教學 (一)：基礎概念與安裝</h1>
+            <h1>n8n 教學 (一)：基礎概念與安裝</h1>
             <p class="post-meta">發布日期：2023年9月10日</p>
             <div class="post-content">
-                <p>歡迎來到 AI n8n 教學系列的第一部分！本篇教學將帶您了解 n8n 的核心概念、主要功能以及如何在您的環境中安裝 n8n。</p>
-
-                <h2>1. 什麼是 n8n？</h2>
-                <p>n8n 是一個強大且可擴展的開源工作流程自動化工具。它允許您將不同的應用程式和服務連接起來，自動化重複性任務，而無需編寫程式碼。</p>
-                <ul>
-                    <li>**視覺化工作流程**：透過拖放介面輕鬆建立複雜的自動化流程。</li>
-                    <li>**豐富的整合**：支援數百種應用程式和服務的整合。</li>
-                    <li>**自託管選項**：您可以將 n8n 部署在自己的伺服器上，完全掌控您的資料。</li>
-                    <li>**可擴展性**：支援自定義節點，滿足特定需求。</li>
-                </ul>
-
-                <h2>2. n8n 的核心概念</h2>
-                <ul>
-                    <li>**節點 (Nodes)**：每個節點代表一個應用程式、服務或一個操作（例如 HTTP 請求、資料轉換）。</li>
-                    <li>**工作流程 (Workflows)**：由多個節點連接而成的自動化流程，定義了資料如何流動和操作。</li>
-                    <li>**觸發器 (Triggers)**：工作流程的起點，可以是定時任務、Webhook 接收、或特定事件發生。</li>
-                </ul>
-
-                <h2>3. n8n 安裝指南</h2>
-                <p>n8n 提供了多種安裝方式，最常見的是使用 Docker 或 npm。</p>
-                <h3>使用 Docker 安裝 (推薦)</h3>
-                <p>Docker 是安裝 n8n 最簡單且推薦的方式。確保您的系統已安裝 Docker 和 Docker Compose。</p>
-                <pre><code>
-# 創建一個目錄用於存放 n8n 資料
-mkdir ~/.n8n
-cd ~/.n8n
-
-# 創建 docker-compose.yml 文件
-# 將以下內容複製到 docker-compose.yml
-version: '3.8'
-
-services:
-  n8n:
-    image: n8nio/n8n
-    restart: always
-    ports:
-      - "5678:5678"
-    volumes:
-      - ./n8n_data:/home/node/.n8n
-    environment:
-      - N8N_BASIC_AUTH_ACTIVE=true
-      - N8N_BASIC_AUTH_USER=user
-      - N8N_BASIC_AUTH_PASSWORD=password
-      - N8N_EDITOR_BASE_URL=http://localhost:5678/
-      - WEBHOOK_URL=http://localhost:5678/
-                </code></pre>
-                <p>保存文件後，在同一目錄下執行：</p>
-                <pre><code>docker-compose up -d</code></pre>
-                <p>n8n 將會在 `http://localhost:5678` 啟動。</p>
-
-                <h3>使用 npm 安裝</h3>
-                <p>如果您有 Node.js 環境，也可以使用 npm 安裝 n8n：</p>
-                <pre><code>npm install -g n8n</code></pre>
-                <p>然後啟動 n8n：</p>
-                <pre><code>n8n start</code></pre>
-                <p>透過本篇教學，您應該對 n8n 有了初步的認識，並成功在您的環境中安裝了它。在下一篇教學中，我們將建立您的第一個 n8n workflow！</p>
+                <p class="">這邊介紹的是較單純的 npx 安裝</p><p class="">開發者建議用 Docker 安裝 <em><mark class="highlight-red"><strong>(裝在公司OA的禁止用 Docker) </strong></mark></em></p><p class="">
+</p><p class="">首先到 Node.js 官方網站下載安裝檔案</p><p class=""><a href="https://nodejs.org/zh-tw/download">https://nodejs.org/zh-tw/download</a></p><p class="">
+</p><figure class="image"><a href="1/image.png"><img style="width:939.984375px" src="1/image.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">
+</p><p class="">安裝時，用預設值，一直下一步即可。</p><figure class="image" style="text-align:left"><a href="1/image%201.png"><img style="width:492.96875px" src="1/image%201.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">用管理員權限打開 CMD</p><figure class="image"><a href="1/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2_2025-05-27_1356481.png"><img style="width:939.984375px" src="1/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2_2025-05-27_1356481.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">輸入 node -v 後按 Enter 確認版本</p><figure class="image"><a href="1/image%202.png"><img style="width:939.96875px" src="1/image%202.png"/></a></figure><p class="">
+</p><hr/><p class="">
+</p><p class="">在 CMD 畫面輸入 npx n8n</p><figure class="image" style="text-align:left"><a href="1/image%203.png"><img style="width:615px" src="1/image%203.png"/></a></figure><p class="">
+</p><p class="">輸入 y 後按 Enter ，靜待安裝完畢。 </p><figure class="image" style="text-align:left"><a href="1/image%204.png"><img style="width:615px" src="1/image%204.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">n8n 安裝完畢，會自動啟動服務，按下 o 後，會自動在瀏覽器打開 n8n 起始頁面。</p><figure class="image" style="text-align:left"><a href="1/image%205.png"><img style="width:615px" src="1/image%205.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">這邊要注意的是 Email 跟 Password 要記好，其他選項隨意選，不影響使用。</p><figure class="image"><a href="1/image%206.png"><img style="width:939.984375px" src="1/image%206.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">登入後可以看到起始頁面，接下來進到下一個 part : Supabase 帳號的申請。</p><figure class="image"><a href="1/image%207.png"><img style="width:939.984375px" src="1/image%207.png"/></a></figure><p class="">
+</p>
             </div>
         </section>
-<p><a href="../n8n-tutorials.html">回上一頁</a></p>
     </main>
+<p><a href="../n8n-tutorials.html">回上一頁</a></p>
 
     <footer>
         <p>&copy; 2023 我的作品集. All rights reserved.</p>
