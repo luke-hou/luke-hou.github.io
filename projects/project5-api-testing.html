@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RESTful API自動化測試框架建置 - Luke Hou 的作品集</title>
+    <meta name="description" content="Luke Hou 開發了一套基於Python Requests和Pytest的RESTful API自動化測試框架，實現了高效的接口測試和數據驗證。">
+    <meta name="keywords" content="API測試, 自動化測試, RESTful API, Python Requests, Pytest, JSON Schema, Postman, CI/CD">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0V2L1DQVPY');
+    </script>    
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../resume.html">簡歷</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">生活分享</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../contact.html">聯絡我</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <h1 class="text-center mb-4">RESTful API自動化測試框架建置</h1>
+                
+                <img src="../images/project1-full.jpg" alt="API測試框架示意圖" class="img-fluid mb-4">
+                
+                <div class="project-details">
+                    <h2>項目概述</h2>
+                    <p>此專案旨在為一個複雜的RESTful API服務開發一套高效、可維護的自動化測試框架。目標是實現接口的功能測試、性能測試和安全性測試，確保API的穩定性、數據正確性和響應速度，為前端應用程式提供可靠的數據支持。</p>
+                    
+                    <h2>使用的技術</h2>
+                    <ul>
+                        <li><b>程式語言</b>: Python</li>
+                        <li><b>HTTP客戶端</b>: Requests</li>
+                        <li><b>測試框架</b>: Pytest</li>
+                        <li><b>數據驗證</b>: JSON Schema</li>
+                        <li><b>報告生成</b>: Allure Report</li>
+                        <li><b>API管理</b>: Postman, Swagger/OpenAPI</li>
+                    </ul>
+                    
+                    <h2>項目挑戰與解決方案</h2>
+                    <h3>挑戰 1: 複雜的API依賴關係</h3>
+                    <p>許多API接口之間存在複雜的依賴關係，例如需要先登錄獲取Token才能訪問其他接口。</p>
+                    <p><b>解決方案</b>: 設計測試用例時，遵循業務流程和API調用順序。利用Pytest的fixture功能，實現測試數據和前置條件的共享與管理，確保測試的獨立性和可重複性。</p>
+                    
+                    <h3>挑戰 2: 響應數據的動態驗證</h3>
+                    <p>API響應數據結構複雜且包含動態生成的值，難以進行精確驗證。</p>
+                    <p><b>解決方案</b>: 引入JSON Schema進行響應數據結構的驗證，確保數據格式的正確性。對於動態值，使用正則表達式或自定義斷言函數進行模糊匹配或業務邏輯驗證，提高測試的健壯性。</p>
+                    
+                    <h3>挑戰 3: 測試報告的詳細程度與可追溯性</h3>
+                    <p>API測試結果需要清晰地展示每個接口的測試狀態、請求和響應數據，以便快速定位問題。</p>
+                    <p><b>解決方案</b>: 整合Allure Report，生成詳細的HTML測試報告。報告中包含每個測試用例的請求URL、請求頭、請求體、響應狀態碼、響應體等信息，並支持添加截圖和日誌，極大地方便了問題的分析和追溯。</p>
+
+                    <h2>項目成果</h2>
+                    <ul>
+                        <li><b>API質量提升</b>: 發現並修復了多個API接口的功能性、性能和安全性缺陷，顯著提升了API的整體質量。</li>
+                        <li><b>測試效率提高</b>: 自動化測試執行時間縮短了70%，實現了快速回歸測試。</li>
+                        <li><b>開發效率加速</b>: 開發人員可以更早地發現接口問題，減少了聯調和集成測試階段的返工。</li>
+                        <li><b>測試覆蓋率擴大</b>: 實現了核心API接口的全面測試，覆蓋了各種正常和異常場景。</li>
+                    </ul>
+                    
+                    <a href="#" class="btn btn-primary mt-3">查看 Demo</a>
+                    <a href="https://github.com/luke-hou/api-automation-testing" target="_blank" class="btn btn-secondary mt-3 ms-2">查看源碼</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2024 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

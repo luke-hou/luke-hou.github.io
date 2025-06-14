@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行動應用程式自動化測試框架開發 - Luke Hou 的作品集</title>
+    <meta name="description" content="Luke Hou 開發了一套基於Appium的行動應用程式自動化測試框架，支援Android和iOS平台，提高測試效率和覆蓋率。">
+    <meta name="keywords" content="行動應用程式測試, Appium, 自動化測試框架, Android測試, iOS測試, UI自動化, Python, Pytest, CI/CD">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0V2L1DQVPY');
+    </script>    
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../resume.html">簡歷</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">生活分享</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../contact.html">聯絡我</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <h1 class="text-center mb-4">行動應用程式自動化測試框架開發</h1>
+                
+                <img src="../images/project2-full.jpg" alt="行動應用程式測試框架示意圖" class="img-fluid mb-4">
+                
+                <div class="project-details">
+                    <h2>項目概述</h2>
+                    <p>此專案旨在為一款跨平台行動應用程式（支援Android和iOS）開發一套高效、可擴展的自動化測試框架。目標是實現UI自動化測試、功能測試和回歸測試，以確保應用程式在不同設備和操作系統上的質量和兼容性。</p>
+                    
+                    <h2>使用的技術</h2>
+                    <ul>
+                        <li><b>自動化測試工具</b>: Appium</li>
+                        <li><b>程式語言</b>: Python</li>
+                        <li><b>測試框架</b>: Pytest</li>
+                        <li><b>報告生成</b>: Allure Report</li>
+                        <li><b>CI/CD整合</b>: Jenkins</li>
+                    </ul>
+                    
+                    <h2>項目挑戰與解決方案</h2>
+                    <h3>挑戰 1: 跨平台兼容性</h3>
+                    <p>Appium在Android和iOS平台上的元素定位和操作存在差異，導致測試腳本難以通用。</p>
+                    <p><b>解決方案</b>: 採用Page Object Model (POM) 設計模式，將頁面元素和操作封裝起來。針對不同平台，維護獨立的元素定位策略，但共享核心業務邏輯，實現測試腳本的最大化重用。</p>
+                    
+                    <h3>挑戰 2: 測試數據管理</h3>
+                    <p>行動應用程式測試需要大量的測試數據，如何高效管理和使用這些數據是一個挑戰。</p>
+                    <p><b>解決方案</b>: 引入數據驅動測試（DDT）方法，將測試數據與測試邏輯分離。數據存儲在外部文件（如Excel、CSV或JSON）中，測試腳本動態讀取數據，提高了測試的靈活性和可維護性。</p>
+                    
+                    <h3>挑戰 3: 測試執行效率與報告可讀性</h3>
+                    <p>行動應用程式測試執行時間較長，且測試報告需要清晰地展示測試結果和失敗原因。</p>
+                    <p><b>解決方案</b>: 結合Pytest的並行執行能力和Appium的雲端設備農場（如Sauce Labs或BrowserStack），實現多設備並行測試，縮短執行時間。整合Allure Report，生成豐富的測試報告，包含測試步驟、截圖、日誌和環境信息，便於問題分析。</p>
+
+                    <h2>項目成果</h2>
+                    <ul>
+                        <li><b>測試覆蓋率提升</b>: 實現了核心業務流程的UI自動化測試，覆蓋率達到80%以上。</li>
+                        <li><b>測試週期縮短</b>: 自動化測試執行時間縮短了60%，加速了行動應用程式的發布週期。</li>
+                        <li><b>缺陷發現效率提高</b>: 早期發現了多個UI和功能性缺陷，降低了修復成本。</li>
+                        <li><b>跨平台兼容性保障</b>: 確保了應用程式在主流Android和iOS設備上的穩定運行和良好用戶體驗。</li>
+                    </ul>
+                    
+                    <a href="#" class="btn btn-primary mt-3">查看 Demo</a>
+                    <a href="https://github.com/luke-hou/mobile-app-automation-testing" target="_blank" class="btn btn-secondary mt-3 ms-2">查看源碼</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2024 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

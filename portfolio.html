@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luke 的作品集 - 侯俊嘉個人網站</title>
+    <title>Luke Hou 侯俊嘉的個人作品集 - 專案與技術展示</title>
+    <meta name="description" content="Luke Hou 侯俊嘉的個人作品集，展示各類技術專案、創意作品，以及在軟體開發領域的實踐與成長。">
+    <meta name="keywords" content="Luke Hou, 侯俊嘉, 作品集, 個人專案, 技術展示, 軟體開發, 創意作品, 程式設計">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -42,49 +44,58 @@
     <main class="container mt-5">
         <div class="row">
             <div class="col-lg-10 mx-auto">
-                <h1 class="text-center mb-4 animate__animated animate__fadeIn">我的作品集</h1>
+                <h1 class="text-center mb-4 animate__animated animate__fadeIn">Luke Hou 侯俊嘉的個人作品集</h1>
                 
                 <div class="intro-text animate__animated animate__fadeIn animate__delay-1s">
                     <p>歡迎來到我的作品集頁面。這裡展示了我最引以為豪的專案和作品。每一個項目都代表了我在技術和創意上的成長。</p>
                 </div>
                 
                 <div class="portfolio-grid animate__animated animate__fadeIn animate__delay-2s">
-                    <!-- 作品項目1 -->
+                    <!-- 作品項目1：自動化測試框架開發 -->
                     <div class="portfolio-item">
-                        <h3>專案名稱1</h3>
-                        <img src="images/project1-thumbnail.jpg" alt="專案1縮略圖" class="img-fluid">
-                        <p>這是專案1的簡短描述。介紹了項目的主要功能和使用的技術。</p>
-                        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project-id="1">查看詳情</a>
+                        <h3>自動化測試框架開發</h3>
+                        <img src="images/project1-thumbnail.jpg" alt="自動化測試框架示意圖" class="img-fluid">
+                        <p>開發基於Selenium和Pytest的Web自動化測試框架，提高測試效率和質量。</p>
+                        <a href="projects/project1-automation-framework.html" class="btn btn-primary">查看詳情</a>
                     </div>
 
-                    <!-- 作品項目2 -->
+                    <!-- 作品項目2：電商平台高併發性能測試 -->
                     <div class="portfolio-item">
-                        <h3>專案名稱2</h3>
-                        <img src="images/project2-thumbnail.jpg" alt="專案2縮略圖" class="img-fluid">
-                        <p>這是專案2的簡短描述。突出了項目的獨特之處和解決的問題。</p>
-                        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#projectModal" data-project-id="2">查看詳情</a>
+                        <h3>電商平台高併發性能測試</h3>
+                        <img src="images/project2-thumbnail.jpg" alt="電商平台性能測試示意圖" class="img-fluid">
+                        <p>使用JMeter對電商平台進行負載和壓力測試，識別性能瓶頸並提出優化建議。</p>
+                        <a href="projects/project2-performance-testing.html" class="btn btn-primary">查看詳情</a>
                     </div>
 
-                    <!-- 可以繼續添加更多作品項目 -->
+                    <!-- 作品項目3：自動化測試CI/CD流水線建置 -->
+                    <div class="portfolio-item">
+                        <h3>自動化測試CI/CD流水線建置</h3>
+                        <img src="images/project1-thumbnail.jpg" alt="CI/CD流水線示意圖" class="img-fluid">
+                        <p>整合Jenkins、Selenium和JUnit，實現持續集成與自動化部署。</p>
+                        <a href="projects/project3-ci-cd-pipeline.html" class="btn btn-primary">查看詳情</a>
+                    </div>
+
+                    <!-- 作品項目4：行動應用程式自動化測試框架開發 -->
+                    <div class="portfolio-item">
+                        <h3>行動應用程式自動化測試框架開發</h3>
+                        <img src="images/project2-thumbnail.jpg" alt="行動應用程式測試框架示意圖" class="img-fluid">
+                        <p>開發基於Appium的行動應用程式自動化測試框架，支援Android和iOS平台。</p>
+                        <a href="projects/project4-mobile-app-testing.html" class="btn btn-primary">查看詳情</a>
+                    </div>
+
+                    <!-- 作品項目5：RESTful API自動化測試框架建置 -->
+                    <div class="portfolio-item">
+                        <h3>RESTful API自動化測試框架建置</h3>
+                        <img src="images/project1-thumbnail.jpg" alt="API測試框架示意圖" class="img-fluid">
+                        <p>開發基於Python Requests和Pytest的RESTful API自動化測試框架。</p>
+                        <a href="projects/project5-api-testing.html" class="btn btn-primary">查看詳情</a>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- 項目詳情模態框 -->
-    <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="projectModalLabel">項目詳情</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="projectModalBody">
-                    <!-- 項目詳情將通過 JavaScript 動態加載 -->
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- 由於作品集項目現在直接跳轉到獨立頁面，此模態框不再需要 -->
+    <!-- 如果未來需要，可以重新引入並調整其觸發邏輯 -->
 
     <footer class="bg-light mt-5 py-3">
         <div class="container text-center">

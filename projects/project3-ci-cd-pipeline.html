@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自動化測試CI/CD流水線建置 - Luke Hou 的作品集</title>
+    <meta name="description" content="Luke Hou 建立了一套自動化測試CI/CD流水線，整合Jenkins、Selenium和Junit，實現了持續集成與自動化部署。">
+    <meta name="keywords" content="CI/CD, 自動化測試, Jenkins, Selenium, JUnit, Maven, Git, 持續集成, 持續部署, DevOps">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0V2L1DQVPY');
+    </script>    
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../resume.html">簡歷</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">生活分享</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../contact.html">聯絡我</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <h1 class="text-center mb-4">自動化測試CI/CD流水線建置</h1>
+                
+                <img src="../images/project1-full.jpg" alt="CI/CD流水線示意圖" class="img-fluid mb-4">
+                
+                <div class="project-details">
+                    <h2>項目概述</h2>
+                    <p>此專案旨在為一個Web應用程式建立一套完整的自動化測試CI/CD（持續集成/持續部署）流水線。目標是將測試流程無縫整合到開發工作流中，實現代碼提交後的自動化測試、報告生成和部署，從而提高軟體交付效率和質量。</p>
+                    
+                    <h2>使用的技術</h2>
+                    <ul>
+                        <li><b>CI/CD工具</b>: Jenkins</li>
+                        <li><b>版本控制</b>: Git, GitHub</li>
+                        <li><b>自動化測試框架</b>: Selenium WebDriver (Java), JUnit</li>
+                        <li><b>構建工具</b>: Maven</li>
+                        <li><b>報告生成</b>: ExtentReports</li>
+                    </ul>
+                    
+                    <h2>項目挑戰與解決方案</h2>
+                    <h3>挑戰 1: 測試環境的穩定性與隔離</h3>
+                    <p>在CI/CD流水線中，測試環境的穩定性和隔離性至關重要，以避免測試之間的相互干擾。</p>
+                    <p><b>解決方案</b>: 利用Docker容器技術為每個測試任務創建獨立、一致的測試環境。每個Jenkins Job在啟動時都會拉取一個乾淨的Docker鏡像，確保測試的隔離性和可重複性。</p>
+                    
+                    <h3>挑戰 2: 測試報告的可讀性與追溯性</h3>
+                    <p>自動化測試會產生大量結果，如何生成清晰、易於理解且可追溯的測試報告是一個挑戰。</p>
+                    <p><b>解決方案</b>: 整合ExtentReports框架，生成美觀且詳細的HTML測試報告。報告中包含測試步驟、截圖、日誌等信息，方便開發和測試人員快速定位問題。同時，將報告歸檔在Jenkins中，方便歷史追溯。</p>
+                    
+                    <h3>挑戰 3: 跨瀏覽器兼容性測試</h3>
+                    <p>Web應用程式需要在多種瀏覽器上運行，手動進行跨瀏覽器測試效率低下。</p>
+                    <p><b>解決方案</b>: 結合Selenium Grid，在Jenkins流水線中配置多個瀏覽器節點（Chrome, Firefox等）。通過並行執行測試，大大縮短了跨瀏覽器兼容性測試的時間，並確保了應用程式在不同瀏覽器上的表現一致性。</p>
+
+                    <h2>項目成果</h2>
+                    <ul>
+                        <li><b>測試效率提升</b>: 自動化測試執行時間縮短了80%，顯著提高了測試效率。</li>
+                        <li><b>缺陷發現率提高</b>: 早期發現並修復了更多缺陷，降低了後期修復成本。</li>
+                        <li><b>交付頻率加快</b>: 實現了每日多次自動化部署，加速了軟體交付週期。</li>
+                        <li><b>質量門禁建立</b>: 在CI/CD流水線中設置了自動化測試質量門禁，確保只有通過所有關鍵測試的代碼才能進入下一階段。</li>
+                    </ul>
+                    
+                    <a href="#" class="btn btn-primary mt-3">查看 Demo</a>
+                    <a href="https://github.com/luke-hou/automated-testing-ci-cd" target="_blank" class="btn btn-secondary mt-3 ms-2">查看源碼</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2024 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

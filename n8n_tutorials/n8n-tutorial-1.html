@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>n8n 教學 (一)：基礎概念與安裝</title>
+    <title>n8n 教學 (一)：本地安裝 Node.js 與 n8n 環境建置</title>
+    <meta name="description" content="n8n 教學系列第一篇，詳細介紹如何從零開始本地安裝 Node.js 與 n8n，為自動化工作流打下基礎。">
+    <meta name="keywords" content="n8n教學, n8n安裝, Node.js安裝, n8n本地環境, 自動化工作流, npx n8n">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="../css/style.css">
@@ -34,36 +36,38 @@
 
     <main class="container">
         <section class="blog-post">
-            <h1>n8n 教學 (一)：基礎概念與安裝</h1>
+            <h1>n8n 教學 (一)：本地安裝 Node.js 與 n8n 環境建置</h1>
             <p class="post-meta">發布日期：2023年9月10日</p>
             <div class="post-content">
                 <p class="">這邊介紹的是較單純的 npx 安裝</p><p class="">開發者建議用 Docker 安裝 <em><mark class="highlight-red"><strong>(裝在公司OA的禁止用 Docker) </strong></mark></em></p><p class="">
 </p><p class="">首先到 Node.js 官方網站下載安裝檔案</p><p class=""><a href="https://nodejs.org/zh-tw/download">https://nodejs.org/zh-tw/download</a></p><p class="">
-</p><figure class="image"><a href="1/image.png"><img style="width:939.984375px" src="1/image.png"/></a></figure><p class="">
+</p><figure class="image"><a href="1/image.png"><img style="width:939.984375px" src="1/image.png" alt="Node.js官方網站下載頁面"/></a></figure><p class="">
 </p><p class="">
 </p><p class="">
-</p><p class="">安裝時，用預設值，一直下一步即可。</p><figure class="image" style="text-align:left"><a href="1/image%201.png"><img style="width:492.96875px" src="1/image%201.png"/></a></figure><p class="">
+</p><p class="">安裝時，用預設值，一直下一步即可。</p><figure class="image" style="text-align:left"><a href="1/image%201.png"><img style="width:492.96875px" src="1/image%201.png" alt="Node.js安裝介面"/></a></figure><p class="">
 </p><p class="">
-</p><p class="">用管理員權限打開 CMD</p><figure class="image"><a href="1/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2_2025-05-27_1356481.png"><img style="width:939.984375px" src="1/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2_2025-05-27_1356481.png"/></a></figure><p class="">
+</p><p class="">用管理員權限打開 CMD</p><figure class="image"><a href="1/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2_2025-05-27_1356481.png"><img style="width:939.984375px" src="1/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2_2025-05-27_1356481.png" alt="以管理員權限開啟命令提示字元"/></a></figure><p class="">
 </p><p class="">
-</p><p class="">輸入 node -v 後按 Enter 確認版本</p><figure class="image"><a href="1/image%202.png"><img style="width:939.96875px" src="1/image%202.png"/></a></figure><p class="">
+</p><p class="">輸入 node -v 後按 Enter 確認版本</p><figure class="image"><a href="1/image%202.png"><img style="width:939.96875px" src="1/image%202.png" alt="確認Node.js版本"/></a></figure><p class="">
 </p><hr/><p class="">
-</p><p class="">在 CMD 畫面輸入 npx n8n</p><figure class="image" style="text-align:left"><a href="1/image%203.png"><img style="width:615px" src="1/image%203.png"/></a></figure><p class="">
-</p><p class="">輸入 y 後按 Enter ，靜待安裝完畢。 </p><figure class="image" style="text-align:left"><a href="1/image%204.png"><img style="width:615px" src="1/image%204.png"/></a></figure><p class="">
+</p><p class="">在 CMD 畫面輸入 npx n8n</p><figure class="image" style="text-align:left"><a href="1/image%203.png"><img style="width:615px" src="1/image%203.png" alt="在命令提示字元中執行npx n8n"/></a></figure><p class="">
+</p><p class="">輸入 y 後按 Enter ，靜待安裝完畢。 </p><figure class="image" style="text-align:left"><a href="1/image%204.png"><img style="width:615px" src="1/image%204.png" alt="n8n安裝確認畫面"/></a></figure><p class="">
 </p><p class="">
-</p><p class="">n8n 安裝完畢，會自動啟動服務，按下 o 後，會自動在瀏覽器打開 n8n 起始頁面。</p><figure class="image" style="text-align:left"><a href="1/image%205.png"><img style="width:615px" src="1/image%205.png"/></a></figure><p class="">
+</p><p class="">n8n 安裝完畢，會自動啟動服務，按下 o 後，會自動在瀏覽器打開 n8n 起始頁面。</p><figure class="image" style="text-align:left"><a href="1/image%205.png"><img style="width:615px" src="1/image%205.png" alt="n8n啟動畫面"/></a></figure><p class="">
 </p><p class="">
-</p><p class="">這邊要注意的是 Email 跟 Password 要記好，其他選項隨意選，不影響使用。</p><figure class="image"><a href="1/image%206.png"><img style="width:939.984375px" src="1/image%206.png"/></a></figure><p class="">
+</p><p class="">這邊要注意的是 Email 跟 Password 要記好，其他選項隨意選，不影響使用。</p><figure class="image"><a href="1/image%206.png"><img style="width:939.984375px" src="1/image%206.png" alt="n8n帳號設定頁面"/></a></figure><p class="">
 </p><p class="">
-</p><p class="">登入後可以看到起始頁面，接下來進到下一個 part : Supabase 帳號的申請。</p><figure class="image"><a href="1/image%207.png"><img style="width:939.984375px" src="1/image%207.png"/></a></figure><p class="">
+</p><p class="">登入後可以看到起始頁面，接下來進到下一個 part : Supabase 帳號的申請。</p><figure class="image"><a href="1/image%207.png"><img style="width:939.984375px" src="1/image%207.png" alt="n8n起始頁面"/></a></figure><p class="">
 </p>
             </div>
         </section>
     </main>
 <p><a href="../n8n-tutorials.html">回上一頁</a></p>
 
-    <footer>
-        <p>&copy; 2023 我的作品集. All rights reserved.</p>
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2024 Luke Hou. All rights reserved.</p>
+        </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>

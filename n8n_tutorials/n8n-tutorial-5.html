@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>n8n 教學 (五)：排程與定時任務</title>
+    <title>n8n 教學 (五)：讓 AI 參考向量資料庫回答</title>
+    <meta name="description" content="n8n 教學系列第五篇，展示如何配置 n8n，讓 AI 能夠參考向量資料庫中的資訊來生成更精確、更符合語境的回答。">
+    <meta name="keywords" content="n8n教學, AI回答, 向量資料庫, Supabase, Gemini, 語境理解, 自動化AI">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="../css/style.css">
@@ -34,81 +36,60 @@
 
     <main class="container">
         <section class="blog-post">
-            <h1>n8n 教學 (五)：排程與定時任務</h1>
+            <h1>n8n 教學 (五)：讓 AI 參考向量資料庫回答</h1>
             <p class="post-meta">發布日期：2023年12月1日</p>
             <div class="post-content">
-                <p>在許多自動化場景中，我們需要讓 workflow 在特定的時間點或以固定的間隔自動執行。本篇教學將介紹如何在 n8n 中設定排程和定時任務。</p>
-
-                <h2>1. Cron 節點</h2>
-                <p>Cron 節點是 n8n 中用於設定定時任務的主要觸發器。它允許您使用 Cron 表達式來定義精確的執行時間。</p>
-                <h3>Cron 表達式基礎</h3>
-                <p>Cron 表達式由五個或六個欄位組成，分別代表：</p>
-                <ul>
-                    <li>分鐘 (0-59)</li>
-                    <li>小時 (0-23)</li>
-                    <li>日期 (1-31)</li>
-                    <li>月份 (1-12)</li>
-                    <li>星期幾 (0-7，0和7都代表星期日)</li>
-                    <li>(可選) 年份</li>
-                </ul>
-                <p>例如：</p>
-                <ul>
-                    <li>`0 0 * * *`：每天午夜執行</li>
-                    <li>`0 9 * * 1-5`：每個工作日早上9點執行</li>
-                    <li>`*/15 * * * *`：每15分鐘執行一次</li>
-                </ul>
-
-                <h3>配置 Cron 節點</h3>
-                <p>在 n8n workflow 中添加 Cron 節點，並在「Mode」中選擇「Cron Expression」，然後輸入您的 Cron 表達式。</p>
-                <pre><code>
-// 範例：每天早上8點執行
-{
-  "nodes": [
-    {
-      "node": "n8n-nodes-base.cron",
-      "parameters": {
-        "mode": "cronExpression",
-        "cronExpression": "0 8 * * *"
-      }
-    }
-  ]
-}
-                </code></pre>
-
-                <h2>2. Interval 節點</h2>
-                <p>如果您需要 workflow 以固定的時間間隔重複執行，可以使用 Interval 節點。</p>
-                <h3>配置 Interval 節點</h3>
-                <p>在 n8n workflow 中添加 Interval 節點，並設定您希望的間隔時間（例如每小時、每分鐘）。</p>
-                <pre><code>
-// 範例：每5分鐘執行一次
-{
-  "nodes": [
-    {
-      "node": "n8n-nodes-base.interval",
-      "parameters": {
-        "interval": 5,
-        "unit": "minutes"
-      }
-    }
-  ]
-}
-                </code></pre>
-
-                <h2>3. 最佳實踐</h2>
-<p><a href="../n8n-tutorials.html">回上一頁</a></p>
-                <ul>
-                    <li>**避免過度頻繁的排程**：根據您的需求合理設定排程頻率，避免不必要的資源消耗。</li>
-                    <li>**考慮時區**：如果您的 workflow 涉及不同時區的服務，請注意 Cron 節點的時區設定。</li>
-                    <li>**監控排程任務**：定期檢查排程任務的執行狀態，確保它們按預期運行。</li>
-                </ul>
-
-                <p>透過本篇教學，您應該能夠在 n8n 中靈活設定各種排程和定時任務，讓您的自動化流程在正確的時間自動啟動。</p>
+                <p class="">
+</p><p class="">同樣建立一個新的工作流，命名為 n8nChatWithAI。</p><p class="">這次點選倒數第二的 ‘On chat message’，然後直接按 ESC 關掉。</p><figure class="image"><a href="5/image.png"><img style="width:533.3125px" src="5/image.png" alt="n8n建立新工作流並選擇On chat message"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">在右邊加號按一下</p><figure class="image" style="text-align:left"><a href="5/image%201.png"><img style="width:440px" src="5/image%201.png" alt="n8n添加新節點"/></a></figure><p class="">
+</p><p class="">輸入 question 後點選 Question and Answer Chain</p><figure class="image" style="text-align:left"><a href="5/image%202.png"><img style="width:399px" src="5/image%202.png" alt="n8n選擇Question and Answer Chain"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">點選 Add Option，然後選 System Prompt Template。</p><figure class="image"><a href="5/image%203.png"><img style="width:518.296875px" src="5/image%203.png" alt="n8n添加System Prompt Template"/></a></figure><p class="">
+</p><p class="">格子右上方切換到 Expression並修改提示詞，注意下方的這個區塊要保留 </p><p class="">貼上：</p><ul class="bulleted-list"><li style="list-style-type:disc">你是專業藥劑師，專長是台灣健保給付規範相關領域。</li></ul><ul class="bulleted-list"><li style="list-style-type:disc">閱讀 Vector Store 的健保規範資料庫，了解台灣健保的相關規範，並以專業藥劑師的角度親切地回答使用者問題。</li></ul><ul class="bulleted-list"><li style="list-style-type:disc">一律用繁體中文回應，但英文專有名詞則保留原文。</li></ul><hr/><p class="">Context: {context}</p><p class="">
+</p><p class="">然後按 ESC 關掉視窗。</p><p class="">
+</p><p class="">
+</p><p class="">點左下鬚鬚</p><figure class="image"><a href="5/image%204.png"><img style="width:518.296875px" src="5/image%204.png" alt="n8n選擇模型"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">選擇你要用的大語言模型，這邊先選 Google Gemini Chat Model</p><figure class="image" style="text-align:left"><a href="5/image%205.png"><img style="width:372px" src="5/image%205.png" alt="n8n選擇Google Gemini Chat Model"/></a></figure><p class="">
+</p><p class="">選擇 models/gemini-2.5-flash-preview-04-17-thinking 後</p><p class="">接著按 ESC 關閉視窗</p><figure class="image"><a href="5/image%206.png"><img style="width:518.3125px" src="5/image%206.png" alt="n8n選擇Gemini模型"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">點右下鬚鬚</p><figure class="image"><a href="5/image%207.png"><img style="width:518.3125px" src="5/image%207.png" alt="n8n添加新節點"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">選 Vector Store Retriever</p><figure class="image" style="text-align:left"><a href="5/image%208.png"><img style="width:381px" src="5/image%208.png" alt="n8n選擇Vector Store Retriever"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">不做改動直接 ESC 關掉</p><figure class="image"><a href="5/image%209.png"><img style="width:518.3125px" src="5/image%209.png" alt="n8n Vector Store Retriever設定"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">繼續在紅點點上面按加號</p><figure class="image"><a href="5/image%2010.png"><img style="width:518.3125px" src="5/image%2010.png" alt="n8n添加新節點"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">選擇綠色閃電 Supabase Vector Store</p><figure class="image" style="text-align:left"><a href="5/image%2011.png"><img style="width:390px" src="5/image%2011.png" alt="n8n選擇Supabase Vector Store"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">Table Name 下拉選擇 nhi_drug_768</p><figure class="image"><a href="5/image%2012.png"><img style="width:518.3125px" src="5/image%2012.png" alt="n8n Supabase Vector Store表格選擇"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">繼續按 Add Option 並選擇 Query Name</p><figure class="image"><a href="5/image%2013.png"><img style="width:518.3125px" src="5/image%2013.png" alt="n8n Supabase Vector Store添加查詢名稱"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">將 match_documents 改成 match_nhi_drug_768</p><p class="">按 ESC 關閉視窗</p><p class="">還是紅色的，沒關係我們繼續按下面的鬚鬚加號。</p><figure class="image"><a href="5/image%2014.png"><img style="width:518.3125px" src="5/image%2014.png" alt="n8n添加新節點"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">選擇 Embeddings Google Gemini</p><figure class="image" style="text-align:left"><a href="5/image%2015.png"><img style="width:301px" src="5/image%2015.png" alt="n8n選擇Embeddings Google Gemini"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">選擇 models/text-embedding-004 </p><p class="">然後 ESC 關閉</p><figure class="image"><a href="5/image%2016.png"><img style="width:518.3125px" src="5/image%2016.png" alt="n8n選擇Embedding模型"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">此時沒有紅色，我們點一下下面的 Open chat 橘色按鈕。</p><figure class="image"><a href="5/image%2017.png"><img style="width:518.3125px" src="5/image%2017.png" alt="n8n開啟聊天視窗"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">這時候可以看到下面出現聊天視窗，輸入你想問的健保用藥規範。</p><figure class="image"><a href="5/image%2018.png"><img style="width:518.3125px" src="5/image%2018.png" alt="n8n聊天視窗輸入問題"/></a></figure><p class="">
+</p><p class="">例如：Doxorubicin 有什麼健保使用限制?</p><figure class="image"><a href="5/image%2019.png"><img style="width:518.296875px" src="5/image%2019.png" alt="n8n聊天視窗輸入Doxorubicin問題"/></a></figure><p class="">
+</p><p class="">這邊可以看到 AI 參考向量資料庫後的回答</p><figure class="image"><a href="5/image%2020.png"><img style="width:518.265625px" src="5/image%2020.png" alt="n8n AI回答"/></a></figure><p class="">
+</p><p class="">看起來有命中</p><figure class="image"><a href="5/image%2021.png"><img style="width:518.3125px" src="5/image%2021.png" alt="n8n AI回答命中結果"/></a></figure><p class="">
+</p><p class="">回到 Supabase 檢查一下，確認應該是沒有亂講話。</p><figure class="image"><a href="5/image%2022.png"><img style="width:518.3125px" src="5/image%2022.png" alt="Supabase資料庫確認"/></a></figure><p class="">
+</p><p class="">至此我們就有一個會參考向量資料庫的問答AI了，恭喜。</p>
             </div>
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2023 我的作品集. All rights reserved.</p>
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2024 Luke Hou. All rights reserved.</p>
+        </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>

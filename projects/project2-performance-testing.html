@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電商平台高併發性能測試與瓶頸分析 - Luke Hou 的作品集</title>
+    <meta name="description" content="Luke Hou 使用JMeter對電商平台進行負載和壓力測試，識別性能瓶頸並提出優化建議，提升系統穩定性。">
+    <meta name="keywords" content="性能測試, JMeter, 負載測試, 壓力測試, 電商平台, 性能優化, Grafana, Prometheus">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-0V2L1DQVPY');
+    </script>    
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../resume.html">簡歷</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">生活分享</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../contact.html">聯絡我</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <h1 class="text-center mb-4">電商平台高併發性能測試與瓶頸分析</h1>
+                
+                <img src="../images/project2-full.jpg" alt="電商平台性能測試示意圖" class="img-fluid mb-4">
+                
+                <div class="project-details">
+                    <h2>項目概述</h2>
+                    <p>此專案旨在對一個大型電商平台進行全面的性能測試，包括負載測試、壓力測試和穩定性測試。目標是評估系統在高併發場景下的表現，識別潛在的性能瓶頸，並提供具體的優化建議，以確保平台在促銷活動或流量高峰期仍能保持穩定和響應迅速。</p>
+                    
+                    <h2>使用的技術</h2>
+                    <ul>
+                        <li><b>負載測試工具</b>: Apache JMeter</li>
+                        <li><b>監控工具</b>: Grafana, Prometheus</li>
+                        <li><b>容器化</b>: Docker</li>
+                        <li><b>操作系統</b>: Linux</li>
+                    </ul>
+                    
+                    <h2>項目挑戰與解決方案</h2>
+                    <h3>挑戰 1: 模擬真實用戶行為</h3>
+                    <p>電商平台用戶行為複雜，包括瀏覽商品、加入購物車、下單支付等，難以精確模擬。</p>
+                    <p><b>解決方案</b>: 深入分析用戶行為日誌，結合業務流程圖，設計多種測試場景和用戶行為路徑。利用JMeter的參數化和關聯功能，模擬真實用戶的動態請求和數據交互。</p>
+                    
+                    <h3>挑戰 2: 大數據量測試與結果分析</h3>
+                    <p>在高併發測試中，會產生大量的性能數據，如何有效收集、存儲和分析這些數據是一個挑戰。</p>
+                    <p><b>解決方案</b>: 搭建Prometheus和Grafana監控系統，實時收集JMeter測試結果和服務器性能指標。通過Grafana的可視化儀表板，對響應時間、吞吐量、錯誤率等關鍵指標進行多維度分析，快速定位問題。</p>
+                    
+                    <h3>挑戰 3: 識別深層次性能瓶頸</h3>
+                    <p>表面數據可能無法揭示系統深層次的性能問題，如數據庫鎖、線程死鎖、內存洩漏等。</p>
+                    <p><b>解決方案</b>: 結合應用程式日誌、數據庫性能監控和操作系統指標，進行多層次數據關聯分析。利用JMeter的Listener和第三方插件，捕獲詳細的錯誤信息和堆棧追蹤，輔助開發團隊進行代碼級別的優化。</p>
+
+                    <h2>項目成果</h2>
+                    <ul>
+                        <li><b>系統響應時間降低</b>: 透過識別並優化數據庫查詢、緩存策略和API接口，平均響應時間降低了約15%。</li>
+                        <li><b>併發用戶數提升</b>: 系統在高併發場景下的穩定性顯著提高，支持的併發用戶數提升了25%，有效應對流量高峰。</li>
+                        <li><b>資源利用率優化</b>: 發現並解決了多個資源洩漏和低效配置問題，使得服務器CPU和內存利用率更加合理。</li>
+                        <li><b>性能基準建立</b>: 為電商平台建立了詳細的性能基準，為後續的版本迭代和容量規劃提供了重要參考依據。</li>
+                    </ul>
+                    
+                    <a href="#" class="btn btn-primary mt-3">查看 Demo</a>
+                    <a href="https://github.com/luke-hou/ecommerce-performance-testing" target="_blank" class="btn btn-secondary mt-3 ms-2">查看源碼</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2024 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
