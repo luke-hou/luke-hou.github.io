@@ -17,20 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 添加滾動動畫 (for portfolio items, can be generalized or made more specific)
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate__animated', 'animate__fadeInUp');
-                observer.unobserve(entry.target); // Optional: unobserve after animation
-            }
-        });
-    });
-
-    // Observe elements with class 'portfolio-item' or any other class you want to animate on scroll
-    document.querySelectorAll('.portfolio-item, .animate-on-scroll, .timeline-item, .skill-item, .intro-text, .contact-info').forEach((el) => {
-        observer.observe(el);
-    });
 
     // 作品集模態框邏輯
     const portfolioModal = document.getElementById('portfolioModal'); // 確保這裡的ID與HTML中的模態框ID一致
