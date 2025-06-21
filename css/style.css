@@ -65,7 +65,7 @@ h3 {
 
 /* 動畫效果 */
 .animate__animated {
-    animation-duration: 1s;
+    animation-duration: 0.5s; /* 加快動畫速度 */
 }
 
 /* 作品集網格樣式 */

@@ -23,7 +23,6 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
                         <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../n8n-new-series.html">n8n 新系列教學</a></li>
                         <li class="nav-item"><a class="nav-link" href="../resume.html">簡歷</a></li>
                         <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">生活分享</a></li>
@@ -37,7 +36,7 @@
     <main class="container">
         <section class="blog-post">
             <h1>n8n 教學 (四)：建立 n8n 工作流塞爆向量資料庫</h1>
-            <p class="post-meta">發布日期：2023年11月15日</p>
+            <p class="post-meta">發布日期：2025年5月</p>
             <div class="post-content">
                 <p class="">回到 n8n 點選 Create Workflow 建立第一個工作流</p><figure class="image"><a href="4/image.png"><img style="width:954.9375px" src="4/image.png"/></a></figure><p class="">
 </p><p class="">
@@ -148,15 +147,16 @@
 </p><p class="">
 </p><p class="">等待跑完，觀察 delete: row 節點有沒有數量，有就對了。</p><figure class="image" style="text-align:left"><a href="4/image%2054.png"><img style="width:287px" src="4/image%2054.png" alt="n8n刪除節點執行結果"/></a></figure><p class="">
 </p><p class="">
-</p><p class="">
 </p><p class="">至此完成將檔案塞到向量資料庫的工作流，並且遇到同檔名的時候會先刪除舊資料，避免重複塞入。</p><figure class="image" style="text-align:left"><a href="4/image%2055.png"><img style="width:518.3125px" src="4/image%2055.png" alt="n8n最終工作流"/></a></figure>
+</p><p class="">
+</p><p class=""><H2>這邊要特別提醒，如果是公司內部或是個人機密敏感資料，為保險起見，請使用全地端模型，包含 Embedding Model 跟 LLM。例如下圖中的 Ollama + qwen3 + multilingual-e5 + 斷網的搭配模式。</H2></p><figure class="image" style="text-align:left"><a href="4/image%2056.jpg"><img style="width:518.3125px" src="4/image%2056.jpg" alt="n8n地端工作流"/></a></figure>
             </div>
         </section>
     </main>
 
     <footer class="bg-light mt-5 py-3">
         <div class="container text-center">
-            <p>&copy; 2024 Luke Hou. All rights reserved.</p>
+            <p>&copy; 2025 侯俊嘉(Luke Hou). All rights reserved.</p>
         </div>
     </footer>
     <script src="../js/main.js"></script>
