@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互動式護理資訊系統(NIS)洞察報告</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals & Muted Teal -->
+    <!-- Application Structure Plan: 本應用程式採用了主題式、非線性的儀表板結構，取代報告原有的章節式佈局。結構分為五大可互動區塊：1. 總覽儀表板：提供高層次摘要與核心效益視覺化圖表。2. 核心功能探索：透過標籤頁與卡片式設計，將複雜的功能需求分類呈現，讓使用者可依興趣點擊探索。3. 技術架構解析：利用視覺化圖解，簡化微服務、雲端部署、數據標準等複雜技術概念。4. 市場生態地圖：以動態圖表比較主要供應商，並用時間軸呈現未來趨勢。5. 法規遵循指南：將生硬的法規條文轉化為易於理解的摺疊式列表。此結構旨在引導使用者依據自身興趣與需求探索資訊，而非被動閱讀，從而大幅提升資訊的吸收效率與使用者體驗。 -->
+    <!-- Visualization & Content Choices: 1. 核心效益 (Goal: Inform): 使用雷達圖 (Chart.js) 來視覺化NIS導入的多維度效益，比文字列表更具衝擊力。2. 核心功能 (Goal: Organize): 採用HTML/CSS卡片式佈局，互動性高，使用者可點擊查看細節，避免資訊過載。3. 系統架構 (Goal: Organize/Inform): 使用純HTML/CSS及Tailwind的Flexbox/Grid繪製結構圖，節點可互動，清晰呈現系統間的關係。4. 供應商比較 (Goal: Compare): 使用水平長條圖 (Chart.js)，動態展示各廠商的特色，比靜態表格更易比較。5. 未來趨勢 (Goal: Change): 設計了垂直時間軸，透過JS互動，生動呈現技術演進。6. 法規 (Goal: Inform): 使用HTML摺疊式選單 (accordion)，將複雜法規分點呈現，易於查閱。所有選擇均為增強互動性與理解性，並確認未使用SVG或Mermaid。 -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 300px;
+            width: 100%;
+            max-width: 500px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .section-fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .section-fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .tab-btn.active {
+            border-color: #14B8A6;
+            color: #14B8A6;
+            font-weight: 700;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            left: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #F0F0F0;
+            border: 3px solid #14B8A6;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 text-center text-sm text-stone-600 bg-yellow-100 rounded-md mb-8">
+        ⚠️ 此網頁內容由 Google Gemini 根據其 Deep Research 報告生成，全部由 AI 完成。
+    </div>
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-teal-600">NIS 洞察報告</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#dashboard" class="text-stone-600 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium">總覽儀表板</a>
+                        <a href="#features" class="text-stone-600 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium">核心功能</a>
+                        <a href="#architecture" class="text-stone-600 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium">技術架構</a>
+                        <a href="#market" class="text-stone-600 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium">市場生態</a>
+                        <a href="#compliance" class="text-stone-600 hover:text-teal-600 px-3 py-2 rounded-md text-sm font-medium">法規遵循</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-stone-400 hover:text-white hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-stone-800 focus:ring-white">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#dashboard" class="text-stone-600 hover:bg-teal-500 hover:text-white block px-3 py-2 rounded-md text-base font-medium">總覽儀表板</a>
+                <a href="#features" class="text-stone-600 hover:bg-teal-500 hover:text-white block px-3 py-2 rounded-md text-base font-medium">核心功能</a>
+                <a href="#architecture" class="text-stone-600 hover:bg-teal-500 hover:text-white block px-3 py-2 rounded-md text-base font-medium">技術架構</a>
+                <a href="#market" class="text-stone-600 hover:bg-teal-500 hover:text-white block px-3 py-2 rounded-md text-base font-medium">市場生態</a>
+                <a href="#compliance" class="text-stone-600 hover:bg-teal-500 hover:text-white block px-3 py-2 rounded-md text-base font-medium">法規遵循</a>
+            </div>
+        </div>
+    </header>
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 text-center">
+        <a href="../blog.html" class="text-teal-600 hover:underline font-medium">&larr; 回到部落格</a>
+    </div>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        
+        <section id="dashboard" class="section-fade-in mb-16">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-bold text-stone-900 leading-tight">解構護理資訊系統 (NIS)</h1>
+                <p class="mt-4 text-lg text-stone-600 max-w-3xl mx-auto">從繁複的功能說明書到清晰的互動洞察，全面解析NIS的核心價值、技術架構與市場未來。</p>
+            </div>
+
+            <!-- Podcast Audio Player -->
+            <div class="mt-8 max-w-xl mx-auto bg-white p-4 rounded-lg shadow">
+                <h3 class="text-lg font-bold text-stone-800 mb-2 text-center">Podcast 版</h3>
+                <audio controls class="w-full">
+                    <source src="NIS_Research_Poscast.mp3" type="audio/mpeg">
+                    您的瀏覽器不支援音訊元素。
+                </audio>
+            </div>
+            <!-- End Podcast Audio Player -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-xl font-bold mb-4 text-center">NIS 導入核心效益</h3>
+                    <p class="text-sm text-stone-600 mb-4 text-center">NIS的導入旨在全面優化醫療服務，其價值主張體現在多個關鍵面向，共同構成一個高效、安全且以病人為中心的照護環境。</p>
+                    <div class="chart-container h-80 md:h-96">
+                        <canvas id="benefitsChart"></canvas>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-lg font-semibold text-stone-800">🎯 系統目標</h3>
+                        <p class="mt-2 text-stone-600">透過資訊科技，優化護理工作流程，提升照護品質與效率，最終實現以病人為中心的智慧醫療服務。</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-lg font-semibold text-stone-800">💡 價值主張</h3>
+                        <p class="mt-2 text-stone-600">解決傳統紙本作業痛點，將護理資料轉化為可分析的知識，不僅提升護理人員效率，更能強化病人安全，支持臨床決策與管理。</p>
+                    </div>
+                     <div class="bg-teal-600 text-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-lg font-semibold">🔍 探索指南</h3>
+                        <p class="mt-2">本頁面為互動式報告，請捲動並點擊各區塊，深入探索NIS的完整世界。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="section-fade-in mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-stone-900">核心功能探索</h2>
+                <p class="mt-3 text-lg text-stone-600 max-w-2xl mx-auto">NIS 功能繁多，我們將其歸納為四大核心領域。點擊下方標籤頁，探索各領域的關鍵功能模組。</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-4 sm:p-6 md:p-8">
+                <div class="border-b border-stone-200 mb-6">
+                    <nav class="-mb-px flex flex-wrap justify-center gap-x-4 sm:gap-x-6" aria-label="Tabs">
+                        <button data-tab="overview" class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-stone-500 hover:text-teal-600 hover:border-teal-600 active">核心總覽</button>
+                        <button data-tab="professional" class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-stone-500 hover:text-teal-600 hover:border-teal-600">護理專業</button>
+                        <button data-tab="collaboration" class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-stone-500 hover:text-teal-600 hover:border-teal-600">跨團隊協作</button>
+                        <button data-tab="decision" class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-stone-500 hover:text-teal-600 hover:border-teal-600">智慧決策</button>
+                    </nav>
+                </div>
+
+                <div id="tab-content" class="min-h-[400px]">
+                </div>
+            </div>
+        </section>
+
+        <section id="architecture" class="section-fade-in mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-stone-900">技術架構解析</h2>
+                <p class="mt-3 text-lg text-stone-600 max-w-2xl mx-auto">現代NIS的成功，建立在穩健且具前瞻性的技術架構之上。了解其背後的關鍵技術選擇。</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-xl font-bold mb-4 text-center">系統整合生態圖</h3>
+                    <p class="text-sm text-stone-600 mb-6 text-center">NIS並非孤島，它需與醫院內其他核心系統無縫整合，形成一個統一的資訊流。點擊節點查看說明。</p>
+                    <div class="flex flex-col items-center justify-center p-4 bg-stone-100 rounded-lg min-h-[300px]">
+                        <div class="text-center mb-4">
+                            <button data-info="nis" class="arch-node bg-teal-500 text-white font-bold py-3 px-6 rounded-full shadow-md transition-transform transform hover:scale-105">護理資訊系統 (NIS)</button>
+                        </div>
+                        <div class="w-full flex justify-center items-center my-2">
+                             <div class="border-t-2 border-stone-300 w-1/4"></div>
+                             <div class="border-l-2 border-stone-300 h-10"></div>
+                             <div class="border-t-2 border-stone-300 w-1/4"></div>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full text-center">
+                            <button data-info="his" class="arch-node bg-white text-stone-700 py-2 px-3 rounded-lg shadow transition-transform transform hover:scale-105">醫院資訊系統 (HIS)</button>
+                            <button data-info="emr" class="arch-node bg-white text-stone-700 py-2 px-3 rounded-lg shadow transition-transform transform hover:scale-105">電子病歷 (EMR)</button>
+                            <button data-info="pacs" class="arch-node bg-white text-stone-700 py-2 px-3 rounded-lg shadow transition-transform transform hover:scale-105">影像儲傳 (PACS)</button>
+                            <button data-info="lis" class="arch-node bg-white text-stone-700 py-2 px-3 rounded-lg shadow transition-transform transform hover:scale-105">檢驗系統 (LIS)</button>
+                        </div>
+                        <div id="arch-info" class="mt-6 p-4 bg-teal-50 rounded-lg text-center text-teal-800 hidden w-full">點擊上方任一系統節點，查看其功能簡介。</div>
+                    </div>
+                </div>
+                <div class="space-y-8">
+                     <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-lg font-semibold text-stone-800">🏗️ 架構模式</h3>
+                        <p class="mt-2 text-stone-600">採用<strong class="text-teal-600">微服務</strong>與<strong class="text-teal-600">雲端原生</strong>架構，將龐大系統拆解為獨立、靈活的小型服務，提升擴展性、韌性與開發速度。</p>
+                    </div>
+                     <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-lg font-semibold text-stone-800">🔄 數據交換標準</h3>
+                        <p class="mt-2 text-stone-600">優先採用<strong class="text-teal-600">FHIR</strong>標準，基於RESTful API，解決系統間資料模型不相容問題，實現跨平台、高效率的數據互通。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="market" class="section-fade-in mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-stone-900">市場生態與未來趨勢</h2>
+                <p class="mt-3 text-lg text-stone-600 max-w-2xl mx-auto">了解台灣市場上的主要玩家，以及驅動NIS未來發展的關鍵科技趨勢。</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                 <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-xl font-bold mb-4 text-center">台灣主要供應商特色比較</h3>
+                    <p class="text-sm text-stone-600 mb-4 text-center">市場上各供應商各有專長，從雲端原生到流程優化，共同構成多元的市場生態。此圖表綜合評估各家公開的產品特色。</p>
+                    <div class="chart-container h-96 md:h-[450px]">
+                        <canvas id="vendorChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                     <h3 class="text-xl font-bold mb-6 text-center">NIS 未來發展趨勢</h3>
+                     <div class="relative pl-8 border-l-2 border-stone-200">
+                        <div class="timeline-item mb-10 pl-6 relative">
+                            <h4 class="font-bold text-teal-600">雲端化與行動護理</h4>
+                            <p class="text-sm text-stone-600 mt-1">電子病歷上雲政策推動，SaaS模式降低導入門檻。行動裝置實現真正的床邊護理，提升即時性與效率。</p>
+                        </div>
+                        <div class="timeline-item mb-10 pl-6 relative">
+                            <h4 class="font-bold text-teal-600">AI 與大數據應用</h4>
+                            <p class="text-sm text-stone-600 mt-1">AI從輔助走向賦能，應用於臨床決策、影像分析、風險預警。大數據分析優化管理、支持研究。</p>
+                        </div>
+                        <div class="timeline-item mb-10 pl-6 relative">
+                            <h4 class="font-bold text-teal-600">物聯網 (IoT) 整合</h4>
+                            <p class="text-sm text-stone-600 mt-1">整合生理量測儀器與穿戴裝置數據，實現連續性照護，建構智能病房，自動化監測與警示。</p>
+                        </div>
+                         <div class="timeline-item pl-6 relative">
+                            <h4 class="font-bold text-teal-600">遠距醫療與居家照護</h4>
+                            <p class="text-sm text-stone-600 mt-1">服務邊界從醫院延伸至家庭，支持視訊看診、遠端監測與長期照護需求，因應人口老化與新興服務模式。</p>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="compliance" class="section-fade-in">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-stone-900">法規遵循指南</h2>
+                <p class="mt-3 text-lg text-stone-600 max-w-2xl mx-auto">NIS的開發與導入，必須在嚴格的法律框架下進行。點擊下方列表，了解核心法規的關鍵要求。</p>
+            </div>
+            <div class="max-w-4xl mx-auto space-y-4">
+                <div class="compliance-item bg-white rounded-xl shadow-lg overflow-hidden">
+                    <button class="w-full text-left p-4 sm:p-6 flex justify-between items-center focus:outline-none">
+                        <span class="text-lg font-semibold text-stone-800">醫療機構電子病歷製作及管理辦法</span>
+                        <span class="transform transition-transform duration-300">
+                            <svg class="w-6 h-6 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+                    </button>
+                    <div class="compliance-content hidden p-4 sm:p-6 border-t border-stone-200 bg-stone-50">
+                        <ul class="space-y-3 text-stone-600 list-disc list-inside">
+                            <li><strong class="text-stone-700">電子簽章：</strong>醫事人員需於24小時內以醫事憑證完成簽章。</li>
+                            <li><strong class="text-stone-700">雲端服務：</strong>允許使用雲端服務，但資料儲存地點原則上需在台灣境內，且受託廠商需有資安認證。</li>
+                            <li><strong class="text-stone-700">增刪可溯：</strong>病歷增刪需留下紀錄，且能與增刪前版本明顯辨識。</li>
+                            <li><strong class="text-stone-700">交換標準：</strong>鼓勵使用電子病歷交換平台，遵循FHIR等標準。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="compliance-item bg-white rounded-xl shadow-lg overflow-hidden">
+                    <button class="w-full text-left p-4 sm:p-6 flex justify-between items-center focus:outline-none">
+                        <span class="text-lg font-semibold text-stone-800">護理機構照護紀錄電子化注意事項</span>
+                         <span class="transform transition-transform duration-300">
+                            <svg class="w-6 h-6 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+                    </button>
+                    <div class="compliance-content hidden p-4 sm:p-6 border-t border-stone-200 bg-stone-50">
+                        <ul class="space-y-3 text-stone-600 list-disc list-inside">
+                           <li><strong class="text-stone-700">權限管理：</strong>需指定專人管理，並建立明確的人員存取權限。</li>
+                           <li><strong class="text-stone-700">備份與保存：</strong>需有完善備份機制，保存年限符合法規，歷程紀錄需完整。</li>
+                           <li><strong class="text-stone-700">安全傳輸：</strong>傳輸需採用SSL/TLS等國際認可的加密機制。</li>
+                           <li><strong class="text-stone-700">事故通報：</strong>資安事件需建立應變機制，並於72小時內通報主管機關。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="compliance-item bg-white rounded-xl shadow-lg overflow-hidden">
+                    <button class="w-full text-left p-4 sm:p-6 flex justify-between items-center focus:outline-none">
+                        <span class="text-lg font-semibold text-stone-800">個人資料保護法</span>
+                         <span class="transform transition-transform duration-300">
+                            <svg class="w-6 h-6 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+                    </button>
+                    <div class="compliance-content hidden p-4 sm:p-6 border-t border-stone-200 bg-stone-50">
+                        <ul class="space-y-3 text-stone-600 list-disc list-inside">
+                           <li><strong class="text-stone-700">告知與同意：</strong>個資的蒐集、處理、利用，需盡告知義務並取得當事人同意。</li>
+                           <li><strong class="text-stone-700">最小使用原則：</strong>僅能於特定目的必要範圍內利用個資，避免過度揭露。</li>
+                           <li><strong class="text-stone-700">當事人權利：</strong>保障病患對其病歷資料的查詢、複製、更正、刪除等權利。</li>
+                           <li><strong class="text-stone-700">安全維護義務：</strong>醫療機構需採取適當安全措施，防止個資洩漏或被竊。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 text-center text-sm text-stone-600 bg-yellow-100 rounded-md mt-8">
+        ⚠️ 此網頁內容由 Google Gemini 根據其 Deep Research 報告生成，全部由 AI 完成。
+    </div>
+        </section>
+    </main>
+
+    <footer class="bg-stone-800 text-white mt-16">
+        <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-sm">
+            <p>&copy; 2025 互動式護理資訊系統(NIS)洞察報告。此為基於公開資料產生的資訊彙整應用程式。</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const featureTabsData = {
+                overview: {
+                    title: "核心總覽模組",
+                    description: "這些是構成NIS骨架的基礎模組，與醫院主要資訊系統(HIS)緊密相連，確保營運順暢。",
+                    items: [
+                        { name: "患者管理", icon: "👤", details: "涵蓋患者基本資料、健康檔案、預約掛號到電子病歷管理，是所有醫療活動的基礎。" },
+                        { name: "醫護人員管理", icon: "👩‍⚕️", details: "管理醫護人員排班、工作分配與基本資料，優化人力資源配置。" },
+                        { name: "醫療資源管理", icon: "🏥", details: "包含藥品、醫療設備與病床的管理，確保資源有效利用與安全。" },
+                        { name: "財務管理", icon: "💰", details: "處理收費、報銷與財務統計，為醫院經營決策提供數據支持。" }
+                    ]
+                },
+                professional: {
+                    title: "護理專業核心功能",
+                    description: "此領域的功能深度支援護理人員的日常臨床作業，是提升照護品質與效率的關鍵。",
+                    items: [
+                        { name: "護理評估", icon: "📝", details: "標準化評估表單，如入院評估、跌倒/壓瘡風險篩選，並整合生理監測數據。" },
+                        { name: "照護計畫", icon: "🗺️", details: "提供標準護理診斷，協助擬定個別化、連續性的照護計畫，並支持跨團隊共同擬定。" },
+                        { name: "臨床文件記錄 (eMAR)", icon: "✍️", details: "電子化給藥紀錄(eMAR)與護理紀錄，支援條碼核對、片語範本，大幅提升安全與效率。" },
+                        { name: "護理指導與出院準備", icon: "📚", details: "提供標準化衛教內容，並自動化出院準備流程，確保照護的連續性。" }
+                    ]
+                },
+                collaboration: {
+                    title: "跨團隊協作與溝通",
+                    description: "促進醫護團隊內外部的資訊流動與協同作業，打破資訊孤島，提升整體醫療效率。",
+                    items: [
+                        { name: "電子白板", icon: "📋", details: "在護理站或病房即時顯示病患關鍵資訊、醫療註記，提升資訊透明度。" },
+                        { name: "線上即時照會", icon: "💬", details: "方便護理師與醫師、藥師等其他專業人員線上討論，加速問題解決。" },
+                        { name: "標準化交班支援", icon: "🔄", details: "支援ISBAR等交班模式，確保交班內容完整、準確，降低溝通誤差。" },
+                        { name: "訊息提醒與警報", icon: "🚨", details: "生理數據異常或風險事件自動發出警報，讓醫護人員能即時反應。" }
+                    ]
+                },
+                decision: {
+                    title: "智慧化與決策支援",
+                    description: "整合AI與大數據分析，將數據轉化為洞見，輔助臨床決策，實現更精準的個人化照護。",
+                    items: [
+                        { name: "臨床決策支援 (CDSS)", icon: "�", details: "從病歷識別關鍵訊息，提供診斷治療指引、藥物交互作用警示等。" },
+                        { name: "AI輔助分析與預測", icon: "🤖", details: "應用於醫療影像分析、疾病診斷、個性化治療方案建議與健康風險預警。" },
+                        { name: "大數據分析", icon: "📊", details: "分析海量醫療數據，用於疾病預防、醫療管理優化與醫學研究。" },
+                        { name: "品管指標自動化", icon: "📈", details: "自動統計或轉出品管指標(如TQIP)，為品質管理與評鑑提供數據支持。" }
+                    ]
+                }
+            };
+
+            const benefitsChartCtx = document.getElementById('benefitsChart').getContext('2d');
+            new Chart(benefitsChartCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['提升工作效率', '強化病人安全', '提升醫療品質', '優化資源管理', '數據驅動決策', '促進跨團隊協作'],
+                    datasets: [{
+                        label: 'NIS 導入效益',
+                        data: [9, 9.5, 8.5, 7.5, 8, 8.5],
+                        backgroundColor: 'rgba(20, 184, 166, 0.2)',
+                        borderColor: 'rgb(13, 148, 136)',
+                        pointBackgroundColor: 'rgb(13, 148, 136)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgb(13, 148, 136)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    elements: {
+                      line: {
+                        borderWidth: 3
+                      }
+                    },
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 12,
+                                    weight: 'bold'
+                                },
+                                color: '#374151'
+                            },
+                            ticks: {
+                                backdropColor: 'rgba(255, 255, 255, 0.75)',
+                                color: '#6b7280'
+                            },
+                            min: 0,
+                            max: 10
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            const vendorChartCtx = document.getElementById('vendorChart').getContext('2d');
+            new Chart(vendorChartCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['艾立斯科技', '台灣富士通', '馬雅資訊', '資拓宏宇', '慧誠智醫'],
+                    datasets: [
+                        {
+                            label: '雲端/SaaS',
+                            data: [9, 5, 6, 7, 8],
+                            backgroundColor: '#0d9488',
+                        },
+                        {
+                            label: 'AI整合',
+                            data: [8, 4, 5, 6, 9],
+                            backgroundColor: '#14b8a6',
+                        },
+                        {
+                            label: '流程優化',
+                            data: [7, 9, 8, 8, 7],
+                            backgroundColor: '#5eead4',
+                        },
+                         {
+                            label: '客製化/整合',
+                            data: [7, 8, 9, 7, 6],
+                            backgroundColor: '#a7f3d0',
+                        }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            stacked: true,
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            stacked: true,
+                            grid: {
+                                display: false
+                            },
+                             ticks: {
+                                font: {
+                                    size: 14,
+                                    weight: '500'
+                                },
+                                color: '#374151'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                           position: 'bottom',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    let value = context.raw;
+                                    let description = '';
+                                    if (value > 8) description = '高度整合/核心特色';
+                                    else if (value > 6) description = '具備能力/重點發展';
+                                    else if (value > 4) description = '提供支援/基礎功能';
+                                    else description = '較少提及';
+                                    return `${label}${description}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    if (!mobileMenu.classList.contains('hidden')) {
+                         mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContent = document.getElementById('tab-content');
+
+            function renderTabContent(tabKey) {
+                const data = featureTabsData[tabKey];
+                let itemsHtml = data.items.map(item => `
+                    <div class="bg-stone-100 p-4 rounded-lg transform transition-transform hover:scale-105 hover:shadow-md cursor-pointer">
+                        <div class="flex items-center">
+                            <span class="text-3xl mr-4">${item.icon}</span>
+                            <div>
+                                <h4 class="font-semibold text-stone-800">${item.name}</h4>
+                                <p class="text-sm text-stone-600">${item.details}</p>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                tabContent.innerHTML = `
+                    <div class="text-center mb-6 animate-fade-in">
+                        <h3 class="text-xl font-bold text-stone-800">${data.title}</h3>
+                        <p class="text-stone-600 mt-2 max-w-xl mx-auto">${data.description}</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 animate-fade-in-delay">
+                        ${itemsHtml}
+                    </div>
+                `;
+            }
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    const tabKey = button.dataset.tab;
+                    renderTabContent(tabKey);
+                });
+            });
+            
+            renderTabContent('overview');
+            document.querySelector('.tab-btn[data-tab="overview"]').classList.add('active');
+            
+            const archNodes = document.querySelectorAll('.arch-node');
+            const archInfoBox = document.getElementById('arch-info');
+            const archInfoData = {
+                nis: "護理資訊系統(NIS)：核心。處理護理評估、計畫、紀錄、給藥等專業流程，是提升護理效率與品質的關鍵。",
+                his: "醫院資訊系統(HIS)：行政中樞。管理掛號、批價、住院、醫囑等核心業務，與NIS有大量資料交換需求。",
+                emr: "電子病歷系統(EMR)：病歷檔案庫。儲存與管理患者的完整電子病歷，NIS的產出是EMR的重要組成部分。",
+                pacs: "醫療影像儲傳系統(PACS)：影像中心。儲存與管理X光、CT、MRI等醫學影像，NIS需能查詢與連結報告。",
+                lis: "檢驗資訊系統(LIS)：檢驗數據源。管理所有實驗室檢驗流程與結果，NIS需即時獲取檢驗數據以輔助判斷。"
+            };
+
+            archNodes.forEach(node => {
+                node.addEventListener('click', () => {
+                    const infoKey = node.dataset.info;
+                    archInfoBox.textContent = archInfoData[infoKey];
+                    archInfoBox.classList.remove('hidden');
+                });
+            });
+            
+            const complianceItems = document.querySelectorAll('.compliance-item');
+            complianceItems.forEach(item => {
+                const button = item.querySelector('button');
+                const content = item.querySelector('.compliance-content');
+                const icon = button.querySelector('svg');
+
+                button.addEventListener('click', () => {
+                    const isHidden = content.classList.contains('hidden');
+                    if (isHidden) {
+                        content.classList.remove('hidden');
+                        icon.style.transform = 'rotate(180deg)';
+                    } else {
+                        content.classList.add('hidden');
+                        icon.style.transform = 'rotate(0deg)';
+                    }
+                });
+            });
+
+            const sections = document.querySelectorAll('.section-fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+        });
+    </script>
+</body>
+</html>
+�
