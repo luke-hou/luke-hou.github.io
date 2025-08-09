@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>專案: AI n8n PRD 測試案例生成 - Luke的作品集</title>
-    <meta name="description" content="探索如何利用 n8n 多智能體與 AI 技術，將 Confluence PRD 自動轉換為 Jira 測試案例，大幅提升軟體測試的效率與品質。">
-    <meta name="keywords" content="n8n, AI, 多智能體, Multi-Agent, Jira, Confluence, 測試案例生成, Luke Hou, 侯俊嘉">
+    <title>專案: AI Vibe Coding 影片自動摘要與字幕 - Luke的作品集</title>
+    <meta name="description" content="透過 Vibe Coding，體驗強大的影片內容分析能力。這個 Side Project 展示了如何利用 AI 技術自動生成影片的逐字稿、時間軸以及精煉的摘要，將繁瑣的內容整理工作化繁為簡。">
+    <meta name="keywords" content="Vibe Coding AI, AI, 影片摘要, 逐字稿, 自動字幕, 內容分析, Luke Hou, 侯俊嘉">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../css/style.css">
@@ -19,7 +19,7 @@
     </script>
     <style>
         .project-hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/prd-ai-test-case-generation-main.png') no-repeat center center;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/vibe-ai-1.png') no-repeat center center;
             background-size: cover;
             padding: 4rem 0;
             color: white;
@@ -69,8 +69,8 @@
     <main>
         <section class="project-hero text-center">
             <div class="container">
-                <h1 class="display-4">從 PRD 到 Jira：導入 n8n AI 多智能體，自動化測試案例生成</h1>
-                <p class="lead">一個旨在革新測試流程、提升團隊生產力的 n8n 自動化專案</p>
+                <h1 class="display-4">Vibe Coding：影片自動摘要與字幕圖片生成器</h1>
+                <p class="lead">一個將影片內容轉化為結構化頁面，提升資訊獲取效率的 AI 工具。</p>
             </div>
         </section>
 
@@ -81,8 +81,8 @@
                     <div class="card border-0">
                         <div class="card-body">
                             <h2 class="card-title h3 mb-3"><i class="bi bi-card-text me-2"></i>項目概述</h2>
-                            <p>在軟體開發流程中，手動根據產品需求文件 (PRD) 撰寫測試案例，是一項耗時且高度依賴人力經驗的關鍵任務。特別是在需求頻繁變更時，維護成本極高。</p>
-                            <p>為了突破這個瓶頸，我實作了一套自動化工作流，利用 n8n 最新的多智能體 (Multi-Agent) 框架，串接 Confluence 與 Jira，實現了「一鍵生成測試案例」的目標。</p>
+                            <p>在資訊(跟會議)爆炸的時代，快速從影片中獲取關鍵資訊至關重要。手動觀看、記錄、整理影片內容不僅耗時費力，也容易遺漏重點。</p>
+                            <p>為了解決這個痛點，我用嘴巴開發了這個工具。它能夠自動處理指定的影片，搭配包含時間軸的逐字稿，並進一步用 AI 提煉出核心摘要，讓使用者能在最短時間內掌握影片精華。</p>
 
                             <hr class="my-4">
 
@@ -90,44 +90,64 @@
                             <ol class="list-group list-group-numbered">
                                 <li class="list-group-item d-flex justify-content-between align-items-start">
                                     <div class="ms-2 me-auto">
-                                        <div class="fw-bold">AI 智能體協作 (AI Agent Collaboration)</div>
-                                        建立一個擔任「測試案例統籌」的主智能體，它會協調兩個專用的向量知識庫：
-                                        <ul class="mt-2">
-                                            <li><strong>PRD 向量資料庫：</strong> 讓 AI 理解需求上下文，參考現有規格書相關功能，擴充測試情境的完整性。</li>
-                                            <li><strong>既有測試案例向量資料庫：</strong> 確保 AI 產出的案例符合團隊現有的格式與風格，不會歪掉。</li>
-                                        </ul>
+                                        <div class="fw-bold">Vibe Coding 快速開發</div>
+                                        使用 Vibe Coding 精神，專注於核心功能實現，在半小時內完成雛形開發，全程沒有看過半秒 Debug 訊息。
                                     </div>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-start">
                                     <div class="ms-2 me-auto">
-                                        <div class="fw-bold">自動化 Jira 整合 (Automated Jira Integration)</div>
-                                        工作流不僅能批次建立 Jira Tickets，更能自動填入系統、測試分類 (Test Category)、優先級 (Priority) 等客製化欄位，為後續的測試分析與數據統計奠定基礎。
+                                        <div class="fw-bold">100% 本地端運行，確保隱私</div>
+                                        整個流程完全在本地端 (localhost) 運行，影片與資料無需上傳，最大程度保障資料安全與使用者隱私。
                                     </div>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-start">
                                     <div class="ms-2 me-auto">
-                                        <div class="fw-bold">智慧型版本更新 (Intelligent Version Syncing)</div>
-                                        當 PRD 文件更新時，可選擇性觸發工作流，自動清除舊版測試案例並生成新版，大幅降低需求變更時的維護成本。
+                                        <div class="fw-bold">高效語音轉文字 (OpenAI Whisper)</div>
+                                        整合 <a href="https://github.com/openai/whisper" target="_blank" rel="noopener noreferrer">OpenAI Whisper</a> 模型，在本地端即可實現高精度的語音辨識，並生成帶有時間軸的逐字稿。
                                     </div>
                                 </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">輕量級 AI 摘要 (MediaTek Breeze)</div>
+                                        採用聯發科開源的 <a href="https://huggingface.co/MediaTek-Research" target="_blank" rel="noopener noreferrer">Breeze</a> 小型語言模型，在有限的硬體資源下，快速提煉逐字稿內容，生成結構化摘要。
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">用鍵盤左右鍵就可以切換上下句，保護工程師脆弱的手腕。</div>
+                                        在大圖瀏覽模式下，直接用鍵盤就可以換頁，讓感言殘喘的手腕、拇指跟食指暫時休息一下。
+                                    </div>
+                                </li>                                
                             </ol>
-                            <p class="mt-4">這個工作流不僅是單純的任務自動化，更是將 AI 技術實際應用於 SQA 流程改造的一次成功實踐。</p>
+
+                            <hr class="my-4">
+
+                            <h2 class="h3 mb-3"><i class="bi bi-exclamation-triangle-fill me-2"></i>技術取捨與挑戰</h2>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <div class="fw-bold">硬體依賴</div>
+                                    <p class="mb-0">由於 AI 模型皆在本地端運行，需要具備一定等級的 GPU 才能流暢使用，這也帶來了較高的功耗。</p>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="fw-bold">模型精度與效能的平衡</div>
+                                    <p class="mb-0">選用 Breeze 這類小型語言模型是為了在多數個人電腦上也能運行，但其摘要的精準度與細膩度，與大型商用模型 (如 GPT-4) 相比仍有差距。儘管如此，對於日常會議記錄、教學影片等內容的整理，其表現已足夠應付。</p>
+                                </li>
+                            </ul>                            
                             
                             <hr class="my-4">
 
                             <h2 class="h3 mb-3"><i class="bi bi-kanban me-2"></i>成果展示</h2>
-                            <p class="text-muted">(已使用 Mock Data 替換，非公司資料。)</p>
+                            <p class="text-muted">以下為工具實際運行的截圖，有請山姆奧特曼先生展示了從影片到逐字稿與摘要的成品。</p>
                             <div class="row g-3">
-                                <div class="col-md-4">
-                                    <img src="../images/prd-ai-test-case-generation-flow-1.png" alt="工作流程圖 1" class="img-fluid rounded gallery-img">
+                                <div class="col-md-6">
+                                    <img src="../images/vibe-ai-1.png" alt="Vibe AI 操作介面" class="img-fluid rounded gallery-img">
                                 </div>
-                                <div class="col-md-4">
-                                    <img src="../images/prd-ai-test-case-generation-flow-2.png" alt="工作流程圖 2" class="img-fluid rounded gallery-img">
-                                </div>
-                                <div class="col-md-4">
-                                    <img src="../images/prd-ai-test-case-generation-flow-3.png" alt="工作流程圖 3" class="img-fluid rounded gallery-img">
+                                <div class="col-md-6">
+                                    <img src="../images/vibe-ai-2.png" alt="Vibe AI 大圖模式" class="img-fluid rounded gallery-img">
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -136,34 +156,27 @@
                 <div class="col-lg-4">
                     <div class="card shadow-sm summary-card">
                         <div class="card-body">
-                            <h3 class="card-title h5 border-bottom pb-2 mb-3"><i class="bi bi-bar-chart-line-fill me-2"></i>量化效益與真實影響</h3>
+                            <h3 class="card-title h5 border-bottom pb-2 mb-3"><i class="bi bi-bar-chart-line-fill me-2"></i>價值與影響</h3>
                             <ul class="list-unstyled">
                                 <li class="mb-3 d-flex">
-                                    <i class="bi bi-robot h4 text-primary me-3"></i>
+                                    <i class="bi bi-clock-history h4 text-primary me-3"></i>
                                     <div>
-                                        <strong class="d-block">加速失業</strong>
-                                        <small class="text-muted">不需要系統知識、開發維運經驗、跟 QA 技能，只要會複製貼上就能產出不差的測試案例。</small>
+                                        <strong class="d-block">大幅提升效率</strong>
+                                        <small class="text-muted">將數以小時計的影片觀看與筆記整理工作，縮短至幾分鐘的閱讀與校對時間。</small>
                                     </div>
                                 </li>
                                 <li class="mb-3 d-flex">
-                                    <i class="bi bi-speedometer2 h4 text-primary me-3"></i>
+                                    <i class="bi bi-search h4 text-primary me-3"></i>
                                     <div>
-                                        <strong class="d-block">效率躍升</strong>
-                                        <small class="text-muted">從超過 1 小時的手動工作，縮短至 5 分鐘內的自動化流程。</small>
+                                        <strong class="d-block">強化資訊可搜索性</strong>
+                                        <small class="text-muted">將非結構化的影音資訊轉化為可搜索、可複製的文字，便於歸檔與再利用。</small>
                                     </div>
                                 </li>
                                 <li class="mb-3 d-flex">
-                                    <i class="bi bi-patch-check-fill h4 text-primary me-3"></i>
+                                    <i class="bi bi-pencil-square h4 text-primary me-3"></i>
                                     <div>
-                                        <strong class="d-block">品質與一致性</strong>
-                                        <small class="text-muted">產出的案例草稿約 70-80% 可直接使用，讓 SQA 團隊能專注於更關鍵的測試分析。</small>
-                                    </div>
-                                </li>
-                                <li class="mb-3 d-flex">
-                                    <i class="bi bi-people-fill h4 text-primary me-3"></i>
-                                    <div>
-                                        <strong class="d-block">降低知識門檻</strong>
-                                        <small class="text-muted">簡化了新進成員或跨職能同事理解需求與測試點的過程，加速團隊協作。</small>
+                                        <strong class="d-block">加速內容再創作</strong>
+                                        <small class="text-muted">快速產生的逐字稿與摘要，可直接作為團隊內部分享的資源。</small>
                                     </div>
                                 </li>
                             </ul>
@@ -171,11 +184,9 @@
                         <div class="card-footer bg-light">
                             <h3 class="h5 mt-2"><i class="bi bi-gear-fill me-2"></i>使用的技術</h3>
                             <div>
-                                <span class="badge bg-primary text-white tech-badge">n8n</span>
-                                <span class="badge bg-secondary tech-badge">AI (LLM, RAG)</span>
-                                <span class="badge bg-info text-dark tech-badge">Vector DB</span>
-                                <span class="badge bg-warning text-dark tech-badge">Jira Automation</span>
-                                <span class="badge bg-dark tech-badge">Confluence API</span>
+                                <span class="badge bg-dark tech-badge">Vibe Coding</span>
+                                <span class="badge bg-success text-white tech-badge">OpenAI Whisper</span>
+                                <span class="badge bg-warning text-dark tech-badge">MediaTek Breeze</span>
                             </div>
                         </div>
                     </div>

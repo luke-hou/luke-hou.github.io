@@ -78,6 +78,8 @@ h3 {
     padding: 1.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 .portfolio-item:hover {
@@ -87,17 +89,20 @@ h3 {
 
 .portfolio-item h3 {
     margin-bottom: 1rem;
+    min-height: 50px; /* 給標題一個最小高度 */
 }
 
 .portfolio-item img {
     border-radius: 5px;
     margin-bottom: 1rem;
     width: 100%;
-    height: auto;
+    height: 200px; /* 固定圖片高度 */
+    object-fit: cover; /* 確保圖片不變形 */
 }
 
 .portfolio-item p {
     margin-bottom: 1rem;
+    flex-grow: 1; /* 讓描述區域填滿剩餘空間 */
 }
 
 /* 按鈕樣式 */
@@ -440,4 +445,120 @@ footer {
     padding: 1rem;
     margin-bottom: 1.5rem;
     border-radius: 0.25rem;
+}
+
+/* === Dark Theme & Professional Portfolio Styles === */
+
+.body-dark {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.body-dark .navbar {
+    background-color: #1e1e1e !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,.5);
+}
+
+.body-dark .navbar-brand,
+.body-dark .nav-link {
+    color: #e0e0e0 !important;
+}
+
+.body-dark .nav-link:hover {
+    color: #4dabf7 !important; /* A nice tech blue */
+}
+
+.body-dark .portfolio-hero h1 {
+    color: #ffffff;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.body-dark .portfolio-hero p {
+    color: #a0a0a0;
+    font-size: 1.1rem;
+}
+
+.body-dark .portfolio-item {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.body-dark .portfolio-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 16px rgba(77, 171, 247, 0.2);
+    border-color: #4dabf7;
+}
+
+.body-dark .portfolio-item .portfolio-image-container {
+    width: 100%;
+    height: 200px;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    overflow: hidden; /* To contain the image */
+}
+
+.body-dark .portfolio-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.body-dark .portfolio-item:hover img {
+    transform: scale(1.05);
+}
+
+
+.body-dark .portfolio-item h3 {
+    color: #f5f5f5;
+    font-size: 1.3rem;
+    min-height: 0; /* Override previous style */
+}
+
+.body-dark .portfolio-item p {
+    color: #a0a0a0;
+    font-size: 0.95rem;
+    flex-grow: 1;
+}
+
+.body-dark .portfolio-tags {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.body-dark .tech-tag {
+    background-color: #333;
+    color: #4dabf7;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.body-dark .btn-primary {
+    background-color: #4dabf7;
+    border-color: #4dabf7;
+    color: #121212;
+    font-weight: bold;
+}
+
+.body-dark .btn-primary:hover {
+    background-color: #ffffff;
+    border-color: #ffffff;
+}
+
+.body-dark footer {
+    background-color: #1e1e1e;
+    color: #a0a0a0;
+    box-shadow: none;
+    border-top: 1px solid #333;
 }
