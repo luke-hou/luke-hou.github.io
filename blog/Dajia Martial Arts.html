@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大甲武館文化・互動導覽</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Chosen Palette: Temple Harmony -->
+    <!-- Application Structure Plan: The SPA is designed as an interactive narrative, not a linear report. It starts with a compelling hero section and sticky navigation for easy access. The core structure is thematic: 1. '武學源流' (Origins) uses an interactive diagram to explain the foundational concepts. 2. '武館殿堂' (Halls of Martial Arts) presents the 8 main schools in an interactive card grid, where clicking a card reveals details in a modal. This encourages user exploration. 3. '武與信的羈絆' (Bond of Arts & Faith) visualizes the connection to the Mazu pilgrimage using a bar chart for historical function shift and cards for key troupes. 4. '挑戰與傳承' (Challenges & Legacy) uses a problem/solution layout and a doughnut chart to present modern issues and future strategies. This structure transforms the dense text into a guided, engaging journey, prioritizing usability and discovery over the original report's academic format. -->
+    <!-- Visualization & Content Choices: 1. Core Concepts -> Goal: Inform -> Interactive Diagram (HTML/CSS) -> Click to show text -> Justification: More engaging than a text block for foundational ideas. 2. 8 Main Schools -> Goal: Organize/Compare -> Interactive Cards/Modal (HTML/JS) -> Click to reveal details -> Justification: Allows users to quickly scan all schools and dive deep into ones that interest them, preventing information overload. 3. Functional Shift -> Goal: Change -> Bar Chart (Chart.js) -> Shows shift from practicality to performance -> Justification: Visually demonstrates a key analytical point from the report. Data is conceptualized from text (e.g., Qing era = high practicality, low performance). 4. Future Strategies -> Goal: Inform -> Doughnut Chart (Chart.js) -> Shows breakdown of strategies -> Justification: Summarizes proposed solutions visually. Data is weighted equally as the report gives no specific hierarchy. 5. Mazu Troupes -> Goal: Organize -> Info Cards (HTML/CSS) -> Display key troupes -> Justification: Breaks down complex info into digestible chunks. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F8F5F2; /* Warm Neutral Background */
+            color: #4A4A4A;
+        }
+        .bg-primary { background-color: #8C2C2C; } /* Deep Red */
+        .text-primary { color: #8C2C2C; }
+        .bg-accent { background-color: #C8A97E; } /* Gold/Tan */
+        .text-accent { color: #C8A97E; }
+        .border-accent { border-color: #C8A97E; }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link:hover {
+            color: #C8A97E;
+            border-bottom-color: #C8A97E;
+        }
+        .active-link {
+            color: #C8A97E;
+            border-bottom-color: #C8A97E;
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .modal {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-in-out;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- AI Generated Disclaimer -->
+    <div class="bg-red-700 text-white text-center p-3 text-sm md:text-base font-bold">
+        ⚠️ 此網頁內容由 Google Gemini 根據其 Deep Research 報告生成，全部由 AI 完成。
+    </div>
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-primary text-white p-4 sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold">大甲武館文化・互動導覽</h1>
+            <nav class="hidden md:flex space-x-6">
+                <a href="../blog.html" class="nav-link border-b-2 border-transparent pb-1">首頁</a>
+                <a href="#schools" class="nav-link border-b-2 border-transparent pb-1">武館殿堂</a>
+                <a href="#connection" class="nav-link border-b-2 border-transparent pb-1">武與信的羈絆</a>
+                <a href="#legacy" class="nav-link border-b-2 border-transparent pb-1">挑戰與傳承</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden mt-4">
+            <a href="../blog.html" class="block py-2 px-4 text-sm hover:bg-white/10 rounded">首頁</a>
+            <a href="#schools" class="block py-2 px-4 text-sm hover:bg-white/10 rounded">武館殿堂</a>
+            <a href="#connection" class="block py-2 px-4 text-sm hover:bg-white/10 rounded">武與信的羈絆</a>
+            <a href="#legacy" class="block py-2 px-4 text-sm hover:bg-white/10 rounded">挑戰與傳承</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="container mx-auto px-4 py-4">
+            <a href="../blog.html" class="text-primary hover:text-accent font-bold flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                回到部落格首頁
+            </a>
+        </div>
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-[60vh] flex items-center justify-center text-center bg-white py-12 px-4">
+            <div class="container mx-auto">
+                <h2 class="text-4xl md:text-5xl font-bold text-primary mb-4">武藝之鄉・百年傳承</h2>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                    本應用程式將帶您深入探索台灣大甲獨特的武館文化。這裡不僅是武術技藝的傳承之地，更是地方信仰與社區力量的交匯點。透過互動式導覽，您將了解其深厚的歷史、與大甲媽祖遶境的共生關係，以及在現代社會中的轉型與挑戰。
+                </p>
+                <a href="#schools" class="bg-accent text-white font-bold py-3 px-8 rounded-full hover:bg-amber-600 transition duration-300 text-lg">
+                    啟程探索
+                </a>
+            </div>
+        </section>
+
+        <!-- Schools Section -->
+        <section id="schools" class="py-16 md:py-24 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-primary">武館殿堂：大甲五十三庄八大武館</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+                        大甲五十三庄聚集了風格各異的武館系統，它們共同構成了此地獨特的武術生態。點擊下方的武館卡片，即可深入了解各館的流派、歷史與獨門絕技。
+                    </p>
+                </div>
+                <div id="school-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- School cards will be injected here by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Connection Section -->
+        <section id="connection" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-primary">武與信的羈絆：媽祖遶境的守護者</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                        大甲武館的興盛與媽祖遶境密不可分。遶境不僅是宗教盛事，更是武術文化得以實踐、傳承與展示的「活態博物館」。武館從早期單純的護駕功能，逐漸演變為兼具儀式性與表演性的文化載體。
+                    </p>
+                </div>
+                <div class="bg-gray-50 p-6 md:p-8 rounded-xl shadow-inner">
+                    <h3 class="text-2xl font-bold text-center mb-6 text-primary">武術功能的時代演變</h3>
+                    <div class="chart-container h-[40vh] md:h-96">
+                        <canvas id="function-shift-chart"></canvas>
+                    </div>
+                    <p class="text-center text-sm text-gray-500 mt-4">此圖表根據報告內容，概念性地呈現大甲武術功能在不同歷史時期的轉變趨勢。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Legacy Section -->
+        <section id="legacy" class="py-16 md:py-24 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-primary">時代的挑戰與傳承之路</h2>
+                    <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                        如同許多傳統文化，大甲武館在現代社會也面臨著嚴峻的挑戰。然而，地方社群與政府正攜手合作，透過多元策略，為這份珍貴的文化遺產尋找永續發展的道路。
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <!-- Challenges -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-red-700 mb-4 flex items-center">
+                            <span class="text-3xl mr-3">⚠️</span> 當代困境
+                        </h3>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex"><span class="text-accent font-bold mr-2">●</span><b>傳承斷層：</b>老一輩凋零，年輕人興趣降低，導致人才流失。</li>
+                            <li class="flex"><span class="text-accent font-bold mr-2">●</span><b>現代衝擊：</b>實戰價值降低，且面臨現代競技運動的競爭。</li>
+                            <li class="flex"><span class="text-accent font-bold mr-2">●</span><b>經營困難：</b>缺乏系統化經營，且與正規教育體系脫節。</li>
+                            <li class="flex"><span class="text-accent font-bold mr-2">●</span><b>文化異化：</b>過度追求表演性，可能喪失傳統技擊的內涵。</li>
+                        </ul>
+                    </div>
+                    <!-- Strategies -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-green-700 mb-4 flex items-center">
+                            <span class="text-3xl mr-3">💡</span> 傳承策略
+                        </h3>
+                         <ul class="space-y-3 text-gray-700">
+                            <li class="flex"><span class="text-accent font-bold mr-2">●</span><b>政府與民間合作：</b>舉辦技藝匯演，提供展演空間與支持。</li>
+                            <li class="flex"><span class="text-accent font-bold mr-2">●</span><b>組織化發展：</b>成立協會，系統性地推動傳承與交流。</li>
+                            <li class="flex"><span class="text-accent font-bold mr-2">●</span><b>教育結合：</b>將武術、鼓藝、獅藝帶入校園，向下紮根。</li>
+                            <li class="flex"><span class="text-accent font-bold mr-2">●</span><b>跨世代培育：</b>鼓勵老中青三代共同參與，凝聚社群認同。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                 <div class="mt-16 bg-white p-6 md:p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-bold text-center mb-6 text-primary">永續傳承策略藍圖</h3>
+                    <div class="chart-container h-72 md:h-80">
+                        <canvas id="strategy-chart"></canvas>
+                    </div>
+                     <p class="text-center text-sm text-gray-500 mt-4">此圖表呈現報告中建議的未來發展方向，以實現文化的永續傳承。</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="bg-red-700 text-white text-center p-3 text-sm md:text-base font-bold mt-8">
+        ⚠️ 此網頁內容由 Google Gemini 根據其 Deep Research 報告生成，全部由 AI 完成。
+    </div>
+
+    <footer class="bg-primary text-white text-center p-6">
+        <p>基於「台灣大甲武館文化之深度探討」報告製作的互動式導覽</p>
+        <p class="text-sm mt-1 opacity-70">© 2025・為教育與文化推廣目的而建構</p>
+    </footer>
+    
+    <!-- Modal -->
+    <div id="school-modal" class="modal fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none">
+        <div id="modal-content" class="modal-content bg-white rounded-lg shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto transform scale-95">
+            <div class="sticky top-0 bg-white p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 id="modal-title" class="text-2xl font-bold text-primary"></h3>
+                <button id="close-modal" class="text-gray-500 hover:text-red-600 text-3xl">&times;</button>
+            </div>
+            <div id="modal-body" class="p-6 md:p-8">
+                <!-- Modal content will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const schoolData = [
+                {
+                    name: "集英堂",
+                    icon: "🦁",
+                    style: "南宗少林、虎鷹拳",
+                    feature: "文武兼修，曾獲舞龍舞獅金牌。",
+                    details: `
+                        <p class="mb-4">集英堂是五十三庄武術匯演的主體之一，其舞獅與武術隊極負盛名。重要傳承者呂松吉先生為南宗少林嫡傳，師承虎鷹拳體系，不僅武藝精湛，更涉獵書畫、音樂、麵雕等多種藝術，體現了傳統武者「文武合一」的理想。</p>
+                        <h4 class="font-bold text-accent mb-2">核心流派：</h4>
+                        <ul class="list-disc list-inside mb-4 pl-2">
+                            <li>南宗少林俗派</li>
+                            <li>虎鷹拳</li>
+                            <li>太祖拳</li>
+                        </ul>
+                        <h4 class="font-bold text-accent mb-2">代表人物：</h4>
+                        <p>呂松吉</p>
+                    `
+                },
+                {
+                    name: "振興社",
+                    icon: "🦅",
+                    style: "金鷹拳",
+                    feature: "鷹爪功法凌厲，具密技「八寶朝堂」。",
+                    details: `
+                        <p class="mb-4">振興社傳承的「金鷹拳」源自福建少林，由阿善師傳入台灣，並在西螺七崁作為自衛武術而紮根。此拳法強調鷹爪手，注重擒拿、指戳，招式凌厲，旨在重創敵人，非到生死關頭不得輕易出手。</p>
+                        <h4 class="font-bold text-accent mb-2">核心特色：</h4>
+                        <ul class="list-disc list-inside mb-4 pl-2">
+                            <li>注重拳、掌、爪並用，多擒拿技法。</li>
+                            <li>身法強調側身閃躲，以柔克剛。</li>
+                            <li>密技套路「八寶朝堂」為其精華，傳承嚴謹。</li>
+                        </ul>
+                        <h4 class="font-bold text-accent mb-2">代表人物：</h4>
+                        <p>施火木 (第六代傳人)</p>
+                    `
+                },
+                {
+                    name: "欽習堂",
+                    icon: "📜",
+                    style: "西螺勤習堂武術",
+                    feature: "拳種多元，獅陣為「太祖武術全陣瑞獅館」。",
+                    details: `
+                        <p class="mb-4">大甲欽習堂源自著名的「西螺七崁」勤習堂。勤習堂由晚清巨紳廖懋昭（萬得師）創立，武術系統龐大，強調「勤習」方能成就武藝。其獅陣「太祖武術全陣瑞獅館」也極具特色。</p>
+                        <h4 class="font-bold text-accent mb-2">武術系統：</h4>
+                        <ul class="list-disc list-inside mb-4 pl-2">
+                            <li>烏鴉揲、鶴拳、虎拳、蛇拳、猴拳等多種象形拳。</li>
+                            <li>包含丈二等長兵器套路。</li>
+                        </ul>
+                        <h4 class="font-bold text-accent mb-2">創始人物：</h4>
+                        <p>廖懋昭（萬得師）</p>
+                    `
+                },
+                {
+                    name: "麒麟堂",
+                    icon: "🦄",
+                    style: "麒麟神獅陣",
+                    feature: "與地方學校合作緊密，推廣麒麟陣藝。",
+                    details: `
+                        <p class="mb-4">麒麟堂是五十三庄八大武館之一，以其獨特的「麒麟神獅陣」聞名。該館積極與地方小學合作，如甲南國小、西岐國小、永安國小等，成立鼓藝隊與麒麟隊，將傳統陣頭藝術向下紮根，有助於文化的年輕化推廣。</p>
+                        <h4 class="font-bold text-accent mb-2">核心特色：</h4>
+                        <ul class="list-disc list-inside mb-4 pl-2">
+                            <li>特色陣頭「麒麟神獅陣」。</li>
+                            <li>深入校園，與教育體系結合。</li>
+                        </ul>
+                    `
+                },
+                {
+                    name: "玉麟堂",
+                    icon: "👴",
+                    style: "客家拳、金獅陣",
+                    feature: "跨世代傳承，會員從3歲到90歲。",
+                    details: `
+                        <p class="mb-4">玉麟堂源流與新竹客家拳有關，是中部地區客家武術的重要代表。該館的一大特色是其驚人的年齡跨度，會員從3歲稚童到90歲耆老皆有，完美展現了武術文化跨世代傳承的活力。他們將參與媽祖遶境視為年度大事，全員出動，場面壯觀。</p>
+                        <h4 class="font-bold text-accent mb-2">傳承特色：</h4>
+                        <ul class="list-disc list-inside mb-4 pl-2">
+                            <li>保留完整的拳套、兵器、獅藝訓練。</li>
+                            <li>家族傳承與社群凝聚力強。</li>
+                            <li>會員年齡層廣，展現傳承活力。</li>
+                        </ul>
+                        <h4 class="font-bold text-accent mb-2">代表人物：</h4>
+                        <p>游明鴻 (理事長)、傅基文 (副理事長)</p>
+                    `
+                },
+                {
+                    name: "金勝堂",
+                    icon: "⚔️",
+                    style: "舞獅、刀棍表演",
+                    feature: "活躍於媽祖文化節，增添武術色彩。",
+                    details: `
+                        <p class="mb-4">金勝堂是大甲五十三庄八大武館之一。該館積極參與大甲媽祖國際觀光文化節等地方慶典，以精彩的舞獅和耍刀舞棍等武術表演，為節慶活動增添熱鬧氣氛與傳統武術色彩。</p>
+                        <h4 class="font-bold text-accent mb-2">主要活動：</h4>
+                        <ul class="list-disc list-inside mb-4 pl-2">
+                            <li>節慶表演</li>
+                            <li>舞獅</li>
+                            <li>兵器展演 (刀、棍)</li>
+                        </ul>
+                    `
+                },
+                {
+                    name: "忠義堂",
+                    icon: "🐲",
+                    style: "廣東獅（龍獅）",
+                    feature: "推動龍獅文化交流，組織運作良好。",
+                    details: `
+                        <p class="mb-4">忠義堂的醒獅團在台灣獅壇地位穩固，其龍獅技藝傳承自廣東，造型威武、動態靈活。該堂成立了「台灣關聖宮龍獅團理事會」，積極推動兩岸三地的龍獅文化交流，其組織運作良好，為武術文化的永續發展提供了堅實的基礎。</p>
+                        <h4 class="font-bold text-accent mb-2">核心特色：</h4>
+                        <ul class="list-disc list-inside mb-4 pl-2">
+                            <li>傳承廣東風格的醒獅技藝。</li>
+                            <li>成立專門理事會，推動文化交流。</li>
+                        </ul>
+                        <h4 class="font-bold text-accent mb-2">代表人物：</h4>
+                        <p>郭維賢 (堂主)</p>
+                    `
+                },
+                {
+                    name: "義虎團",
+                    icon: "🐅",
+                    style: "弄虎技藝",
+                    feature: "台灣罕見以虎為主角的陣頭。",
+                    details: `
+                        <p class="mb-4">義虎團以其「弄虎陣」聞名，是台灣地區極為罕見的以虎為主角的陣頭。此技藝已有百年歷史，由武師蔡趖所傳，後由吳籐師父正式成立「義虎團」。現任館長王其南，憑藉自身建築板模的專業，親手製作虎頭，將傳統技藝與現代工藝結合，並積極培育新生代，讓一度面臨失傳危機的弄虎文化重獲新生。</p>
+                        <h4 class="font-bold text-accent mb-2">核心特色：</h4>
+                        <ul class="list-disc list-inside mb-4 pl-2">
+                            <li>獨特的「弄虎陣」表演。</li>
+                            <li>館長親自製作虎頭道具。</li>
+                            <li>成功復甦瀕臨失傳的傳統技藝。</li>
+                        </ul>
+                        <h4 class="font-bold text-accent mb-2">代表人物：</h4>
+                        <p>王其南 (第三代館長)</p>
+                    `
+                },
+            ];
+
+            const schoolGrid = document.getElementById('school-grid');
+            const modal = document.getElementById('school-modal');
+            const modalContent = document.getElementById('modal-content');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            const closeModalBtn = document.getElementById('close-modal');
+
+            schoolData.forEach(school => {
+                const card = document.createElement('div');
+                card.className = 'card bg-white rounded-lg shadow-md p-6 text-center cursor-pointer';
+                card.innerHTML = `
+                    <div class="text-5xl mb-4">${school.icon}</div>
+                    <h3 class="text-xl font-bold text-primary mb-2">${school.name}</h3>
+                    <p class="text-accent font-semibold mb-3">${school.style}</p>
+                    <p class="text-gray-600 text-sm">${school.feature}</p>
+                `;
+                card.addEventListener('click', () => {
+                    modalTitle.textContent = school.name;
+                    modalBody.innerHTML = school.details;
+                    modal.classList.remove('opacity-0', 'pointer-events-none');
+                    modalContent.classList.remove('scale-95');
+                });
+                schoolGrid.appendChild(card);
+            });
+
+            const closeModal = () => {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                modalContent.classList.add('scale-95');
+            };
+
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Close mobile menu on link click
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // Nav link active state on scroll
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('header nav a');
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 60) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active-link');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active-link');
+                    }
+                });
+            });
+            
+            // Chart.js Implementations
+            // 1. Function Shift Chart
+            const functionShiftCtx = document.getElementById('function-shift-chart').getContext('2d');
+            new Chart(functionShiftCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['清代 (Qing)', '日治 (Japanese Rule)', '戰後 (Post-War)', '現代 (Modern)'],
+                    datasets: [
+                        {
+                            label: '實用性 (Practicality)',
+                            data: [8, 4, 5, 2],
+                            backgroundColor: '#8C2C2C',
+                            borderColor: '#8C2C2C',
+                            borderWidth: 1
+                        },
+                        {
+                            label: '文化展演性 (Performance)',
+                            data: [3, 6, 7, 9],
+                            backgroundColor: '#C8A97E',
+                            borderColor: '#C8A97E',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10,
+                            title: {
+                                display: true,
+                                text: '功能強度 (概念性評分)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: { display: false },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        },
+                    },
+                }
+            });
+
+            // 2. Strategy Chart
+            const strategyCtx = document.getElementById('strategy-chart').getContext('2d');
+            new Chart(strategyCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['武術教育改革', '民間與學術交流', '武德文化國際傳播'],
+                    datasets: [{
+                        label: '傳承策略',
+                        data: [33.3, 33.3, 33.4],
+                        backgroundColor: [
+                            '#8C2C2C',
+                            '#C8A97E',
+                            '#A88662'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        title: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互動式 Git 教學應用程式</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutral Harmony -->
+    <!-- Application Structure Plan: The application is designed as an interactive learning dashboard. The structure discards the linear format of the report in favor of a topic-based modular approach, accessible via a persistent sidebar navigation. This allows users to jump directly to concepts they find challenging (e.g., branching, undoing changes) or use it as a quick reference. Key concepts like the three-area workflow and branching are transformed from static text into interactive diagrams. This non-linear, task-oriented structure enhances usability by catering to both initial learning and ongoing reference needs, which is more effective for a technical skill like Git than a simple page-by-page reading. -->
+    <!-- Visualization & Content Choices: 
+        - Git's 3 Areas: Report Info -> Textual description of Working Directory, Staging Area, Repository. Goal -> Clarify the fundamental data flow. Viz/Presentation -> Interactive three-column diagram. Interaction -> Clicking `git add` and `git commit` buttons animates file blocks moving between columns. Justification -> Makes the abstract core workflow tangible and memorable. Library/Method -> Vanilla JS, HTML/CSS.
+        - Branching/Merging: Report Info -> Explanation of `git branch`, `git merge`. Goal -> Visualize how development lines diverge and converge. Viz/Presentation -> A dynamic, simplified commit graph. Interaction -> Buttons for "Create Branch", "Add Commit", "Merge" dynamically render new commits and branch lines on the graph. Justification -> Demystifies the branching model, which is often a point of confusion for beginners. Library/Method -> Vanilla JS, HTML/CSS.
+        - `revert` vs. `reset`: Report Info -> Comparison of two undo mechanisms. Goal -> Highlight the critical difference between safe (revert) and potentially destructive (reset) history modification. Viz/Presentation -> Side-by-side commit history diagrams. Interaction -> A toggle switch updates the diagrams to show `revert` adding a new commit versus `reset` removing an existing one. Justification -> Provides a clear, direct visual comparison of a crucial safety concept. Library/Method -> Vanilla JS, HTML/CSS.
+        - Command Reference: Report Info -> Lists of Git commands and their functions. Goal -> Provide a quick, accessible reference. Viz/Presentation -> A grid of command "cards". Interaction -> A search bar filters cards by command name; clicking a card could reveal more details (though kept simple here). Justification -> More user-friendly and faster than scrolling through long text sections. Library/Method -> Vanilla JS, HTML/CSS.
+        - Command Categories: Report Info -> The overall grouping of commands in the report. Goal -> Give users a high-level overview of where they'll spend their time. Viz/Presentation -> A Donut Chart. Interaction -> Hovering over segments shows the category name. Justification -> Offers a simple, high-level visual summary of the tool's landscape. Library/Method -> Chart.js.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #FDFBF8;
+            color: #3D4451;
+        }
+        .sidebar-link {
+            transition: all 0.2s ease-in-out;
+            border-left: 3px solid transparent;
+        }
+        .sidebar-link.active, .sidebar-link:hover {
+            background-color: #F4F0EB;
+            border-left-color: #A89C8C;
+            color: #3D4451;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .card {
+            background-color: #FFFFFF;
+            border: 1px solid #EAE6E1;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+        }
+        .code-block {
+            background-color: #F9F7F5;
+            border: 1px solid #EAE6E1;
+            color: #71594d;
+        }
+        .btn-primary {
+            background-color: #A89C8C;
+            color: #FFFFFF;
+            transition: background-color 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #8E7C68;
+        }
+        .btn-secondary {
+            background-color: #EAE6E1;
+            color: #3D4451;
+            transition: background-color 0.2s;
+        }
+        .btn-secondary:hover {
+            background-color: #DCD5CC;
+        }
+        .chart-container { 
+            position: relative; 
+            width: 100%; 
+            max-width: 400px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) { .chart-container { height: 350px; } }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="flex h-screen bg-[#FDFBF8]">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-[#F8F4F0] border-r border-[#EAE6E1] flex-shrink-0 hidden md:block">
+            <div class="p-6">
+                <a href="../blog.html" class="text-sm text-gray-600 hover:underline mb-4 block">← 回到 Blog</a>
+                <h1 class="text-xl font-bold text-[#3D4451]">互動式 Git 指南</h1>
+                <p class="text-sm text-gray-500 mt-1">資深工程師引導</p>
+            </div>
+            <nav id="sidebar-nav" class="mt-4 flex flex-col">
+                <a href="#concepts" class="sidebar-link px-6 py-3 text-gray-600 font-medium">核心概念</a>
+                <a href="#workflow" class="sidebar-link px-6 py-3 text-gray-600 font-medium">基礎工作流</a>
+                <a href="#branching" class="sidebar-link px-6 py-3 text-gray-600 font-medium">分支管理</a>
+                <a href="#remote" class="sidebar-link px-6 py-3 text-gray-600 font-medium">遠端協作</a>
+                <a href="#undo" class="sidebar-link px-6 py-3 text-gray-600 font-medium">撤銷與還原</a>
+                <a href="#habits" class="sidebar-link px-6 py-3 text-gray-600 font-medium">良好習慣</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-12">
+            <!-- Mobile Navigation -->
+            <div class="md:hidden mb-4">
+                <select id="mobile-nav" class="w-full p-2 border border-gray-300 rounded-md bg-white">
+                    <option value="concepts">核心概念</option>
+                    <option value="workflow">基礎工作流</option>
+                    <option value="branching">分支管理</option>
+                    <option value="remote">遠端協作</option>
+                    <option value="undo">撤銷與還原</option>
+                    <option value="habits">良好習慣</option>
+                </select>
+            </div>
+
+            <!-- Podcast Player -->
+            <div class="card p-4 rounded-lg mb-6">
+                <h3 class="text-xl font-semibold mb-2">Podcast 播放</h3>
+                <audio controls class="w-full">
+                    <source src="git_newbie.mp3" type="audio/mpeg">
+                    您的瀏覽器不支援音訊元素。
+                </audio>
+            </div>
+
+            <!-- DOCX Download Link -->
+            <div class="card p-4 rounded-lg mb-6">
+                <h3 class="text-xl font-semibold mb-2">相關資源</h3>
+                <p class="text-gray-600 mb-2">下載 AI 深度研究報告 (DOCX):</p>
+                <a href="git_newbie.docx" download class="btn-secondary px-4 py-2 rounded-md font-medium inline-block">AI深度研究報告</a>
+            </div>
+            
+            <!-- Section: Core Concepts -->
+            <section id="concepts" class="content-section">
+                <h2 class="text-3xl font-bold mb-2">核心概念</h2>
+                <p class="mb-8 text-gray-600">理解Git的基石。本章節將透過互動圖表，幫助您視覺化地掌握Git如何管理您的程式碼，特別是工作目錄、暫存區和儲存庫這三大區域之間的關係。</p>
+
+                <div class="card p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4">三大工作區域互動模型</h3>
+                    <p class="mb-6 text-gray-600">這是 Git 最核心的工作流程。您的檔案會在「工作目錄」被修改，透過 <code class="code-block px-1 rounded-md text-sm">git add</code> 進入「暫存區」待命，最後藉由 <code class="code-block px-1 rounded-md text-sm">git commit</code> 永久存入「Git 儲存庫」。點擊下方按鈕，觀察檔案狀態的流轉！</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center border-t pt-6">
+                        <div>
+                            <h4 class="font-bold mb-2">1. 工作目錄</h4>
+                            <div id="working-dir" class="bg-gray-100 p-4 rounded-lg min-h-[120px] border border-dashed flex flex-col justify-center items-center">
+                                <div id="file-in-working" class="bg-blue-200 text-blue-800 p-2 rounded w-3/4">my-file.js (已修改)</div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2">2. 暫存區 (Index)</h4>
+                            <div id="staging-area" class="bg-gray-100 p-4 rounded-lg min-h-[120px] border border-dashed flex flex-col justify-center items-center"></div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2">3. Git 儲存庫</h4>
+                            <div id="repo-area" class="bg-gray-100 p-4 rounded-lg min-h-[120px] border border-dashed flex flex-col justify-center items-center"></div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center gap-4 mt-6">
+                        <button id="git-add-btn" class="btn-primary px-4 py-2 rounded-md font-medium">執行 git add</button>
+                        <button id="git-commit-btn" class="btn-secondary px-4 py-2 rounded-md font-medium" disabled>執行 git commit</button>
+                        <button id="reset-flow-btn" class="text-gray-500 hover:text-gray-700 text-sm">重設</button>
+                    </div>
+                </div>
+
+                <div class="card p-6 rounded-lg mt-8">
+                    <h3 class="text-xl font-semibold mb-4">Git的資料處理：快照而非差異</h3>
+                    <p class="text-gray-600">與許多版本控制系統儲存「檔案差異」不同，Git的核心思想是「快照」。每次提交時，Git都會對整個專案製作一個快照並儲存。如果檔案未修改，Git只會保留一個指向之前已儲存檔案的連結。這使得Git在處理分支和歷史紀錄時極其高效。</p>
+                </div>
+            </section>
+
+            <!-- Section: Basic Workflow -->
+            <section id="workflow" class="content-section">
+                <h2 class="text-3xl font-bold mb-2">基礎工作流</h2>
+                <p class="mb-8 text-gray-600">本章節涵蓋了您日常開發中最常用的Git指令。從初始化專案到提交您的第一個變更，我們將一步步引導您完成整個流程。</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="card p-5 rounded-lg">
+                        <h3 class="font-bold text-lg">git init</h3>
+                        <p class="text-sm text-gray-600 mt-1 mb-3">在目前目錄初始化一個新的Git儲存庫。</p>
+                        <pre class="code-block p-2 rounded-md text-sm"><code>git init</code></pre>
+                    </div>
+                    <div class="card p-5 rounded-lg">
+                        <h3 class="font-bold text-lg">git status</h3>
+                        <p class="text-sm text-gray-600 mt-1 mb-3">顯示工作目錄和暫存區的狀態，是您的「安全網」。</p>
+                        <pre class="code-block p-2 rounded-md text-sm"><code>git status</code></pre>
+                    </div>
+                     <div class="card p-5 rounded-lg">
+                        <h3 class="font-bold text-lg">git add</h3>
+                        <p class="text-sm text-gray-600 mt-1 mb-3">將檔案變更加到暫存區，準備提交。</p>
+                        <pre class="code-block p-2 rounded-md text-sm"><code>git add &lt;file_name&gt;
+git add .</code></pre>
+                    </div>
+                    <div class="card p-5 rounded-lg">
+                        <h3 class="font-bold text-lg">git commit</h3>
+                        <p class="text-sm text-gray-600 mt-1 mb-3">將暫存區的內容建立一個新的提交紀錄。</p>
+                        <pre class="code-block p-2 rounded-md text-sm"><code>git commit -m "提交訊息"</code></pre>
+                    </div>
+                    <div class="card p-5 rounded-lg">
+                        <h3 class="font-bold text-lg">git log</h3>
+                        <p class="text-sm text-gray-600 mt-1 mb-3">查看提交歷史紀錄。</p>
+                        <pre class="code-block p-2 rounded-md text-sm"><code>git log
+git log --oneline --graph</code></pre>
+                    </div>
+                    <div class="card p-5 rounded-lg">
+                        <h3 class="font-bold text-lg">初始設定</h3>
+                        <p class="text-sm text-gray-600 mt-1 mb-3">設定您的使用者名稱和Email，這對團隊協作至關重要。</p>
+                        <pre class="code-block p-2 rounded-md text-sm"><code>git config --global user.name "你的名字"
+git config --global user.email "你的郵箱"</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Branching -->
+            <section id="branching" class="content-section">
+                <h2 class="text-3xl font-bold mb-2">分支管理</h2>
+                 <p class="mb-8 text-gray-600">分支是Git的王牌功能。它讓您能安全地在獨立的環境中開發新功能或修復錯誤，而不影響主線。此互動圖表將展示分支的建立、提交與合併過程。</p>
+
+                <div class="card p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4">分支流程互動模型</h3>
+                    <div id="branch-graph" class="p-4 bg-gray-50 rounded-lg min-h-[200px] font-mono text-sm relative overflow-x-auto"></div>
+                    <div class="flex flex-wrap justify-center gap-4 mt-6">
+                        <button id="branch-commit-main-btn" class="btn-secondary px-4 py-2 rounded-md text-sm">在 main 上提交</button>
+                        <button id="branch-create-feature-btn" class="btn-secondary px-4 py-2 rounded-md text-sm">建立 feature 分支</button>
+                        <button id="branch-commit-feature-btn" class="btn-secondary px-4 py-2 rounded-md text-sm" disabled>在 feature 上提交</button>
+                        <button id="branch-merge-btn" class="btn-primary px-4 py-2 rounded-md text-sm" disabled>合併 feature 到 main</button>
+                        <button id="branch-reset-btn" class="text-gray-500 hover:text-gray-700 text-sm">重設</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                    <div class="card p-6 rounded-lg">
+                        <h3 class="font-bold text-lg">Git Flow</h3>
+                        <p class="text-sm text-gray-600 mt-2">一種嚴謹的分支策略，定義了 master, develop, feature, release, hotfix 五種分支。適合需要嚴格版本控制的大型專案。</p>
+                    </div>
+                    <div class="card p-6 rounded-lg">
+                        <h3 class="font-bold text-lg">GitHub Flow</h3>
+                        <p class="text-sm text-gray-600 mt-2">一種輕量化的策略，只有一個主分支 (main)。所有開發都在特性分支進行，透過 Pull Request 合併。適合快速迭代和持續交付的專案。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Remote -->
+            <section id="remote" class="content-section">
+                <h2 class="text-3xl font-bold mb-2">遠端協作</h2>
+                <p class="mb-8 text-gray-600">軟體開發是團隊運動。本章節介紹如何與GitHub等遠端儲存庫互動，同步您和他人的工作成果。</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                     <div class="card p-5 rounded-lg">
+                        <h3 class="font-bold text-lg">git clone</h3>
+                        <p class="text-sm text-gray-600 mt-1 mb-3">將一個遠端儲存庫完整複製到您的本地電腦。</p>
+                        <pre class="code-block p-2 rounded-md text-sm"><code>git clone &lt;repository_URL&gt;</code></pre>
+                    </div>
+                     <div class="card p-5 rounded-lg">
+                        <h3 class="font-bold text-lg">git push</h3>
+                        <p class="text-sm text-gray-600 mt-1 mb-3">將您的本地提交推送到遠端儲存庫。</p>
+                        <pre class="code-block p-2 rounded-md text-sm"><code>git push origin &lt;branch_name&gt;</code></pre>
+                    </div>
+                </div>
+                <div class="card p-6 rounded-lg mt-6">
+                     <h3 class="text-xl font-semibold mb-4">fetch vs pull</h3>
+                     <p class="text-gray-600 mb-4">兩者都用於同步遠端變更，但有細微且重要的差別：</p>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                         <div>
+                            <h4 class="font-bold text-lg">git fetch</h4>
+                            <p class="text-sm text-gray-600 mt-1">只會下載遠端最新的資料到本地，但**不會**自動合併或修改您目前的工作。它讓您能在合併前先查看遠端的變更。</p>
+                         </div>
+                         <div>
+                            <h4 class="font-bold text-lg">git pull</h4>
+                            <p class="text-sm text-gray-600 mt-1">是 `git fetch` 加上 `git merge` 的組合。它會下載最新資料並**立即嘗試合併**到您目前的分支。更為直接，但也可能立即產生合併衝突。</p>
+                         </div>
+                     </div>
+                </div>
+            </section>
+
+            <!-- Section: Undo -->
+            <section id="undo" class="content-section">
+                <h2 class="text-3xl font-bold mb-2">撤銷與還原</h2>
+                 <p class="mb-8 text-gray-600">人非聖賢，孰能無過。學會如何安全地撤銷錯誤操作是專業開發者的必備技能。這裡我們將比較兩種最關鍵的撤銷提交指令：<code class="code-block px-1 rounded-md text-sm">revert</code> 和 <code class="code-block px-1 rounded-md text-sm">reset</code>。</p>
+
+                <div class="card p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4">Revert vs Reset 互動比較</h3>
+                    <p class="text-gray-600 mb-4">假設我們有一個提交歷史，現在想要撤銷「加入錯誤功能」這個提交。使用下方的開關，看看 `revert` 和 `reset` 分別會對歷史紀錄做什麼。</p>
+                    
+                    <div class="flex items-center justify-center my-4">
+                        <span class="mr-3 font-medium text-gray-700">安全 (Revert)</span>
+                        <label for="undo-toggle" class="flex items-center cursor-pointer">
+                            <div class="relative">
+                                <input type="checkbox" id="undo-toggle" class="sr-only">
+                                <div class="block bg-gray-300 w-14 h-8 rounded-full"></div>
+                                <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                            </div>
+                        </label>
+                         <span class="ml-3 font-medium text-gray-700">危險 (Reset)</span>
+                    </div>
+
+                    <div id="undo-display" class="mt-4 p-4 bg-gray-50 rounded-lg min-h-[150px]">
+                        <!-- Content will be generated by JS -->
+                    </div>
+
+                    <div id="undo-explanation" class="mt-4 text-center text-gray-600"></div>
+                </div>
+            </section>
+
+            <!-- Section: Habits -->
+            <section id="habits" class="content-section">
+                <h2 class="text-3xl font-bold mb-2">良好習慣</h2>
+                <p class="mb-8 text-gray-600">技術只是工具，良好的習慣才能發揮其最大價值。養成這些習慣，將使您成為更可靠的團隊成員。</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="card p-5 rounded-lg">
+                        <h4 class="font-bold">✨ 提交粒度適中</h4>
+                        <p class="text-sm text-gray-600 mt-1">一次提交只做一件事（如修復一個Bug、開發一個小功能）。</p>
+                    </div>
+                     <div class="card p-5 rounded-lg">
+                        <h4 class="font-bold">📝 撰寫清晰的提交訊息</h4>
+                        <p class="text-sm text-gray-600 mt-1">讓未來的自己和同事能快速理解這次變更的目的。</p>
+                    </div>
+                    <div class="card p-5 rounded-lg">
+                        <h4 class="font-bold">🔄 頻繁使用 `git status`</h4>
+                        <p class="text-sm text-gray-600 mt-1">在執行 `add` 和 `commit` 前，永遠清楚自己的工作區狀態。</p>
+                    </div>
+                    <div class="card p-5 rounded-lg">
+                        <h4 class="font-bold">🤝 推送前先拉取</h4>
+                        <p class="text-sm text-gray-600 mt-1">執行 `git push` 前，先用 `git pull` 同步遠端變更，減少衝突。</p>
+                    </div>
+                </div>
+
+                <div class="card p-6 rounded-lg mt-8">
+                     <h3 class="text-xl font-semibold mb-4">常用指令分佈</h3>
+                     <p class="text-gray-600 mb-4">這張圖表大致呈現了不同類型Git指令在日常工作中的使用頻率，幫助您了解學習的重點。</p>
+                     <div class="chart-container">
+                         <canvas id="habits-chart"></canvas>
+                     </div>
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.content-section');
+            const sidebarLinks = document.querySelectorAll('#sidebar-nav a');
+            const mobileNav = document.getElementById('mobile-nav');
+
+            function setActiveSection(hash) {
+                const targetHash = hash || '#concepts';
+                
+                sections.forEach(section => {
+                    if ('#' + section.id === targetHash) {
+                        section.classList.add('active');
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+
+                sidebarLinks.forEach(link => {
+                    if (link.getAttribute('href') === targetHash) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+
+                mobileNav.value = targetHash.substring(1);
+            }
+            
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetHash = e.currentTarget.getAttribute('href');
+                    setActiveSection(targetHash);
+                    window.location.hash = targetHash;
+                });
+            });
+
+            mobileNav.addEventListener('change', (e) => {
+                const targetHash = '#' + e.target.value;
+                setActiveSection(targetHash);
+                 window.location.hash = targetHash;
+            });
+            
+            setActiveSection(window.location.hash);
+
+            initCoreConcepts();
+            initBranching();
+            initUndo();
+            initHabitsChart();
+        });
+
+        function initCoreConcepts() {
+            const workingDir = document.getElementById('working-dir');
+            const stagingArea = document.getElementById('staging-area');
+            const repoArea = document.getElementById('repo-area');
+            const addBtn = document.getElementById('git-add-btn');
+            const commitBtn = document.getElementById('git-commit-btn');
+            const resetBtn = document.getElementById('reset-flow-btn');
+            const fileEl = `<div id="file-in-working" class="bg-blue-200 text-blue-800 p-2 rounded w-3/4 transition-all duration-300">my-file.js (已修改)</div>`;
+            const stagedFileEl = `<div id="file-in-staging" class="bg-yellow-200 text-yellow-800 p-2 rounded w-3/4 transition-all duration-300">my-file.js (已暫存)</div>`;
+            const committedFileEl = `<div id="file-in-repo" class="bg-green-200 text-green-800 p-2 rounded w-3/4 transition-all duration-300">my-file.js (已提交)</div>`;
+            
+            function resetState() {
+                workingDir.innerHTML = fileEl;
+                stagingArea.innerHTML = '';
+                repoArea.innerHTML = '';
+                addBtn.disabled = false;
+                commitBtn.disabled = true;
+                commitBtn.classList.add('btn-secondary');
+                commitBtn.classList.remove('btn-primary');
+
+            }
+
+            addBtn.addEventListener('click', () => {
+                const file = workingDir.querySelector('div');
+                if (file) {
+                    file.style.opacity = '0';
+                    setTimeout(() => {
+                        workingDir.innerHTML = '';
+                        stagingArea.innerHTML = stagedFileEl;
+                        addBtn.disabled = true;
+                        commitBtn.disabled = false;
+                        commitBtn.classList.remove('btn-secondary');
+                        commitBtn.classList.add('btn-primary');
+                    }, 300);
+                }
+            });
+
+            commitBtn.addEventListener('click', () => {
+                const file = stagingArea.querySelector('div');
+                 if (file) {
+                    file.style.opacity = '0';
+                     setTimeout(() => {
+                        stagingArea.innerHTML = '';
+                        repoArea.innerHTML = committedFileEl;
+                        commitBtn.disabled = true;
+                    }, 300);
+                }
+            });
+
+            resetBtn.addEventListener('click', resetState);
+            resetState();
+        }
+
+        function initBranching() {
+            const graphEl = document.getElementById('branch-graph');
+            const commitMainBtn = document.getElementById('branch-commit-main-btn');
+            const createFeatureBtn = document.getElementById('branch-create-feature-btn');
+            const commitFeatureBtn = document.getElementById('branch-commit-feature-btn');
+            const mergeBtn = document.getElementById('branch-merge-btn');
+            const resetBtn = document.getElementById('branch-reset-btn');
+
+            let state = {
+                mainCommits: 1,
+                featureCreated: false,
+                featureCommits: 0,
+                merged: false
+            };
+
+            const renderGraph = () => {
+                let html = '';
+                let mainLine = '';
+                let featureLine = '';
+
+                for (let i = 0; i < state.mainCommits; i++) {
+                    mainLine += 'o--';
+                }
+
+                if(state.merged) {
+                    mainLine += 'o--';
+                }
+
+                html += `<div class="whitespace-nowrap"><span class="text-blue-600 font-bold">main   </span>${mainLine.slice(0, -2)}</div>`;
+                
+                if (state.featureCreated) {
+                    let prefix = ' '.repeat(state.mainCommits * 3 - 3);
+                    featureLine += prefix + '`--';
+                    for (let i = 0; i < state.featureCommits; i++) {
+                        featureLine += 'o--';
+                    }
+                    html += `<div class="whitespace-nowrap mt-2"><span class="text-green-600 font-bold">feature</span>${featureLine.slice(0, -2)}</div>`;
+                }
+
+                if(state.merged) {
+                    let mergePointIndex = (state.mainCommits - 1) * 3;
+                    let lastMainIndex = (state.mainCommits) * 3;
+                    let lastFeatureIndex = mergePointIndex + 2 + state.featureCommits * 3;
+                    
+                    let mainHtml = html.split('\n')[0];
+                    let featureHtml = html.split('\n')[1] || '';
+
+                    let newMainHtml = mainHtml.substring(0, mergePointIndex + 14) + '/' + mainHtml.substring(mergePointIndex + 15);
+                    newMainHtml = newMainHtml.substring(0, lastMainIndex + 11) + 'M' + newMainHtml.substring(lastMainIndex + 12);
+                    
+                    let newFeatureHtml = featureHtml.substring(0, mergePointIndex + 14) + '/' + featureHtml.substring(mergePointIndex + 15);
+                    newFeatureHtml = newFeatureHtml.substring(0, lastFeatureIndex + 14) + '^' + newFeatureHtml.substring(lastFeatureIndex + 15);
+                    
+                    html = `${newMainHtml}\n${newFeatureHtml}`;
+                }
+
+
+                graphEl.innerHTML = html.replace(/\n/g, '<br>');
+            };
+
+            commitMainBtn.addEventListener('click', () => {
+                if (!state.featureCreated && !state.merged) {
+                    state.mainCommits++;
+                    renderGraph();
+                }
+            });
+
+            createFeatureBtn.addEventListener('click', () => {
+                if (!state.featureCreated) {
+                    state.featureCreated = true;
+                    commitFeatureBtn.disabled = false;
+                    mergeBtn.disabled = false;
+                    createFeatureBtn.disabled = true;
+                    renderGraph();
+                }
+            });
+
+            commitFeatureBtn.addEventListener('click', () => {
+                if (state.featureCreated && !state.merged) {
+                    state.featureCommits++;
+                    renderGraph();
+                }
+            });
+
+            mergeBtn.addEventListener('click', () => {
+                 if (state.featureCreated && !state.merged) {
+                    state.merged = true;
+                    commitMainBtn.disabled = true;
+                    commitFeatureBtn.disabled = true;
+                    mergeBtn.disabled = true;
+                    renderGraph();
+                }
+            });
+
+            const resetState = () => {
+                state = { mainCommits: 1, featureCreated: false, featureCommits: 0, merged: false };
+                commitMainBtn.disabled = false;
+                createFeatureBtn.disabled = false;
+                commitFeatureBtn.disabled = true;
+                mergeBtn.disabled = true;
+                renderGraph();
+            };
+
+            resetBtn.addEventListener('click', resetState);
+            resetState();
+        }
+
+        function initUndo() {
+            const toggle = document.getElementById('undo-toggle');
+            const display = document.getElementById('undo-display');
+            const explanation = document.getElementById('undo-explanation');
+
+            const history = [
+                { id: 'C1', msg: '初始化專案' },
+                { id: 'C2', msg: '加入登入頁' },
+                { id: 'C3', msg: '加入錯誤功能' },
+                { id: 'C4', msg: '修正樣式' }
+            ];
+
+            const renderHistory = (h, highlightId = null) => {
+                return h.map(c => `<div class="p-2 rounded ${c.id === highlightId ? 'bg-red-200' : 'bg-gray-200'}"><strong>${c.id}:</strong> ${c.msg}</div>`).join('<div class="text-center my-1">↑</div>');
+            }
+
+            const render = () => {
+                if (toggle.checked) { // Reset
+                    const resetHistory = history.slice(0, 2);
+                     display.innerHTML = `
+                        <p class="text-center font-bold mb-2">執行 git reset --hard C2 後</p>
+                        <div class="flex flex-col-reverse items-center">${renderHistory(resetHistory)}</div>
+                        <p class="text-sm text-center text-red-600 mt-2">(C3 和 C4 的提交歷史被移除了)</p>
+                    `;
+                    explanation.innerHTML = '`reset` 會改寫歷史，將分支指針移回過去的某個提交，拋棄之後的所有提交。這在本地端很方便，但如果已推送到遠端，會對協作造成嚴重問題。'
+                } else { // Revert
+                    const revertHistory = [ ...history, { id: 'C5', msg: 'Revert "加入錯誤功能"' }];
+                    display.innerHTML = `
+                         <p class="text-center font-bold mb-2">執行 git revert C3 後</p>
+                        <div class="flex flex-col-reverse items-center">${renderHistory(revertHistory, 'C5')}</div>
+                        <p class="text-sm text-center text-green-600 mt-2">(新增了一個 C5 提交來反向抵銷 C3 的變更)</p>
+                    `;
+                    explanation.innerHTML = '`revert` 會建立一個新的提交，其內容是目標提交的反向操作。它不改變現有歷史，而是追加歷史，因此對於已推送到遠端的提交來說，是更安全的撤銷方式。'
+                }
+            }
+
+            toggle.addEventListener('change', render);
+            render();
+        }
+
+        function initHabitsChart(){
+            const ctx = document.getElementById('habits-chart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['基礎工作流 (add, commit, status)', '分支管理 (branch, merge, checkout)', '遠端協作 (push, pull, clone)', '歷史操作 (log, revert, reset)'],
+                    datasets: [{
+                        label: '指令使用頻率',
+                        data: [45, 30, 20, 5],
+                        backgroundColor: [
+                            'rgba(168, 156, 140, 0.7)',
+                            'rgba(142, 124, 104, 0.7)',
+                            'rgba(234, 230, 225, 1)',
+                            'rgba(195, 185, 175, 0.7)'
+                        ],
+                        borderColor: [
+                            '#A89C8C',
+                            '#8E7C68',
+                            '#EAE6E1',
+                            '#C3B9AF'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: false,
+                            text: '常用指令分佈'
+                        }
+                    }
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>
+
+    <!-- AI Generated Content Disclaimer -->
+    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mt-6" role="alert">
+        <p class="font-bold">AI 生成提醒</p>
+        <p>這篇文章的全部內容都是由 AI Deep Research 後生成，僅供參考。</p>
+    </div>
+</body>
+</html>

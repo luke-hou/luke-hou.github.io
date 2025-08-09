@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n 教學 (五)：讓 AI 參考向量資料庫回答</title>
+    <meta name="description" content="n8n 教學系列第五篇，展示如何配置 n8n，讓 AI 能夠參考向量資料庫中的資訊來生成更精確、更符合語境的回答。">
+    <meta name="keywords" content="n8n教學, AI回答, 向量資料庫, Supabase, Gemini, 語境理解, 自動化AI">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/resume.css">
+</head>
+<body>
+    <div class="alert alert-danger alert-dismissible fade show text-center animate__animated animate__fadeInDown" role="alert" style="margin-bottom: 0;">
+        <strong>這邊請特別注意！</strong>使用如果您的 API key 綁定在免費的 (free tier) 的專案中，也就是沒有綁定帳單並啟用，那麼 Gemini 經手的資料就有可能被作為訓練用，如有機敏資訊，並且一定要使用 Gemini 的話，請使用付費方案。
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../resume.html">簡歷</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">生活分享</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../contact.html">聯絡我</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="blog-post">
+            <h1>n8n 教學 (五)：讓 AI 參考向量資料庫回答</h1>
+            <p class="post-meta">發布日期：2025年5月</p>
+            <div class="post-content">
+                <p class="">
+</p><p class="">同樣建立一個新的工作流，命名為 n8nChatWithAI。</p><p class="">這次點選倒數第二的 ‘On chat message’，然後直接按 ESC 關掉。</p><figure class="image"><a href="5/image.png"><img style="width:533.3125px" src="5/image.png" alt="n8n建立新工作流並選擇On chat message"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">在右邊加號按一下</p><figure class="image" style="text-align:left"><a href="5/image%201.png"><img style="width:440px" src="5/image%201.png" alt="n8n添加新節點"/></a></figure><p class="">
+</p><p class="">輸入 question 後點選 Question and Answer Chain</p><figure class="image" style="text-align:left"><a href="5/image%202.png"><img style="width:399px" src="5/image%202.png" alt="n8n選擇Question and Answer Chain"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">點選 Add Option，然後選 System Prompt Template。</p><figure class="image"><a href="5/image%203.png"><img style="width:518.296875px" src="5/image%203.png" alt="n8n添加System Prompt Template"/></a></figure><p class="">
+</p><p class="">格子右上方切換到 Expression並修改提示詞，注意下方的這個區塊要保留 </p><p class="">貼上：</p><ul class="bulleted-list"><li style="list-style-type:disc">你是專業藥劑師，專長是台灣健保給付規範相關領域。</li></ul><ul class="bulleted-list"><li style="list-style-type:disc">閱讀 Vector Store 的健保規範資料庫，了解台灣健保的相關規範，並以專業藥劑師的角度親切地回答使用者問題。</li></ul><ul class="bulleted-list"><li style="list-style-type:disc">一律用繁體中文回應，但英文專有名詞則保留原文。</li></ul><hr/><p class="">Context: {context}</p><p class="">
+</p><p class="">然後按 ESC 關掉視窗。</p><p class="">
+</p><p class="">
+</p><p class="">點左下鬚鬚</p><figure class="image"><a href="5/image%204.png"><img style="width:518.296875px" src="5/image%204.png" alt="n8n選擇模型"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">選擇你要用的大語言模型，這邊先選 Google Gemini Chat Model</p><figure class="image" style="text-align:left"><a href="5/image%205.png"><img style="width:372px" src="5/image%205.png" alt="n8n選擇Google Gemini Chat Model"/></a></figure><p class="">
+</p><p class="">選擇 models/gemini-2.5-flash-preview-04-17-thinking 後</p><p class="">接著按 ESC 關閉視窗</p><figure class="image"><a href="5/image%206.png"><img style="width:518.3125px" src="5/image%206.png" alt="n8n選擇Gemini模型"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">點右下鬚鬚</p><figure class="image"><a href="5/image%207.png"><img style="width:518.3125px" src="5/image%207.png" alt="n8n添加新節點"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">選 Vector Store Retriever</p><figure class="image" style="text-align:left"><a href="5/image%208.png"><img style="width:381px" src="5/image%208.png" alt="n8n選擇Vector Store Retriever"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">不做改動直接 ESC 關掉</p><figure class="image"><a href="5/image%209.png"><img style="width:518.3125px" src="5/image%209.png" alt="n8n Vector Store Retriever設定"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">繼續在紅點點上面按加號</p><figure class="image"><a href="5/image%2010.png"><img style="width:518.3125px" src="5/image%2010.png" alt="n8n添加新節點"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">選擇綠色閃電 Supabase Vector Store</p><figure class="image" style="text-align:left"><a href="5/image%2011.png"><img style="width:390px" src="5/image%2011.png" alt="n8n選擇Supabase Vector Store"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">Table Name 下拉選擇 nhi_drug_768</p><figure class="image"><a href="5/image%2012.png"><img style="width:518.3125px" src="5/image%2012.png" alt="n8n Supabase Vector Store表格選擇"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">繼續按 Add Option 並選擇 Query Name</p><figure class="image"><a href="5/image%2013.png"><img style="width:518.3125px" src="5/image%2013.png" alt="n8n Supabase Vector Store添加查詢名稱"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">將 match_documents 改成 match_nhi_drug_768</p><p class="">按 ESC 關閉視窗</p><p class="">還是紅色的，沒關係我們繼續按下面的鬚鬚加號。</p><figure class="image"><a href="5/image%2014.png"><img style="width:518.3125px" src="5/image%2014.png" alt="n8n添加新節點"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">選擇 Embeddings Google Gemini</p><figure class="image" style="text-align:left"><a href="5/image%2015.png"><img style="width:301px" src="5/image%2015.png" alt="n8n選擇Embeddings Google Gemini"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">選擇 models/text-embedding-004 </p><p class="">然後 ESC 關閉</p><figure class="image"><a href="5/image%2016.png"><img style="width:518.3125px" src="5/image%2016.png" alt="n8n選擇Embedding模型"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">此時沒有紅色，我們點一下下面的 Open chat 橘色按鈕。</p><figure class="image"><a href="5/image%2017.png"><img style="width:518.3125px" src="5/image%2017.png" alt="n8n開啟聊天視窗"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">這時候可以看到下面出現聊天視窗，輸入你想問的健保用藥規範。</p><figure class="image"><a href="5/image%2018.png"><img style="width:518.3125px" src="5/image%2018.png" alt="n8n聊天視窗輸入問題"/></a></figure><p class="">
+</p><p class="">例如：Doxorubicin 有什麼健保使用限制?</p><figure class="image"><a href="5/image%2019.png"><img style="width:518.296875px" src="5/image%2019.png" alt="n8n聊天視窗輸入Doxorubicin問題"/></a></figure><p class="">
+</p><p class="">這邊可以看到 AI 參考向量資料庫後的回答</p><figure class="image"><a href="5/image%2020.png"><img style="width:518.265625px" src="5/image%2020.png" alt="n8n AI回答"/></a></figure><p class="">
+</p><p class="">看起來有命中</p><figure class="image"><a href="5/image%2021.png"><img style="width:518.3125px" src="5/image%2021.png" alt="n8n AI回答命中結果"/></a></figure><p class="">
+</p><p class="">回到 Supabase 檢查一下，確認應該是沒有亂講話。</p><figure class="image"><a href="5/image%2022.png"><img style="width:518.3125px" src="5/image%2022.png" alt="Supabase資料庫確認"/></a></figure><p class="">
+</p><p class="">至此我們就有一個會參考向量資料庫的問答AI了，恭喜。</p>
+            </div>
+        </section>
+    </main>
+<div class="mt-5 text-center">
+        <a href="../n8n-tutorials.html" class="btn btn-secondary">返回 n8n 教學列表</a>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade show text-center animate__animated animate__fadeInUp" role="alert" style="margin-top: 0;">
+        <strong>這邊請特別注意！</strong>使用如果您的 API key 綁定在免費的 (free tier) 的專案中，也就是沒有綁定帳單並啟用，那麼 Gemini 經手的資料就有可能被作為訓練用，如有機敏資訊，並且一定要使用 Gemini 的話，請使用付費方案。
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2025 侯俊嘉(Luke Hou). All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

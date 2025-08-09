@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n 教學 (一)：本地安裝 Node.js 與 n8n 環境建置</title>
+    <meta name="description" content="n8n 教學系列第一篇，詳細介紹如何從零開始本地安裝 Node.js 與 n8n，為自動化工作流打下基礎。">
+    <meta name="keywords" content="n8n教學, n8n安裝, Node.js安裝, n8n本地環境, 自動化工作流, npx n8n">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .tutorial-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.5rem auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .tutorial-content figure {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .tutorial-content figure img {
+            margin: 0 auto;
+        }
+        .tutorial-content hr {
+            margin: 2rem 0;
+            border-top: 2px solid #eee;
+        }
+        .highlight-red {
+            background-color: #ffe0e0;
+            color: #d9534f;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+        .alert-custom {
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+            color: #856404;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../resume.html">簡歷</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../contact.html">聯絡我</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <article class="blog-post">
+                    <h1 class="mb-3">n8n 教學 (一)：本地安裝 Node.js 與 n8n 環境建置</h1>
+                    <p class="text-muted mb-4">發布日期：2025年5月</p>
+
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>重要提醒：</strong> 如果您的 Gemini API key 綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案。
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
+                    <div class="tutorial-content">
+                        <p>這邊介紹的是較單純的 npx 安裝。</p>
+                        <p>開發者建議用 Docker 安裝 <em class="highlight-red"><strong>(裝在公司OA的禁止用 Docker)</strong></em></p>
+                        
+                        <h2 class="mt-4">1. 下載 Node.js</h2>
+                        <p>首先到 Node.js 官方網站下載安裝檔案：<a href="https://nodejs.org/zh-tw/download" target="_blank">https://nodejs.org/zh-tw/download</a></p>
+                        <figure>
+                            <a href="1/image.png" target="_blank"><img src="1/image.png" alt="Node.js官方網站下載頁面" class="img-fluid"></a>
+                            <figcaption class="text-muted mt-2">圖 1: Node.js 官方網站下載頁面</figcaption>
+                        </figure>
+                        
+                        <h2 class="mt-4">2. 安裝 Node.js</h2>
+                        <p>安裝時，用預設值，一直下一步即可。</p>
+                        <figure>
+                            <a href="1/image%201.png" target="_blank"><img src="1/image%201.png" alt="Node.js安裝介面" class="img-fluid"></a>
+                            <figcaption class="text-muted mt-2">圖 2: Node.js 安裝介面</figcaption>
+                        </figure>
+                        
+                        <h2 class="mt-4">3. 確認 Node.js 版本</h2>
+                        <p>用管理員權限打開 CMD，輸入 <code>node -v</code> 後按 Enter 確認版本。</p>
+                        <figure>
+                            <a href="1/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2_2025-05-27_1356481.png" target="_blank"><img src="1/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2_2025-05-27_1356481.png" alt="以管理員權限開啟命令提示字元" class="img-fluid"></a>
+                            <figcaption class="text-muted mt-2">圖 3: 以管理員權限開啟命令提示字元</figcaption>
+                        </figure>
+                        <figure>
+                            <a href="1/image%202.png" target="_blank"><img src="1/image%202.png" alt="確認Node.js版本" class="img-fluid"></a>
+                            <figcaption class="text-muted mt-2">圖 4: 確認 Node.js 版本</figcaption>
+                        </figure>
+                        
+                        <hr>
+                        
+                        <h2 class="mt-4">4. 安裝並啟動 n8n</h2>
+                        <p>在 CMD 畫面輸入 <code>npx n8n</code>。</p>
+                        <figure>
+                            <a href="1/image%203.png" target="_blank"><img src="1/image%203.png" alt="在命令提示字元中執行npx n8n" class="img-fluid"></a>
+                            <figcaption class="text-muted mt-2">圖 5: 在命令提示字元中執行 npx n8n</figcaption>
+                        </figure>
+                        <p>輸入 <code>y</code> 後按 Enter，靜待安裝完畢。</p>
+                        <figure>
+                            <a href="1/image%204.png" target="_blank"><img src="1/image%204.png" alt="n8n安裝確認畫面" class="img-fluid"></a>
+                            <figcaption class="text-muted mt-2">圖 6: n8n 安裝確認畫面</figcaption>
+                        </figure>
+                        <p>n8n 安裝完畢，會自動啟動服務，按下 <code>o</code> 後，會自動在瀏覽器打開 n8n 起始頁面。</p>
+                        <figure>
+                            <a href="1/image%205.png" target="_blank"><img src="1/image%205.png" alt="n8n啟動畫面" class="img-fluid"></a>
+                            <figcaption class="text-muted mt-2">圖 7: n8n 啟動畫面</figcaption>
+                        </figure>
+                        <p>這邊要注意的是 Email 跟 Password 要記好，其他選項隨意選，不影響使用。</p>
+                        <figure>
+                            <a href="1/image%206.png" target="_blank"><img src="1/image%206.png" alt="n8n帳號設定頁面" class="img-fluid"></a>
+                            <figcaption class="text-muted mt-2">圖 8: n8n 帳號設定頁面</figcaption>
+                        </figure>
+                        <p>登入後可以看到起始頁面，接下來進到下一個 part : Supabase 帳號的申請。</p>
+                        <figure>
+                            <a href="1/image%207.png" target="_blank"><img src="1/image%207.png" alt="n8n起始頁面" class="img-fluid"></a>
+                            <figcaption class="text-muted mt-2">圖 9: n8n 起始頁面</figcaption>
+                        </figure>
+                    </div>
+                </article>
+
+                <div class="mt-5 text-center">
+                    <a href="../n8n-tutorials.html" class="btn btn-primary btn-lg">返回 n8n 教學列表</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2025 侯俊嘉(Luke Hou). All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

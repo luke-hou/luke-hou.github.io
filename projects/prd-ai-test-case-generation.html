@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>專案: PRD AI 測試案例生成 - Luke的作品集</title>
+    <meta name="description" content="探索如何利用 n8n 多智能體與 AI 技術，將 PRD 自動轉換為 Jira 測試案例，大幅提升軟體測試的效率與品質。">
+    <meta name="keywords" content="n8n, AI, 多智能體, Multi-Agent, Jira, 自動化測試, 測試案例生成, Luke Hou, 侯俊嘉">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0V2L1DQVPY');
+    </script>
+    <style>
+        .project-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/prd-ai-test-case-generation-main.png') no-repeat center center;
+            background-size: cover;
+            padding: 4rem 0;
+            color: white;
+        }
+        .project-hero h1 {
+            font-weight: 700;
+        }
+        .summary-card {
+            position: sticky;
+            top: 20px;
+        }
+        .tech-badge {
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .gallery-img {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .gallery-img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">Luke Hou</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../contact.html">聯絡我</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="project-hero text-center">
+            <div class="container">
+                <h1 class="display-4">從 PRD 到 Jira：導入 AI 多智能體，自動化測試案例生成</h1>
+                <p class="lead">一個旨在革新測試流程、提升團隊生產力的 n8n 自動化專案</p>
+            </div>
+        </section>
+
+        <section class="container mt-5">
+            <div class="row">
+                <!-- Main Content -->
+                <div class="col-lg-8">
+                    <div class="card border-0">
+                        <div class="card-body">
+                            <h2 class="card-title h3 mb-3"><i class="bi bi-card-text me-2"></i>項目概述</h2>
+                            <p>在軟體開發流程中，手動根據產品需求文件 (PRD) 撰寫測試案例，是一項耗時且高度依賴人力經驗的關鍵任務。特別是在需求頻繁變更時，維護成本極高。</p>
+                            <p>為了突破這個瓶頸，我實作了一套自動化工作流，利用 n8n 最新的多智能體 (Multi-Agent) 框架，串接 Confluence 與 Jira，實現了「一鍵生成測試案例」的目標。</p>
+
+                            <hr class="my-4">
+
+                            <h2 class="h3 mb-3"><i class="bi bi-lightbulb-fill me-2"></i>核心做法與亮點</h2>
+                            <ol class="list-group list-group-numbered">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">AI 智能體協作 (AI Agent Collaboration)</div>
+                                        建立一個擔任「測試案例統籌」的主智能體，它會協調兩個專用知識庫：
+                                        <ul class="mt-2">
+                                            <li><strong>PRD 向量資料庫：</strong> 讓 AI 理解需求上下文，參考相似功能，擴充測試情境的完整性。</li>
+                                            <li><strong>既有測試案例向量資料庫：</strong> 確保 AI 產出的案例符合團隊現有的格式與風格，無縫接軌。</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">自動化 Jira 整合 (Automated Jira Integration)</div>
+                                        工作流不僅能批次建立 Jira Tickets，更能自動填入系統、測試分類 (Test Category)、優先級 (Priority) 等客製化欄位，為後續的測試分析與數據統計奠定基礎。
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">智慧型版本更新 (Intelligent Version Syncing)</div>
+                                        當 PRD 文件更新時，可選擇性觸發工作流，自動清除舊版測試案例並生成新版，大幅降低需求變更時的維護成本。
+                                    </div>
+                                </li>
+                            </ol>
+                            <p class="mt-4">這個工作流不僅是單純的任務自動化，更是將 AI 技術實際應用於 SQA 流程改造的一次成功實踐。</p>
+                            
+                            <hr class="my-4">
+
+                            <h2 class="h3 mb-3"><i class="bi bi-kanban me-2"></i>工作流程展示</h2>
+                            <p class="text-muted">(使用 Mock Data 替換，非公司資料。)</p>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <img src="../images/prd-ai-test-case-generation-flow-1.png" alt="工作流程圖 1" class="img-fluid rounded gallery-img">
+                                </div>
+                                <div class="col-md-4">
+                                    <img src="../images/prd-ai-test-case-generation-flow-2.png" alt="工作流程圖 2" class="img-fluid rounded gallery-img">
+                                </div>
+                                <div class="col-md-4">
+                                    <img src="../images/prd-ai-test-case-generation-flow-3.png" alt="工作流程圖 3" class="img-fluid rounded gallery-img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <div class="card shadow-sm summary-card">
+                        <div class="card-body">
+                            <h3 class="card-title h5 border-bottom pb-2 mb-3"><i class="bi bi-bar-chart-line-fill me-2"></i>量化效益與真實影響</h3>
+                            <ul class="list-unstyled">
+                                <li class="mb-3 d-flex">
+                                    <i class="bi bi-robot h4 text-primary me-3"></i>
+                                    <div>
+                                        <strong class="d-block">取代自己</strong>
+                                        <small class="text-muted">不需要系統知識、開發維運經驗、跟 QA 技能，只要會複製貼上就會產測試案例。</small>
+                                    </div>
+                                </li>
+                                <li class="mb-3 d-flex">
+                                    <i class="bi bi-speedometer2 h4 text-primary me-3"></i>
+                                    <div>
+                                        <strong class="d-block">效率躍升</strong>
+                                        <small class="text-muted">從超過 1 小時的手動工作，縮短至 5 分鐘內的自動化流程。</small>
+                                    </div>
+                                </li>
+                                <li class="mb-3 d-flex">
+                                    <i class="bi bi-patch-check-fill h4 text-primary me-3"></i>
+                                    <div>
+                                        <strong class="d-block">品質與一致性</strong>
+                                        <small class="text-muted">產出的案例草稿約 70-80% 可直接使用，讓 SQA 團隊能專注於更關鍵的測試分析。</small>
+                                    </div>
+                                </li>
+                                <li class="mb-3 d-flex">
+                                    <i class="bi bi-people-fill h4 text-primary me-3"></i>
+                                    <div>
+                                        <strong class="d-block">降低知識門檻</strong>
+                                        <small class="text-muted">簡化了新進成員或跨職能同事理解需求與測試點的過程，加速團隊協作。</small>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-footer bg-light">
+                            <h3 class="h5 mt-2"><i class="bi bi-gear-fill me-2"></i>使用的技術</h3>
+                            <div>
+                                <span class="badge bg-primary text-white tech-badge">n8n</span>
+                                <span class="badge bg-secondary tech-badge">AI (LLM, RAG)</span>
+                                <span class="badge bg-info text-dark tech-badge">Vector DB</span>
+                                <span class="badge bg-warning text-dark tech-badge">Jira Automation</span>
+                                <span class="badge bg-dark tech-badge">Confluence API</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-grid mt-3">
+                        <a href="../portfolio.html" class="btn btn-outline-primary"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-light mt-5 py-4">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="" class="img-fluid" id="modalImage" alt="Project Image">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+            const modalImage = document.getElementById('modalImage');
+            
+            document.querySelectorAll('.gallery-img').forEach(img => {
+                img.addEventListener('click', function () {
+                    modalImage.src = this.src;
+                    imageModal.show();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

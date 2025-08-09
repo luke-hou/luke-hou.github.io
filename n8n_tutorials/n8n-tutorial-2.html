@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n 教學 (二)：Supabase 申請及建立向量資料庫</title>
+    <meta name="description" content="n8n 教學系列第二篇，引導您申請 Supabase 帳號並建立向量資料庫，為 AI 應用提供資料儲存基礎。">
+    <meta name="keywords" content="n8n教學, Supabase, 向量資料庫, 資料庫建立, AI應用, PostgreSQL, RLS">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/resume.css">
+</head>
+<body>
+    <div class="alert alert-danger alert-dismissible fade show text-center animate__animated animate__fadeInDown" role="alert" style="margin-bottom: 0;">
+        <strong>這邊請特別注意！</strong>使用如果您的 API key 綁定在免費的 (free tier) 的專案中，也就是沒有綁定帳單並啟用，那麼 Gemini 經手的資料就有可能被作為訓練用，如有機敏資訊，並且一定要使用 Gemini 的話，請使用付費方案。
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../resume.html">簡歷</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">生活分享</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../contact.html">聯絡我</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="blog-post">
+            <h1>n8n 教學 (二)：Supabase 申請及建立向量資料庫</h1>
+            <p class="post-meta">發布日期：2025年5月</p>
+            <div class="post-content">
+                <p class="">到官網首頁 <a href="https://supabase.com/">https://supabase.com/</a></p><p class="">點選 Start your project 綠色按鈕</p><figure class="image"><a href="2/image.png"><img style="width:954.984375px" src="2/image.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">點選最下方的 Sign Up Now 使用信箱進行註冊</p><figure class="image" style="text-align:left"><a href="2/image%201.png"><img style="width:562px" src="2/image%201.png" alt="Supabase註冊頁面"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">輸入信箱跟密碼進行註冊，然後到註冊信箱收信，完成信箱認證。</p><figure class="image" style="text-align:left"><a href="2/image%202.png"><img style="width:562px" src="2/image%202.png" alt="Supabase註冊資訊填寫"/></a></figure><p class="">
+</p><p class="">點選 New Organization</p><figure class="image"><a href="2/image%203.png"><img style="width:939.9375px" src="2/image%203.png" alt="Supabase建立新組織"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">輸入名稱，這邊先用 n8nTest，其他選項不變，然後按右下角 Create Organization。</p><figure class="image" style="text-align:left"><a href="2/image%204.png"><img style="width:668.3125px" src="2/image%204.png" alt="Supabase組織設定"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">Project name 先輸入 n8nProject</p><p class="">資料庫密碼要記好</p><p class="">Region 選地理位置最靠近你的</p><p class="">最後點選右下角 Create new project</p><figure class="image"><a href="2/image%205.png"><img style="width:668.3125px" src="2/image%205.png" alt="Supabase專案設定"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">完成後畫面</p><figure class="image"><a href="2/image%206.png"><img style="width:939.984375px" src="2/image%206.png" alt="Supabase專案建立完成"/></a></figure><p class="">
+</p><hr/><p class="">
+</p><p class="">接著要建立資料表，先將滑鼠移到左邊邊界，展開左邊選單，點選 SQL Editor</p><figure class="image" style="text-align:left"><a href="2/image%207.png"><img style="width:202px" src="2/image%207.png" alt="Supabase左側選單SQL Editor"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">點選 Create a new snippet</p><figure class="image" style="text-align:left"><a href="2/image%208.png"><img style="width:365px" src="2/image%208.png" alt="Supabase建立新SQL片段"/></a></figure><p class="">
+</p><p class="">貼上這段語法</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre class="code"><code class="language-SQL">drop table if exists nhi_drug_768;
+
+-- Drop the match_{{tablename}} function if it exists -- Note: It&#x27;s good practice to specify argument types when dropping
+drop function if exists match_nhi_drug_768(vector, integer, jsonb);
+
+-- Enable the pgvector extension to work with embedding vectors
+create extension if not exists vector;
+
+-- Create a table to store your {{tablename}}
+create table nhi_drug_768 (
+  id bigserial primary key,
+  content text, -- corresponds to Document.pageContent
+  metadata jsonb, -- corresponds to Document.metadata
+  embedding vector(768) -- 確保這個維度匹配你的 Embedding 模型
+);
+
+-- Create a function to search for documents_nhi_drug
+create function match_nhi_drug_768 (
+  query_embedding vector(768), -- 確保這個維度匹配你的 Embedding 模型
+  match_count int default null, -- Using integer alias
+  filter jsonb DEFAULT &#x27;{}&#x27;
+) returns table (
+  id bigint,
+  content text,
+  metadata jsonb,
+  similarity float
+)
+
+language plpgsql
+as $$
+#variable_conflict use_column
+begin
+  return query
+  select
+    d.id,                -- Using alias for clarity
+    d.content,
+    d.metadata,
+    1 - (d.embedding <=> query_embedding) as similarity -- Using alias
+  from nhi_drug_768 d   -- Defining alias d
+  where d.metadata @> filter
+  order by d.embedding <=> query_embedding
+  limit match_count;
+end;
+$$;
+</code></pre><figure class="image"><a href="2/image%209.png"><img style="width:939.96875px" src="2/image%209.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">
+</p><p class="">點選畫面中間最右側的綠色按鈕 Run</p><figure class="image" style="text-align:left"><a href="2/image%2010.png"><img style="width:369px" src="2/image%2010.png" alt="Supabase執行SQL查詢"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">點選 Run this query，等待數秒。</p><figure class="image" style="text-align:left"><a href="2/image%2011.png"><img style="width:578px" src="2/image%2011.png" alt="Supabase確認執行查詢"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">在下方視窗 Results 可以看到成功訊息</p><figure class="image" style="text-align:left"><a href="2/image%2012.png"><img style="width:331px" src="2/image%2012.png" alt="Supabase查詢結果成功訊息"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">打開左側欄選單，點選 Table Editor</p><figure class="image" style="text-align:left"><a href="2/image%2013.png"><img style="width:207px" src="2/image%2013.png" alt="Supabase左側選單Table Editor"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">看到我們創建的向量資料表已經完成。</p><p class="">接著點選畫面上方的咖啡色按鈕 RLS disabled</p><figure class="image"><a href="2/image%2014.png"><img style="width:939.984375px" src="2/image%2014.png" alt="Supabase資料表RLS disabled狀態"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">點選下方的 Enable RLS for this table</p><figure class="image" style="text-align:left"><a href="2/image%2015.png"><img style="width:432px" src="2/image%2015.png" alt="Supabase啟用RLS選項"/></a></figure><p class="">
+</p><p class="">點選綠色的 Enable RLS </p><figure class="image" style="text-align:left"><a href="2/image%2016.png"><img style="width:386px" src="2/image%2016.png" alt="Supabase確認啟用RLS"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">至此資料表設置完畢。</p><hr/><p class="">
+</p><p class="">再次打開左邊選單，點選 Project Settings</p><figure class="image" style="text-align:left"><a href="2/image%2017.png"><img style="width:214px" src="2/image%2017.png" alt="Supabase左側選單Project Settings"/></a></figure><p class="">
+</p><p class="">點選 Data API</p><figure class="image" style="text-align:left"><a href="2/image%2018.png"><img style="width:269px" src="2/image%2018.png" alt="Supabase專案設定Data API"/></a></figure><p class="">
+</p><p class="">找到 Project API Keys </p><p class="">點選 service_role 最右側的 Reveal 按鈕</p><figure class="image"><a href="2/image%2019.png"><img style="width:939.984375px" src="2/image%2019.png" alt="Supabase專案API金鑰"/></a></figure><p class="">
+</p><p class="">點選後會產生 token，右側的按鈕會變成 Copy，點一下</p><figure class="image"><a href="2/image%2020.png"><img style="width:939.9375px" src="2/image%2020.png" alt="Supabase API金鑰顯示與複製"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">把這個 API token 保存在安全的地方，勿外洩。</p><p class="">
+</p><p class="">至此 Supabase 的向量資料庫設置完畢。</p>
+                <div class="mt-5 text-center">
+                    <a href="../n8n-tutorials.html" class="btn btn-secondary">返回 n8n 教學列表</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="alert alert-danger alert-dismissible fade show text-center animate__animated animate__fadeInUp" role="alert" style="margin-top: 0;">
+        <strong>這邊請特別注意！</strong>使用如果您的 API key 綁定在免費的 (free tier) 的專案中，也就是沒有綁定帳單並啟用，那麼 Gemini 經手的資料就有可能被作為訓練用，如有機敏資訊，並且一定要使用 Gemini 的話，請使用付費方案。
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2025 侯俊嘉(Luke Hou). All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

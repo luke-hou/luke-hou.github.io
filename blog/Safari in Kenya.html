@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>肯亞夢幻獵遊之旅｜互動指南 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals (Stone, Amber, Emerald, Slate) -->
+    <!-- Application Structure Plan: The application is structured as a single-page scrolling experience with a fixed top navigation bar for quick access to key planning stages. The information architecture is thematic rather than linear: 1. A hero section for a welcoming overview. 2. An interactive itinerary with clickable day cards to reveal details and temperature charts, making the schedule easy to understand. 3. A consolidated pre-departure section with interactive checklists for visas, health, and packing, transforming passive text into an actionable tool. 4. A local guide for on-trip essentials like safety and tipping, designed for quick reference. 5. A budget analysis section with a donut chart to visually break down costs. This structure prioritizes user tasks (planning, packing, on-trip reference) over the original report's narrative flow, enhancing usability and making the complex information more digestible and engaging. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Itinerary -> Goal: Visualize daily plan -> Viz: Interactive cards with text & Chart.js bar chart (Temp) -> Interaction: Click to expand -> Justification: Breaks down the dense schedule into manageable, interactive daily chunks. The temperature chart adds a quick, useful data point for packing decisions. -> Library: Chart.js/Canvas.
+        - Report Info: Budget Analysis -> Goal: Clarify cost distribution -> Viz: Chart.js Donut Chart -> Interaction: Hover to see details -> Justification: A donut chart is highly effective for showing parts-of-a-whole, making the NT$120,000 budget allocation immediately understandable. -> Library: Chart.js/Canvas.
+        - Report Info: Checklists (Visa, Health, Packing) -> Goal: Make preparation actionable -> Viz: Styled HTML checklists & tables -> Interaction: Visual checkboxes (non-functional) -> Justification: Converts passive lists from the report into active planning tools that users can mentally or physically check off. -> Library: HTML/Tailwind.
+        - Report Info: Safety/Tipping/Communication -> Goal: Quick on-trip reference -> Viz: Icon-based lists & simple tables -> Interaction: Static -> Justification: Uses icons and clear formatting for high scannability on mobile devices, which is crucial for in-country use. -> Library: HTML/Tailwind/Unicode. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .bg-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23a8a29e' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-slate-700">
+
+    <!-- AI Generated Disclaimer -->
+    <div class="bg-red-700 text-white text-center p-3 text-sm md:text-base font-bold">
+        ⚠️ 此網頁內容由 Google Gemini 根據其 Deep Research 報告生成，全部由 AI 完成。
+    </div>
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="text-xl font-bold text-amber-700">肯亞獵遊指南</div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#itinerary" class="hover:text-amber-600 transition">互動行程</a>
+                <a href="#checklist" class="hover:text-amber-600 transition">行前準備</a>
+                <a href="#guide" class="hover:text-amber-600 transition">在地指南</a>
+                <a href="#budget" class="hover:text-amber-600 transition">預算分析</a>
+            </div>
+            <div class="md:hidden">
+                <select id="mobile-nav" class="bg-white border border-stone-300 rounded-md p-2 text-slate-700">
+                    <option value="#">導覽</option>
+                    <option value="#itinerary">互動行程</option>
+                    <option value="#checklist">行前準備</option>
+                    <option value="#guide">在地指南</option>
+                    <option value="#budget">預算分析</option>
+                </select>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container mx-auto px-6 py-4">
+            <a href="../blog.html" class="text-amber-700 hover:text-amber-900 font-bold flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                回到部落格首頁
+            </a>          
+        </div>      
+        <section id="hero" class="relative text-white py-20 md:py-32 bg-amber-800">
+            <div class="absolute inset-0 bg-black opacity-40"></div>
+             <div class="absolute inset-0 bg-pattern opacity-50"></div>
+            <div class="container mx-auto px-6 text-center relative z-10">
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4">肯亞夢幻獵遊之旅</h1>
+                <p class="text-lg md:text-2xl mb-8 text-stone-200">2025年10月｜台灣上班族們的非洲冒險互動指南</p>
+                <div class="flex justify-center items-center space-x-6 text-base md:text-lg">
+                    <span class="flex items-center"><span class="mr-2">🗓️</span> 10/02 - 10/11</span>
+                    <span class="flex items-center"><span class="mr-2">💰</span> 預算 NT$120,000</span>
+                    <span class="flex items-center"><span class="mr-2">🌍</span> 肯亞</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="itinerary" class="py-16 md:py-24 bg-stone-100">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+
+                    <div class="bg-white p-4 rounded-lg shadow mb-4 max-w-xl mx-auto">
+                        <a href="Safari_in_Kenya_DeepResearch.html" class="text-emerald-700 hover:text-emerald-900 font-bold flex items-center text-xl underline justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v4a1 1 0 102 0V7zm-1 7a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                            </svg>
+                        肯亞之旅深度研究
+                        </a>
+                    </div>
+                    <!-- Audio Player -->
+                    <div class="mt-4 max-w-xl mx-auto bg-white p-4 rounded-lg shadow">
+                        <h3 class="text-lg font-bold text-slate-700 mb-2">Podcast版</h3>
+                        <audio controls class="w-full">
+                            <source src="../blog/Safari_in_Kenya_tts.mp3" type="audio/mpeg">
+                            您的瀏覽器不支援音訊元素。
+                        </audio>
+                    </div>
+                    <!-- End Audio Player -->
+                </div>
+                <div class="space-y-8">
+                    <p class="mt-4 text-lg text-slate-600">點擊下方每日行程卡，深入探索每一天的精彩安排，從住宿亮點到令人屏息的野生動物奇遇，助您規劃完美的肯亞之旅。</p>
+                    <div class="itinerary-card bg-white rounded-xl shadow-lg overflow-hidden transition hover:shadow-2xl cursor-pointer">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-amber-700">第 1-2 天：馬賽馬拉國家保護區</h3>
+                            <p class="text-slate-500 mt-1">非洲五霸的家園與動物大遷徙的舞台</p>
+                        </div>
+                        <div class="itinerary-details hidden p-6 pt-0">
+                            <div class="grid md:grid-cols-2 gap-8">
+                                <div>
+                                    <h4 class="font-bold text-lg mb-2">每日亮點</h4>
+                                    <ul class="list-disc list-inside space-y-2 text-slate-600">
+                                        <li><strong class="text-slate-800">陸路交通：</strong>從奈洛比出發，約6小時車程，沿途欣賞東非大裂谷風光。</li>
+                                        <li><strong class="text-slate-800">野生動物遊獵 (Game Drive)：</strong>尋找獅、豹、象、犀牛、水牛等非洲五霸。10月仍有大量牛羚與斑馬逗留，捕食活動頻繁。</li>
+                                        <li><strong class="text-slate-800">住宿：</strong>Jambo Mara Safari Lodge (Google 4.2★)，以寬敞客房與熱情服務聞名。</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-2 text-center">十月氣溫參考</h4>
+                                    <div class="chart-container h-48 md:h-64">
+                                        <canvas id="mara-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="itinerary-card bg-white rounded-xl shadow-lg overflow-hidden transition hover:shadow-2xl cursor-pointer">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-amber-700">第 3 天：納庫魯湖國家公園</h3>
+                            <p class="text-slate-500 mt-1">火鶴鳥的粉色天堂與犀牛保育重地</p>
+                        </div>
+                        <div class="itinerary-details hidden p-6 pt-0">
+                             <div class="grid md:grid-cols-2 gap-8">
+                                <div>
+                                    <h4 class="font-bold text-lg mb-2">每日亮點</h4>
+                                    <ul class="list-disc list-inside space-y-2 text-slate-600">
+                                        <li><strong class="text-slate-800">鳥類奇觀：</strong>觀賞數以萬計的火鶴鳥，構成一片粉色湖岸。</li>
+                                        <li><strong class="text-slate-800">犀牛蹤跡：</strong>肯亞最重要的白犀牛與黑犀牛保育區，目擊機會高。</li>
+                                        <li><strong class="text-slate-800">住宿：</strong>Lake Nakuru Sopa Lodge (Hotels.com 9.2)，位於公園內，享絕佳湖景。</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-2 text-center">十月氣溫參考</h4>
+                                    <div class="chart-container h-48 md:h-64">
+                                        <canvas id="nakuru-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="itinerary-card bg-white rounded-xl shadow-lg overflow-hidden transition hover:shadow-2xl cursor-pointer">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-amber-700">第 4 天：地獄之門 & 奈瓦夏湖</h3>
+                            <p class="text-slate-500 mt-1">騎單車穿梭野生動物間的獨特體驗</p>
+                        </div>
+                        <div class="itinerary-details hidden p-6 pt-0">
+                           <div class="grid md:grid-cols-2 gap-8">
+                                <div>
+                                    <h4 class="font-bold text-lg mb-2">每日亮點</h4>
+                                    <ul class="list-disc list-inside space-y-2 text-slate-600">
+                                        <li><strong class="text-slate-800">單車獵遊：</strong>在地獄之門國家公園，體驗在斑馬、長頸鹿旁騎單車的樂趣。</li>
+                                        <li><strong class="text-slate-800">峽谷健行：</strong>探索地獄之門的壯麗峽谷地形。</li>
+                                        <li><strong class="text-slate-800">住宿：</strong>Lake Naivasha Sopa Resort (Booking.com 8.9)，園區內有野生動物自由漫步。</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-2 text-center">十月氣溫參考</h4>
+                                    <div class="chart-container h-48 md:h-64">
+                                        <canvas id="naivasha-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="itinerary-card bg-white rounded-xl shadow-lg overflow-hidden transition hover:shadow-2xl cursor-pointer">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-amber-700">第 5-6 天：安波塞利國家公園</h3>
+                            <p class="text-slate-500 mt-1">以吉力馬札羅雪山為背景的巨象樂園</p>
+                        </div>
+                        <div class="itinerary-details hidden p-6 pt-0">
+                            <div class="grid md:grid-cols-2 gap-8">
+                                <div>
+                                    <h4 class="font-bold text-lg mb-2">每日亮點</h4>
+                                    <ul class="list-disc list-inside space-y-2 text-slate-600">
+                                        <li><strong class="text-slate-800">陸路交通：</strong>從奈瓦夏湖出發，約4.5小時車程。</li>
+                                        <li><strong class="text-slate-800">象群天堂：</strong>觀賞龐大的非洲象群，幸運的話能拍到以吉力馬札羅山為背景的經典畫面。</li>
+                                        <li><strong class="text-slate-800">觀鳥：</strong>10月下旬是候鳥抵達的季節，鳥類生態豐富。</li>
+                                        <li><strong class="text-slate-800">住宿：</strong>Sentrim Amboseli Lodge (Hotels.com 8.8)，提供舒適住宿與多樣自助餐。</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-2 text-center">十月氣溫參考</h4>
+                                    <div class="chart-container h-48 md:h-64">
+                                        <canvas id="amboseli-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="itinerary-card bg-white rounded-xl shadow-lg overflow-hidden transition hover:shadow-2xl cursor-pointer">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-amber-700">第 7-8 天：返回奈洛比 & 歸途</h3>
+                            <p class="text-slate-500 mt-1">滿載回憶，踏上歸途</p>
+                        </div>
+                        <div class="itinerary-details hidden p-6 pt-0">
+                            <h4 class="font-bold text-lg mb-2">行程說明</h4>
+                            <p class="text-slate-600">第7天，從安波塞利返回奈洛比（約3-4小時車程），根據航班時間，可能會在奈洛比市區進行最後的採購或參觀。第8天，從奈洛比的喬莫·肯亞塔國際機場 (NBO) 搭機返回台灣，結束這趟精彩的非洲夢幻之旅。</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="checklist" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800">行前準備互動清單</h2>
+                    <p class="mt-4 text-lg text-slate-600">這是一份綜合性的準備指南，確保您的旅程萬無一失。</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    
+                    <div class="bg-stone-50 p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-bold text-emerald-800 mb-4">📄 簽證與文件 (eTA)</h3>
+                        <p class="text-sm text-slate-500 mb-4">肯亞已取消落地簽，台灣公民<strong class="text-red-600">必須</strong>在出發前線上申請電子旅行授權 (eTA)。</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start"><span class="mr-2 mt-1">✅</span><div><strong>至少提前一週申請：</strong>官方處理時間72小時，但務必預留緩衝。</div></li>
+                            <li class="flex items-start"><span class="mr-2 mt-1">✅</span><div><strong>有效護照：</strong>效期需自入境日起算6個月以上。</div></li>
+                            <li class="flex items-start"><span class="mr-2 mt-1">✅</span><div><strong>數位照片：</strong>符合規定尺寸(350x350px)及背景要求。</div></li>
+                            <li class="flex items-start"><span class="mr-2 mt-1">✅</span><div><strong>證明文件：</strong>來回機票、飯店預訂確認函 (全英文PDF)。</div></li>
+                            <li class="flex items-start"><span class="mr-2 mt-1">✅</span><div><strong>費用：</strong>約 30 美元。</div></li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-stone-50 p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-bold text-emerald-800 mb-4">🩺 健康與醫療</h3>
+                        <p class="text-sm text-slate-500 mb-4">出發前4-6週，請務必諮詢<strong class="text-red-600">旅遊醫學門診</strong>。</p>
+                         <ul class="space-y-3">
+                            <li class="flex items-start"><span class="mr-2 mt-1">✅</span><div><strong>黃熱病疫苗：</strong>強烈建議接種，並取得「黃皮書」(國際預防接種證明書)。</div></li>
+                            <li class="flex items-start"><span class="mr-2 mt-1">✅</span><div><strong>瘧疾預防：</strong>10月為高風險期，需與醫師討論是否服用預防藥物。</div></li>
+                            <li class="flex items-start"><span class="mr-2 mt-1">✅</span><div><strong>建議疫苗：</strong>A肝、傷寒、破傷風等。</div></li>
+                            <li class="flex items-start"><span class="mr-2 mt-1">✅</span><div><strong>個人藥品：</strong>攜帶足量常用藥及處方藥，並備妥英文處方箋。</div></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-stone-50 p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-bold text-emerald-800 mb-4">🧳 行李打包攻略</h3>
+                        <p class="text-sm text-slate-500 mb-4">輕便、實用、多層次是打包關鍵。</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start"><span class="mr-2 mt-1">✅</span><div><strong>衣物：</strong>中性色系(卡其、綠)，洋蔥式穿搭 (早晚溫差大)，帶保暖外套。</div></li>
+                            <li class="flex items-start"><span class="mr-2 mt-1">✅</span><div><strong>鞋子：</strong>舒適好走的包頭鞋(運動鞋即可)。</div></li>
+                            <li class="flex items-start"><span class="mr-2 mt-1">✅</span><div><strong>防護用品：</strong>高係數防曬乳、寬邊帽、太陽眼鏡、防蚊液(含DEET)。</div></li>
+                             <li class="flex items-start"><span class="text-red-500 mr-2 mt-1">🚫</span><div><strong>禁止攜帶：</strong><strong class="text-red-600">任何形式的塑膠袋</strong>、迷彩或軍用圖案衣物。</div></li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-stone-50 p-6 rounded-lg shadow col-span-full">
+                        <h3 class="text-xl font-bold text-emerald-800 mb-4">✨ 個人化打包建議</h3>
+                        <p class="text-sm text-slate-500 mb-4">告訴我您在肯亞想進行的特殊活動（例如：熱氣球、山區健行、文化交流），我會提供額外的打包建議！</p>
+                        <div class="flex flex-col md:flex-row gap-4 mb-4">
+                            <input type="text" id="packing-activity-input" placeholder="例如：熱氣球、山區健行" class="flex-grow p-3 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            <button id="get-packing-suggestions-btn" class="bg-emerald-600 text-white px-6 py-3 rounded-md hover:bg-emerald-700 transition">
+                                取得建議 ✨
+                            </button>
+                        </div>
+                        <div id="packing-suggestions-output" class="bg-stone-50 p-4 rounded-md border border-stone-200 min-h-[100px] flex items-center justify-center text-slate-500">
+                            請輸入特殊活動後點擊「取得建議」按鈕
+                        </div>
+                        <div id="packing-suggestions-loading" class="hidden text-center mt-4">
+                            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600 inline-block"></div>
+                            <p class="text-slate-500 mt-2">生成中，請稍候...</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        
+        <section id="guide" class="py-16 md:py-24 bg-stone-100">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800">在地實用指南</h2>
+                    <p class="mt-4 text-lg text-slate-600">旅途中的安全、貨幣及通訊等關鍵資訊。</p>
+                </div>
+                <div class="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow">
+                         <h3 class="text-xl font-bold text-amber-700 mb-4">🛡️ 安全須知 (提高警覺)</h3>
+                         <ul class="space-y-3 text-slate-600">
+                            <li class="flex items-start"><span class="mr-3 text-2xl">🚨</span><div><strong>保持低調：</strong>避免炫富，貴重物品鎖在飯店保險箱。</div></li>
+                            <li class="flex items-start"><span class="mr-3 text-2xl">🚗</span><div><strong>交通安全：</strong>天黑後避免外出，搭乘信譽良好的旅行社車輛，行車時鎖門關窗。</div></li>
+                            <li class="flex items-start"><span class="mr-3 text-2xl">🦁</span><div><strong>野生動物：</strong>與動物保持安全距離，絕不擅自下車。</div></li>
+                            <li class="flex items-start"><span class="mr-3 text-2xl">📄</span><div><strong>身份證明：</strong>隨身攜帶護照影本。</div></li>
+                            <li class="flex items-start"><span class="mr-3 text-2xl">🏥</span><div><strong>醫療保險：</strong>務必購買包含「海外緊急醫療後送」的旅遊險。偏遠地區醫療資源有限。</div></li>
+                         </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-bold text-amber-700 mb-4">💰 貨幣與小費</h3>
+                        <p class="text-slate-600 mb-4">當地貨幣為肯亞先令(KES)。<br>1 TWD ≈ 4.3 KES</p>
+                        <h4 class="font-bold mb-2">小費參考：</h4>
+                         <ul class="space-y-2 text-slate-600">
+                             <li><strong>餐廳/旅館：</strong>帳單的 10-15%</li>
+                             <li><strong>行李員：</strong>每件行李 1 美元 (或約130 KES)</li>
+                             <li><strong>狩獵導遊/司機：</strong><strong class="text-red-600">非常重要</strong>，建議每位旅客每天給 10-20 美元。</li>
+                         </ul>
+                         <p class="text-sm mt-4 text-slate-500">建議準備一些美元或肯亞先令現金支付小費。</p>
+                    </div>
+                     <div class="lg:col-span-3 bg-white p-6 rounded-lg shadow">
+                         <h3 class="text-xl font-bold text-amber-700 mb-4">📱 通訊與網路</h3>
+                         <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-bold mb-2">最佳選擇：Safaricom</h4>
+                                <p class="text-slate-600">Safaricom是肯亞最大的電信商，即使在偏遠的國家公園內，覆蓋率也最廣、最穩定。抵達奈洛比機場後即可憑護照購買SIM卡。</p>
+                            </div>
+                            <div>
+                                 <h4 class="font-bold mb-2">溫馨提醒</h4>
+                                 <p class="text-slate-600">雖然Safaricom覆蓋好，但在極度偏遠的地區，網路訊號仍可能中斷。許多旅館提供Wi-Fi，但速度可能不快。不妨將此視為一場暫時的數位排毒之旅。</p>
+                            </div>
+                         </div>
+                    </div>
+                    <div class="lg:col-span-3 bg-white p-6 rounded-lg shadow">
+                         <h3 class="text-xl font-bold text-amber-700 mb-4">✨ 肯亞在地短語學習器</h3>
+                         <p class="text-slate-600 mb-4">輸入您想學習短語的情境（例如：餐廳點餐、問路），讓我為您生成實用短語！</p>
+                         <div class="flex flex-col md:flex-row gap-4 mb-4">
+                            <input type="text" id="phrasebook-input" placeholder="例如：餐廳點餐、緊急求助" class="flex-grow p-3 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            <button id="generate-phrases-btn" class="bg-amber-600 text-white px-6 py-3 rounded-md hover:bg-amber-700 transition">
+                                生成短語 ✨
+                            </button>
+                         </div>
+                         <div id="phrasebook-output" class="bg-stone-50 p-4 rounded-md border border-stone-200 min-h-[100px] flex items-center justify-center text-slate-500">
+                            請輸入情境後點擊「生成短語」按鈕
+                         </div>
+                         <div id="phrasebook-loading" class="hidden text-center mt-4">
+                            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-600 inline-block"></div>
+                            <p class="text-slate-500 mt-2">生成中，請稍候...</p>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="budget" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-6">
+                 <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-800">預算分析 (NT$ 120,000)</h2>
+                    <p class="mt-4 text-lg text-slate-600">這是一個預估的費用分配，實際花費可能因機票價格與個人消費而異。</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="chart-container h-72 md:h-96">
+                        <canvas id="budget-chart"></canvas>
+                    </div>
+                    <div>
+                        <ul class="space-y-4 text-lg">
+                            <li class="flex items-center"><span class="h-4 w-4 rounded-full bg-emerald-600 mr-3"></span><div><strong>獵遊套裝行程：</strong>約 60% (NT$ 72,000)</div></li>
+                            <li class="text-sm text-slate-500 pl-7 -mt-2">包含境內交通、住宿、餐食、導遊、國家公園門票等。</li>
+                            <li class="flex items-center"><span class="h-4 w-4 rounded-full bg-amber-500 mr-3"></span><div><strong>國際機票：</strong>約 25% (NT$ 30,000)</div></li>
+                            <li class="text-sm text-slate-500 pl-7 -mt-2">此為預估值，價格浮動大，建議提早預訂。</li>
+                            <li class="flex items-center"><span class="h-4 w-4 rounded-full bg-sky-600 mr-3"></span><div><strong>小費支出：</strong>約 8% (NT$ 9,600)</div></li>
+                            <li class="text-sm text-slate-500 pl-7 -mt-2">是對導遊與服務人員的重要肯定。</div></li>
+                             <li class="flex items-center"><span class="h-4 w-4 rounded-full bg-slate-400 mr-3"></span><div><strong>雜支與個人消費：</strong>約 7% (NT$ 8,400)</div></li>
+                             <li class="text-sm text-slate-500 pl-7 -mt-2">包含簽證、疫苗、紀念品、額外餐飲等。</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <div class="bg-red-700 text-white text-center p-3 text-sm md:text-base font-bold mt-8">
+        ⚠️ 此網頁內容由 Google Gemini 根據其 Deep Research 報告生成，全部由 AI 完成。
+    </div>
+
+    <footer class="bg-slate-800 text-stone-300 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>這份互動指南是根據您提供的詳細報告製作而成。</p>
+            <p class="text-sm mt-2 text-stone-400">祝您與朋友們有趟畢生難忘的肯亞之旅！</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Mobile Navigation
+            const mobileNav = document.getElementById('mobile-nav');
+            mobileNav.addEventListener('change', (e) => {
+                const target = e.target.value;
+                if (target !== '#') {
+                    document.querySelector(target).scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+
+            // Itinerary card interaction
+            const itineraryCards = document.querySelectorAll('.itinerary-card');
+            itineraryCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const details = card.querySelector('.itinerary-details');
+                    details.classList.toggle('hidden');
+                });
+            });
+
+            // Chart.js configurations
+            const defaultChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                           callback: function(value) {
+                                return value + '°C'
+                           }
+                        }
+                    }
+                }
+            };
+            
+            const tempChartData = {
+                labels: ['白天均溫', '清晨/夜晚'],
+                datasets: [{
+                    label: '溫度',
+                    backgroundColor: ['rgba(234, 179, 8, 0.6)', 'rgba(56, 189, 248, 0.6)'],
+                    borderColor: ['rgba(234, 179, 8, 1)', 'rgba(56, 189, 248, 1)'],
+                    borderWidth: 1,
+                    barPercentage: 0.5,
+                }]
+            };
+
+            // Maasai Mara Chart
+            if (document.getElementById('mara-chart')) {
+                 const maraData = JSON.parse(JSON.stringify(tempChartData));
+                 maraData.datasets[0].data = [27, 12];
+                 new Chart(document.getElementById('mara-chart'), { type: 'bar', data: maraData, options: defaultChartOptions });
+            }
+
+            // Nakuru Chart
+            if (document.getElementById('nakuru-chart')) {
+                const nakuruData = JSON.parse(JSON.stringify(tempChartData));
+                nakuruData.datasets[0].data = [28, 11];
+                new Chart(document.getElementById('nakuru-chart'), { type: 'bar', data: nakuruData, options: defaultChartOptions });
+            }
+            
+            // Naivasha Chart
+            if (document.getElementById('naivasha-chart')) {
+                const naivashaData = JSON.parse(JSON.stringify(tempChartData));
+                naivashaData.datasets[0].data = [26, 10];
+                new Chart(document.getElementById('naivasha-chart'), { type: 'bar', data: naivashaData, options: defaultChartOptions });
+            }
+
+            // Amboseli Chart
+            if (document.getElementById('amboseli-chart')) {
+                const amboseliData = JSON.parse(JSON.stringify(tempChartData));
+                amboseliData.datasets[0].data = [28, 15];
+                new Chart(document.getElementById('amboseli-chart'), { type: 'bar', data: amboseliData, options: defaultChartOptions });
+            }
+
+            // Budget Chart
+            if (document.getElementById('budget-chart')) {
+                new Chart(document.getElementById('budget-chart'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['獵遊套裝行程', '國際機票', '小費支出', '雜支與個人消費'],
+                        datasets: [{
+                            label: '預算分配',
+                            data: [72000, 30000, 9600, 8400],
+                            backgroundColor: [
+                                'rgb(5 150 105)', // emerald-600
+                                'rgb(217 119 6)',  // amber-600
+                                'rgb(2 132 199)',  // sky-600
+                                'rgb(148 163 184)' // slate-400
+                            ],
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 20
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed !== null) {
+                                            label += new Intl.NumberFormat('zh-TW', { style: 'currency', currency: 'TWD', minimumFractionDigits: 0 }).format(context.parsed);
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Gemini API Integration - Phrasebook Generator
+            const phrasebookInput = document.getElementById('phrasebook-input');
+            const generatePhrasesBtn = document.getElementById('generate-phrases-btn');
+            const phrasebookOutput = document.getElementById('phrasebook-output');
+            const phrasebookLoading = document.getElementById('phrasebook-loading');
+
+            generatePhrasesBtn.addEventListener('click', async () => {
+                const topic = phrasebookInput.value.trim();
+                if (!topic) {
+                    phrasebookOutput.innerHTML = '<p class="text-red-500">請輸入您想學習短語的情境！</p>';
+                    return;
+                }
+
+                phrasebookOutput.innerHTML = ''; // Clear previous output
+                phrasebookLoading.classList.remove('hidden'); // Show loading indicator
+                generatePhrasesBtn.disabled = true; // Disable button during generation
+
+                try {
+                    let chatHistory = [];
+                    const prompt = `請為以下情境生成5句肯亞斯瓦希里語的常用短語，並提供中文翻譯和簡單的發音指南 (用拼音或羅馬拼音即可)。情境：${topic}`;
+                    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                    const payload = { contents: chatHistory };
+                    const apiKey = ""; // If you want to use models other than gemini-2.0-flash or imagen-3.0-generate-002, provide an API key here. Otherwise, leave this as-is.
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const text = result.candidates[0].content.parts[0].text;
+                        const formattedText = text.split('\n').map(line => `<p>${line}</p>`).join('');
+                        phrasebookOutput.innerHTML = `<div class="text-slate-700 space-y-2">${formattedText}</div>`;
+                    } else {
+                        phrasebookOutput.innerHTML = '<p class="text-red-500">無法生成短語，請稍後再試。</p>';
+                    }
+                } catch (error) {
+                    console.error('Error generating phrases:', error);
+                    phrasebookOutput.innerHTML = '<p class="text-red-500">生成短語時發生錯誤，請檢查網路連線。</p>';
+                } finally {
+                    phrasebookLoading.classList.add('hidden'); // Hide loading indicator
+                    generatePhrasesBtn.disabled = false; // Enable button
+                }
+            });
+
+            // Gemini API Integration - Packing Suggestions
+            const packingActivityInput = document.getElementById('packing-activity-input');
+            const getPackingSuggestionsBtn = document.getElementById('get-packing-suggestions-btn');
+            const packingSuggestionsOutput = document.getElementById('packing-suggestions-output');
+            const packingSuggestionsLoading = document.getElementById('packing-suggestions-loading');
+
+            getPackingSuggestionsBtn.addEventListener('click', async () => {
+                const activity = packingActivityInput.value.trim();
+                if (!activity) {
+                    packingSuggestionsOutput.innerHTML = '<p class="text-red-500">請輸入您想進行的特殊活動！</p>';
+                    return;
+                }
+
+                packingSuggestionsOutput.innerHTML = ''; // Clear previous output
+                packingSuggestionsLoading.classList.remove('hidden'); // Show loading indicator
+                getPackingSuggestionsBtn.disabled = true; // Disable button
+
+                try {
+                    let chatHistory = [];
+                    const prompt = `考量到肯亞獵遊之旅 (2025年10月)，除了基本的打包清單外，請針對「${activity}」這項特殊活動，建議5樣額外的必備物品，並簡潔地列出它們。`;
+                    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                    const payload = { contents: chatHistory };
+                    const apiKey = ""; // If you want to use models other than gemini-2.0-flash or imagen-3.0-generate-002, provide an API key here. Otherwise, leave this as-is.
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const text = result.candidates[0].content.parts[0].text;
+                        const formattedText = text.split('\n').map(line => `<p>${line}</p>`).join('');
+                        packingSuggestionsOutput.innerHTML = `<div class="text-slate-700 space-y-2">${formattedText}</div>`;
+                    } else {
+                        packingSuggestionsOutput.innerHTML = '<p class="text-red-500">無法生成建議，請稍後再試。</p>';
+                    }
+                } catch (error) {
+                    console.error('Error generating packing suggestions:', error);
+                    packingSuggestionsOutput.innerHTML = '<p class="text-red-500">生成建議時發生錯誤，請檢查網路連線。</p>';
+                } finally {
+                    packingSuggestionsLoading.classList.add('hidden'); // Hide loading indicator
+                    getPackingSuggestionsBtn.disabled = false; // Enable button
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,793 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>[n8n教學] 4. 建立 n8n 工作流塞爆向量資料庫</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2003d4ce-60e2-80cd-a656-d051fa9c214e" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/met_henri_tl_1892.jpg" style="object-position:center 70%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">🛣️</span></div><h1 class="page-title">[n8n教學] 4. 建立 n8n 工作流塞爆向量資料庫</h1><p class="page-description"></p><table class="properties"><tbody><tr class="property-row property-row-created_by"><th><span class="icon property-icon"><svg aria-hidden="true" role="graphics-symbol" viewBox="0 0 16 16" style="width:14px;height:14px;display:block;fill:rgba(71, 70, 68, 0.6);flex-shrink:0" class="typesCreatedBy"><path d="M8 15.126C11.8623 15.126 15.0615 11.9336 15.0615 8.06445C15.0615 4.20215 11.8623 1.00293 7.99316 1.00293C4.13086 1.00293 0.938477 4.20215 0.938477 8.06445C0.938477 11.9336 4.1377 15.126 8 15.126ZM8 10.4229C6.05176 10.4229 4.54785 11.1133 3.83008 11.9131C2.90039 10.9082 2.33301 9.55469 2.33301 8.06445C2.33301 4.91992 4.84863 2.39746 7.99316 2.39746C11.1377 2.39746 13.6738 4.91992 13.6738 8.06445C13.6738 9.55469 13.1064 10.9082 12.1699 11.9131C11.4521 11.1133 9.94824 10.4229 8 10.4229ZM8 9.30176C9.32617 9.30859 10.3516 8.18066 10.3516 6.71094C10.3516 5.33008 9.31934 4.18164 8 4.18164C6.6875 4.18164 5.6416 5.33008 5.64844 6.71094C5.65527 8.18066 6.68066 9.28809 8 9.30176Z"></path></svg></span>建立者</th><td><span class="user"><span class="icon text-icon user-icon"><span class="user-icon-inner">L</span></span>Luke</span></td></tr></tbody></table></header><div class="page-body"><p id="2003d4ce-60e2-8093-a3ec-f8b1459119ef" class="">回到 n8n 點選 Create Workflow 建立第一個工作流</p><figure id="2003d4ce-60e2-80a3-9ded-f6cb69a60a53" class="image"><a href="image.png"><img style="width:954.9375px" src="image.png"/></a></figure><p id="2003d4ce-60e2-80f3-9a67-f28b8bd811e7" class="">
+</p><p id="2003d4ce-60e2-803e-b06e-fea73575b28a" class="">
+</p><p id="2003d4ce-60e2-801b-a672-e124eb840c1e" class="">初始畫面</p><figure id="2003d4ce-60e2-80c8-b91a-c687df883117" class="image"><a href="image%201.png"><img style="width:939.984375px" src="image%201.png"/></a></figure><p id="2003d4ce-60e2-8051-847d-eff5698adf32" class="">
+</p><p id="2003d4ce-60e2-8084-8151-d2282ebb5c63" class="">
+</p><p id="2003d4ce-60e2-8024-a7bb-c307186e78cb" class="">點選左上重新命名工作流為 n8nDocIntoVectorDB</p><figure id="2003d4ce-60e2-809f-8886-cad567d946f7" class="image" style="text-align:left"><a href="image%202.png"><img style="width:408px" src="image%202.png"/></a></figure><p id="2003d4ce-60e2-805d-a430-db62e6284307" class="">
+</p><p id="2003d4ce-60e2-8063-913a-ffb9db2d8ed3" class="">
+</p><p id="2003d4ce-60e2-8008-a00b-ff3da9df1231" class="">點選右上角 … 打開選單，接著點 Settings</p><figure id="2003d4ce-60e2-8097-8158-e5328b7d14aa" class="image" style="text-align:left"><a href="image%203.png"><img style="width:553px" src="image%203.png"/></a></figure><p id="2003d4ce-60e2-8018-9778-d91247a86304" class="">
+</p><p id="2003d4ce-60e2-8007-98dc-f7c872494082" class="">
+</p><p id="2003d4ce-60e2-8058-bb83-f18ce99a035c" class="">將 Time Zone 改為 Asia/Taipei 後點右下角 Save</p><figure id="2003d4ce-60e2-807a-b95e-f08db3dd0ff0" class="image"><a href="image%204.png"><img style="width:939.96875px" src="image%204.png"/></a></figure><p id="2003d4ce-60e2-80e3-baff-d85b5590c353" class="">
+</p><p id="2003d4ce-60e2-80ff-b3c6-ec5bda3b6a49" class="">
+</p><p id="2003d4ce-60e2-80cf-9c41-dde9fcb51b9d" class="">現在點選畫面正中央的 Add first step</p><figure id="2003d4ce-60e2-808c-a5a4-f77e0b993b04" class="image" style="text-align:left"><a href="image%205.png"><img style="width:190px" src="image%205.png"/></a></figure><p id="2003d4ce-60e2-8047-a37e-de3904eb55ce" class="">
+</p><p id="2003d4ce-60e2-8049-af42-f7b1b58cfad2" class="">
+</p><p id="2003d4ce-60e2-80bf-b6a0-de1cf8886242" class="">右側會彈出一個視窗</p><figure id="2003d4ce-60e2-800b-9bcb-ebf71a54224c" class="image" style="text-align:left"><a href="image%206.png"><img style="width:623.984375px" src="image%206.png"/></a></figure><p id="2003d4ce-60e2-80dc-9e38-e7a3c5b83b4d" class="">
+</p><p id="2003d4ce-60e2-80a5-955d-cc100e80a597" class="">
+</p><p id="2003d4ce-60e2-8068-903a-e88d536b1fd5" class="">
+</p><p id="2003d4ce-60e2-80ce-b78f-f25ef35cbae1" class="">於搜尋框輸入 form ，點選 n8m Form</p><figure id="2003d4ce-60e2-8053-96d5-f7f7543b26c1" class="image" style="text-align:left"><a href="image%207.png"><img style="width:385px" src="image%207.png"/></a></figure><p id="2003d4ce-60e2-8061-b05f-ced49776c9da" class="">
+</p><p id="2003d4ce-60e2-8075-b9c2-d7d41b241758" class="">
+</p><p id="2003d4ce-60e2-8006-b979-ed65dc552a16" class="">繼續點選 On new n8n Form event</p><figure id="2003d4ce-60e2-8019-a874-d00b3a50b87a" class="image" style="text-align:left"><a href="image%208.png"><img style="width:394px" src="image%208.png"/></a></figure><p id="2003d4ce-60e2-8025-b38f-ca3a740ff00c" class="">
+</p><p id="2003d4ce-60e2-8008-abbd-fb9c51c456f3" class="">
+</p><p id="2003d4ce-60e2-8006-b5b0-f0dcfe38b6e2" class="">出現節點設置視窗，先不要慌。</p><figure id="2003d4ce-60e2-80c1-b11a-ff0c66caa8b5" class="image" style="text-align:left"><a href="image%209.png"><img style="width:395px" src="image%209.png"/></a></figure><p id="2003d4ce-60e2-80c1-9757-f2ac7dc2dbe5" class="">
+</p><p id="2003d4ce-60e2-8030-b8b0-c507fc19fa69" class="">
+</p><p id="2003d4ce-60e2-805e-b7ed-fb528fa0a9d8" class="">Form Title 輸入 ‘檔案選擇’，然後點一下 ‘Add Form Element’ </p><figure id="2003d4ce-60e2-801c-b0a2-d2f5416a9c71" class="image" style="text-align:left"><a href="image%2010.png"><img style="width:375px" src="image%2010.png"/></a></figure><p id="2003d4ce-60e2-80d8-9c49-fc741f80079b" class="">
+</p><p id="2003d4ce-60e2-80d1-be34-c80324de333c" class="">
+</p><p id="2003d4ce-60e2-80f7-a879-e4958c43a7c6" class="">Field Name 輸入 ‘<mark class="highlight-red"><strong>inputFiles</strong></mark>’</p><p id="2003d4ce-60e2-807f-b7f7-c1eb9f927185" class="">Element Type 選擇 ‘File’</p><p id="2003d4ce-60e2-8099-ad2f-d4bbcd97bbe3" class="">Multiple Files 撥到左邊</p><p id="2003d4ce-60e2-802e-8f1f-fa7eb9b825ed" class="">Accepted File Types 輸入 ‘pdf’</p><p id="2003d4ce-60e2-8037-87cc-c14532b83bc1" class="">最後按一下 ESC 關閉這個設定畫面</p><figure id="2003d4ce-60e2-80c6-902c-d62e9f67c7b8" class="image" style="text-align:left"><a href="image%2011.png"><img style="width:384px" src="image%2011.png"/></a></figure><p id="2003d4ce-60e2-80ee-8a2c-f7d2e3c703d7" class="">
+</p><p id="2003d4ce-60e2-80c5-9640-c714a30474b4" class="">
+</p><p id="2003d4ce-60e2-80af-ac9d-d976d28a8802" class="">看到跑出來了，緊接著按一下節點右邊的加號</p><figure id="2003d4ce-60e2-807a-9354-faea5445bb87" class="image" style="text-align:left"><a href="image%2012.png"><img style="width:537px" src="image%2012.png"/></a></figure><p id="2003d4ce-60e2-80ae-99c7-e5332b1ada8e" class="">
+</p><p id="2003d4ce-60e2-800e-8faf-d86817b7fcb6" class="">
+</p><p id="2003d4ce-60e2-8059-9dce-fe6fd8acf834" class="">在搜尋框輸入 ‘extract’ 並選擇 ‘Extract from File’</p><figure id="2003d4ce-60e2-8061-9328-f6f847bd006e" class="image" style="text-align:left"><a href="image%2013.png"><img style="width:382px" src="image%2013.png"/></a></figure><p id="2003d4ce-60e2-8049-932c-fcff2d87fa26" class="">
+</p><p id="2003d4ce-60e2-802f-9bb5-f489b4efb6f9" class="">
+</p><p id="2003d4ce-60e2-8000-a019-d99e28639a91" class="">繼續選擇 ‘Extract from PDF’</p><figure id="2003d4ce-60e2-801a-ae8b-d2aa63680c4b" class="image" style="text-align:left"><a href="image%2014.png"><img style="width:314px" src="image%2014.png"/></a></figure><p id="2003d4ce-60e2-80f5-913a-e0df4ca58ea6" class="">
+</p><p id="2003d4ce-60e2-80ef-9149-f418bcd53461" class="">
+</p><p id="2003d4ce-60e2-806e-b038-c3b2dc3cc699" class="">接著在節點設定畫面的 Input Binary Field 從 ‘data’ 改成 ‘inputFile’，然後按 ESC 關閉設定畫面。</p><figure id="2003d4ce-60e2-800a-995a-d5b470a3eeb7" class="image" style="text-align:left"><a href="image%2015.png"><img style="width:586px" src="image%2015.png"/></a></figure><p id="2003d4ce-60e2-80f9-83d5-f812229cd8d1" class="">
+</p><p id="2003d4ce-60e2-8093-bc10-f4a9df3efe76" class="">
+</p><p id="2003d4ce-60e2-8016-a433-fa1eb0b26b32" class="">在 Extract from File 右邊加號點一下，在搜尋框輸入 supabasse，點選 Supabase Vector Store</p><figure id="2003d4ce-60e2-805f-a01d-f7878d333749" class="image"><a href="image%2016.png"><img style="width:859.984375px" src="image%2016.png"/></a></figure><p id="2003d4ce-60e2-80da-b6ce-e7d0aa147cf8" class="">
+</p><p id="2003d4ce-60e2-8002-8574-c212a812f448" class="">
+</p><p id="2003d4ce-60e2-8015-80e6-c1604bba4ca9" class="">點選 Add documents to vector store</p><figure id="2003d4ce-60e2-806b-b33e-e3a4a9bf4b48" class="image" style="text-align:left"><a href="image%2017.png"><img style="width:390px" src="image%2017.png"/></a></figure><p id="2003d4ce-60e2-80bb-923b-c9bf2246c93d" class="">
+</p><p id="2003d4ce-60e2-8023-9456-deb9a8487c4e" class="">
+</p><p id="2003d4ce-60e2-80e8-9813-e094b281256e" class="">接著會自動打開設定視窗，點選右邊的鉛筆</p><figure id="2003d4ce-60e2-8043-b02f-e708fda4cb08" class="image" style="text-align:left"><a href="image%2018.png"><img style="width:580px" src="image%2018.png"/></a></figure><p id="2003d4ce-60e2-8049-a2fa-cad9f2799dc3" class="">
+</p><p id="2003d4ce-60e2-80c7-a71f-ed7be9cbe38b" class="">
+</p><p id="2003d4ce-60e2-8067-8d7d-c0d9b85172ca" class="">Credential 設定視窗</p><figure id="2003d4ce-60e2-802d-aa48-c8e022f196c4" class="image"><a href="image%2019.png"><img style="width:859.984375px" src="image%2019.png"/></a></figure><p id="2003d4ce-60e2-80e0-ad82-f035a1edb2f9" class="">
+</p><p id="2003d4ce-60e2-8080-9ae2-f1e1f407d5f8" class="">
+</p><p id="2003d4ce-60e2-80a4-81c6-c9856f556aea" class="">然後回到 Supabase 網頁，到 API Settings 頁面。</p><p id="2003d4ce-60e2-8036-ae9f-dd4c2b44008d" class="">複製 Project URL 貼到 n8n 的 Host 欄位</p><p id="2003d4ce-60e2-8070-a5b7-d60ff88c9b78" class="">複製 Supabase 的 service_role 貼到 n8n 的 Service Role Secret 欄位</p><p id="2003d4ce-60e2-80f8-8810-e47d746f546d" class="">最後點選右上角的 Save，會出現認證成功訊息。</p><figure id="2003d4ce-60e2-8094-bd24-c37b7e74258f" class="image"><a href="image%2020.png"><img style="width:859.984375px" src="image%2020.png"/></a></figure><figure id="2003d4ce-60e2-8006-a105-c69081db23b5" class="image" style="text-align:left"><a href="image%2021.png"><img style="width:623.984375px" src="image%2021.png"/></a></figure><p id="2003d4ce-60e2-80ee-b71c-dbc855045a31" class="">
+</p><p id="2003d4ce-60e2-8032-9a22-ceac056807e0" class="">
+</p><p id="2003d4ce-60e2-8020-9286-f0aeb1676b0b" class="">接著會自動回到節點設定畫面，我們點選 Table Name 比較寬的那個下拉選單，選擇我們之前建立的 ‘nhi_drug_768’。</p><p id="2003d4ce-60e2-80db-a652-c3120b26a8ce" class="">然後按一下最下面的 Add Option</p><figure id="2003d4ce-60e2-806a-977b-cdf041ec130d" class="image" style="text-align:left"><a href="image%2022.png"><img style="width:590px" src="image%2022.png"/></a></figure><p id="2003d4ce-60e2-8040-8038-c8499fe409d0" class="">
+</p><p id="2003d4ce-60e2-8042-af77-f963a1d3071b" class="">
+</p><p id="2003d4ce-60e2-80c3-b19b-cf720471fda5" class="">將 Query Name 從 match_documents 改成 match_nhi_drug_768</p><p id="2003d4ce-60e2-8052-8c51-f960c7ce37a7" class="">然後按 ESC 關閉設定畫面 </p><figure id="2003d4ce-60e2-809c-9177-f24cac960d17" class="image" style="text-align:left"><a href="image%2023.png"><img style="width:586px" src="image%2023.png"/></a></figure><p id="2003d4ce-60e2-804a-9afb-cc5b5b739f68" class="">
+</p><p id="2003d4ce-60e2-80e3-b39b-e393b3b7c9c4" class="">
+</p><p id="2003d4ce-60e2-8082-ba4b-f08a0b989275" class="">現在的工作流會長這樣，點選 Supabase Vector Store 節點左下的鬚鬚</p><figure id="2003d4ce-60e2-800a-924c-f90210221dbe" class="image"><a href="image%2024.png"><img style="width:859.953125px" src="image%2024.png"/></a></figure><p id="2003d4ce-60e2-808c-850d-fe6301af1f3c" class="">
+</p><p id="2003d4ce-60e2-8094-96b6-e4bf8e10d027" class="">
+</p><p id="2003d4ce-60e2-8011-84a1-ebb828441018" class="">選擇 Embedding model，這邊我們先選擇 Embeddings Google Gemini</p><figure id="2003d4ce-60e2-80de-a09f-f8f871c67950" class="image" style="text-align:left"><a href="image%2025.png"><img style="width:310px" src="image%2025.png"/></a></figure><p id="2003d4ce-60e2-8047-af57-f394f87bb415" class="">
+</p><p id="2003d4ce-60e2-8008-b887-f84b3b50a0ce" class="">
+</p><p id="2003d4ce-60e2-80d1-bb3a-d194101920d7" class="">接著下拉點選 Create new credential</p><figure id="2003d4ce-60e2-8078-a620-c99b95dedb37" class="image" style="text-align:left"><a href="image%2026.png"><img style="width:582px" src="image%2026.png"/></a></figure><p id="2003d4ce-60e2-8057-ab0a-ffd76463cd42" class="">
+</p><p id="2003d4ce-60e2-80f0-affa-f784806a7600" class="">
+</p><p id="2003d4ce-60e2-804d-b973-fd9f69f23ab4" class="">改名稱，然後貼上 API Key</p><figure id="2003d4ce-60e2-8070-85e2-ecbad00ee376" class="image"><a href="image%2027.png"><img style="width:518.28125px" src="image%2027.png"/></a></figure><p id="2003d4ce-60e2-8081-974f-e1aa5eadbec4" class="">
+</p><p id="2003d4ce-60e2-800a-98c5-f5ee24a8022f" class="">
+</p><p id="2003d4ce-60e2-80dd-8e5b-d793612c7401" class="">忘記 API Key 的可以回到 Google Cloud 查閱 </p><figure id="2003d4ce-60e2-808a-ab52-eb24f58f44f4" class="image"><a href="image%2028.png"><img style="width:518.28125px" src="image%2028.png"/></a></figure><p id="2003d4ce-60e2-80ae-ace7-f609497bd6d8" class="">
+</p><p id="2003d4ce-60e2-80ec-8a4d-faa7b09bcff5" class="">
+</p><p id="2003d4ce-60e2-80b2-a79e-c5ffad71fa6d" class="">貼上 API key 後按右上的 Save，然後按旁邊X關掉畫面。</p><figure id="2003d4ce-60e2-8095-bb14-c62bcdd69679" class="image"><a href="image%2029.png"><img style="width:518.296875px" src="image%2029.png"/></a></figure><figure id="2003d4ce-60e2-8053-824b-dd75d0ff15aa" class="image"><a href="image%2030.png"><img style="width:332px" src="image%2030.png"/></a></figure><p id="2003d4ce-60e2-8032-bc53-c2d78a9c3e94" class="">
+</p><p id="2003d4ce-60e2-803e-856e-e46c60194e32" class="">
+</p><p id="2003d4ce-60e2-80c1-8e21-fc685c037c30" class="">
+</p><p id="2003d4ce-60e2-8046-b790-f90f04cf71df" class="">接著下拉選擇 models/test-embedding-004，然後按 ESC 關閉畫面。</p><figure id="2003d4ce-60e2-8048-8a92-e952329a5859" class="image" style="text-align:left"><a href="image%2031.png"><img style="width:591px" src="image%2031.png"/></a></figure><p id="2003d4ce-60e2-8034-a9f5-de8573e5bc41" class="">
+</p><p id="2003d4ce-60e2-805d-85f6-db02a62c695b" class="">
+</p><p id="2003d4ce-60e2-80f7-8c8a-e37478c37a60" class="">此時可以看到左下的鬚鬚長出一顆圓球</p><figure id="2003d4ce-60e2-8026-8a7c-d9faa56237f1" class="image"><a href="image%2032.png"><img style="width:518.296875px" src="image%2032.png"/></a></figure><p id="2003d4ce-60e2-8021-9d16-d0f522f7a389" class="">
+</p><p id="2003d4ce-60e2-80b2-bfdf-c13bdb2c1539" class="">
+</p><p id="2003d4ce-60e2-8058-b649-f2ec9566fa22" class="">這時候看到 Supabase 節點還是紅的，代表還有問題沒解決，此時點右下角的鬚鬚。</p><p id="2003d4ce-60e2-8091-9509-ebcd1aeafa36" class="">點選 Default Data Loader</p><figure id="2003d4ce-60e2-80a9-b258-c0a6e06de24f" class="image" style="text-align:left"><a href="image%2033.png"><img style="width:389px" src="image%2033.png"/></a></figure><p id="2003d4ce-60e2-8074-977a-feef5765285e" class="">
+</p><p id="2003d4ce-60e2-8028-84e8-d9ca62eb207f" class="">
+</p><p id="2003d4ce-60e2-8063-8980-e980cd6a78b6" class="">
+</p><p id="2003d4ce-60e2-8053-a9c8-d3c0e3fc5057" class="">點選 Add Option，然後點 Metadata。</p><figure id="2003d4ce-60e2-8012-934a-c6bb93202bf9" class="image"><a href="image%2034.png"><img style="width:518.3125px" src="image%2034.png"/></a></figure><p id="2003d4ce-60e2-8055-988f-cd9f30e47c48" class="">
+</p><p id="2003d4ce-60e2-80c0-a78f-d7b58389afe4" class="">
+</p><p id="2003d4ce-60e2-8025-9d37-e5f120afb2cb" class="">接著點 Add property</p><figure id="2003d4ce-60e2-80ed-8908-e973e38b513b" class="image"><a href="image%2035.png"><img style="width:518.3125px" src="image%2035.png"/></a></figure><p id="2003d4ce-60e2-80f3-a868-f668efb11744" class="">
+</p><p id="2003d4ce-60e2-80b8-805a-edce825a32a8" class="">
+</p><p id="2003d4ce-60e2-801d-a5f5-c2958bdf5111" class="">Name 輸入 fileName，Value 貼上 </p><p id="2003d4ce-60e2-809b-b330-eb064144cec1" class="">{{ $(&#x27;On form submission&#x27;).item.json.inputFile.filename }}</p><p id="2003d4ce-60e2-80ee-9d16-c5dbabfbf96b" class="">並確認這個小格子的右上方的 Expression 是亮的。</p><figure id="2003d4ce-60e2-80d6-82f6-cf7c7dda15a9" class="image"><a href="image%2036.png"><img style="width:518.3125px" src="image%2036.png"/></a></figure><p id="2003d4ce-60e2-8053-8442-ec7ff4a9263d" class="">
+</p><p id="2003d4ce-60e2-80b2-a55a-d3b1839f6501" class="">
+</p><p id="2003d4ce-60e2-800c-92d2-ecba6783cb5e" class="">此時換成右下鬚鬚紅了，直接點一下它的加號</p><figure id="2003d4ce-60e2-805a-99a0-c65f7840397a" class="image"><a href="image%2037.png"><img style="width:518.3125px" src="image%2037.png"/></a></figure><p id="2003d4ce-60e2-80e9-9090-db46674bca58" class="">
+</p><p id="2003d4ce-60e2-80ad-b8de-cd11baa18133" class="">
+</p><p id="2003d4ce-60e2-80fe-acfb-dce9bdd11aa3" class="">選擇 Recursive Character Text Splitter</p><figure id="2003d4ce-60e2-800e-bcad-debf86f76e1f" class="image" style="text-align:left"><a href="image%2038.png"><img style="width:387px" src="image%2038.png"/></a></figure><p id="2003d4ce-60e2-805d-884d-fe46845a16c0" class="">
+</p><p id="2003d4ce-60e2-8020-963f-f0f03d1674a8" class="">
+</p><p id="2003d4ce-60e2-806a-b902-ecdd02ac599a" class="">改成 200，然後按 ESC 關閉設定畫面。</p><figure id="2003d4ce-60e2-8025-b264-d9ebd2855c4b" class="image"><a href="image%2039.png"><img style="width:518.3125px" src="image%2039.png"/></a></figure><p id="2003d4ce-60e2-80f9-85f8-f31e475c7a1d" class="">
+</p><p id="2003d4ce-60e2-801b-b37f-e9f4b479a0d7" class="">
+</p><p id="2003d4ce-60e2-8087-8402-cd82a1c9cffe" class="">這時候的畫面，點一下 Execute workflow 首次觸發</p><figure id="2003d4ce-60e2-807b-90d4-c5657ee0f4ba" class="image"><a href="image%2040.png"><img style="width:518.3125px" src="image%2040.png"/></a></figure><p id="2003d4ce-60e2-8027-9827-c319aa324eef" class="">
+</p><p id="2003d4ce-60e2-8091-8bbc-eb61df6cfe87" class="">
+</p><p id="2003d4ce-60e2-802e-be45-c303f4ae0574" class="">點選 ‘選擇檔案’，然後選擇要寫入向量資料庫的檔案後，點選 Submit。</p><p id="2023d4ce-60e2-8003-90e1-df77ca34cd98" class="">示範檔案可以到此下載 : <a href="https://www.nhi.gov.tw/ch/cp-13108-67ddf-2508-1.html">最新版藥品給付規定內容(整份帶走)-114.04.25更新-衛生福利部中央健康保險署-健保服務-健保藥品與特材及醫療服務-健保藥品-藥品相關法規與規範-藥品給付規定-最新版藥品給付規定內容(整份帶走)</a></p><figure id="2003d4ce-60e2-8017-bd35-c9c1aaad0ef4" class="image" style="text-align:left"><a href="image%2041.png"><img style="width:515px" src="image%2041.png"/></a></figure><p id="2003d4ce-60e2-80ad-8422-ff421721a166" class="">
+</p><p id="2003d4ce-60e2-8027-9bcf-f8e9123a3e7e" class="">
+</p><p id="2003d4ce-60e2-8010-ad82-f6a766446b0b" class="">此時會發現背後開始偷偷跑了，有點措手不及但是沒關係，先關掉這個 Submit 視窗。</p><figure id="2003d4ce-60e2-80a0-8b76-c739bc2c9702" class="image"><a href="image%2042.png"><img style="width:518.3125px" src="image%2042.png"/></a></figure><p id="2003d4ce-60e2-80a2-886c-df88ae255233" class="">
+</p><p id="2003d4ce-60e2-80ea-ba7d-ef7692b3c3ec" class="">
+</p><p id="2003d4ce-60e2-8059-84f7-c9c7479aecca" class="">看一眼剛剛執行成功的 Executions</p><figure id="2003d4ce-60e2-8001-92ef-c3a04ae731e2" class="image"><a href="image%2043.png"><img style="width:518.3125px" src="image%2043.png"/></a></figure><p id="2003d4ce-60e2-809a-8683-c28080a0fff7" class="">
+</p><p id="2003d4ce-60e2-80f9-a2ab-dcd20038295b" class="">
+</p><p id="2003d4ce-60e2-8002-b866-c34834df7054" class="">此時回到 Supabase 網站，打開我們的資料庫，就可以看到剛剛寫入的資料了。</p><figure id="2003d4ce-60e2-807e-92dd-dae9451d5159" class="image"><a href="image%2044.png"><img style="width:518.3125px" src="image%2044.png"/></a></figure><p id="2003d4ce-60e2-805e-b739-ef05d417a4d9" class="">
+</p><hr id="2003d4ce-60e2-80d4-a9bb-c7dc0023a2dc"/><p id="2003d4ce-60e2-80db-9ef0-deceede20173" class="">
+</p><p id="2003d4ce-60e2-80c1-be24-c39088764e8b" class="">此時還有最後一個步驟：刪除重複資料</p><p id="2003d4ce-60e2-8092-9624-feb848a67ead" class="">在 Extract from File 節點右邊的線上面按一下加號</p><figure id="2003d4ce-60e2-80d6-8312-dcfbef23ee74" class="image"><a href="image%2045.png"><img style="width:518.3125px" src="image%2045.png"/></a></figure><p id="2003d4ce-60e2-80c9-8f9f-cf67a0931ac3" class="">
+</p><p id="2003d4ce-60e2-803b-ae53-eecb9ad78e7b" class="">
+</p><p id="2003d4ce-60e2-80f2-b7f0-c2b8db091632" class="">輸入 supabase 搜尋，然後點選 Supabase</p><figure id="2003d4ce-60e2-8005-8e01-cfaaa1db64cc" class="image" style="text-align:left"><a href="image%2046.png"><img style="width:384px" src="image%2046.png"/></a></figure><p id="2003d4ce-60e2-8066-a076-cd9dd0a82eca" class="">
+</p><p id="2003d4ce-60e2-80d9-a38f-fa47039814d5" class="">
+</p><p id="2003d4ce-60e2-804c-a5de-ce4e4fcfd509" class="">下一層繼續選擇 Delete a row</p><figure id="2003d4ce-60e2-80b8-ad92-e51afe6ae9c3" class="image" style="text-align:left"><a href="image%2047.png"><img style="width:383px" src="image%2047.png"/></a></figure><p id="2003d4ce-60e2-8059-9bd5-df1522e9e54d" class="">
+</p><p id="2003d4ce-60e2-8069-9a09-e65ee8ec5818" class="">
+</p><p id="2003d4ce-60e2-8054-9a6f-cdd3d61b0b0e" class="">這邊點選 Table Name or ID 並下拉選擇 nhi_drug_768</p><figure id="2003d4ce-60e2-8035-8e87-e80a36791eba" class="image"><a href="image%2048.png"><img style="width:518.3125px" src="image%2048.png"/></a></figure><p id="2003d4ce-60e2-8071-a475-c8c0072773d8" class="">
+</p><p id="2003d4ce-60e2-80c2-b231-f3ff8d3cbc84" class="">
+</p><p id="2003d4ce-60e2-803a-84ae-edf14e784b9a" class="">Select Type 點選下拉，選擇 String。</p><figure id="2003d4ce-60e2-803a-a38c-ef8162a4a4b3" class="image"><a href="image%2049.png"><img style="width:518.3125px" src="image%2049.png"/></a></figure><p id="2003d4ce-60e2-801e-9479-eded3f657b2c" class="">
+</p><p id="2003d4ce-60e2-801c-a29e-e78b42cdb09a" class="">
+</p><p id="2003d4ce-60e2-8024-84d0-cf0982c6522c" class="">在 Filters (String) 貼上下面的字串，然後點一下格子右上的 Expression。 </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2003d4ce-60e2-8028-9522-cca10896db7f" class="code"><code class="language-JavaScript">metadata-&gt;&gt;fileName=like.{{ $(&#x27;On form submission&#x27;).item.json.inputFile.filename }}</code></pre><figure id="2003d4ce-60e2-8093-a2f3-f768aea6c58d" class="image"><a href="image%2050.png"><img style="width:518.3125px" src="image%2050.png"/></a></figure><p id="2003d4ce-60e2-80c4-ba4a-d645043203cb" class="">
+</p><p id="2003d4ce-60e2-8064-bc69-edfb01d43104" class="">
+</p><p id="2003d4ce-60e2-808a-9691-f98739d513f0" class="">關掉後，會看到剛剛的 delete 節點流落在外</p><figure id="2003d4ce-60e2-80e8-bcd0-d58ea335463a" class="image"><a href="image%2051.png"><img style="width:518.296875px" src="image%2051.png"/></a></figure><p id="2003d4ce-60e2-8022-97a0-e1e0c539f2b0" class="">
+</p><p id="2003d4ce-60e2-80d0-ab07-fbbf25ed26cc" class="">
+</p><p id="2003d4ce-60e2-8065-aac8-e0b24c28263e" class="">把它拉到 Supabase Vector Store 上方，並且從 Extract from File 拉一條線連接起來</p><figure id="2003d4ce-60e2-80aa-9081-fa98425b5c2a" class="image"><a href="image%2052.png"><img style="width:518.3125px" src="image%2052.png"/></a></figure><p id="2003d4ce-60e2-8072-a0fb-fc34ef75fd12" class="">
+</p><p id="2003d4ce-60e2-8043-9bd4-ecbcde806f23" class="">
+</p><p id="2003d4ce-60e2-8059-b2d8-c0fa86baac16" class="">再次啟動工作流，並且選擇同一個 PDF 檔案上傳。</p><figure id="2003d4ce-60e2-8055-8e4b-e42fc155d267" class="image"><a href="image%2053.png"><img style="width:518.296875px" src="image%2053.png"/></a></figure><p id="2003d4ce-60e2-805a-ad12-fa958ca54fa5" class="">
+</p><p id="2003d4ce-60e2-80e0-b29b-f7e893263310" class="">
+</p><p id="2003d4ce-60e2-80a0-b1b1-fa57f87920c8" class="">等待跑完，觀察 delete: row 節點有沒有數量，有就對了。</p><figure id="2003d4ce-60e2-8065-9914-cf2847e5283d" class="image"><a href="image%2054.png"><img style="width:287px" src="image%2054.png"/></a></figure><p id="2003d4ce-60e2-809c-85b0-f1a8fc08fea0" class="">
+</p><p id="2003d4ce-60e2-80b0-8589-d8c53cec80b3" class="">
+</p><p id="2003d4ce-60e2-80c4-ae71-da22c05accf3" class="">
+</p><p id="2003d4ce-60e2-806a-8386-e267204f2310" class="">至此完成將檔案塞到向量資料庫的工作流，並且遇到同檔名的時候會先刪除舊資料，避免重複塞入。</p><figure id="2003d4ce-60e2-80d2-ad40-d077f33420bb" class="image"><a href="image%2055.png"><img style="width:518.3125px" src="image%2055.png"/></a></figure></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

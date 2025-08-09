@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n 教學 (三)：申請 Gemini API Key</title>
+    <meta name="description" content="n8n 教學系列第三篇，指導您如何申請 Google Gemini API Key，這是啟用 AI 相關功能的重要步驟。">
+    <meta name="keywords" content="n8n教學, Gemini API, Google AI Studio, API Key申請, AI功能, Google Cloud">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/resume.css">
+</head>
+<body>
+    <div class="alert alert-danger alert-dismissible fade show text-center animate__animated animate__fadeInDown" role="alert" style="margin-bottom: 0;">
+        <strong>這邊請特別注意！</strong>使用如果您的 API key 綁定在免費的 (free tier) 的專案中，也就是沒有綁定帳單並啟用，那麼 Gemini 經手的資料就有可能被作為訓練用，如有機敏資訊，並且一定要使用 Gemini 的話，請使用付費方案。
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../resume.html">簡歷</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">生活分享</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../contact.html">聯絡我</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="blog-post">
+            <h1>n8n 教學 (三)：申請 Gemini API Key</h1>
+            <p class="post-meta">發布日期：2025年5月</p>
+            <div class="post-content">
+                <p class="">接下來要來申請免費的 AI API</p><figure class="image" style="text-align:left"><a href="3/image.png"><img style="width:481px" src="3/image.png"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">到 <a href="https://cloud.google.com/?hl=zh-TW">https://cloud.google.com/?hl=zh-TW</a></p><p class="">登入 Google 帳號</p><p class="">點選右上角 Console控制台</p><figure class="image" style="text-align:left"><a href="3/image%201.png"><img style="width:432px" src="3/image%201.png" alt="Google Cloud Console登入頁面"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">點左上</p><figure class="image" style="text-align:left"><a href="3/image%202.png"><img style="width:380px" src="3/image%202.png" alt="Google Cloud Console選單"/></a></figure><p class="">
+</p><p class="">點新增專案</p><figure class="image"><a href="3/image%203.png"><img style="width:533.28125px" src="3/image%203.png" alt="Google Cloud Console新增專案"/></a></figure><p class="">
+</p><p class="">改成 n8nTest，然後點建立。</p><figure class="image"><a href="3/image%204.png"><img style="width:518.3125px" src="3/image%204.png" alt="Google Cloud Console建立專案"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">等待數秒</p><figure class="image" style="text-align:left"><a href="3/image%205.png"><img style="width:412px" src="3/image%205.png" alt="Google Cloud Console專案建立中"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">點一下 ‘選取專案’</p><figure class="image" style="text-align:left"><a href="3/image%206.png"><img style="width:408px" src="3/image%206.png" alt="Google Cloud Console選取專案"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">確認左上角變成 n8nTest</p><figure class="image" style="text-align:left"><a href="3/image%207.png"><img style="width:372px" src="3/image%207.png" alt="Google Cloud Console專案選取成功"/></a></figure><p class="">
+</p><p class="">
+</p><hr/><p class="">
+</p><p class="">開一個新網頁，到 <a href="https://aistudio.google.com/">https://aistudio.google.com/</a> 並登入 Google 帳號</p><p class="">直接點選上方的 Get API Key</p><figure class="image"><a href="3/image%208.png"><img style="width:859.984375px" src="3/image%208.png" alt="Google AI Studio取得API金鑰"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">繼續點選 Create API key</p><figure class="image"><a href="3/image%209.png"><img style="width:859.984375px" src="3/image%209.png" alt="Google AI Studio建立API金鑰"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">點一下搜尋框，選擇先前建立的 n8nTest 專案</p><figure class="image" style="text-align:left"><a href="3/image%2010.png"><img style="width:463px" src="3/image%2010.png" alt="Google AI Studio選擇專案"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">緊接著點選 Create API key in existing project</p><figure class="image" style="text-align:left"><a href="3/image.png"><img style="width:481px" src="3/image.png" alt="Google AI Studio在現有專案中建立API金鑰"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">等待數秒</p><figure class="image" style="text-align:left"><a href="3/image%2011.png"><img style="width:199px" src="3/image%2011.png" alt="Google AI Studio金鑰生成中"/></a></figure><p class="">
+</p><p class="">
+</p><p class="">
+</p><p class="">
+</p><p class="">點選 Copy 並將 API key 保存在安全的地方</p><figure class="image"><a href="3/image%2012.png"><img style="width:518.296875px" src="3/image%2012.png" alt="Google AI Studio複製API金鑰"/></a></figure>
+            </div>
+        </section>
+    </main>
+                <div class="mt-5 text-center">
+                    <a href="../n8n-tutorials.html" class="btn btn-secondary">返回 n8n 教學列表</a>
+                </div>
+
+    <div class="alert alert-danger alert-dismissible fade show text-center animate__animated animate__fadeInUp" role="alert" style="margin-top: 0;">
+        <strong>這邊請特別注意！</strong>使用如果您的 API key 綁定在免費的 (free tier) 的專案中，也就是沒有綁定帳單並啟用，那麼 Gemini 經手的資料就有可能被作為訓練用，如有機敏資訊，並且一定要使用 Gemini 的話，請使用付費方案。
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2025 侯俊嘉(Luke Hou). All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="../js/main.js"></script>
+</body>
+</html>

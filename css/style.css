@@ -1,0 +1,443 @@
+/* 全局樣式 */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* 導航欄樣式 */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.nav-link {
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: #007bff;
+}
+
+/* 主要內容區域 */
+main {
+    min-height: calc(100vh - 140px);
+    padding: 2rem 0;
+}
+
+/* 標題樣式 */
+h1, h2, h3 {
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #007bff;
+}
+
+h2 {
+    font-size: 2rem;
+    color: #0056b3;
+}
+
+h3 {
+    font-size: 1.5rem;
+    color: #004085;
+}
+
+/* 響應式調整 */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+    h2 {
+        font-size: 1.75rem;
+    }
+    h3 {
+        font-size: 1.25rem;
+    }
+}
+
+
+/* 作品集網格樣式 */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.portfolio-item {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.portfolio-item h3 {
+    margin-bottom: 1rem;
+}
+
+.portfolio-item img {
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    width: 100%;
+    height: auto;
+}
+
+.portfolio-item p {
+    margin-bottom: 1rem;
+}
+
+/* 按鈕樣式 */
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #545b62;
+    border-color: #545b62;
+}
+
+/* 頁腳樣式 */
+footer {
+    background-color: #f8f9fa;
+    padding: 1rem 0;
+    text-align: center;
+    box-shadow: 0 -2px 4px rgba(0,0,0,.1);
+}
+
+/* 模態框樣式 */
+.modal-content {
+    border-radius: 10px;
+}
+
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal-title {
+    color: #007bff;
+}
+
+.modal-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+/* 額外的實用類 */
+.text-primary {
+    color: #007bff;
+}
+
+.bg-light {
+    background-color: #f8f9fa;
+}
+
+.mt-5 {
+    margin-top: 3rem;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.py-3 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+/* 博客網格樣式 */
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.blog-item {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.blog-item img {
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.blog-item h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.blog-item p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+
+
+/* Resume Page Specific Styles */
+.profile-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.profile-header img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #007bff;
+    margin-bottom: 1rem;
+}
+
+.profile-header h1 {
+    font-size: 2.8rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.profile-header p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.section-title {
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    color: #007bff;
+}
+
+.experience-item, .education-item, .skill-item {
+    margin-bottom: 2rem;
+    padding-left: 1.5rem;
+    border-left: 3px solid #eee;
+}
+
+.experience-item h3, .education-item h3 {
+    font-size: 1.6rem;
+    color: #0056b3;
+    margin-bottom: 0.5rem;
+}
+
+.experience-item p, .education-item p {
+    margin-bottom: 0.3rem;
+}
+
+.experience-item ul, .education-item ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.experience-item ul li, .education-item ul li {
+    margin-bottom: 0.5rem;
+}
+
+.skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.skill-badge {
+    background-color: #007bff;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+/* Timeline for resume */
+.timeline {
+    position: relative;
+    padding: 20px 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10px;
+    width: 3px;
+    height: 100%;
+    background: #007bff;
+}
+
+.timeline-item {
+    margin-bottom: 30px;
+    position: relative;
+    padding-left: 40px;
+}
+
+.timeline-icon {
+    width: 20px;
+    height: 20px;
+    background: #007bff;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    top: 5px;
+    z-index: 1;
+}
+
+.timeline-content {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.timeline-content h2 {
+    font-size: 1.4rem;
+    color: #0056b3;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.timeline-content h3 {
+    font-size: 1.2rem;
+    color: #004085;
+    margin-bottom: 5px;
+}
+
+.timeline-content p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.timeline-content ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.timeline-content ul li {
+    margin-bottom: 5px;
+}
+
+/* Adjustments for index.html profile section */
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.profile-section img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #007bff;
+}
+
+.profile-section .text-content h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.profile-section .text-content p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.social-links a {
+    margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+    .profile-section {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .profile-section img {
+        margin-bottom: 1.5rem;
+    }
+
+    .profile-section .text-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .profile-section .text-content p {
+        font-size: 1rem;
+    }
+}
+
+/* Tutorial Page Specific Styles */
+.tutorial-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.5rem auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.tutorial-content figure {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+.tutorial-content figure img {
+    margin: 0 auto;
+}
+.tutorial-content hr {
+    margin: 2rem 0;
+    border-top: 2px solid #eee;
+}
+.highlight-red {
+    background-color: #ffe0e0;
+    color: #d9534f;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+}
+.alert-custom {
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+    color: #856404;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0.25rem;
+}
