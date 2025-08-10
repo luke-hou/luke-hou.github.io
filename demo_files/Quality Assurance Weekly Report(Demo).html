@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quality Weekly Report: 2025W32</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background-color: #1e1e1e;
+            padding: 25px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+        h1, h2, h3 {
+            color: #bb86fc;
+            border-bottom: 2px solid #373737;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 1.8em;
+        }
+        h3 {
+            font-size: 1.4em;
+            border-bottom: 1px solid #373737;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #333;
+        }
+        th {
+            background-color: #333333;
+            color: #bb86fc;
+            font-weight: bold;
+        }
+        td {
+            text-align: left;
+        }
+        td.number, th.number {
+            text-align: right;
+        }
+        .failed {
+            color: #cf6679;
+            font-weight: bold;
+        }
+        .passed {
+            color: #03dac6;
+        }
+        a {
+            color: #82aaff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        strong {
+            font-weight: bold;
+        }
+        .summary-block, .analysis-block {
+            background-color: #2a2a2a;
+            border-left: 5px solid #bb86fc;
+            padding: 15px 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+        .chart-container {
+            padding: 20px;
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            margin-top: 25px;
+            margin-bottom: 40px;
+        }
+        .priority-highest { color: #ff4d6d; }
+        .priority-high { color: #ffb3c1; }
+        .priority-medium { color: #fff3bf; }
+        .priority-low { color: #c8f7c5; }
+        .priority-default { color: #a0a0a0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quality Weekly Report: 2025W32 (2025-08-04 to 2025-08-08)</h1>
+
+        <div class="summary-block">
+            <h3>整體測試總結</h3>
+            <p>
+                本週整體測試進展穩健，核心數據表現如下：<br>
+                - <strong>光明燈點燈流程通過率 (實測):</strong> <strong style="font-size: 1.1em; color: #03dac6;">85.0%</strong><br>
+                - <strong>Issue 驗證成功率:</strong> <strong style="font-size: 1.1em; color: #03dac6;">80.0%</strong><br>
+                - <strong>新增 Highest Priority Bugs:</strong> <strong style="font-size: 1.1em; color: #cf6679;">2</strong>
+            </p>
+            <p>
+                本週品質趨勢顯示，核心的點燈及安太歲流程相對穩定，通過率顯著提升。然而，新發現的 2 個 Highest Priority Bug 均與金流及核心登入功能相關，對系統主要營收及使用者體驗構成直接風險，建議開發團隊應優先投入資源修復。
+            </p>
+        </div>
+
+        <h2>📊 光明燈點燈流程測試分析</h2>
+
+        <div class="analysis-block">
+            <p>
+                本週「光明燈點燈流程」實測通過率為 <strong style="font-size: 1.1em;">85.0%</strong>，相較於前一週的 78.0%，提升了 <strong style="font-size: 1.1em;" class="passed">7.0%</strong>，品質趨勢正向發展。執行率由 90.9% 下降至 83.3%，主要受中元普渡期間系統壓力較大及年度壓力測試活動影響，導致部分案例延後或無法執行。
+            </p>
+            <table id="test-case-changes">
+                <caption>本週光明燈點燈流程測項變動</caption>
+                <thead>
+                    <tr>
+                        <th>異動類型</th>
+                        <th>數量</th>
+                        <th>測項名稱</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>新增測項</td>
+                        <td class="number">1</td>
+                        <td>線上祈福同意書</td>
+                    </tr>
+                    <tr>
+                        <td>移除測項</td>
+                        <td class="number">0</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>表 1: 光明燈點燈流程 WoW 比較</h3>
+        <table id="wow-comparison-table">
+            <thead>
+                <tr>
+                    <th>指標</th>
+                    <th class="number">W-1 (W31)</th>
+                    <th class="number">W (W32)</th>
+                    <th class="number">WoW</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="passed">Passed</span></td><td class="number"><span class="passed">78</span></td><td class="number"><span class="passed">85</span></td><td class="number"><span class="passed">+7</span></td></tr>
+                <tr><td><strong class="failed">Failed</strong></td><td class="number"><strong class="failed">22</strong></td><td class="number"><strong class="failed">15</strong></td><td class="number"><strong class="failed">-7</strong></td></tr>
+                <tr><td>TBD</td><td class="number">5</td><td class="number">10</td><td class="number">+5</td></tr>
+                <tr><td>--</td><td class="number">5</td><td class="number">10</td><td class="number">+5</td></tr>
+                <tr><td>通過率 (實測)</td><td class="number"><strong style="font-size: 1.1em;">78.0%</strong></td><td class="number"><strong style="font-size: 1.1em;">85.0%</strong></td><td class="number"><strong style="font-size: 1.1em;" class="passed">+7.0%</strong></td></tr>
+                <tr><td>執行率</td><td class="number"><strong style="font-size: 1.1em;">90.9%</strong></td><td class="number"><strong style="font-size: 1.1em;">83.3%</strong></td><td class="number"><strong style="font-size: 1.1em;" class="failed">-7.6%</strong></td></tr>
+                <tr><td>應測總數</td><td class="number">110</td><td class="number">120</td><td class="number">+10</td></tr>
+            </tbody>
+        </table>
+        <div class="chart-container">
+            <canvas id="wowChart"></canvas>
+        </div>
+
+        <h3>表 2: 光明燈點燈流程歷史數據</h3>
+        <table id="history-table">
+            <thead>
+                <tr>
+                    <th>週別</th>
+                    <th class="number"><span class="passed">Passed</span></th>
+                    <th class="number"><strong class="failed">Failed</strong></th>
+                    <th class="number">TBD</th>
+                    <th class="number">--</th>
+                    <th class="number">實測</th>
+                    <th class="number">應測</th>
+                    <th class="number">通過率(實測)</th>
+                    <th class="number">執行率</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>本週數據 (W32)</td><td class="number"><span class="passed">85</span></td><td class="number"><strong class="failed">15</strong></td><td class="number">10</td><td class="number">10</td><td class="number">100</td><td class="number">120</td><td class="number"><strong style="font-size: 1.1em;">85.0%</strong></td><td class="number"><strong style="font-size: 1.1em;">83.3%</strong></td></tr>
+                <tr><td>W31</td><td class="number"><span class="passed">78</span></td><td class="number"><strong class="failed">22</strong></td><td class="number">5</td><td class="number">5</td><td class="number">100</td><td class="number">110</td><td class="number"><strong style="font-size: 1.1em;">78.0%</strong></td><td class="number"><strong style="font-size: 1.1em;">90.9%</strong></td></tr>
+                <tr><td>W30</td><td class="number"><span class="passed">75</span></td><td class="number"><strong class="failed">25</strong></td><td class="number">3</td><td class="number">2</td><td class="number">100</td><td class="number">105</td><td class="number"><strong style="font-size: 1.1em;">75.0%</strong></td><td class="number"><strong style="font-size: 1.1em;">95.2%</strong></td></tr>
+                <tr><td>W29</td><td class="number"><span class="passed">70</span></td><td class="number"><strong class="failed">30</strong></td><td class="number">0</td><td class="number">0</td><td class="number">100</td><td class="number">100</td><td class="number"><strong style="font-size: 1.1em;">70.0%</strong></td><td class="number"><strong style="font-size: 1.1em;">100.0%</strong></td></tr>
+            </tbody>
+        </table>
+        <div class="chart-container">
+            <canvas id="historyChart"></canvas>
+        </div>
+
+        <h3>表 3: 光明燈點燈流程 <strong class="failed">Failed</strong> 案例明細</h3>
+        <div class="chart-container" style="max-width: 600px; margin-left: auto; margin-right: auto;">
+             <canvas id="failedCasesChart"></canvas>
+        </div>
+        <div class="analysis-block">
+            <strong>分析重點：</strong>
+            <p>本週 Failed 案例主要集中在「智慧宮廟入口 & 系統登入」與「點燈/安太歲系統」，佔總失敗數的 28.6%。這些問題直接影響使用者進入系統及執行核心點燈流程，具有較高的風險。此外，「年度大型法會」的報名功能異常也需關注，可能影響重要宮廟活動的信眾參與度。</p>
+        </div>
+        <table id="failed-details-table">
+            <thead>
+                <tr>
+                    <th class="number">流水號</th>
+                    <th>項目 (功能模組/類別)</th>
+                    <th>測試案例標題 (簡述)</th>
+                    <th>相關 Ticket</th>
+                    <th>本週狀態 (W)</th>
+                    <th>上週狀態 (W-1)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td class="number">1</td><td>智慧宮廟入口 & 系統登入</td><td>閒置過久自動登出後，重新登入無反應</td><td><a href="https://mazu-temple.atlassian.net/browse/MAZU-1001" target="_blank">MAZU-1001</a></td><td><strong class="failed">Failed</strong></td><td><strong class="failed">Failed</strong></td></tr>
+                <tr><td class="number">2</td><td>點燈/安太歲系統</td><td>信眾類別下拉選單出現重複的宮廟委員選項</td><td><a href="https://mazu-temple.atlassian.net/browse/MAZU-1002" target="_blank">MAZU-1002</a></td><td><strong class="failed">Failed</strong></td><td><strong class="failed">Failed</strong></td></tr>
+                <tr><td class="number">3</td><td>祈福套餐管理</td><td>新增套餐按下取消後，資料仍被儲存</td><td><a href="https://mazu-temple.atlassian.net/browse/MAZU-1003" target="_blank">MAZU-1003</a></td><td><strong class="failed">Failed</strong></td><td><strong class="failed">Failed</strong></td></tr>
+                <tr><td class="number">4</td><td>代辦祈福儀式</td><td>未選擇祈福項目，卻可成功送出代辦申請</td><td><a href="https://mazu-temple.atlassian.net/browse/MAZU-1004" target="_blank">MAZU-1004</a></td><td><strong class="failed">Failed</strong></td><td><strong class="failed">Failed</strong></td></tr>
+                <tr><td class="number">5</td><td>信眾歷史紀錄查詢</td><td>複製過往祈福項目時，系統顯示請求超時</td><td><a href="https://mazu-temple.atlassian.net/browse/MAZU-1005" target="_blank">MAZU-1005</a></td><td><strong class="failed">Failed</strong></td><td><strong class="failed">Failed</strong></td></tr>
+                <tr><td class="number">6</td><td>線上祈福同意書</td><td>同意書視窗標題顯示為內部開發代號</td><td><a href="https://mazu-temple.atlassian.net/browse/MAZU-1006" target="_blank">MAZU-1006</a></td><td><strong class="failed">Failed</strong></td><td>--</td></tr>
+                <tr><td class="number">7</td><td>年度大型法會</td><td>中元普渡法會報名系統無法篩選場次</td><td><a href="https://mazu-temple.atlassian.net/browse/MAZU-1007" target="_blank">MAZU-1007</a></td><td><strong class="failed">Failed</strong></td><td><strong class="failed">Failed</strong></td></tr>
+            </tbody>
+        </table>
+
+        <h2>🔎 問題驗證摘要</h2>
+        <div class="analysis-block">
+            <p>本週共驗證 <strong>5</strong> 個問題。其中 <strong class="failed">1</strong> 個問題驗證失敗 (<strong class="failed">20.0%</strong>)，<strong>1</strong> 個問題為附帶說明通過 (<strong style="font-size: 1.1em;">20.0%</strong>)，顯示修復後的交付品質仍有改善空間，建議開發團隊關注驗證失敗的 Ticket，確保問題被完整解決。</p>
+        </div>
+        
+        <h3>驗證結果分佈</h3>
+        <table id="verification-summary-table">
+            <thead>
+                <tr>
+                    <th>驗證結果</th>
+                    <th class="number">數量</th>
+                    <th class="number">佔比 (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="passed">Passed</span></td><td class="number"><span class="passed">3</span></td><td class="number"><strong style="font-size: 1.1em;">60.0%</strong></td></tr>
+                <tr><td><strong class="failed">Failed</strong></td><td class="number"><strong class="failed">1</strong></td><td class="number"><strong style="font-size: 1.1em;" class="failed">20.0%</strong></td></tr>
+                <tr><td>PassWithNotes</td><td class="number">1</td><td class="number"><strong style="font-size: 1.1em;">20.0%</strong></td></tr>
+            </tbody>
+        </table>
+        <div class="chart-container" style="max-width: 600px; margin-left: auto; margin-right: auto;">
+            <canvas id="verificationChart"></canvas>
+        </div>
+        
+        <h3><strong class="failed">Failed</strong> & PassWithNotes 問題明細</h3>
+        <table id="verification-details-table">
+            <thead>
+                <tr>
+                    <th>Ticket</th>
+                    <th>Summary (Issue 摘要)</th>
+                    <th>驗證結果</th>
+                    <th>QA Remark</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><a href="https://mazu-temple.atlassian.net/browse/MAZU-0953" target="_blank">MAZU-0953</a></td><td>[媽祖廟] 祈福套餐 - 無法使用快速搜尋找到「委員專屬」套餐</td><td><strong class="failed">Failed</strong></td><td>快速搜尋仍無法找到與特定委員身份綁定的套餐。</td></tr>
+                <tr><td><a href="https://mazu-temple.atlassian.net/browse/MAZU-0954" target="_blank">MAZU-0954</a></td><td>[媽祖廟] 文案調整 - 將系統內的「即時列印」統一改為「產出報表」</td><td>PassWithNotes</td><td>已修正大部分文案，但「代辦祈福」模組的錯誤訊息未同步調整。已建立新票追蹤 MAZU-1004。</td></tr>
+            </tbody>
+        </table>
+        
+        <h2>🐛 Bug 回報總覽</h2>
+        <div class="analysis-block">
+            <p>本週共回報 <strong>7</strong> 個新 Bug。其中包含 <strong class="failed">2</strong> 個 <strong>Highest</strong> Priority Bug，分別影響「線上香油錢」及「系統登入」核心功能，對宮廟的正常運作與信眾體驗構成重大威脅，必須立即處理。另有 2 個 High Priority Bug 也需高度關注。</p>
+            <p><strong>排序邏輯:</strong> Highest > High > Medium > Low</p>
+        </div>
+
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 300px;">
+                <h3>按 Status 統計</h3>
+                <table id="bug-status-table">
+                    <thead><tr><th>Status</th><th class="number">數量</th><th class="number">佔比 (%)</th></tr></thead>
+                    <tbody>
+                        <tr><td>Reported</td><td class="number">3</td><td class="number"><strong style="font-size: 1.1em;">42.9%</strong></td></tr>
+                        <tr><td>Closed</td><td class="number">1</td><td class="number"><strong style="font-size: 1.1em;">14.3%</strong></td></tr>
+                        <tr><td>Beta Pass (EM in Dev)</td><td class="number">1</td><td class="number"><strong style="font-size: 1.1em;">14.3%</strong></td></tr>
+                        <tr><td>Alpha Pass (RD in Dev)</td><td class="number">1</td><td class="number"><strong style="font-size: 1.1em;">14.3%</strong></td></tr>
+                        <tr><td>Investigation</td><td class="number">1</td><td class="number"><strong style="font-size: 1.1em;">14.3%</strong></td></tr>
+                    </tbody>
+                </table>
+                <div class="chart-container"><canvas id="bugStatusChart"></canvas></div>
+            </div>
+            <div style="flex: 1; min-width: 300px;">
+                <h3>按 Priority 統計</h3>
+                <table id="bug-priority-table">
+                    <thead><tr><th>Priority</th><th class="number">數量</th><th class="number">佔比 (%)</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="priority-highest">Highest</span></td><td class="number"><strong class="failed">2</strong></td><td class="number"><strong style="font-size: 1.1em;" class="failed">28.6%</strong></td></tr>
+                        <tr><td><span class="priority-high">High</span></td><td class="number">2</td><td class="number"><strong style="font-size: 1.1em;">28.6%</strong></td></tr>
+                        <tr><td><span class="priority-medium">Medium</span></td><td class="number">2</td><td class="number"><strong style="font-size: 1.1em;">28.6%</strong></td></tr>
+                        <tr><td><span class="priority-low">Low</span></td><td class="number">1</td><td class="number"><strong style="font-size: 1.1em;">14.3%</strong></td></tr>
+                    </tbody>
+                </table>
+                <div class="chart-container"><canvas id="bugPriorityChart"></canvas></div>
+            </div>
+        </div>
+
+        <h3>Bug 明細</h3>
+        <table id="bug-details-table">
+            <thead>
+                <tr>
+                    <th>Ticket</th>
+                    <th>Priority</th>
+                    <th>Summary (Bug 摘要)</th>
+                    <th>Status</th>
+                    <th>Assignee</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><a href="https://mazu-temple.atlassian.net/browse/MAZU-1120" target="_blank">MAZU-1120</a></td><td><strong class="priority-highest">Highest</strong></td><td>[香油錢系統] 線上刷卡功能無法使用，信眾無法完成線上捐款</td><td>Beta Pass (EM in Dev)</td><td>王德發</td></tr>
+                <tr><td><a href="https://mazu-temple.atlassian.net/browse/MAZU-1121" target="_blank">MAZU-1121</a></td><td><strong class="priority-highest">Highest</strong></td><td>[智慧宮廟入口] 無法登入系統，且畫面上沒有任何錯誤提示</td><td>Reported</td><td>陳光明</td></tr>
+                <tr><td><a href="https://mazu-temple.atlassian.net/browse/MAZU-1122" target="_blank">MAZU-1122</a></td><td><span class="priority-high">High</span></td><td>[祈福證明] 列印出的感謝狀缺少信眾姓名及捐款金額</td><td>Alpha Pass (RD in Dev)</td><td>張文昌</td></tr>
+                <tr><td><a href="https://mazu-temple.atlassian.net/browse/MAZU-1123" target="_blank">MAZU-1123</a></td><td><span class="priority-high">High</span></td><td>[安太歲服務] 費用會被重複計入香油錢系統，造成金額錯誤</td><td>Reported</td><td>李秀英</td></tr>
+                <tr><td><a href="https://mazu-temple.atlassian.net/browse/MAZU-1124" target="_blank">MAZU-1124</a></td><td><span class="priority-medium">Medium</span></td><td>[線上商城] 將開運商品加入「我的最愛」時，顯示後端錯誤</td><td>Investigation</td><td>吳金龍</td></tr>
+                <tr><td><a href="https://mazu-temple.atlassian.net/browse/MAZU-1125" target="_blank">MAZU-1125</a></td><td><span class="priority-medium">Medium</span></td><td>[信眾清單] 午別、殿別、主神、服務法師等欄位均顯示 '--'</td><td>Closed</td><td>林安泰</td></tr>
+                <tr><td><a href="https://mazu-temple.atlassian.net/browse/MAZU-1126" target="_blank">MAZU-1126</a></td><td><span class="priority-low">Low</span></td><td>[點燈系統] 光明燈預設點亮頻率有誤，導致系統預設總時數為 0</td><td>Reported</td><td>林安泰</td></tr>
+            </tbody>
+        </table>
+
+        <h2>📝 Task 總覽</h2>
+        <div class="analysis-block">
+            <p>本週共建立 <strong>2</strong> 個新 Task，皆為系統優化與體驗改善的建議，屬長期規劃項目。其中 <strong>1</strong> 個為 High Priority，建議納入未來版本規劃。</p>
+            <p><strong>排序邏輯:</strong> High > Medium</p>
+        </div>
+        
+        <h3>按 Priority 統計</h3>
+        <table id="task-priority-table">
+            <thead>
+                <tr>
+                    <th>Priority</th>
+                    <th class="number">數量</th>
+                    <th class="number">佔比 (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="priority-high">High</span></td><td class="number">1</td><td class="number"><strong style="font-size: 1.1em;">50.0%</strong></td></tr>
+                <tr><td><span class="priority-medium">Medium</span></td><td class="number">1</td><td class="number"><strong style="font-size: 1.1em;">50.0%</strong></td></tr>
+            </tbody>
+        </table>
+        <div class="chart-container" style="max-width: 600px; margin-left: auto; margin-right: auto;">
+            <canvas id="taskPriorityChart"></canvas>
+        </div>
+        
+        <h3>Task 明細</h3>
+        <table id="task-details-table">
+            <thead>
+                <tr>
+                    <th>Ticket</th>
+                    <th>Priority</th>
+                    <th>Summary (Task 摘要)</th>
+                    <th>Status</th>
+                    <th>Assignee</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><a href="https://mazu-temple.atlassian.net/browse/MAZU-2050" target="_blank">MAZU-2050</a></td><td><span class="priority-high">High</span></td><td>[系統優化] 建議「宮廟通」增加全站搜尋功能（含線上商城、法會報名）</td><td>Backlog</td><td></td></tr>
+                <tr><td><a href="https://mazu-temple.atlassian.net/browse/MAZU-2051" target="_blank">MAZU-2051</a></td><td><span class="priority-medium">Medium</span></td><td>[體驗改善] 建議在問題回報系統中增加說明範本，引導使用者更精確地描述問題</td><td>Backlog</td><td></td></tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <script>
+    const chartConfig = {
+        plugins: {
+            legend: {
+                labels: {
+                    color: '#e0e0e0',
+                    font: { size: 14 }
+                }
+            },
+            title: {
+                display: true,
+                color: '#e0e0e0',
+                font: { size: 16 }
+            }
+        },
+        scales: {
+            y: {
+                ticks: { color: '#e0e0e0' },
+                grid: { color: '#444' }
+            },
+            x: {
+                ticks: { color: '#e0e0e0' },
+                grid: { color: '#444' }
+            }
+        }
+    };
+    
+    // Chart 1: WoW Comparison
+    const wowCtx = document.getElementById('wowChart').getContext('2d');
+    new Chart(wowCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Passed', 'Failed', 'TBD', '--'],
+            datasets: [{
+                label: 'W-1 (W31)',
+                data: [78, 22, 5, 5],
+                backgroundColor: 'rgba(130, 170, 255, 0.7)',
+                borderColor: 'rgba(130, 170, 255, 1)',
+                borderWidth: 1
+            }, {
+                label: 'W (W32)',
+                data: [85, 15, 10, 10],
+                backgroundColor: 'rgba(187, 134, 252, 0.7)',
+                borderColor: 'rgba(187, 134, 252, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: { ...chartConfig,
+            plugins: { ...chartConfig.plugins, 
+                title: { ...chartConfig.plugins.title, text: '本週 vs 上週測試案例狀態比較' }
+            },
+            scales: { ...chartConfig.scales }
+        }
+    });
+
+    // Chart 2: History Trend
+    const historyCtx = document.getElementById('historyChart').getContext('2d');
+    new Chart(historyCtx, {
+        type: 'line',
+        data: {
+            labels: ['W29', 'W30', 'W31', 'W32'],
+            datasets: [{
+                label: '通過率 (實測)',
+                data: [70.0, 75.0, 78.0, 85.0],
+                borderColor: '#03dac6',
+                backgroundColor: 'rgba(3, 218, 198, 0.2)',
+                tension: 0.1,
+                yAxisID: 'yPercentage'
+            }, {
+                label: '執行率',
+                data: [100.0, 95.2, 90.9, 83.3],
+                borderColor: '#bb86fc',
+                backgroundColor: 'rgba(187, 134, 252, 0.2)',
+                tension: 0.1,
+                yAxisID: 'yPercentage'
+            }, {
+                label: 'Failed 數量',
+                data: [30, 25, 22, 15],
+                borderColor: '#cf6679',
+                backgroundColor: 'rgba(207, 102, 121, 0.2)',
+                type: 'bar',
+                yAxisID: 'yCount'
+            }]
+        },
+        options: {
+            ...chartConfig,
+            plugins: { ...chartConfig.plugins,
+                title: { ...chartConfig.plugins.title, text: '最近四週品質趨勢' }
+            },
+            scales: {
+                x: { ...chartConfig.scales.x },
+                yPercentage: {
+                    type: 'linear',
+                    position: 'left',
+                    max: 100,
+                    min: 0,
+                    title: { display: true, text: '百分比 (%)', color: '#e0e0e0' },
+                    ticks: { color: '#e0e0e0' },
+                    grid: { color: '#444' }
+                },
+                yCount: {
+                    type: 'linear',
+                    position: 'right',
+                    title: { display: true, text: '數量', color: '#e0e0e0' },
+                    ticks: { color: '#e0e0e0' },
+                    grid: { drawOnChartArea: false } 
+                }
+            }
+        }
+    });
+
+    // Chart 3: Failed Cases by Module
+    const failedCasesCtx = document.getElementById('failedCasesChart').getContext('2d');
+    new Chart(failedCasesCtx, {
+        type: 'pie',
+        data: {
+            labels: ['智慧宮廟入口 & 系統登入', '點燈/安太歲系統', '祈福套餐管理', '代辦祈福儀式', '信眾歷史紀錄查詢', '線上祈福同意書', '年度大型法會'],
+            datasets: [{
+                label: 'Failed 案例分佈',
+                data: [1, 1, 1, 1, 1, 1, 1],
+                backgroundColor: ['#c44536', '#A0522D', '#D2691E', '#735d78', '#343148', '#FF7F50', '#8b4513'],
+            }]
+        },
+        options: {
+             ...chartConfig,
+            plugins: { ...chartConfig.plugins, 
+                title: { ...chartConfig.plugins.title, text: '本週 Failed 案例功能模組分佈' }
+            },
+            scales: {}
+        }
+    });
+    
+    // Chart 4: Verification Summary
+    const verificationCtx = document.getElementById('verificationChart').getContext('2d');
+    new Chart(verificationCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Passed', 'Failed', 'PassWithNotes'],
+            datasets: [{
+                label: '驗證結果',
+                data: [3, 1, 1],
+                backgroundColor: ['#03dac6', '#cf6679', '#f8b400'],
+                borderColor: '#1e1e1e',
+                borderWidth: 2
+            }]
+        },
+        options: { ...chartConfig, 
+            plugins: { ...chartConfig.plugins, 
+                title: { ...chartConfig.plugins.title, text: '本週問題驗證結果分佈' }
+            },
+            scales: {}
+        }
+    });
+    
+    // Chart 5: Bug Status
+    const bugStatusCtx = document.getElementById('bugStatusChart').getContext('2d');
+    new Chart(bugStatusCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Reported', 'Closed', 'Beta Pass (EM in Dev)', 'Alpha Pass (RD in Dev)', 'Investigation'],
+            datasets: [{
+                label: 'Bug 狀態',
+                data: [3, 1, 1, 1, 1],
+                backgroundColor: ['#ffc107', '#4caf50', '#2196f3', '#9c27b0', '#ff5722'],
+            }]
+        },
+        options: { ...chartConfig,
+            plugins: { ...chartConfig.plugins,
+                title: { ...chartConfig.plugins.title, text: 'Bug 狀態分佈' }
+            },
+            scales: {}
+        }
+    });
+
+    // Chart 6: Bug Priority
+    const bugPriorityCtx = document.getElementById('bugPriorityChart').getContext('2d');
+    new Chart(bugPriorityCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Highest', 'High', 'Medium', 'Low'],
+            datasets: [{
+                label: 'Bug 優先級',
+                data: [2, 2, 2, 1],
+                backgroundColor: ['#ff4d6d', '#ffb3c1', '#fff3bf', '#c8f7c5'],
+            }]
+        },
+        options: { ...chartConfig,
+            plugins: { ...chartConfig.plugins,
+                title: { ...chartConfig.plugins.title, text: 'Bug 優先級分佈' }
+            },
+            scales: {}
+        }
+    });
+
+    // Chart 7: Task Priority
+    const taskPriorityCtx = document.getElementById('taskPriorityChart').getContext('2d');
+    new Chart(taskPriorityCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['High', 'Medium'],
+            datasets: [{
+                label: 'Task 優先級',
+                data: [1, 1],
+                backgroundColor: ['#ffb3c1', '#fff3bf'],
+                borderColor: '#1e1e1e',
+                borderWidth: 2
+            }]
+        },
+        options: { ...chartConfig,
+            plugins: { ...chartConfig.plugins,
+                title: { ...chartConfig.plugins.title, text: 'Task 優先級分佈' }
+            },
+            scales: {}
+        }
+    });
+
+    </script>
+</body>
+</html>
