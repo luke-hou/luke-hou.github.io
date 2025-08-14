@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>專案: n8n + AI 自動更新 Jira 狀態至 Excel - Luke的作品集</title>
+    <meta name="description" content="展示如何利用 n8n 與 AI，將耗時的 Jira 狀態手動更新流程全自動化，大幅提升團隊效率與數據即時性。">
+    <meta name="keywords" content="n8n, AI, Jira, Excel, 自動化, 軟體測試, QA, Luke Hou, 侯俊嘉">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0V2L1DQVPY');
+    </script>
+    <style>
+        .project-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/n8n-ai-excel-main.png') no-repeat center center;
+            background-size: cover;
+            padding: 4rem 0;
+            color: white;
+        }
+        .project-hero h1 {
+            font-weight: 700;
+        }
+        .summary-card {
+            position: sticky;
+            top: 20px;
+        }
+        .tech-badge {
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .gallery-img {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .gallery-img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">Luke Hou</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../contact.html">聯絡我</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="project-hero text-center">
+            <div class="container">
+                <h1 class="display-4">以 n8n + AI 打造 Jira 測試總表全自動化</h1>
+                <p class="lead">「原本一週只能更新兩次的測試總表，我用 AI + 自動化做到每天更新兩次，還多省 93% 時間！」</p>
+            </div>
+        </section>
+
+        <section class="container mt-5">
+            <div class="row">
+                <!-- Main Content -->
+                <div class="col-lg-8">
+                    <div class="card border-0">
+                        <div class="card-body">
+                            <h2 class="card-title h3 mb-3"><i class="bi bi-card-text me-2"></i>項目概述</h2>
+                            <p>測試團隊依賴人工更新 Excel 測試總表來追蹤 Jira ticket 狀況，這份總表是跨團隊 review 會議的重要依據。然而，這個流程非常耗時且容易出錯：單次更新需耗費 2.5 小時以上，導致資訊更新頻率低，進而影響測試覆蓋率與決策速度，Review 會議中也常因等待查詢 Jira 而打亂節奏。</p>
+                            <p>為了解決此瓶頸，我設計了一套基於 n8n 的自動化工作流，串接 Jira API 與 Excel，並搭配 AI 自動摘要功能，讓測試總表能每日兩次自動更新，即時反映專案品質狀況，徹底改變了原有的工作模式。</p>
+
+                            <hr class="my-4">
+
+                            <h2 class="h3 mb-3"><i class="bi bi-lightbulb-fill me-2"></i>核心做法與亮點</h2>
+                            <ol class="list-group list-group-numbered">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">每日多次自動更新</div>
+                                        將過去每週最多兩次的人工更新，提升為每日兩次的自動化排程，確保所有利害關係人都能掌握最即時的資訊。
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">AI 智慧摘要</div>
+                                        利用 AI 自動分析並摘要 Jira ticket 中的所有討論紀錄，將冗長的對話轉化為精簡重點，大幅加速會議中的 review 效率。
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">格式化與 Emoji 呈現</div>
+                                        自動化的報告不僅更新數據，更透過格式化與 Emoji 標示，引導讀者快速識別重點，提升報告的易讀性。
+                                    </div>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">團隊貢獻</div>
+                                        這個工作流不僅節省自己大量時間，也分享給同仁使用，讓效益倍數增長。
+                                    </div>
+                                </li>                                    
+                                </li>
+                            </ol>
+
+                            <hr class="my-4">
+
+                            <h2 class="h3 mb-3"><i class="bi bi-kanban me-2"></i>成果展示</h2>
+                            <p class="text-muted">以下為此工作流的實際運行截圖：</p>
+                            <div class="row g-4">
+                                <div class="col-12">
+                                    <h5>最終 Excel 產出成果</h5>
+                                    <img src="../images/n8n-ai-excel-main.png" alt="最終 Excel 產出成果" class="img-fluid rounded gallery-img">
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>主工作流 (Master Workflow)</h6>
+                                    <img src="../images/n8n-ai-excel-flow-1.png" alt="主工作流" class="img-fluid rounded gallery-img">
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>子工作流 (Sub Workflow)</h6>
+                                    <img src="../images/n8n-ai-excel-flow-2.png" alt="子工作流" class="img-fluid rounded gallery-img">
+                                </div>
+                                <div class="col-12">
+                                    <h6>孫工作流 (Grandchild Workflow)</h6>
+                                    <img src="../images/n8n-ai-excel-flow-3.png" alt="孫工作流" class="img-fluid rounded gallery-img">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <div class="card shadow-sm summary-card">
+                        <div class="card-body">
+                            <h3 class="card-title h5 border-bottom pb-2 mb-3"><i class="bi bi-bar-chart-line-fill me-2"></i>價值與影響</h3>
+                            <ul class="list-unstyled">
+                                <li class="mb-3 d-flex">
+                                    <i class="bi bi-speedometer2 h4 text-primary me-3"></i>
+                                    <div>
+                                        <strong class="d-block">效率提升 93%</strong>
+                                        <small class="text-muted">單次更新時間由 2.5 小時大幅縮短至 10 分鐘，每週為團隊釋放超過 4 小時的寶貴人力。</small>
+                                    </div>
+                                </li>
+                                <li class="mb-3 d-flex">
+                                    <i class="bi bi-arrow-repeat h4 text-primary me-3"></i>
+                                    <div>
+                                        <strong class="d-block">提升資訊即時性</strong>
+                                        <small class="text-muted">從每週更新兩次到每日更新兩次，確保團隊能基於最新的數據進行決策，降低風險。</small>
+                                    </div>
+                                </li>
+                                <li class="mb-3 d-flex">
+                                    <i class="bi bi-people-fill h4 text-primary me-3"></i>
+                                    <div>
+                                        <strong class="d-block">加速跨部門溝通</strong>
+                                        <small class="text-muted">AI 摘要讓會議不再需要花時間等待讀取 Jira，大幅提升 review 會議的溝通效率。</small>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-footer bg-light">
+                            <h3 class="h5 mt-2"><i class="bi bi-gear-fill me-2"></i>使用的技術</h3>
+                            <div>
+                                <span class="badge bg-primary text-white tech-badge">n8n</span>
+                                <span class="badge bg-secondary tech-badge">AI (LLM)</span>
+                                <span class="badge bg-warning text-dark tech-badge">Jira API</span>
+                                <span class="badge bg-success text-white tech-badge">Excel</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-grid mt-3">
+                        <a href="../portfolio.html" class="btn btn-outline-primary"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-light mt-5 py-4">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="" class="img-fluid" id="modalImage" alt="Project Image">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+            const modalImage = document.getElementById('modalImage');
+            
+            document.querySelectorAll('.gallery-img').forEach(img => {
+                img.addEventListener('click', function () {
+                    modalImage.src = this.src;
+                    imageModal.show();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

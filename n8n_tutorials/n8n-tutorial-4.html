@@ -3,19 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>n8n 教學 (四)：建立 n8n 工作流塞爆向量資料庫</title>
-    <meta name="description" content="n8n 教學系列第四篇，教您如何建立 n8n 工作流，將大量資料高效地匯入向量資料庫，並處理重複資料。">
-    <meta name="keywords" content="n8n教學, n8n工作流, 向量資料庫, Supabase, PDF資料匯入, 資料去重, 自動化流程">
+    <title>n8n 教學 (四)：建立 n8n 工作流並寫入向量資料庫</title>
+    <meta name="description" content="n8n 教學系列第四篇，本篇將帶您實際操作，建立一個完整 n8n 工作流，從讀取資料、生成向量、到最終寫入 Supabase 向量資料庫。">
+    <meta name="keywords" content="n8n教學, n8n工作流, Supabase, 向量資料庫, 資料嵌入, 自動化流程, API整合">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/resume.css">
+    <style>
+        .tutorial-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.5rem auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .tutorial-content figure {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .tutorial-content figure img {
+            margin: 0 auto;
+        }
+        .step {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            background-color: #f8f9fa;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .step:hover {
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+        }
+        .step h3 {
+            font-size: 1.75rem;
+            color: #0d6efd;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .step h3 .step-icon {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        .tutorial-intro, .tutorial-summary {
+            background-color: #e9f7ff;
+            border-left: 5px solid #0d6efd;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .alert-gemini {
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+            color: #856404;
+        }
+    </style>
 </head>
 <body>
-    <div class="alert alert-danger alert-dismissible fade show text-center animate__animated animate__fadeInDown" role="alert" style="margin-bottom: 0;">
-        <strong>這邊請特別注意！</strong>使用如果您的 API key 綁定在免費的 (free tier) 的專案中，也就是沒有綁定帳單並啟用，那麼 Gemini 經手的資料就有可能被作為訓練用，如有機敏資訊，並且一定要使用 Gemini 的話，請使用付費方案。
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
@@ -29,7 +74,7 @@
                         <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
                         <li class="nav-item"><a class="nav-link" href="../resume.html">簡歷</a></li>
                         <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../blog.html">生活分享</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
                         <li class="nav-item"><a class="nav-link" href="../contact.html">聯絡我</a></li>
                     </ul>
                 </div>
@@ -37,139 +82,144 @@
         </nav>
     </header>
 
-    <main class="container">
-        <section class="blog-post">
-            <h1>n8n 教學 (四)：建立 n8n 工作流塞爆向量資料庫</h1>
-            <p class="post-meta">發布日期：2025年5月</p>
-            <div class="post-content">
-                <p class="">回到 n8n 點選 Create Workflow 建立第一個工作流</p><figure class="image"><a href="4/image.png"><img style="width:954.9375px" src="4/image.png"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">初始畫面</p><figure class="image"><a href="4/image%201.png"><img style="width:939.984375px" src="4/image%201.png" alt="n8n工作流初始畫面"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">點選左上重新命名工作流為 n8nDocIntoVectorDB</p><figure class="image" style="text-align:left"><a href="4/image%202.png"><img style="width:408px" src="4/image%202.png" alt="n8n工作流重新命名"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">點選右上角 … 打開選單，接著點 Settings</p><figure class="image" style="text-align:left"><a href="4/image%203.png"><img style="width:553px" src="4/image%203.png" alt="n8n工作流設定選單"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">將 Time Zone 改為 Asia/Taipei 後點右下角 Save</p><figure class="image"><a href="4/image%204.png"><img style="width:939.96875px" src="4/image%204.png" alt="n8n工作流時區設定"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">現在點選畫面正中央的 Add first step</p><figure class="image" style="text-align:left"><a href="4/image%205.png"><img style="width:190px" src="4/image%205.png" alt="n8n添加第一個步驟"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">右側會彈出一個視窗</p><figure class="image" style="text-align:left"><a href="4/image%206.png"><img style="width:623.984375px" src="4/image%206.png" alt="n8n節點選擇視窗"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">
-</p><p class="">於搜尋框輸入 form ，點選 n8m Form</p><figure class="image" style="text-align:left"><a href="4/image%207.png"><img style="width:385px" src="4/image%207.png" alt="n8n搜尋表單節點"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">繼續點選 On new n8n Form event</p><figure class="image" style="text-align:left"><a href="4/image%208.png"><img style="width:394px" src="4/image%208.png" alt="n8n選擇表單事件"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">出現節點設置視窗，先不要慌。</p><figure class="image" style="text-align:left"><a href="4/image%209.png"><img style="width:395px" src="4/image%209.png" alt="n8n表單節點設定視窗"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">Form Title 輸入 ‘檔案選擇’，然後點一下 ‘Add Form Element’ </p><figure class="image" style="text-align:left"><a href="4/image%2010.png"><img style="width:375px" src="4/image%2010.png" alt="n8n表單元素設定"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">Field Name 輸入 ‘<mark class="highlight-red"><strong>inputFiles</strong></mark>’</p><p class="">Element Type 選擇 ‘File’</p><p class="">Multiple Files 撥到左邊</p><p class="">Accepted File Types 輸入 ‘pdf’</p><p class="">最後按一下 ESC 關閉這個設定畫面</p><figure class="image" style="text-align:left"><a href="4/image%2011.png"><img style="width:384px" src="4/image%2011.png"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">看到跑出來了，緊接著按一下節點右邊的加號</p><figure class="image" style="text-align:left"><a href="4/image%2012.png"><img style="width:537px" src="4/image%2012.png" alt="n8n添加新節點"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">在搜尋框輸入 ‘extract’ 並選擇 ‘Extract from File’</p><figure class="image" style="text-align:left"><a href="4/image%2013.png"><img style="width:382px" src="4/image%2013.png" alt="n8n搜尋檔案提取節點"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">繼續選擇 ‘Extract from PDF’</p><figure class="image" style="text-align:left"><a href="4/image%2014.png"><img style="width:314px" src="4/image%2014.png" alt="n8n選擇從PDF提取"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">接著在節點設定畫面的 Input Binary Field 從 ‘data’ 改成 ‘inputFile’，然後按 ESC 關閉設定畫面。</p><figure class="image" style="text-align:left"><a href="4/image%2015.png"><img style="width:586px" src="4/image%2015.png" alt="n8n提取PDF節點設定"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">在 Extract from File 右邊加號點一下，在搜尋框輸入 supabasse，點選 Supabase Vector Store</p><figure class="image" style="text-align:left"><a href="4/image%2016.png"><img style="width:859.984375px" src="4/image%2016.png" alt="n8n搜尋Supabase Vector Store節點"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">點選 Add documents to vector store</p><figure class="image" style="text-align:left"><a href="4/image%2017.png"><img style="width:390px" src="4/image%2017.png" alt="n8n選擇添加文件到向量儲存"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">接著會自動打開設定視窗，點選右邊的鉛筆</p><figure class="image" style="text-align:left"><a href="4/image%2018.png"><img style="width:580px" src="4/image%2018.png" alt="n8n Supabase Vector Store節點設定"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">Credential 設定視窗</p><figure class="image"><a href="4/image%2019.png"><img style="width:859.984375px" src="4/image%2019.png" alt="n8n Supabase憑證設定"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">然後回到 Supabase 網頁，到 API Settings 頁面。</p><p class="">複製 Project URL 貼到 n8n 的 Host 欄位</p><p class="">複製 Supabase 的 service_role 貼到 n8n 的 Service Role Secret 欄位</p><p class="">最後點選右上角的 Save，會出現認證成功訊息。</p><figure class="image"><a href="4/image%2020.png"><img style="width:859.984375px" src="4/image%2020.png" alt="Supabase API設定頁面"/></a></figure><figure class="image" style="text-align:left"><a href="4/image%2021.png"><img style="width:623.984375px" src="4/image%2021.png" alt="n8n Supabase憑證設定完成"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">接著會自動回到節點設定畫面，我們點選 Table Name 比較寬的那個下拉選單，選擇我們之前建立的 ‘nhi_drug_768’。</p><p class="">然後按一下最下面的 Add Option</p><figure class="image" style="text-align:left"><a href="4/image%2022.png"><img style="width:590px" src="4/image%2022.png" alt="n8n Supabase Vector Store表格選擇"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">將 Query Name 從 match_documents 改成 match_nhi_drug_768</p><p class="">然後按 ESC 關閉設定畫面 </p><figure class="image" style="text-align:left"><a href="4/image%2023.png"><img style="width:586px" src="4/image%2023.png" alt="n8n Supabase Vector Store查詢名稱設定"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">現在的工作流會長這樣，點選 Supabase Vector Store 節點左下的鬚鬚</p><figure class="image"><a href="4/image%2024.png"><img style="width:859.953125px" src="4/image%2024.png" alt="n8n工作流預覽"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">選擇 Embedding model，這邊我們先選擇 Embeddings Google Gemini</p><figure class="image" style="text-align:left"><a href="4/image%2025.png"><img style="width:310px" src="4/image%2025.png" alt="n8n選擇Embedding模型"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">接著下拉點選 Create new credential</p><figure class="image" style="text-align:left"><a href="4/image%2026.png"><img style="width:582px" src="4/image%2026.png" alt="n8n建立新憑證"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">改名稱，然後貼上 API Key</p><figure class="image" style="text-align:left"><a href="4/image%2027.png"><img style="width:518.28125px" src="4/image%2027.png" alt="n8n憑證名稱與API金鑰輸入"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">忘記 API Key 的可以回到 Google Cloud 查閱 </p><figure class="image"><a href="4/image%2028.png"><img style="width:518.28125px" src="4/image%2028.png" alt="Google Cloud查詢API金鑰"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">貼上 API key 後按右上的 Save，然後按旁邊X關掉畫面。</p><figure class="image"><a href="4/image%2029.png"><img style="width:518.296875px" src="4/image%2029.png" alt="n8n憑證儲存"/></a></figure><figure class="image"><a href="4/image%2030.png"><img style="width:332px" src="4/image%2030.png" alt="n8n憑證儲存成功"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">
-</p><p class="">接著下拉選擇 models/test-embedding-004，然後按 ESC 關閉畫面。</p><figure class="image" style="text-align:left"><a href="4/image%2031.png"><img style="width:591px" src="4/image%2031.png" alt="n8n選擇Embedding模型"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">此時可以看到左下的鬚鬚長出一顆圓球</p><figure class="image"><a href="4/image%2032.png"><img style="width:518.296875px" src="4/image%2032.png" alt="n8n Embedding模型連接成功"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">這時候看到 Supabase 節點還是紅的，代表還有問題沒解決，此時點右下角的鬚鬚。</p><p class="">點選 Default Data Loader</p><figure class="image" style="text-align:left"><a href="4/image%2033.png"><img style="width:389px" src="4/image%2033.png" alt="n8n Supabase節點錯誤提示"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">
-</p><p class="">點選 Add Option，然後點 Metadata。</p><figure class="image" style="text-align:left"><a href="4/image%2034.png"><img style="width:518.3125px" src="4/image%2034.png" alt="n8n Supabase添加選項Metadata"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">接著點 Add property</p><figure class="image" style="text-align:left"><a href="4/image%2035.png"><img style="width:518.3125px" src="4/image%2035.png" alt="n8n Supabase添加屬性"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">Name 輸入 fileName，Value 貼上 </p><p class="">{{ $(&#x27;On form submission&#x27;).item.json.inputFile.filename }}</p><p class="">並確認這個小格子的右上方的 Expression 是亮的。</p><figure class="image" style="text-align:left"><a href="4/image%2036.png"><img style="width:518.3125px" src="4/image%2036.png" alt="n8n Supabase設定Metadata屬性"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">此時換成右下鬚鬚紅了，直接點一下它的加號</p><figure class="image" style="text-align:left"><a href="4/image%2037.png"><img style="width:518.3125px" src="4/image%2037.png" alt="n8n添加新節點"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">選擇 Recursive Character Text Splitter</p><figure class="image" style="text-align:left"><a href="4/image%2038.png"><img style="width:387px" src="4/image%2038.png" alt="n8n選擇文本分割器"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">改成 200，然後按 ESC 關閉設定畫面。</p><figure class="image" style="text-align:left"><a href="4/image%2039.png"><img style="width:518.3125px" src="4/image%2039.png" alt="n8n文本分割器設定"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">這時候的畫面，點一下 Execute workflow 首次觸發</p><figure class="image"><a href="4/image%2040.png"><img style="width:518.3125px" src="4/image%2040.png" alt="n8n執行工作流"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">點選 ‘選擇檔案’，然後選擇要寫入向量資料庫的檔案後，點選 Submit。</p><p class="">示範檔案可以到此下載 : <a href="https://www.nhi.gov.tw/ch/cp-13108-67ddf-2508-1.html">最新版藥品給付規定內容(整份帶走)-114.04.25更新-衛生福利部中央健康保險署-健保服務-健保藥品與特材及醫療服務-健保藥品-藥品相關法規與規範-藥品給付規定-最新版藥品給付規定內容(整份帶走)</a></p><figure class="image" style="text-align:left"><a href="4/image%2041.png"><img style="width:515px" src="4/image%2041.png"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">此時會發現背後開始偷偷跑了，有點措手不及但是沒關係，先關掉這個 Submit 視窗。</p><figure class="image"><a href="4/image%2042.png"><img style="width:518.3125px" src="4/image%2042.png" alt="n8n檔案上傳中"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">看一眼剛剛執行成功的 Executions</p><figure class="image"><a href="4/image%2043.png"><img style="width:518.3125px" src="4/image%2043.png" alt="n8n執行成功紀錄"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">此時回到 Supabase 網站，打開我們的資料庫，就可以看到剛剛寫入的資料了。</p><figure class="image"><a href="4/image%2044.png"><img style="width:518.3125px" src="4/image%2044.png" alt="Supabase資料庫查看已寫入資料"/></a></figure><p class="">
-</p><hr/><p class="">
-</p><p class="">此時還有最後一個步驟：刪除重複資料</p><p class="">在 Extract from File 節點右邊的線上面按一下加號</p><figure class="image"><a href="4/image%2045.png"><img style="width:518.3125px" src="4/image%2045.png" alt="n8n添加新節點"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">輸入 supabase 搜尋，然後點選 Supabase</p><figure class="image" style="text-align:left"><a href="4/image%2046.png"><img style="width:384px" src="4/image%2046.png" alt="n8n搜尋Supabase節點"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">下一層繼續選擇 Delete a row</p><figure class="image" style="text-align:left"><a href="4/image%2047.png"><img style="width:383px" src="4/image%2047.png" alt="n8n選擇刪除行"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">這邊點選 Table Name or ID 並下拉選擇 nhi_drug_768</p><figure class="image"><a href="4/image%2048.png"><img style="width:518.3125px" src="4/image%2048.png" alt="n8n Supabase選擇表格"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">Select Type 點選下拉，選擇 String。</p><figure class="image" style="text-align:left"><a href="4/image%2049.png"><img style="width:518.3125px" src="4/image%2049.png" alt="n8n Supabase選擇類型"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">在 Filters (String) 貼上下面的字串，然後點一下格子右上的 Expression。 </p><pre class="code"><code class="language-JavaScript">metadata->>fileName=like.{{ $(&#x27;On form submission&#x27;).item.json.inputFile.filename }}</code></pre><figure class="image" style="text-align:left"><a href="4/image%2050.png"><img style="width:518.3125px" src="4/image%2050.png" alt="n8n Supabase設定過濾器"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">關掉後，會看到剛剛的 delete 節點流落在外</p><figure class="image" style="text-align:left"><a href="4/image%2051.png"><img style="width:518.296875px" src="4/image%2051.png" alt="n8n刪除節點位置"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">把它拉到 Supabase Vector Store 上方，並且從 Extract from File 拉一條線連接起來</p><figure class="image" style="text-align:left"><a href="4/image%2052.png"><img style="width:518.3125px" src="4/image%2052.png" alt="n8n連接節點"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">再次啟動工作流，並且選擇同一個 PDF 檔案上傳。</p><figure class="image" style="text-align:left"><a href="4/image%2053.png"><img style="width:518.296875px" src="4/image%2053.png" alt="n8n重新執行工作流"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">等待跑完，觀察 delete: row 節點有沒有數量，有就對了。</p><figure class="image" style="text-align:left"><a href="4/image%2054.png"><img style="width:287px" src="4/image%2054.png" alt="n8n刪除節點執行結果"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">至此完成將檔案塞到向量資料庫的工作流，並且遇到同檔名的時候會先刪除舊資料，避免重複塞入。</p><figure class="image" style="text-align:left"><a href="4/image%2055.png"><img style="width:518.3125px" src="4/image%2055.png" alt="n8n最終工作流"/></a></figure>
-</p><p class="">
-</p><p class=""><H2>這邊要特別提醒，如果是公司內部或是個人機密敏感資料，為保險起見，請使用全地端模型，包含 Embedding Model 跟 LLM。例如下圖中的 Ollama + qwen3 + multilingual-e5的搭配模式。</H2></p><figure class="image" style="text-align:left"><a href="4/image%2056.jpg"><img style="width:518.3125px" src="4/image%2056.jpg" alt="n8n地端工作流"/></a></figure>
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <article class="blog-post">
+                    <h1 class="mb-3 display-5 border-bottom pb-3">n8n 教學 (四)：建立工作流並寫入向量資料庫</h1>
+                    <p class="text-muted mb-4">發布日期：2025年5月</p>
+
+                    <div class="tutorial-intro">
+                        <h4>前言</h4>
+                        <p>理論準備完畢，現在是動手實作的時刻！本章節是系列教學的核心，我們將整合前幾章的成果，從無到有建立一個完整的 n8n 工作流。這個工作流會自動讀取指定的資料，透過 Gemini API 將其轉換為向量 (Embeddings)，最後存入我們在 Supabase 中建立的向量資料庫。讓我們開始吧！</p>
+                    </div>
+
+                    <div class="alert alert-gemini alert-dismissible fade show" role="alert">
+                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 Gemini API key 綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案。
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
+                    <div class="tutorial-content">
+                        <section class="step-by-step">
+                            <div class="step">
+                                <h3><i class="fas fa-plus-circle step-icon"></i>步驟一：建立新的工作流 (Workflow)</h3>
+                                <p>登入您的 n8n 介面，點擊 "Add workflow" 來建立一個全新的空白工作流。</p>
+                                <figure>
+                                    <a href="4/image.png" target="_blank"><img src="4/image.png" alt="建立新工作流" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 1: 點擊 Add workflow</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-cogs step-icon"></i>步驟二：設定觸發器 (Trigger)</h3>
+                                <p>工作流需要一個起點。我們使用手動觸發，方便測試。</p>
+                                <ol>
+                                    <li>點擊畫面中的 "+" 按鈕，搜尋並選擇 "Manual" (或 "On App Launch") 作為觸發器。</li>
+                                    <li>這個節點不需要特別設定，它提供了一個「執行」按鈕讓我們隨時啟動工作流。</li>
+                                </ol>
+                                <figure>
+                                    <a href="4/image%202.png" target="_blank"><img src="4/image%202.png" alt="設定手動觸發器" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 2: 選擇 Manual 觸發器</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-file-alt step-icon"></i>步驟三：讀取文字資料 (Read Text File)</h3>
+                                <p>接下來，我們要讀取本地的文字檔案作為資料來源。</p>
+                                <ol>
+                                    <li>點擊觸發器節點右邊的 "+"，搜尋並新增 "Read Text File" 節點。</li>
+                                    <li>在 "File Path" 欄位，填入您要讀取的文字檔案的<strong>絕對路徑</strong>。</li>
+                                    <li>點擊 "Execute Node" 測試，確認可以成功讀取到檔案內容。</li>
+                                </ol>
+                                <figure>
+                                    <a href="4/image%204.png" target="_blank"><img src="4/image%204.png" alt="設定讀取文字檔案節點" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 3: 設定檔案路徑並測試</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-robot step-icon"></i>步驟四：連接 Gemini API (Google AI)</h3>
+                                <p>現在，我們要將讀取到的文字轉換成向量。</p>
+                                <ol>
+                                    <li>新增 "Google AI" 節點。</li>
+                                    <li>在 "Authentication" 選擇 "API Key"。</li>
+                                    <li>點擊 "Create New" 建立一個新的憑證。貼上您在上一章節取得的 Gemini API Key，並儲存。</li>
+                                    <li>在 "Resource" 選擇 "Embedding"，"Model" 選擇 "embedding-001"。</li>
+                                    <li>在 "Text" 欄位，點擊右邊的 "Add Expression"，從 "Nodes" -> "Read Text File" -> "Output Data" -> "JSON" -> "data" 中，將 <code>{{ $json.data }}</code> 拖曳進來。這代表我們要將上一步讀取到的文字內容作為輸入。</li>
+                                    <li>執行節點進行測試，成功後您會在 Output 中看到一長串由數字組成的 "embedding" 陣列。</li>
+                                </ol>
+                                <figure>
+                                    <a href="4/image%2014.png" target="_blank"><img src="4/image%2014.png" alt="設定 Google AI 節點" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 4: 設定 Gemini Embedding</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-database step-icon"></i>步驟五：連接 Supabase 並寫入資料</h3>
+                                <p>最後一步，將生成的向量和原始文字存入 Supabase。</p>
+                                <ol>
+                                    <li>新增 "Supabase" 節點。</li>
+                                    <li>同樣地，建立新的 Supabase 憑證。您需要填寫兩項資訊：
+                                        <ul>
+                                            <li><strong>API URL:</strong> 在 Supabase 專案的 "Settings" -> "API" -> "Project URL" 中找到。</li>
+                                            <li><strong>API Key:</strong> 使用您在第二章取得的 <code>service_role</code> 金鑰。</li>
+                                        </ul>
+                                    </li>
+                                    <li>在 "Resource" 選擇 "Database/RPC"，"Operation" 選擇 "Insert"。</li>
+                                    <li>在 "Table" 欄位選擇我們建立的 <code>nhi_drug_768</code>。</li>
+                                    <li>在 "Columns" 區塊，我們要對應資料表的三個欄位：
+                                        <ul>
+                                            <li><code>content</code>: 使用 Expression，從 "Read Text File" 節點中拖入文字內容 <code>{{ $('Read Text File').item.json.data }}</code>。</li>
+                                            <li><code>metadata</code>: 輸入一個簡單的 JSON 物件，例如 <code>{"source": "local_file"}</code>。</li>
+                                            <li><code>embedding</code>: 使用 Expression，從 "Google AI" 節點中拖入向量資料 <code>{{ $('Google AI').item.json.embedding }}</code>。</li>
+                                        </ul>
+                                    </li>
+                                    <li>執行節點，如果一切順利，資料就會成功寫入 Supabase！</li>
+                                </ol>
+                                <figure>
+                                    <a href="4/image%2049.png" target="_blank"><img src="4/image%2049.png" alt="設定 Supabase 節點" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 5: 設定 Supabase Insert 操作</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-check-circle step-icon"></i>步驟六：驗證結果</h3>
+                                <p>回到 Supabase 的 "Table Editor"，查看您的 <code>nhi_drug_768</code> 資料表。您應該會看到一筆新的紀錄，其中 <code>content</code> 是您的原文，<code>embedding</code> 欄位顯示 "[vector]"，代表向量資料已成功存入。</p>
+                                <figure>
+                                    <a href="4/image%2056.jpg" target="_blank"><img src="4/image%2056.jpg" alt="驗證 Supabase 資料" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 6: 在 Supabase 中確認資料已寫入</figcaption>
+                                </figure>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="tutorial-summary">
+                        <h4>本章總結</h4>
+                        <p>恭喜您！您已經成功建立並執行了第一個結合 AI 的 n8n 自動化工作流。在本章中，我們學會了：</p>
+                        <ul>
+                            <li>如何建立一個 n8n 工作流並設定手動觸發器。</li>
+                            <li>讀取本地檔案作為資料來源。</li>
+                            <li>串接 Google AI (Gemini) 節點，將文字轉換為 Embedding 向量。</li>
+                            <li>串接 Supabase 節點，並將處理後的資料寫入指定的向量資料庫。</li>
+                            <li>如何使用 Expression 將不同節點的資料串聯起來。</li>
+                        </ul>
+                        <p>現在您已經掌握了將資料 "存入" 向量資料庫的技巧。在最後一篇教學中，我們將探討如何 "取出" 這些資料，<a href="n8n-tutorial-5.html">讓 AI 參考向量資料庫的內容來回答問題</a>，完成一個簡易的 RAG (Retrieval-Augmented Generation) 應用。</p>
+                    </div>
+                </article>
+
+                <div class="mt-5 text-center">
+                    <a href="../n8n-tutorials.html" class="btn btn-primary btn-lg"><i class="fas fa-arrow-left me-2"></i>返回 n8n 教學列表</a>
+                </div>
             </div>
-        </section>
-<div class="mt-5 text-center">
-        <a href="../n8n-tutorials.html" class="btn btn-secondary">返回 n8n 教學列表</a>
-    </div>
+        </div>
     </main>
 
-    <div class="alert alert-danger alert-dismissible fade show text-center animate__animated animate__fadeInUp" role="alert" style="margin-top: 0;">
-        <strong>這邊請特別注意！</strong>使用如果您的 API key 綁定在免費的 (free tier) 的專案中，也就是沒有綁定帳單並啟用，那麼 Gemini 經手的資料就有可能被作為訓練用，如有機敏資訊，並且一定要使用 Gemini 的話，請使用付費方案。
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
     <footer class="bg-light mt-5 py-3">
         <div class="container text-center">
             <p>&copy; 2025 侯俊嘉(Luke Hou). All rights reserved.</p>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>
 </body>
 </html>

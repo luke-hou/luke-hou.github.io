@@ -3,19 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>n8n 教學 (五)：讓 AI 參考向量資料庫回答</title>
-    <meta name="description" content="n8n 教學系列第五篇，展示如何配置 n8n，讓 AI 能夠參考向量資料庫中的資訊來生成更精確、更符合語境的回答。">
-    <meta name="keywords" content="n8n教學, AI回答, 向量資料庫, Supabase, Gemini, 語境理解, 自動化AI">
+    <title>n8n 教學 (五)：讓 AI 參考向量資料庫回答問題 (RAG)</title>
+    <meta name="description" content="n8n 教學系列最終篇，我們將建立一個 RAG (Retrieval-Augmented Generation) 應用，讓 AI 能夠查詢 Supabase 向量資料庫，並根據相似度最高的資料來回答您的問題。">
+    <meta name="keywords" content="n8n教學, RAG, Retrieval-Augmented Generation, Supabase, 向量搜尋, Gemini, AI問答">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/resume.css">
+    <style>
+        .tutorial-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.5rem auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .tutorial-content figure {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .tutorial-content figure img {
+            margin: 0 auto;
+        }
+        .step {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            background-color: #f8f9fa;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .step:hover {
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+        }
+        .step h3 {
+            font-size: 1.75rem;
+            color: #0d6efd;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .step h3 .step-icon {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        .tutorial-intro, .tutorial-summary {
+            background-color: #e9f7ff;
+            border-left: 5px solid #0d6efd;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .alert-gemini {
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+            color: #856404;
+        }
+        .code-block {
+            background-color: #212529;
+            color: #f8f9fa;
+            padding: 1rem;
+            border-radius: .3rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
 </head>
 <body>
-    <div class="alert alert-danger alert-dismissible fade show text-center animate__animated animate__fadeInDown" role="alert" style="margin-bottom: 0;">
-        <strong>這邊請特別注意！</strong>使用如果您的 API key 綁定在免費的 (free tier) 的專案中，也就是沒有綁定帳單並啟用，那麼 Gemini 經手的資料就有可能被作為訓練用，如有機敏資訊，並且一定要使用 Gemini 的話，請使用付費方案。
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
@@ -29,7 +82,7 @@
                         <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
                         <li class="nav-item"><a class="nav-link" href="../resume.html">簡歷</a></li>
                         <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../blog.html">生活分享</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
                         <li class="nav-item"><a class="nav-link" href="../contact.html">聯絡我</a></li>
                     </ul>
                 </div>
@@ -37,65 +90,121 @@
         </nav>
     </header>
 
-    <main class="container">
-        <section class="blog-post">
-            <h1>n8n 教學 (五)：讓 AI 參考向量資料庫回答</h1>
-            <p class="post-meta">發布日期：2025年5月</p>
-            <div class="post-content">
-                <p class="">
-</p><p class="">同樣建立一個新的工作流，命名為 n8nChatWithAI。</p><p class="">這次點選倒數第二的 ‘On chat message’，然後直接按 ESC 關掉。</p><figure class="image"><a href="5/image.png"><img style="width:533.3125px" src="5/image.png" alt="n8n建立新工作流並選擇On chat message"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">在右邊加號按一下</p><figure class="image" style="text-align:left"><a href="5/image%201.png"><img style="width:440px" src="5/image%201.png" alt="n8n添加新節點"/></a></figure><p class="">
-</p><p class="">輸入 question 後點選 Question and Answer Chain</p><figure class="image" style="text-align:left"><a href="5/image%202.png"><img style="width:399px" src="5/image%202.png" alt="n8n選擇Question and Answer Chain"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">點選 Add Option，然後選 System Prompt Template。</p><figure class="image"><a href="5/image%203.png"><img style="width:518.296875px" src="5/image%203.png" alt="n8n添加System Prompt Template"/></a></figure><p class="">
-</p><p class="">格子右上方切換到 Expression並修改提示詞，注意下方的這個區塊要保留 </p><p class="">貼上：</p><ul class="bulleted-list"><li style="list-style-type:disc">你是專業藥劑師，專長是台灣健保給付規範相關領域。</li></ul><ul class="bulleted-list"><li style="list-style-type:disc">閱讀 Vector Store 的健保規範資料庫，了解台灣健保的相關規範，並以專業藥劑師的角度親切地回答使用者問題。</li></ul><ul class="bulleted-list"><li style="list-style-type:disc">一律用繁體中文回應，但英文專有名詞則保留原文。</li></ul><hr/><p class="">Context: {context}</p><p class="">
-</p><p class="">然後按 ESC 關掉視窗。</p><p class="">
-</p><p class="">
-</p><p class="">點左下鬚鬚</p><figure class="image"><a href="5/image%204.png"><img style="width:518.296875px" src="5/image%204.png" alt="n8n選擇模型"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">選擇你要用的大語言模型，這邊先選 Google Gemini Chat Model</p><figure class="image" style="text-align:left"><a href="5/image%205.png"><img style="width:372px" src="5/image%205.png" alt="n8n選擇Google Gemini Chat Model"/></a></figure><p class="">
-</p><p class="">選擇 models/gemini-2.5-flash-preview-04-17-thinking 後</p><p class="">接著按 ESC 關閉視窗</p><figure class="image"><a href="5/image%206.png"><img style="width:518.3125px" src="5/image%206.png" alt="n8n選擇Gemini模型"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">點右下鬚鬚</p><figure class="image"><a href="5/image%207.png"><img style="width:518.3125px" src="5/image%207.png" alt="n8n添加新節點"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">選 Vector Store Retriever</p><figure class="image" style="text-align:left"><a href="5/image%208.png"><img style="width:381px" src="5/image%208.png" alt="n8n選擇Vector Store Retriever"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">不做改動直接 ESC 關掉</p><figure class="image"><a href="5/image%209.png"><img style="width:518.3125px" src="5/image%209.png" alt="n8n Vector Store Retriever設定"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">繼續在紅點點上面按加號</p><figure class="image"><a href="5/image%2010.png"><img style="width:518.3125px" src="5/image%2010.png" alt="n8n添加新節點"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">選擇綠色閃電 Supabase Vector Store</p><figure class="image" style="text-align:left"><a href="5/image%2011.png"><img style="width:390px" src="5/image%2011.png" alt="n8n選擇Supabase Vector Store"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">Table Name 下拉選擇 nhi_drug_768</p><figure class="image"><a href="5/image%2012.png"><img style="width:518.3125px" src="5/image%2012.png" alt="n8n Supabase Vector Store表格選擇"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">繼續按 Add Option 並選擇 Query Name</p><figure class="image"><a href="5/image%2013.png"><img style="width:518.3125px" src="5/image%2013.png" alt="n8n Supabase Vector Store添加查詢名稱"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">將 match_documents 改成 match_nhi_drug_768</p><p class="">按 ESC 關閉視窗</p><p class="">還是紅色的，沒關係我們繼續按下面的鬚鬚加號。</p><figure class="image"><a href="5/image%2014.png"><img style="width:518.3125px" src="5/image%2014.png" alt="n8n添加新節點"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">選擇 Embeddings Google Gemini</p><figure class="image" style="text-align:left"><a href="5/image%2015.png"><img style="width:301px" src="5/image%2015.png" alt="n8n選擇Embeddings Google Gemini"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">選擇 models/text-embedding-004 </p><p class="">然後 ESC 關閉</p><figure class="image"><a href="5/image%2016.png"><img style="width:518.3125px" src="5/image%2016.png" alt="n8n選擇Embedding模型"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">此時沒有紅色，我們點一下下面的 Open chat 橘色按鈕。</p><figure class="image"><a href="5/image%2017.png"><img style="width:518.3125px" src="5/image%2017.png" alt="n8n開啟聊天視窗"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">這時候可以看到下面出現聊天視窗，輸入你想問的健保用藥規範。</p><figure class="image"><a href="5/image%2018.png"><img style="width:518.3125px" src="5/image%2018.png" alt="n8n聊天視窗輸入問題"/></a></figure><p class="">
-</p><p class="">例如：Doxorubicin 有什麼健保使用限制?</p><figure class="image"><a href="5/image%2019.png"><img style="width:518.296875px" src="5/image%2019.png" alt="n8n聊天視窗輸入Doxorubicin問題"/></a></figure><p class="">
-</p><p class="">這邊可以看到 AI 參考向量資料庫後的回答</p><figure class="image"><a href="5/image%2020.png"><img style="width:518.265625px" src="5/image%2020.png" alt="n8n AI回答"/></a></figure><p class="">
-</p><p class="">看起來有命中</p><figure class="image"><a href="5/image%2021.png"><img style="width:518.3125px" src="5/image%2021.png" alt="n8n AI回答命中結果"/></a></figure><p class="">
-</p><p class="">回到 Supabase 檢查一下，確認應該是沒有亂講話。</p><figure class="image"><a href="5/image%2022.png"><img style="width:518.3125px" src="5/image%2022.png" alt="Supabase資料庫確認"/></a></figure><p class="">
-</p><p class="">至此我們就有一個會參考向量資料庫的問答AI了，恭喜。</p>
-            </div>
-        </section>
-    </main>
-<div class="mt-5 text-center">
-        <a href="../n8n-tutorials.html" class="btn btn-secondary">返回 n8n 教學列表</a>
-    </div>
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <article class="blog-post">
+                    <h1 class="mb-3 display-5 border-bottom pb-3">n8n 教學 (五)：讓 AI 參考向量資料庫回答 (RAG)</h1>
+                    <p class="text-muted mb-4">發布日期：2025年5月</p>
 
-    <div class="alert alert-danger alert-dismissible fade show text-center animate__animated animate__fadeInUp" role="alert" style="margin-top: 0;">
-        <strong>這邊請特別注意！</strong>使用如果您的 API key 綁定在免費的 (free tier) 的專案中，也就是沒有綁定帳單並啟用，那麼 Gemini 經手的資料就有可能被作為訓練用，如有機敏資訊，並且一定要使用 Gemini 的話，請使用付費方案。
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+                    <div class="tutorial-intro">
+                        <h4>最終章：打造您的第一個 RAG 應用</h4>
+                        <p>歡迎來到 n8n 教學系列的最終篇！在前面的章節中，我們學會了如何將資料存入向量資料庫。現在，我們要來學習如何「利用」這些資料。本章將引導您建立一個完整的 RAG (Retrieval-Augmented Generation) 工作流，讓 AI 能夠根據您提出的問題，從 Supabase 中檢索最相關的資訊，並生成精準的回答。</p>
+                    </div>
+
+                    <div class="tutorial-content">
+                        <section class="step-by-step">
+                            <div class="step">
+                                <h3><i class="fas fa-question-circle step-icon"></i>步驟一：設定問題節點 (Set Node)</h3>
+                                <p>首先，我們需要一個地方來輸入我們的問題。</p>
+                                <ol>
+                                    <li>在新的工作流中，新增一個 "Set" 節點。</li>
+                                    <li>在 "Value" 欄位，輸入您想提出的問題，例如：「健保給付的規定有哪些？」。將這個值的 "Name" 設為 <code>question</code>。</li>
+                                    <li>這個節點將作為整個 RAG 流程的輸入源。</li>
+                                </ol>
+                                <figure>
+                                    <a href="5/image%201.png" target="_blank"><img src="5/image%201.png" alt="設定問題節點" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 1: 使用 Set 節點來定義問題</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-robot step-icon"></i>步驟二：將問題轉換為向量 (Embedding)</h3>
+                                <p>為了在向量資料庫中進行搜尋，我們需要先將問題本身轉換成向量。</p>
+                                <ol>
+                                    <li>新增一個 "Google AI" 節點，並設定好您的 Gemini API Key 憑證。</li>
+                                    <li>"Resource" 選擇 "Embedding"，"Model" 選擇 "embedding-001"。</li>
+                                    <li>在 "Text" 欄位，使用 Expression 從上一個 Set 節點中拖入問題：<code>{{ $('Set').item.json.question }}</code>。</li>
+                                    <li>執行節點，您會得到代表問題的向量。</li>
+                                </ol>
+                                <figure>
+                                    <a href="5/image%2010.png" target="_blank"><img src="5/image%2010.png" alt="將問題轉換為向量" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 2: 使用 Google AI 節點將問題文字轉換為向量</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-search step-icon"></i>步驟三：在 Supabase 中進行向量搜尋</h3>
+                                <p>這是 RAG 的核心步驟：檢索 (Retrieval)。我們將使用問題的向量來尋找資料庫中最相似的內容。</p>
+                                <ol>
+                                    <li>新增一個 "Supabase" 節點，並設定好您的憑證。</li>
+                                    <li>"Resource" 選擇 "Database/RPC"，"Operation" 選擇 "RPC"。</li>
+                                    <li>在 "Function Name" 欄位，輸入我們在第二章建立的函式名稱：<code>match_nhi_drug_768</code>。</li>
+                                    <li>在 "Arguments" 中設定三個參數：
+                                        <ul>
+                                            <li><code>query_embedding</code>: 使用 Expression，從上一步的 Google AI 節點拖入問題向量 <code>{{ $('Google AI').item.json.embedding }}</code>。</li>
+                                            <li><code>match_count</code>: 輸入您希望回傳的資料筆數，例如 <code>5</code>。</li>
+                                            <li><code>filter</code>: 輸入一個空的 JSON 物件 <code>{}</code>。</li>
+                                        </ul>
+                                    </li>
+                                    <li>執行後，您會從資料庫中獲得與問題最相關的 5 筆資料。</li>
+                                </ol>
+                                <figure>
+                                    <a href="5/image%2011.png" target="_blank"><img src="5/image%2011.png" alt="在 Supabase 中進行向量搜尋" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 3: 呼叫 RPC 函式進行向量相似度搜尋</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-lightbulb step-icon"></i>步驟四：生成最終答案 (Generation)</h3>
+                                <p>最後，我們將檢索到的資料和原始問題一起交給 AI，讓它生成最終的答案。</p>
+                                <ol>
+                                    <li>再新增一個 "Google AI" 節點 (或複製一個)。</li>
+                                    <li>這次 "Resource" 選擇 "Chat Model"，"Model" 選擇 "gemini-pro"。</li>
+                                    <li>在 "Prompt" 欄位，我們要建構一個包含上下文的提示 (Prompt)。使用 Expression，輸入以下內容：</li>
+                                </ol>
+                                <div class="code-block">
+                                    <pre><code>請根據以下參考資料，回答使用者的問題。
+
+參考資料：
+{{ JSON.stringify($('Supabase').item.json.body) }}
+
+使用者的問題：
+{{ $('Set').item.json.question }}</code></pre>
+                                </div>
+                                <p>這個提示告訴 AI，它的回答應該要基於我們從 Supabase 檢索出來的資料。</p>
+                                <ol start="4">
+                                    <li>執行節點，AI 將會回傳一個綜合了參考資料的、更精準的答案。</li>
+                                </ol>
+                                <figure>
+                                    <a href="5/image%2013.png" target="_blank"><img src="5/image%2013.png" alt="生成最終答案" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 4: 結合檢索到的上下文，讓 AI 生成最終答案</figcaption>
+                                </figure>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="tutorial-summary">
+                        <h4>系列總結與展望</h4>
+                        <p>恭喜您完成了整個 n8n 教學系列！您已經從零開始，成功地建立了一個功能完整的 RAG 應用。回顧整個系列，我們學會了：</p>
+                        <ul>
+                            <li><strong>環境建置：</strong> 在本地安裝 n8n。</li>
+                            <li><strong>資料庫設定：</strong> 建立 Supabase 向量資料庫。</li>
+                            <li><strong>API 申請：</strong> 取得 Gemini API Key。</li>
+                            <li><strong>資料寫入：</strong> 建立工作流將文件轉換為向量並存入資料庫。</li>
+                            <li><strong>資料檢索與生成 (RAG)：</strong> 建立工作流，讓 AI 根據私有資料回答問題。</li>
+                        </ul>
+                        <p>您現在所掌握的技能，是打造各種強大 AI 自動化應用的基礎。您可以嘗試替換不同的資料來源 (如 Notion、網頁爬蟲)、探索更複雜的 Prompt Engineering 技巧，或將結果輸出到不同的地方 (如 Email、Slack)。自動化的世界充滿無限可能，期待您創造出更多精彩的應用！</p>
+                    </div>
+                </article>
+
+                <div class="mt-5 text-center">
+                    <a href="../n8n-tutorials.html" class="btn btn-primary btn-lg"><i class="fas fa-arrow-left me-2"></i>返回 n8n 教學列表</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
     <footer class="bg-light mt-5 py-3">
         <div class="container text-center">
             <p>&copy; 2025 侯俊嘉(Luke Hou). All rights reserved.</p>

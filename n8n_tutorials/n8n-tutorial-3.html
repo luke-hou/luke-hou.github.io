@@ -7,15 +7,60 @@
     <meta name="description" content="n8n 教學系列第三篇，指導您如何申請 Google Gemini API Key，這是啟用 AI 相關功能的重要步驟。">
     <meta name="keywords" content="n8n教學, Gemini API, Google AI Studio, API Key申請, AI功能, Google Cloud">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/resume.css">
+    <style>
+        .tutorial-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.5rem auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .tutorial-content figure {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .tutorial-content figure img {
+            margin: 0 auto;
+        }
+        .step {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            background-color: #f8f9fa;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .step:hover {
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+        }
+        .step h3 {
+            font-size: 1.75rem;
+            color: #0d6efd;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .step h3 .step-icon {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        .tutorial-intro, .tutorial-summary {
+            background-color: #e9f7ff;
+            border-left: 5px solid #0d6efd;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .alert-gemini {
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+            color: #856404;
+        }
+    </style>
 </head>
 <body>
-    <div class="alert alert-danger alert-dismissible fade show text-center animate__animated animate__fadeInDown" role="alert" style="margin-bottom: 0;">
-        <strong>這邊請特別注意！</strong>使用如果您的 API key 綁定在免費的 (free tier) 的專案中，也就是沒有綁定帳單並啟用，那麼 Gemini 經手的資料就有可能被作為訓練用，如有機敏資訊，並且一定要使用 Gemini 的話，請使用付費方案。
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
@@ -29,7 +74,7 @@
                         <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
                         <li class="nav-item"><a class="nav-link" href="../resume.html">簡歷</a></li>
                         <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../blog.html">生活分享</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
                         <li class="nav-item"><a class="nav-link" href="../contact.html">聯絡我</a></li>
                     </ul>
                 </div>
@@ -37,55 +82,104 @@
         </nav>
     </header>
 
-    <main class="container">
-        <section class="blog-post">
-            <h1>n8n 教學 (三)：申請 Gemini API Key</h1>
-            <p class="post-meta">發布日期：2025年5月</p>
-            <div class="post-content">
-                <p class="">接下來要來申請免費的 AI API</p><figure class="image" style="text-align:left"><a href="3/image.png"><img style="width:481px" src="3/image.png"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">到 <a href="https://cloud.google.com/?hl=zh-TW">https://cloud.google.com/?hl=zh-TW</a></p><p class="">登入 Google 帳號</p><p class="">點選右上角 Console控制台</p><figure class="image" style="text-align:left"><a href="3/image%201.png"><img style="width:432px" src="3/image%201.png" alt="Google Cloud Console登入頁面"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">點左上</p><figure class="image" style="text-align:left"><a href="3/image%202.png"><img style="width:380px" src="3/image%202.png" alt="Google Cloud Console選單"/></a></figure><p class="">
-</p><p class="">點新增專案</p><figure class="image"><a href="3/image%203.png"><img style="width:533.28125px" src="3/image%203.png" alt="Google Cloud Console新增專案"/></a></figure><p class="">
-</p><p class="">改成 n8nTest，然後點建立。</p><figure class="image"><a href="3/image%204.png"><img style="width:518.3125px" src="3/image%204.png" alt="Google Cloud Console建立專案"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">等待數秒</p><figure class="image" style="text-align:left"><a href="3/image%205.png"><img style="width:412px" src="3/image%205.png" alt="Google Cloud Console專案建立中"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">點一下 ‘選取專案’</p><figure class="image" style="text-align:left"><a href="3/image%206.png"><img style="width:408px" src="3/image%206.png" alt="Google Cloud Console選取專案"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">確認左上角變成 n8nTest</p><figure class="image" style="text-align:left"><a href="3/image%207.png"><img style="width:372px" src="3/image%207.png" alt="Google Cloud Console專案選取成功"/></a></figure><p class="">
-</p><p class="">
-</p><hr/><p class="">
-</p><p class="">開一個新網頁，到 <a href="https://aistudio.google.com/">https://aistudio.google.com/</a> 並登入 Google 帳號</p><p class="">直接點選上方的 Get API Key</p><figure class="image"><a href="3/image%208.png"><img style="width:859.984375px" src="3/image%208.png" alt="Google AI Studio取得API金鑰"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">繼續點選 Create API key</p><figure class="image"><a href="3/image%209.png"><img style="width:859.984375px" src="3/image%209.png" alt="Google AI Studio建立API金鑰"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">點一下搜尋框，選擇先前建立的 n8nTest 專案</p><figure class="image" style="text-align:left"><a href="3/image%2010.png"><img style="width:463px" src="3/image%2010.png" alt="Google AI Studio選擇專案"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">緊接著點選 Create API key in existing project</p><figure class="image" style="text-align:left"><a href="3/image.png"><img style="width:481px" src="3/image.png" alt="Google AI Studio在現有專案中建立API金鑰"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">等待數秒</p><figure class="image" style="text-align:left"><a href="3/image%2011.png"><img style="width:199px" src="3/image%2011.png" alt="Google AI Studio金鑰生成中"/></a></figure><p class="">
-</p><p class="">
-</p><p class="">
-</p><p class="">
-</p><p class="">點選 Copy 並將 API key 保存在安全的地方</p><figure class="image"><a href="3/image%2012.png"><img style="width:518.296875px" src="3/image%2012.png" alt="Google AI Studio複製API金鑰"/></a></figure>
-            </div>
-        </section>
-    </main>
-                <div class="mt-5 text-center">
-                    <a href="../n8n-tutorials.html" class="btn btn-secondary">返回 n8n 教學列表</a>
-                </div>
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <article class="blog-post">
+                    <h1 class="mb-3 display-5 border-bottom pb-3">n8n 教學 (三)：申請 Gemini API Key</h1>
+                    <p class="text-muted mb-4">發布日期：2025年5月</p>
 
-    <div class="alert alert-danger alert-dismissible fade show text-center animate__animated animate__fadeInUp" role="alert" style="margin-top: 0;">
-        <strong>這邊請特別注意！</strong>使用如果您的 API key 綁定在免費的 (free tier) 的專案中，也就是沒有綁定帳單並啟用，那麼 Gemini 經手的資料就有可能被作為訓練用，如有機敏資訊，並且一定要使用 Gemini 的話，請使用付費方案。
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+                    <div class="tutorial-intro">
+                        <h4>前言</h4>
+                        <p>有了 n8n 環境和 Supabase 資料庫後，現在是時候為我們的自動化流程注入 AI 的智慧了。本章節將帶您一步步完成 Google Gemini API Key 的申請流程，讓您的 n8n 工作流也能擁有強大的語言模型能力。</p>
+                    </div>
+
+                    <div class="alert alert-gemini alert-dismissible fade show" role="alert">
+                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 API key 綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案。
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
+                    <div class="tutorial-content">
+                        <section class="step-by-step">
+                            <div class="step">
+                                <h3><i class="fas fa-cloud step-icon"></i>步驟一：建立 Google Cloud 專案</h3>
+                                <p>Gemini API Key 需要綁定在一個 Google Cloud 專案上。如果您還沒有專案，請依照以下步驟建立：</p>
+                                <ol>
+                                    <li>前往 <a href="https://cloud.google.com/?hl=zh-TW" target="_blank">Google Cloud Console</a> 並登入您的 Google 帳號。</li>
+                                    <li>點擊頁面左上角的專案選單，然後選擇「新增專案」。</li>
+                                    <li>為您的專案命名 (例如: <code>n8nTest</code>)，然後點擊「建立」。</li>
+                                    <li>建立完成後，請確保您已從頂端選單選取了這個新專案。</li>
+                                </ol>
+                                <figure>
+                                    <a href="3/image%203.png" target="_blank"><img src="3/image%203.png" alt="Google Cloud Console新增專案" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 1: 點擊新增專案</figcaption>
+                                </figure>
+                                <figure>
+                                    <a href="3/image%204.png" target="_blank"><img src="3/image%204.png" alt="Google Cloud Console建立專案" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 2: 設定專案名稱並建立</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-robot step-icon"></i>步驟二：前往 Google AI Studio</h3>
+                                <p>接下來，我們將透過 Google AI Studio 來生成 API Key。</p>
+                                <p><a href="https://aistudio.google.com/" target="_blank" class="btn btn-primary"><i class="fas fa-external-link-alt me-2"></i>前往 Google AI Studio</a></p>
+                                <p>登入後，點擊頁面左側或上方的 "Get API Key" 按鈕。</p>
+                                <figure>
+                                    <a href="3/image%208.png" target="_blank"><img src="3/image%208.png" alt="Google AI Studio取得API金鑰" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 3: 點擊 Get API Key</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-key step-icon"></i>步驟三：生成並複製 API Key</h3>
+                                <p>最後一步，將 API Key 與我們剛建立的 Cloud 專案關聯。</p>
+                                <ol>
+                                    <li>在彈出的視窗中，點擊 "Create API key in existing project"。</li>
+                                    <li>在搜尋框中，選擇我們剛剛建立的 <code>n8nTest</code> 專案。</li>
+                                    <li>點擊 "Create API key" 按鈕。</li>
+                                    <li>系統會生成一組 API 金鑰。請立即點擊 "Copy" 按鈕複製。</li>
+                                </ol>
+                                <div class="alert alert-danger">
+                                    <strong><i class="fas fa-exclamation-triangle me-2"></i>安全第一：</strong> 這組 API Key 代表了您應用程式的身份。<strong>請務必將其存放在安全的地方 (如密碼管理器)，絕對不要外洩或直接寫在任何公開的程式碼中。</strong>
+                                </div>
+                                <figure>
+                                    <a href="3/image%2010.png" target="_blank"><img src="3/image%2010.png" alt="Google AI Studio選擇專案" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 4: 選擇先前建立的 Google Cloud 專案</figcaption>
+                                </figure>
+                                <figure>
+                                    <a href="3/image%2012.png" target="_blank"><img src="3/image%2012.png" alt="Google AI Studio複製API金鑰" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 5: 複製生成後的 API Key</figcaption>
+                                </figure>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="tutorial-summary">
+                        <h4>本章總結</h4>
+                        <p>太棒了！您現在手上已經握有開啟 AI 功能的鑰匙。在本章中，我們完成了：</p>
+                        <ul>
+                            <li>建立一個新的 Google Cloud 專案。</li>
+                            <li>在 Google AI Studio 中，將 API Key 與您的專案關聯。</li>
+                            <li>成功生成並複製了您的 Gemini API Key。</li>
+                        </ul>
+                        <p>有了 API Key，我們就可以在 n8n 中大展身手了。下一篇文章，我們將實際動手 <a href="n8n-tutorial-4.html">建立第一個 n8n 工作流，將資料寫入先前建立的 Supabase 向量資料庫中</a>。</p>
+                    </div>
+                </article>
+
+                <div class="mt-5 text-center">
+                    <a href="../n8n-tutorials.html" class="btn btn-primary btn-lg"><i class="fas fa-arrow-left me-2"></i>返回 n8n 教學列表</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
     <footer class="bg-light mt-5 py-3">
         <div class="container text-center">
             <p>&copy; 2025 侯俊嘉(Luke Hou). All rights reserved.</p>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>
 </body>
 </html>

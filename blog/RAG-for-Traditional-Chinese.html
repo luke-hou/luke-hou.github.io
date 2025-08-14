@@ -331,7 +331,7 @@
                         <h3 class="text-lg font-semibold text-gray-700 mb-2">查詢轉換與優化 (Query Transformation and Optimization)</h3>
                         <p class="text-gray-700">原始的用戶查詢可能不總是檢索的最佳形式。查詢轉換旨在將原始查詢重寫或分解為更適合檢索的子查詢，以提高檢索器的效率和準確性。</p>
                         <ul class="list-disc list-inside text-gray-700 mt-2 space-y-1">
-                            <li><strong class="text-gray-600">查詢重寫 (Query Rewriting)：</strong> 將模糊、不完整或口語化的查詢改寫為更精確、更適合檢索的標準化查詢。例如，將「關於蘋果公司的最新財報？」重寫為「蘋果公司2024年第二季度財報」。這可以利用LLM來完成。</li>
+                            <li><strong class="text-gray-600">查詢重寫 (Query Rewriting)：</strong> 將模糊、不完整或口語化的查詢改寫為更精確、更適合檢索的標準化查詢。例如，將「關於蘋果公司的最新財報？」重寫為「蘋果公司2025年第二季度財報」。這可以利用LLM來完成。</li>
                             <li><strong class="text-gray-600">查詢分解 (Query Decomposition)：</strong> 對於複雜的多意圖查詢，將其分解為一系列簡單的子查詢，每個子查詢針對一個特定的資訊點。例如，將「特斯拉Model 3的續航里程是多少，以及它與Model Y的價格差異？」分解為「特斯拉Model 3續航里程」和「特斯拉Model 3與Model Y價格差異」。每個子查詢獨立檢索後，再將結果整合。</li>
                             <li><strong class="text-gray-600">假設性文檔嵌入 (HyDE)：</strong> 如前所述，生成一個假設性的答案或文檔，並使用其嵌入向量進行檢索，而不是直接使用原始查詢的嵌入向量。這有助於捕捉查詢的語義意圖，即使原始查詢本身較為簡短或模糊。</li>
                         </ul>

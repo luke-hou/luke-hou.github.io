@@ -25,23 +25,64 @@
         .tutorial-content figure img {
             margin: 0 auto;
         }
-        .tutorial-content hr {
+        .step {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            background-color: #f8f9fa;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .step:hover {
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+        }
+        .step h3 {
+            font-size: 1.75rem;
+            color: #0d6efd;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .step h3 .step-icon {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        code {
+            background-color: #e9ecef;
+            padding: .2rem .4rem;
+            border-radius: .2rem;
+            font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: .875em;
+        }
+        pre {
+            background-color: #212529;
+            color: #f8f9fa;
+            padding: 1rem;
+            border-radius: .3rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: inherit;
+            font-size: 1em;
+        }
+        .tutorial-intro, .tutorial-summary {
+            background-color: #e9f7ff;
+            border-left: 5px solid #0d6efd;
+            padding: 1.5rem;
             margin: 2rem 0;
-            border-top: 2px solid #eee;
         }
-        .highlight-red {
-            background-color: #ffe0e0;
-            color: #d9534f;
-            padding: 0.2em 0.4em;
-            border-radius: 3px;
-        }
-        .alert-custom {
+        .alert-gemini {
             background-color: #fff3cd;
             border-color: #ffeeba;
             color: #856404;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            border-radius: 0.25rem;
+        }
+        .alert-docker {
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+            color: #0c5460;
         }
     </style>
 </head>
@@ -71,76 +112,107 @@
         <div class="row">
             <div class="col-lg-10 mx-auto">
                 <article class="blog-post">
-                    <h1 class="mb-3">n8n 教學 (一)：本地安裝 Node.js 與 n8n 環境建置</h1>
+                    <h1 class="mb-3 display-5 border-bottom pb-3">n8n 教學 (一)：本地安裝 Node.js 與 n8n 環境建置</h1>
                     <p class="text-muted mb-4">發布日期：2025年5月</p>
 
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        <strong>重要提醒：</strong> 如果您的 Gemini API key 綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案。
+                    <div class="tutorial-intro">
+                        <h4>歡迎來到 n8n 自動化教學系列！</h4>
+                        <p>本系列將帶您從零開始，一步步學習如何利用強大的自動化工具 n8n 打造屬於自己的工作流。第一篇文章將專注於基礎環境建置，我們將引導您在個人電腦上完成 Node.js 的安裝，並透過 npx 快速啟動 n8n 服務。</p>
+                    </div>
+
+                    <div class="alert alert-gemini alert-dismissible fade show" role="alert">
+                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 Gemini API key 綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案。
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 
+                    <div class="alert alert-docker" role="alert">
+                        <h4 class="alert-heading"><i class="fab fa-docker me-2"></i>關於安裝方式</h4>
+                        <p>本教學採用 <code>npx</code> 進行安裝，此方式最為簡易、快速，適合初學者或臨時性使用。對於開發者或需要長期穩定運行的場景，官方更推薦使用 <a href="https://docs.n8n.io/hosting/installation/docker/" target="_blank" class="alert-link">Docker</a> 進行部署。<strong>(注意：若在公司內部網路環境，請遵循資安規範，未經允許請勿使用 Docker。)</strong></p>
+                    </div>
+
                     <div class="tutorial-content">
-                        <p>這邊介紹的是較單純的 npx 安裝。</p>
-                        <p>開發者建議用 Docker 安裝 <em class="highlight-red"><strong>(裝在公司OA的禁止用 Docker)</strong></em></p>
-                        
-                        <h2 class="mt-4">1. 下載 Node.js</h2>
-                        <p>首先到 Node.js 官方網站下載安裝檔案：<a href="https://nodejs.org/zh-tw/download" target="_blank">https://nodejs.org/zh-tw/download</a></p>
-                        <figure>
-                            <a href="1/image.png" target="_blank"><img src="1/image.png" alt="Node.js官方網站下載頁面" class="img-fluid"></a>
-                            <figcaption class="text-muted mt-2">圖 1: Node.js 官方網站下載頁面</figcaption>
-                        </figure>
-                        
-                        <h2 class="mt-4">2. 安裝 Node.js</h2>
-                        <p>安裝時，用預設值，一直下一步即可。</p>
-                        <figure>
-                            <a href="1/image%201.png" target="_blank"><img src="1/image%201.png" alt="Node.js安裝介面" class="img-fluid"></a>
-                            <figcaption class="text-muted mt-2">圖 2: Node.js 安裝介面</figcaption>
-                        </figure>
-                        
-                        <h2 class="mt-4">3. 確認 Node.js 版本</h2>
-                        <p>用管理員權限打開 CMD，輸入 <code>node -v</code> 後按 Enter 確認版本。</p>
-                        <figure>
-                            <a href="1/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2_2025-05-27_1356481.png" target="_blank"><img src="1/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2_2025-05-27_1356481.png" alt="以管理員權限開啟命令提示字元" class="img-fluid"></a>
-                            <figcaption class="text-muted mt-2">圖 3: 以管理員權限開啟命令提示字元</figcaption>
-                        </figure>
-                        <figure>
-                            <a href="1/image%202.png" target="_blank"><img src="1/image%202.png" alt="確認Node.js版本" class="img-fluid"></a>
-                            <figcaption class="text-muted mt-2">圖 4: 確認 Node.js 版本</figcaption>
-                        </figure>
-                        
-                        <hr>
-                        
-                        <h2 class="mt-4">4. 安裝並啟動 n8n</h2>
-                        <p>在 CMD 畫面輸入 <code>npx n8n</code>。</p>
-                        <figure>
-                            <a href="1/image%203.png" target="_blank"><img src="1/image%203.png" alt="在命令提示字元中執行npx n8n" class="img-fluid"></a>
-                            <figcaption class="text-muted mt-2">圖 5: 在命令提示字元中執行 npx n8n</figcaption>
-                        </figure>
-                        <p>輸入 <code>y</code> 後按 Enter，靜待安裝完畢。</p>
-                        <figure>
-                            <a href="1/image%204.png" target="_blank"><img src="1/image%204.png" alt="n8n安裝確認畫面" class="img-fluid"></a>
-                            <figcaption class="text-muted mt-2">圖 6: n8n 安裝確認畫面</figcaption>
-                        </figure>
-                        <p>n8n 安裝完畢，會自動啟動服務，按下 <code>o</code> 後，會自動在瀏覽器打開 n8n 起始頁面。</p>
-                        <figure>
-                            <a href="1/image%205.png" target="_blank"><img src="1/image%205.png" alt="n8n啟動畫面" class="img-fluid"></a>
-                            <figcaption class="text-muted mt-2">圖 7: n8n 啟動畫面</figcaption>
-                        </figure>
-                        <p>這邊要注意的是 Email 跟 Password 要記好，其他選項隨意選，不影響使用。</p>
-                        <figure>
-                            <a href="1/image%206.png" target="_blank"><img src="1/image%206.png" alt="n8n帳號設定頁面" class="img-fluid"></a>
-                            <figcaption class="text-muted mt-2">圖 8: n8n 帳號設定頁面</figcaption>
-                        </figure>
-                        <p>登入後可以看到起始頁面，接下來進到下一個 part : Supabase 帳號的申請。</p>
-                        <figure>
-                            <a href="1/image%207.png" target="_blank"><img src="1/image%207.png" alt="n8n起始頁面" class="img-fluid"></a>
-                            <figcaption class="text-muted mt-2">圖 9: n8n 起始頁面</figcaption>
-                        </figure>
+                        <section class="step-by-step">
+                            <div class="step">
+                                <h3><i class="fas fa-download step-icon"></i>步驟一：下載 Node.js</h3>
+                                <p>首先，請前往 Node.js 官方網站下載最新的 LTS (長期支援) 版本安裝檔。LTS 版本提供了最佳的穩定性與相容性。</p>
+                                <p><a href="https://nodejs.org/zh-tw/download" target="_blank" class="btn btn-primary"><i class="fas fa-external-link-alt me-2"></i>前往 Node.js 官網</a></p>
+                                <figure>
+                                    <a href="1/image.png" target="_blank"><img src="1/image.png" alt="Node.js官方網站下載頁面" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 1: Node.js 官方網站下載頁面</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-cogs step-icon"></i>步驟二：安裝 Node.js</h3>
+                                <p>執行下載的安裝檔，基本上只需遵循安裝精靈的指示，保持預設選項並點擊「下一步」即可完成安裝。</p>
+                                <figure>
+                                    <a href="1/image%201.png" target="_blank"><img src="1/image%201.png" alt="Node.js安裝介面" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 2: Node.js 安裝介面</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-terminal step-icon"></i>步驟三：驗證 Node.js 安裝</h3>
+                                <p>為了確認 Node.js 是否成功安裝，請以<strong>系統管理員權限</strong>開啟您的命令提示字元 (CMD) 或 PowerShell，並輸入以下指令來檢查版本號：</p>
+                                <pre><code>node -v</code></pre>
+                                <p>如果成功安裝，您會看到類似 <code>v20.11.1</code> 的版本號碼回傳。</p>
+                                <figure>
+                                    <a href="1/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2_2025-05-27_1356481.png" target="_blank"><img src="1/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2_2025-05-27_1356481.png" alt="以管理員權限開啟命令提示字元" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 3: 以管理員權限開啟命令提示字元</figcaption>
+                                </figure>
+                                <figure>
+                                    <a href="1/image%202.png" target="_blank"><img src="1/image%202.png" alt="確認Node.js版本" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 4: 確認 Node.js 版本</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-rocket step-icon"></i>步驟四：啟動 n8n</h3>
+                                <p>環境準備就緒後，同樣在命令提示字元中，輸入以下指令來下載並執行 n8n：</p>
+                                <pre><code>npx n8n</code></pre>
+                                <p><code>npx</code> 會自動抓取最新版的 n8n 並執行。首次執行時，系統會詢問您是否要安裝，請輸入 <code>y</code> 並按下 Enter。</p>
+                                <figure>
+                                    <a href="1/image%203.png" target="_blank"><img src="1/image%203.png" alt="在命令提示字元中執行npx n8n" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 5: 在命令提示字元中執行 npx n8n</figcaption>
+                                </figure>
+                                <p>安裝過程需要一些時間，請耐心等候。完成後，n8n 會自動啟動本地伺服器。您可以按下鍵盤上的 <code>o</code> 鍵，它將自動在您的預設瀏覽器中開啟 n8n 的歡迎頁面。</p>
+                                <figure>
+                                    <a href="1/image%205.png" target="_blank"><img src="1/image%205.png" alt="n8n啟動畫面" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 6: n8n 啟動畫面</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-user-circle step-icon"></i>步驟五：設定 n8n 帳號</h3>
+                                <p>首次進入 n8n，您需要設定一組管理員帳號。請務必記下您設定的 Email 與密碼，這是未來登入的憑證。其餘的問卷選項可以依個人情況填寫，不影響後續使用。</p>
+                                <figure>
+                                    <a href="1/image%206.png" target="_blank"><img src="1/image%206.png" alt="n8n帳號設定頁面" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 7: n8n 帳號設定頁面</figcaption>
+                                </figure>
+                                <p>登入後，您將會看到 n8n 的主畫布，恭喜您，至此已成功建置好本地開發環境！</p>
+                                <figure>
+                                    <a href="1/image%207.png" target="_blank"><img src="1/image%207.png" alt="n8n起始頁面" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 8: n8n 起始頁面</figcaption>
+                                </figure>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="tutorial-summary">
+                        <h4>本章總結</h4>
+                        <p>恭喜您完成了 n8n 的基礎環境建置！在本篇文章中，我們學習了：</p>
+                        <ul>
+                            <li>如何下載並安裝 Node.js。</li>
+                            <li>如何驗證 Node.js 是否安裝成功。</li>
+                            <li>使用 <code>npx n8n</code> 指令快速啟動 n8n 服務。</li>
+                            <li>完成 n8n 的初始帳號設定。</li>
+                        </ul>
+                        <p>接下來的教學，我們將會介紹 <a href="n8n-tutorial-2.html">Supabase 帳號的申請與設定</a>，為我們的自動化流程準備好資料儲存的空間。</p>
                     </div>
                 </article>
 
                 <div class="mt-5 text-center">
-                    <a href="../n8n-tutorials.html" class="btn btn-primary btn-lg">返回 n8n 教學列表</a>
+                    <a href="../n8n-tutorials.html" class="btn btn-primary btn-lg"><i class="fas fa-arrow-left me-2"></i>返回 n8n 教學列表</a>
                 </div>
             </div>
         </div>
