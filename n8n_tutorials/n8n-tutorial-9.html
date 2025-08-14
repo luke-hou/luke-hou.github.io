@@ -89,6 +89,11 @@
                         <p>恭喜您來到本系列教學的最終章！我們已經成功將知識庫儲存在本地的 Qdrant 資料庫中。現在，我們將完成最後一塊拼圖：改造聊天工作流，讓 AI 能夠從這個私有知識庫中檢索資訊，並根據這些資訊來回答您的問題。本章將引導您<a href="#qdrant-settings">設定 Qdrant 檢索節點</a>，結束後，您將擁有一個完全在您掌控之下的、具備私有知識庫的問答機器人。</p>
                     </div>
 
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 Gemini API key 綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案，或使用地端 LLM，亦或是公司提供的 API。
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
                     <div class="tutorial-content">
                         <section class="step-by-step">
                             <div class="step">
@@ -156,6 +161,11 @@
                                 </figure>
                             </div>
                         </section>
+                    </div>
+
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 Gemini API key 綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案，或使用地端 LLM，亦或是公司提供的 API。
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 
                     <div class="tutorial-summary">

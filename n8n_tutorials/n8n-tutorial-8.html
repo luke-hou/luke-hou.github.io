@@ -97,6 +97,11 @@
                         <p>我們已經分別學會了如何使用 Supabase (雲端) 和 Qdrant (地端) 作為向量資料庫。本章的目標是將先前為 Supabase 建立的資料上傳工作流，改造成適用於 Qdrant 的版本。透過這個過程，您將學會如何靈活地切換不同的向量資料庫節點，並了解它們在 n8n 中的具體設定差異，包括<a href="#delete-node">刪除節點</a>與<a href="#upsert-node">寫入節點</a>，最終實現一個完全在地化的資料處理流程。</p>
                     </div>
 
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 Gemini API key 綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案，或使用地端 LLM，亦或是公司提供的 API。
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
                     <div class="tutorial-content">
                         <section class="step-by-step">
                             <div class="step">
@@ -210,6 +215,11 @@
                                 </figure>
                             </div>
                         </section>
+                    </div>
+
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 Gemini API key 綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案，或使用地端 LLM，亦或是公司提供的 API。
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 
                     <div class="tutorial-summary">
