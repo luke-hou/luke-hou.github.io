@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>n8n 教學 - Luke Hou 侯俊嘉的AI自動化工作流指南</title>
-    <meta name="description" content="Luke Hou 侯俊嘉提供的 n8n 自動化工作流教學，包含本地安裝、Supabase 向量資料庫、Gemini API 申請、資料庫填充與 AI 應用等實用指南。">
-    <meta name="keywords" content="AI, n8n教學, n8n自動化, Luke Hou, 侯俊嘉, 工作流, Supabase, 向量資料庫, Gemini API, AI應用, 自動化工具">
+    <meta name="description" content="Luke Hou 侯俊嘉提供的 n8n 自動化工作流教學，包含本地安裝、Supabase、Qdrant 向量資料庫、Gemini API 申請、資料庫填充與 AI 應用等實用指南。">
+    <meta name="keywords" content="AI, n8n教學, n8n自動化, Luke Hou, 侯俊嘉, 工作流, Supabase, Qdrant, 向量資料庫, Gemini API, AI應用, 自動化工具">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
@@ -16,7 +17,48 @@
     gtag('js', new Date());
 
     gtag('config', 'G-0V2L1DQVPY');
-    </script>      
+    </script>
+    <style>
+        .tutorial-series {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background-color: #f8f9fa;
+            border-radius: .5rem;
+            border: 1px solid #dee2e6;
+        }
+        .tutorial-series h2 {
+            font-size: 2.25rem;
+            color: #212529;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #0d6efd;
+            display: flex;
+            align-items: center;
+        }
+        .tutorial-series h2 .series-icon {
+            margin-right: 1rem;
+            color: #0d6efd;
+        }
+        .tutorial-series-advanced {
+            background-color: #fffbe6;
+            border-color: #ffe58f;
+        }
+        .tutorial-series-advanced h2 {
+            color: #c39300;
+            border-bottom-color: #c39300;
+        }
+        .tutorial-series-advanced h2 .series-icon {
+            color: #c39300;
+        }
+        .tutorial-series-advanced .btn-primary {
+            background-color: #c39300;
+            border-color: #c39300;
+        }
+        .tutorial-series-advanced .btn-primary:hover {
+            background-color: #a07900;
+            border-color: #a07900;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -44,74 +86,96 @@
             <div class="col-lg-10 mx-auto">
                 <h1 class="text-center mb-4">鄉下人的質樸 n8n 自動化AI工作流實踐</h1>
                 
-                <div class="intro-text">
-                    <p>歡迎來到我的 n8n 教學頁面。這裡將會從一個純樸鄉下人的角度介紹 n8n 相關的實用但不炫酷的教學內容。</p>
+                <div class="intro-text mb-5">
+                    <p>歡迎來到我的 n8n 教學頁面。這裡將會從一個純樸鄉下人的角度介紹 n8n 相關的實用但不炫酷的教學內容，從基礎設定到進階的在地化部署，帶您一步步打造專屬於您的 AI 自動化流程。</p>
                 </div>
                 
-                <div class="portfolio-grid">
-                    <!-- 教學項目1 -->
-                    <div class="portfolio-item">
-                        <h3>n8n 教學 (一)：本地安裝 node.js 與 n8n</h3>
-                        <img src="n8n_tutorials/1/image.png" alt="n8n教學一：本地安裝Node.js與n8n" class="img-fluid">
-                        <p>本篇教學將帶領您從零開始，完成 Node.js 與 n8n 的本地環境建置，為後續的自動化工作流打下基礎。</p>
-                        <a href="n8n_tutorials/n8n-tutorial-1.html" class="btn btn-primary">查看詳情</a>
-                    </div>
+                <!-- 基礎系列 -->
+                <section id="basic-series" class="tutorial-series">
+                    <h2><i class="fas fa-cloud series-icon"></i>基礎系列 (Supabase 雲端整合)</h2>
+                    <div class="portfolio-grid">
+                        <!-- 教學項目1 -->
+                        <div class="portfolio-item">
+                            <h3>n8n 教學 (一)：本地安裝 node.js 與 n8n</h3>
+                            <img src="n8n_tutorials/1/image.png" alt="n8n教學一：本地安裝Node.js與n8n" class="img-fluid">
+                            <p>本篇教學將帶領您從零開始，完成 Node.js 與 n8n 的本地環境建置，為後續的自動化工作流打下基礎。</p>
+                            <a href="n8n_tutorials/n8n-tutorial-1.html" class="btn btn-primary">查看詳情</a>
+                        </div>
 
-                    <!-- 教學項目2 -->
-                    <div class="portfolio-item">
-                        <h3>n8n 教學 (二)：Supabase 申請及建立向量資料庫</h3>
-                        <img src="n8n_tutorials/2/image.png" alt="n8n教學二：Supabase申請及建立向量資料庫" class="img-fluid">
-                        <p>本篇教學將引導您申請 Supabase 帳號，並建立向量資料庫，為 AI 應用提供資料儲存基礎。</p>
-                        <a href="n8n_tutorials/n8n-tutorial-2.html" class="btn btn-primary">查看詳情</a>
-                    </div>
+                        <!-- 教學項目2 -->
+                        <div class="portfolio-item">
+                            <h3>n8n 教學 (二)：Supabase 申請及建立向量資料庫</h3>
+                            <img src="n8n_tutorials/2/image.png" alt="n8n教學二：Supabase申請及建立向量資料庫" class="img-fluid">
+                            <p>本篇教學將引導您申請 Supabase 帳號，並建立向量資料庫，為 AI 應用提供資料儲存基礎。</p>
+                            <a href="n8n_tutorials/n8n-tutorial-2.html" class="btn btn-primary">查看詳情</a>
+                        </div>
 
-                    <!-- 教學項目3 -->
-                    <div class="portfolio-item">
-                        <h3>n8n 教學 (三)：申請 Gemini API key</h3>
-                        <img src="n8n_tutorials/3/image.png" alt="n8n教學三：申請Gemini API key" class="img-fluid">
-                        <p>本篇教學將指導您如何申請 Google Gemini API Key，這是啟用 AI 相關功能的重要步驟。</p>
-                        <a href="n8n_tutorials/n8n-tutorial-3.html" class="btn btn-primary">查看詳情</a>
-                    </div>
+                        <!-- 教學項目3 -->
+                        <div class="portfolio-item">
+                            <h3>n8n 教學 (三)：申請 Gemini API key</h3>
+                            <img src="n8n_tutorials/3/image.png" alt="n8n教學三：申請Gemini API key" class="img-fluid">
+                            <p>本篇教學將指導您如何申請 Google Gemini API Key，這是啟用 AI 相關功能的重要步驟。</p>
+                            <a href="n8n_tutorials/n8n-tutorial-3.html" class="btn btn-primary">查看詳情</a>
+                        </div>
 
-                    <!-- 教學項目4 -->
-                    <div class="portfolio-item">
-                        <h3>n8n 教學 (四)：建立 n8n 工作流塞爆向量資料庫</h3>
-                        <img src="n8n_tutorials/4/image.png" alt="n8n教學四：建立n8n工作流塞爆向量資料庫" class="img-fluid">
-                        <p>本篇教學將教您如何建立 n8n 工作流，將大量資料高效地匯入向量資料庫，並處理重複資料。</p>
-                        <a href="n8n_tutorials/n8n-tutorial-4.html" class="btn btn-primary">查看詳情</a>
-                    </div>
+                        <!-- 教學項目4 -->
+                        <div class="portfolio-item">
+                            <h3>n8n 教學 (四)：建立 n8n 工作流塞爆向量資料庫</h3>
+                            <img src="n8n_tutorials/4/image.png" alt="n8n教學四：建立n8n工作流塞爆向量資料庫" class="img-fluid">
+                            <p>本篇教學將教您如何建立 n8n 工作流，將大量資料高效地匯入向量資料庫，並處理重複資料。</p>
+                            <a href="n8n_tutorials/n8n-tutorial-4.html" class="btn btn-primary">查看詳情</a>
+                        </div>
 
-                    <!-- 教學項目5 -->
-                    <div class="portfolio-item">
-                        <h3>n8n 教學 (五)：讓AI參考向量資料庫回答</h3>
-                        <img src="n8n_tutorials/5/image.png" alt="n8n教學五：讓AI參考向量資料庫回答" class="img-fluid">
-                        <p>本篇教學將展示如何配置 n8n，讓 AI 能夠參考向量資料庫中的資訊來生成更精確、更符合語境的回答。</p>
-                        <a href="n8n_tutorials/n8n-tutorial-5.html" class="btn btn-primary">查看詳情</a>
+                        <!-- 教學項目5 -->
+                        <div class="portfolio-item">
+                            <h3>n8n 教學 (五)：讓AI參考向量資料庫回答</h3>
+                            <img src="n8n_tutorials/5/image.png" alt="n8n教學五：讓AI參考向量資料庫回答" class="img-fluid">
+                            <p>本篇教學將展示如何配置 n8n，讓 AI 能夠參考向量資料庫中的資訊來生成更精確、更符合語境的回答。</p>
+                            <a href="n8n_tutorials/n8n-tutorial-5.html" class="btn btn-primary">查看詳情</a>
+                        </div>
                     </div>
+                </section>
 
-                    <!-- 可以繼續添加更多教學項目 -->
-                </div>
+                <!-- 在地化部署系列 -->
+                <section id="advanced-series" class="tutorial-series tutorial-series-advanced">
+                    <h2><i class="fas fa-server series-icon"></i>進階系列：在地化部署 (Qdrant)</h2>
+                    <div class="portfolio-grid">
+                        <!-- 教學項目6 -->
+                        <div class="portfolio-item">
+                            <h3>n8n 教學 (六)：安裝與設定 Qdrant</h3>
+                            <img src="n8n_tutorials/6/image.png" alt="n8n教學六：安裝與設定 Qdrant" class="img-fluid">
+                            <p>本篇將介紹如何在本地環境安裝 Qdrant 向量資料庫，實現資料的完全私有化，確保您的資料安全。</p>
+                            <a href="n8n_tutorials/n8n-tutorial-6.html" class="btn btn-primary">查看詳情</a>
+                        </div>
+
+                        <!-- 教學項目7 -->
+                        <div class="portfolio-item">
+                            <h3>n8n 教學 (七)：在 Qdrant 中建立您的第一個向量資料庫</h3>
+                            <img src="n8n_tutorials/7/image.png" alt="n8n教學七：在 Qdrant 中建立您的第一個向量資料庫" class="img-fluid">
+                            <p>本篇將帶您實際操作 Qdrant Web UI，建立一個 Collection 並設定向量維度，完成您的第一個在地向量資料庫。</p>
+                            <a href="n8n_tutorials/n8n-tutorial-7.html" class="btn btn-primary">查看詳情</a>
+                        </div>
+
+                        <!-- 教學項目8 -->
+                        <div class="portfolio-item">
+                            <h3>n8n 教學 (八)：整合 n8n 與 Qdrant</h3>
+                            <img src="n8n_tutorials/8/image.png" alt="n8n教學八：整合 n8n 與 Qdrant" class="img-fluid">
+                            <p>本篇將教您如何改造先前為 Supabase 設計的工作流，將其無縫對接到 Qdrant 在地向量資料庫，建立一個完整的私有化流程。</p>
+                            <a href="n8n_tutorials/n8n-tutorial-8.html" class="btn btn-primary">查看詳情</a>
+                        </div>
+
+                        <!-- 教學項目9 -->
+                        <div class="portfolio-item">
+                            <h3>n8n 教學 (九)：改造 Chat 工作流</h3>
+                            <img src="n8n_tutorials/9/image.png" alt="n8n教學九：改造 Chat 工作流" class="img-fluid">
+                            <p>本篇將引導您改造聊天工作流，整合 Qdrant 向量資料庫，讓您的 AI 助理能根據私有知識庫進行回覆。</p>
+                            <a href="n8n_tutorials/n8n-tutorial-9.html" class="btn btn-primary">查看詳情</a>
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
     </main>
-
-    <!-- 項目詳情模態框 (此模態框現在僅用於作品集頁面，n8n教學頁面將直接跳轉) -->
-    <!-- 由於n8n教學頁面不再使用模態框，此區塊可以移除或保留，但其功能將不會被觸發 -->
-    <!-- 為了避免混淆，我將其ID改回projectModal，並移除相關的data屬性，使其不再被n8n教學頁面觸發 -->
-    <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="projectModalLabel">教學詳情</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="projectModalBody">
-                    <!-- 項目詳情將通過 JavaScript 動態加載 -->
-                    <p>教學內容正在準備中，敬請期待！</p>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <footer class="bg-light mt-5 py-3">
         <div class="container text-center">

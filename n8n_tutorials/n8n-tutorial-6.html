@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n 教學 (六)：安裝與設定 Qdrant - 在地部署的向量資料庫</title>
+    <meta name="description" content="n8n 教學系列第六篇，介紹 Supabase 以外的另一個強大選項：Qdrant 向量資料庫。本篇將引導您如何從 Github 下載、安裝並設定 Qdrant，實現完全在地化的私有資料儲存。">
+    <meta name="keywords" content="n8n教學, Qdrant, 向量資料庫, 在地部署, Self-hosted, Github Release, AI, RAG, 私有化">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .tutorial-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.5rem auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .tutorial-content figure {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .tutorial-content figure img {
+            margin: 0 auto;
+        }
+        .step {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            background-color: #f8f9fa;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .step:hover {
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+        }
+        .step h3 {
+            font-size: 1.75rem;
+            color: #0d6efd;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .step h3 .step-icon {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        .tutorial-intro, .tutorial-summary {
+            background-color: #e9f7ff;
+            border-left: 5px solid #0d6efd;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .alert-info {
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../resume.html">簡歷</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../contact.html">聯絡我</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <article class="blog-post">
+                    <h1 class="mb-3 display-5 border-bottom pb-3">n8n 教學 (六)：安裝與設定 Qdrant - 在地部署的向量資料庫</h1>
+                    <p class="text-muted mb-4">發布日期：2025年7月</p>
+
+                    <div class="tutorial-intro">
+                        <h4>前言：擁有一個完全私有的向量資料庫</h4>
+                        <p>在之前的教學中，我們使用了 Supabase 作為雲端向量資料庫。然而，在許多企業或注重資料隱私的場景中，將資料儲存在本地是更佳的選擇。本章將介紹另一個優秀的開源向量資料庫 Qdrant，並教您如何透過官方的 Github Release 版本，輕鬆在您自己的電腦上完成安裝與設定，實現資料的完全私有化。</p>
+                    </div>
+
+                    <div class="tutorial-content">
+                        <section class="step-by-step">
+                            <div class="step">
+                                <h3><i class="fab fa-github step-icon"></i>步驟一：從 Github 下載 Qdrant 執行檔</h3>
+                                <p>我們將直接從 Qdrant 的官方 Github 儲存庫下載預先編譯好的執行檔，這是最簡單的安裝方式。</p>
+                                <ol>
+                                    <li>前往 <a href="https://github.com/qdrant/qdrant/releases" target="_blank">Qdrant Github Releases 頁面</a>。</li>
+                                    <li>找到最新的版本，並在 "Assets" 區塊中找到符合您作業系統的 <code>.zip</code> 壓縮檔 (例如：<code>qdrant-x86_64-pc-windows-msvc.zip</code>) 並下載。</li>
+                                </ol>
+                                <figure>
+                                    <a href="6/image.png" target="_blank"><img src="6/image.png" alt="從 Github Releases 下載 Qdrant" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 1: 從官方 Github Releases 頁面下載最新版本的執行檔。</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-folder-open step-icon"></i>步驟二：解壓縮並執行 Qdrant</h3>
+                                <p>下載完成後，我們需要將檔案解壓縮並執行一次，以生成必要的設定檔。</p>
+                                <ol>
+                                    <li>在您的電腦上建立一個新資料夾 (例如：<code>C:\Qdrant</code>)。</li>
+                                    <li>將下載的 <code>.zip</code> 檔案內容解壓縮到這個新資料夾中。</li>
+                                    <li>在檔案總管的網址列輸入 <code>cmd</code> 並按下 Enter，快速開啟指向目前目錄的命令提示字元。</li>
+                                    <li>在命令提示字元視窗中，輸入 <code>qdrant</code> 並按下 Enter。</li>
+                                    <li>首次執行時，Qdrant 會在本機啟動並自動生成所需的設定檔與資料夾。看到日誌輸出後，您可以連續按兩次 <code>Ctrl + C</code> 來關閉服務。</li>
+                                </ol>
+                                <figure>
+                                    <a href="6/image%201.png" target="_blank"><img src="6/image%201.png" alt="解壓縮 Qdrant 檔案" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 2: 將下載的檔案解壓縮至指定資料夾。</figcaption>
+                                </figure>
+                                <figure>
+                                    <a href="6/image%203.png" target="_blank"><img src="6/image%203.png" alt="執行 Qdrant" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 3: 首次執行 qdrant.exe 以生成設定檔。</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-desktop step-icon"></i>步驟三：下載並設定 Web UI</h3>
+                                <p>為了方便管理，我們需要下載 Qdrant 的 Web UI 前端介面。</p>
+                                <ol>
+                                    <li>前往 <a href="https://github.com/qdrant/qdrant-web-ui/releases" target="_blank">Qdrant Web UI Github Releases 頁面</a>。</li>
+                                    <li>下載最新版的 <code>qdrant-web-ui.zip</code>。</li>
+                                    <li>在 <code>C:\Qdrant</code> 資料夾內，手動建立一個名為 <code>static</code> 的新資料夾。</li>
+                                    <li>將下載的 <code>qdrant-web-ui.zip</code> 內容解壓縮，並將裡面的所有檔案複製到剛剛建立的 <code>static</code> 資料夾中。</li>
+                                </ol>
+                                <figure>
+                                    <a href="6/image%205.png" target="_blank"><img src="6/image%205.png" alt="下載 Qdrant Web UI" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 4: 從 Web UI 的 Github Releases 頁面下載壓縮檔。</figcaption>
+                                </figure>
+                                <figure>
+                                    <a href="6/image%209.png" target="_blank"><img src="6/image%209.png" alt="設定 static 資料夾" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 5: 將 Web UI 檔案放入新建的 static 資料夾。</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-rocket step-icon"></i>步驟四：啟動服務並開啟儀表板</h3>
+                                <p>所有檔案都就緒後，我們就可以正式啟動 Qdrant 服務了。</p>
+                                <ol>
+                                    <li>再次回到 <code>C:\Qdrant</code> 資料夾，透過網址列輸入 <code>cmd</code> 開啟命令提示字元。</li>
+                                    <li>輸入 <code>qdrant</code> 並按下 Enter。</li>
+                                    <li>服務啟動後，您會看到日誌中顯示 Web UI 的網址。</li>
+                                    <li>按住 <code>Ctrl</code> 並點擊連結 <a href="http://localhost:6333/dashboard" target="_blank">http://localhost:6333/dashboard</a>，或直接在瀏覽器中開啟。</li>
+                                </ol>
+                                <div class="alert alert-info">
+                                    <strong>提示：</strong> 如果 <code>localhost</code> 無法開啟，可以嘗試將其替換為 <code>127.0.0.1</code>，即 <a href="http://127.0.0.1:6333/dashboard" target="_blank">http://127.0.0.1:6333/dashboard</a>。
+                                </div>
+                                <figure>
+                                    <a href="6/image%2011.png" target="_blank"><img src="6/image%2011.png" alt="Qdrant 儀表板" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 6: 成功開啟 Qdrant Web UI 儀表板。</figcaption>
+                                </figure>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="tutorial-summary">
+                        <h4>本章總結</h4>
+                        <p>恭喜您！您已經成功在本地電腦上部署了 Qdrant 向量資料庫。這為您的 AI 應用提供了一個安全、私有且高效的資料儲存方案。在本章中，我們完成了：</p>
+                        <ul>
+                            <li>從 Github 下載 Qdrant 執行檔與 Web UI。</li>
+                            <li>完成 Qdrant 的首次啟動與設定檔生成。</li>
+                            <li>正確配置 Web UI 檔案。</li>
+                            <li>成功啟動 Qdrant 服務並開啟管理儀表板。</li>
+                        </ul>
+                        <p>有了這個在地化的向量資料庫，我們就可以在接下來的教學中，學習如何將 n8n 與 Qdrant 結合，打造一個完全在您掌控之下的 RAG 應用。</p>
+                        <div class="text-center mt-4">
+                            <a href="n8n-tutorial-7.html" class="btn btn-success btn-lg">前往下一章：在 Qdrant 建立向量資料庫 <i class="fas fa-arrow-right ms-2"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+                <div class="mt-5 text-center">
+                    <a href="../n8n-tutorials.html" class="btn btn-primary btn-lg"><i class="fas fa-arrow-left me-2"></i>返回 n8n 教學列表</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2025 侯俊嘉(Luke Hou). All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>
