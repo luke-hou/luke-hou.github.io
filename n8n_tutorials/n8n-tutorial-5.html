@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>n8n 教學 (五)：讓 AI 參考向量資料庫回答問題 (RAG)</title>
+    <title>n8n 教學 (五)：讓 AI 參考向量資料庫回答 (RAG)</title>
     <meta name="description" content="n8n 教學系列最終篇，我們將建立一個 RAG (Retrieval-Augmented Generation) 應用，讓 AI 能夠查詢 Supabase 向量資料庫，並根據相似度最高的資料來回答您的問題。">
-    <meta name="keywords" content="n8n教學, RAG, Retrieval-Augmented Generation, Supabase, 向量搜尋, Gemini, AI問答">
+    <meta name="keywords" content="n8n教學, RAG, Retrieval-Augmented Generation, Supabase, 向量搜尋, Gemini, AI問答, Chatbot">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
@@ -102,83 +102,129 @@
                         <p>歡迎來到 n8n 教學系列的最終篇！在前面的章節中，我們學會了如何將資料存入向量資料庫。現在，我們要來學習如何「利用」這些資料。本章將引導您建立一個完整的 RAG (Retrieval-Augmented Generation) 工作流，讓 AI 能夠根據您提出的問題，從 Supabase 中檢索最相關的資訊，並生成精準的回答。</p>
                     </div>
 
+                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 API key 綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 經手的資料就有可能被作為訓練用，如有機敏資訊，並且一定要使用 Gemini 的話，請使用付費方案。
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+
                     <div class="tutorial-content">
                         <section class="step-by-step">
                             <div class="step">
-                                <h3><i class="fas fa-question-circle step-icon"></i>步驟一：設定問題節點 (Set Node)</h3>
-                                <p>首先，我們需要一個地方來輸入我們的問題。</p>
+                                <h3><i class="fas fa-comments step-icon"></i>步驟一：設定聊天觸發器</h3>
+                                <p>首先，建立一個新的工作流，並選擇以聊天訊息作為觸發方式。</p>
                                 <ol>
-                                    <li>在新的工作流中，新增一個 "Set" 節點。</li>
-                                    <li>在 "Value" 欄位，輸入您想提出的問題，例如：「健保給付的規定有哪些？」。將這個值的 "Name" 設為 <code>question</code>。</li>
-                                    <li>這個節點將作為整個 RAG 流程的輸入源。</li>
+                                    <li>建立一個新工作流，命名為 <code>n8nChatWithAI</code>。</li>
+                                    <li>選擇觸發器時，點選 "On chat message"。這會讓工作流在您透過聊天介面傳送訊息時啟動。</li>
                                 </ol>
                                 <figure>
-                                    <a href="5/image%201.png" target="_blank"><img src="5/image%201.png" alt="設定問題節點" class="img-fluid"></a>
-                                    <figcaption class="text-muted mt-2">圖 1: 使用 Set 節點來定義問題</figcaption>
+                                    <a href="5/image.png" target="_blank"><img src="5/image.png" alt="選擇聊天觸發器" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 1: 選擇 "On chat message" 作為起點</figcaption>
                                 </figure>
                             </div>
 
                             <div class="step">
-                                <h3><i class="fas fa-robot step-icon"></i>步驟二：將問題轉換為向量 (Embedding)</h3>
-                                <p>為了在向量資料庫中進行搜尋，我們需要先將問題本身轉換成向量。</p>
+                                <h3><i class="fas fa-link step-icon"></i>步驟二：加入問答鏈 (Q&A Chain)</h3>
+                                <p>接下來，我們加入一個核心元件 "Question and Answer Chain"，它會幫我們整合後續的語言模型和向量資料庫。</p>
                                 <ol>
-                                    <li>新增一個 "Google AI" 節點，並設定好您的 Gemini API Key 憑證。</li>
-                                    <li>"Resource" 選擇 "Embedding"，"Model" 選擇 "embedding-001"。</li>
-                                    <li>在 "Text" 欄位，使用 Expression 從上一個 Set 節點中拖入問題：<code>{{ $('Set').item.json.question }}</code>。</li>
-                                    <li>執行節點，您會得到代表問題的向量。</li>
+                                    <li>在觸發器後新增節點，搜尋 "question" 並選擇 "Question and Answer Chain"。</li>
+                                    <li>點擊 "Add Option" 並選擇 "System Prompt Template"，讓我們可以客製化 AI 的指令。</li>
+                                    <li>啟用 "Expression" 並貼上以下提示詞，為 AI 設定角色和任務：
+                                        <div class="code-block mt-3">
+                                            <pre><code>你是專業藥劑師，專長是台灣健保給付規範相關領域。
+閱讀 Vector Store 的健保規範資料庫，了解台灣健保的相關規範，並以專業藥劑師的角度親切地回答使用者問題。
+一律用繁體中文回應，但英文專有名詞則保留原文。
+
+Context: {context}</code></pre>
+                                        </div>
+                                    </li>
                                 </ol>
                                 <figure>
-                                    <a href="5/image%2010.png" target="_blank"><img src="5/image%2010.png" alt="將問題轉換為向量" class="img-fluid"></a>
-                                    <figcaption class="text-muted mt-2">圖 2: 使用 Google AI 節點將問題文字轉換為向量</figcaption>
+                                    <a href="5/image%202.png" target="_blank"><img src="5/image%202.png" alt="加入 Q&A Chain" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 2: 新增 Question and Answer Chain 節點</figcaption>
+                                </figure>
+                                <figure>
+                                    <a href="5/image%203.png" target="_blank"><img src="5/image%203.png" alt="設定系統提示詞" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 3: 客製化系統提示詞以指導 AI</figcaption>
                                 </figure>
                             </div>
 
                             <div class="step">
-                                <h3><i class="fas fa-search step-icon"></i>步驟三：在 Supabase 中進行向量搜尋</h3>
-                                <p>這是 RAG 的核心步驟：檢索 (Retrieval)。我們將使用問題的向量來尋找資料庫中最相似的內容。</p>
+                                <h3><i class="fas fa-brain step-icon"></i>步驟三：設定大型語言模型 (LLM)</h3>
+                                <p>現在，我們要為 Q&A Chain 指定一個大腦，也就是我們選用的語言模型。</p>
                                 <ol>
-                                    <li>新增一個 "Supabase" 節點，並設定好您的憑證。</li>
-                                    <li>"Resource" 選擇 "Database/RPC"，"Operation" 選擇 "RPC"。</li>
-                                    <li>在 "Function Name" 欄位，輸入我們在第二章建立的函式名稱：<code>match_nhi_drug_768</code>。</li>
-                                    <li>在 "Arguments" 中設定三個參數：
+                                    <li>點擊 Q&A Chain 節點左下的 "鬚鬚"。</li>
+                                    <li>選擇 "Google Gemini Chat Model"。</li>
+                                    <li>選擇或建立您的 Gemini 憑證，並將 Model 選為 <code>models/gemini-2.5-flash</code> (或您偏好的模型)。</li>
+                                </ol>
+                                <figure>
+                                    <a href="5/image%205.png" target="_blank"><img src="5/image%205.png" alt="選擇語言模型" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 4: 選擇 Google Gemini 作為語言模型</figcaption>
+                                </figure>
+                                <figure>
+                                    <a href="5/image%206.png" target="_blank"><img src="5/image%206.png" alt="設定模型版本" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 5: 選擇指定的模型版本</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-database step-icon"></i>步驟四：設定向量資料庫檢索器</h3>
+                                <p>這是 RAG 的核心：設定如何從我們的 Supabase 向量資料庫中檢索資訊。</p>
+                                <ol>
+                                    <li>點擊 Q&A Chain 節點右下的 "鬚鬚"，選擇 "Vector Store Retriever"。</li>
+                                    <li>在跳出的視窗中，繼續點擊紅點上的 "+"，選擇 "Supabase Vector Store"。</li>
+                                    <li><strong>設定 Supabase 連線:</strong>
                                         <ul>
-                                            <li><code>query_embedding</code>: 使用 Expression，從上一步的 Google AI 節點拖入問題向量 <code>{{ $('Google AI').item.json.embedding }}</code>。</li>
-                                            <li><code>match_count</code>: 輸入您希望回傳的資料筆數，例如 <code>5</code>。</li>
-                                            <li><code>filter</code>: 輸入一個空的 JSON 物件 <code>{}</code>。</li>
+                                            <li>選擇您的 Supabase 憑證。</li>
+                                            <li>"Table Name" 選擇 <code>nhi_drug_768</code>。</li>
+                                            <li>"Query Name" 改為 <code>match_nhi_drug_768</code>。</li>
                                         </ul>
                                     </li>
-                                    <li>執行後，您會從資料庫中獲得與問題最相關的 5 筆資料。</li>
+                                    <li><strong>設定 Embedding 模型:</strong>
+                                        <ul>
+                                            <li>在 Supabase Vector Store 節點下方的 "鬚鬚" 點擊 "+"。</li>
+                                            <li>選擇 "Embeddings Google Gemini"。</li>
+                                            <li>選擇您的 Gemini 憑證，並將 Model 設為 <code>models/text-embedding-004</code>。</li>
+                                        </ul>
+                                    </li>
                                 </ol>
                                 <figure>
-                                    <a href="5/image%2011.png" target="_blank"><img src="5/image%2011.png" alt="在 Supabase 中進行向量搜尋" class="img-fluid"></a>
-                                    <figcaption class="text-muted mt-2">圖 3: 呼叫 RPC 函式進行向量相似度搜尋</figcaption>
+                                    <a href="5/image%208.png" target="_blank"><img src="5/image%208.png" alt="選擇向量檢索器" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 6: 選擇 Vector Store Retriever</figcaption>
+                                </figure>
+                                <figure>
+                                    <a href="5/image%2011.png" target="_blank"><img src="5/image%2011.png" alt="選擇 Supabase Vector Store" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 7: 將檢索器指向 Supabase</figcaption>
+                                </figure>
+                                <figure>
+                                    <a href="5/image%2014.png" target="_blank"><img src="5/image%2014.png" alt="設定 Supabase 表格與函式" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 8: 設定要查詢的表格與函式</figcaption>
+                                </figure>
+                                <figure>
+                                    <a href="5/image%2016.png" target="_blank"><img src="5/image%2016.png" alt="設定 Embedding 模型" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 9: 設定用於查詢的 Embedding 模型</figcaption>
                                 </figure>
                             </div>
 
                             <div class="step">
-                                <h3><i class="fas fa-lightbulb step-icon"></i>步驟四：生成最終答案 (Generation)</h3>
-                                <p>最後，我們將檢索到的資料和原始問題一起交給 AI，讓它生成最終的答案。</p>
+                                <h3><i class="fas-fa-rocket step-icon"></i>步驟五：開始聊天與驗證</h3>
+                                <p>所有節點都設定完畢！現在可以開始與您的 AI 聊天了。</p>
                                 <ol>
-                                    <li>再新增一個 "Google AI" 節點 (或複製一個)。</li>
-                                    <li>這次 "Resource" 選擇 "Chat Model"，"Model" 選擇 "gemini-pro"。</li>
-                                    <li>在 "Prompt" 欄位，我們要建構一個包含上下文的提示 (Prompt)。使用 Expression，輸入以下內容：</li>
-                                </ol>
-                                <div class="code-block">
-                                    <pre><code>請根據以下參考資料，回答使用者的問題。
-
-參考資料：
-{{ JSON.stringify($('Supabase').item.json.body) }}
-
-使用者的問題：
-{{ $('Set').item.json.question }}</code></pre>
-                                </div>
-                                <p>這個提示告訴 AI，它的回答應該要基於我們從 Supabase 檢索出來的資料。</p>
-                                <ol start="4">
-                                    <li>執行節點，AI 將會回傳一個綜合了參考資料的、更精準的答案。</li>
+                                    <li>點擊畫面下方的橘色按鈕 "Open chat"。</li>
+                                    <li>在聊天視窗中，輸入您想詢問的健保用藥問題，例如：「Doxorubicin 有什麼健保使用限制?」</li>
+                                    <li>AI 會接收您的問題，轉換為向量後至 Supabase 搜尋，最後將搜尋結果與您的問題結合，生成最終回覆。</li>
+                                    <li>您可以比對 AI 的回答與 Supabase 資料庫中的原文，確認其準確性。</li>
                                 </ol>
                                 <figure>
-                                    <a href="5/image%2013.png" target="_blank"><img src="5/image%2013.png" alt="生成最終答案" class="img-fluid"></a>
-                                    <figcaption class="text-muted mt-2">圖 4: 結合檢索到的上下文，讓 AI 生成最終答案</figcaption>
+                                    <a href="5/image%2019.png" target="_blank"><img src="5/image%2019.png" alt="開始聊天" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 10: 在聊天視窗中提出問題</figcaption>
+                                </figure>
+                                <figure>
+                                    <a href="5/image%2020.png" target="_blank"><img src="5/image%2020.png" alt="AI 回覆" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 11: AI 根據向量資料庫的內容生成回答</figcaption>
+                                </figure>
+                                <figure>
+                                    <a href="5/image%2022.png" target="_blank"><img src="5/image%2022.png" alt="驗證資料" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 12: 在 Supabase 中比對原始資料，驗證正確性</figcaption>
                                 </figure>
                             </div>
                         </section>
