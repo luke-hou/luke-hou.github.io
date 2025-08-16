@@ -6,6 +6,7 @@
     <title>n8n 教學 - Luke Hou 侯俊嘉的AI自動化工作流指南</title>
     <meta name="description" content="Luke Hou 侯俊嘉提供的 n8n 自動化工作流教學，包含本地安裝、Supabase、Qdrant 向量資料庫、Gemini API 申請、向量資料庫填充與 AI 應用等實用指南。">
     <meta name="keywords" content="AI, n8n教學, n8n自動化, Luke Hou, 侯俊嘉, 工作流, Supabase, Qdrant, 向量資料庫, Gemini API, AI應用, 自動化工具">
+    <link rel="icon" href="/images/favicon.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -74,7 +75,7 @@
                         <li class="nav-item"><a class="nav-link" href="n8n-tutorials.html">⚡n8n 教學</a></li>
                         <li class="nav-item"><a class="nav-link" href="portfolio.html">📚作品集</a></li>
                         <li class="nav-item"><a class="nav-link" href="blog.html">✈️分享</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact.html">🧘‍♂️聯絡我</a></li>
+                        
                     </ul>
                 </div>
             </div>
@@ -93,6 +94,7 @@
                 <!-- 基礎系列 -->
                 <section id="basic-series" class="tutorial-series">
                     <h2><i class="fas fa-cloud series-icon"></i>基礎系列 (Supabase 雲端整合)</h2>
+                    <p class="series-intro">本系列將帶您從零開始，學習 n8n 的基本操作，並整合 Supabase 雲端向量資料庫與 Gemini AI。完成後，您將擁有一個能透過雲端知識庫回答問題的基礎 RAG (檢索增強生成) 應用。</p>
                     <div class="portfolio-grid">
                         <!-- 教學項目1 -->
                         <div class="portfolio-item">
@@ -139,6 +141,7 @@
                 <!-- 在地化部署系列 -->
                 <section id="advanced-series" class="tutorial-series tutorial-series-advanced">
                     <h2><i class="fas fa-server series-icon"></i>進階系列：在地化部署 (Qdrant)</h2>
+                    <p class="series-intro">本系列專為重視資料隱私與自主性的使用者設計。我們將學習如何在本地環境安裝並設定 Qdrant 向量資料庫，並將先前的工作流無縫對接到這個私有化知識庫，實現一個完全由您掌控的 RAG 應用。</p>
                     <div class="portfolio-grid">
                         <!-- 教學項目6 -->
                         <div class="portfolio-item">
@@ -170,6 +173,14 @@
                             <img src="n8n_tutorials/9/image.png" alt="n8n教學九：改造 Chat 工作流" class="img-fluid">
                             <p>本篇將引導您改造聊天工作流，整合 Qdrant 向量資料庫，讓您的 AI 助理能根據私有知識庫進行回覆。</p>
                             <a href="n8n_tutorials/n8n-tutorial-9.html" class="btn btn-primary">查看詳情</a>
+                        </div>
+
+                        <!-- 教學項目10 -->
+                        <div class="portfolio-item">
+                            <h3>n8n 教學 (十)：從快照還原 Qdrant 資料庫</h3>
+                            <img src="n8n_tutorials/10/image 7.png" alt="n8n教學十：從快照還原 Qdrant 資料庫" class="img-fluid">
+                            <p>本篇將指導您如何利用 Qdrant 的快照功能，快速匯入或還原整個向量資料庫，對於備份、遷移與協作至關重要。</p>
+                            <a href="n8n_tutorials/n8n-tutorial-10.html" class="btn btn-primary">查看詳情</a>
                         </div>
                     </div>
                 </section>

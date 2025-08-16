@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FHIR 深度技術解析儀表板</title>
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #334155; /* slate-700 */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .content-section {
+            scroll-margin-top: 5rem;
+        }
+        .interactive-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .interactive-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .comparison-toggle-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- AI Generated Disclaimer -->
+    <div class="bg-teal-700 text-white text-center p-3 text-sm md:text-base font-bold">
+        ⚠️ 此網頁內容由 Google Gemini 根據其 Deep Research 報告生成，全部由 AI 完成。
+    </div>
+
+    <!-- Header -->
+    <header id="header" class="bg-white text-slate-800 p-4 sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-teal-700">FHIR 深度技術解析</h1>
+            <a href="../blog.html" class="text-teal-600 hover:text-teal-800 font-bold">回到部落格</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 sm:p-6 md:p-10">
+        
+        <!-- Section 1: Overview -->
+        <section id="overview" class="content-section mb-12">
+            <div class="flex items-center mb-4 border-b-4 border-teal-200 pb-2">
+                <h2 class="text-3xl font-bold text-teal-800">總覽：引領醫療資訊互通的範式轉移</h2>
+                <button class="ml-4 px-4 py-2 bg-teal-500 text-white rounded-full font-medium hover:bg-teal-600 transition-colors" onclick="summarizeSection('overview')">✨ 摘要說明</button>
+            </div>
+            <div id="summary-overview" class="p-4 bg-teal-50 rounded-lg text-slate-700 hidden mb-6"></div>
+            <p class="text-lg text-slate-600 mb-6">
+                本儀表板專為醫療資訊技術（HIT）專業人士、系統架構師與政策制定者設計。我們將對 FHIR 進行從技術底層到應用實踐的全面剖析。探討其基於 Web 技術的現代化架構如何解決傳統 HL7 標準的實作困境，並深入分析台灣衛福部推動的「台灣醫療資訊標準大平台」計畫，以及其在本土醫療體系中如何落地與演進。
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-4xl font-bold text-teal-600" id="efficiency-stat">30%</h3>
+                    <p class="text-slate-500 mt-2">敏盛醫事作業效率提升</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-4xl font-bold text-teal-600" id="pac-stat">26,000+</h3>
+                    <p class="text-slate-500 mt-2">新北市PAC病歷交換數</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-4xl font-bold text-teal-600" id="tw-ig-stat">12+</h3>
+                    <p class="text-slate-500 mt-2">台灣FHIR核心指引(TW Core IG)版本</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Core Concepts -->
+        <section id="core-concepts" class="content-section mb-12">
+            <div class="flex items-center mb-4 border-b-4 border-teal-200 pb-2">
+                <h2 class="text-3xl font-bold text-teal-800">FHIR 核心技術：資源、API、安全框架</h2>
+                <button class="ml-4 px-4 py-2 bg-teal-500 text-white rounded-full font-medium hover:bg-teal-600 transition-colors" onclick="summarizeSection('core-concepts')">✨ 摘要說明</button>
+            </div>
+            <div id="summary-core-concepts" class="p-4 bg-teal-50 rounded-lg text-slate-700 hidden mb-6"></div>
+            <p class="text-lg text-slate-600 mb-8">FHIR 的核心是其模組化、Web化的設計理念。它由三大技術支柱構成，共同賦予了醫療數據前所未有的靈活度與互通性。</p>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="interactive-card bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-bold text-teal-700 mb-3">資源 (Resources) 模型</h3>
+                    <p class="text-slate-600 mb-4">FHIR 將所有醫療數據抽象為細粒度、可獨立存取的「資源」(Resource)。每個資源都擁有明確的業務定義、通用化的數據屬性及標準化的行為。這種設計使得數據可以按需組合，而無需交換龐大的文檔。</p>
+                    <ul class="list-disc list-inside text-sm text-slate-600">
+                        <li><strong>Patient：</strong>患者基本資訊。</li>
+                        <li><strong>Observation：</strong>檢驗結果、生命徵象等。</li>
+                        <li><strong>Encounter：：</strong>就醫紀錄。</li>
+                        <li><strong>MedicationRequest：</strong>用藥醫囑。</li>
+                    </ul>
+                </div>
+                <div class="interactive-card bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-bold text-teal-700 mb-3">RESTful API 服務</h3>
+                    <p class="text-slate-600 mb-4">FHIR 透過 HTTP 協定與 RESTful API 提供 CRUD (Create, Read, Update, Delete) 操作，將其與現代 Web 服務無縫整合。這使得開發者可以使用熟悉的技術棧，大幅降低學習曲線。</p>
+                    <ul class="list-disc list-inside text-sm text-slate-600">
+                        <li><strong>讀取 (GET)：</strong>`[base]/Patient/[id]`</li>
+                        <li><strong>查詢 (Search)：</strong>`[base]/Patient?gender=male`</li>
+                        <li><strong>新增 (POST)：：</strong>`[base]/Patient`</li>
+                        <li><strong>更新 (PUT)：：</strong>`[base]/Patient/[id]`</li>
+                    </ul>
+                </div>
+                <div class="interactive-card bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-bold text-teal-700 mb-3">SMART on FHIR 框架</h3>
+                    <p class="text-slate-600 mb-4">SMART on FHIR 是一個開放的應用程式框架，它結合了 FHIR 的數據存取能力與 OAuth 2.0 的安全授權機制。這確保了第三方應用程式可以安全地嵌入任何支援 FHIR 的 EHR 系統中，實現跨系統的互通與創新。</p>
+                    <p class="text-sm text-slate-600 mt-2"><strong>工作流程：</strong>應用程式透過授權伺服器獲取存取權杖，然後憑此權杖安全地呼叫 FHIR 伺服器上的 API。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Comparison -->
+        <section id="comparison" class="content-section mb-12">
+            <div class="flex items-center mb-4 border-b-4 border-teal-200 pb-2">
+                <h2 class="text-3xl font-bold text-teal-800">標準技術比較：FHIR vs. HL7 V2 vs. V3</h2>
+                <button class="ml-4 px-4 py-2 bg-teal-500 text-white rounded-full font-medium hover:bg-teal-600 transition-colors" onclick="summarizeSection('comparison')">✨ 摘要說明</button>
+            </div>
+            <div id="summary-comparison" class="p-4 bg-teal-50 rounded-lg text-slate-700 hidden mb-6"></div>
+            <p class="text-lg text-slate-600 mb-8">FHIR 標誌著 HL7 家族的技術演進，它吸取了 V2 實作簡單但結構鬆散、V3 結構嚴謹但實作複雜的經驗，取兩者之長，開創了一種更平衡且現代化的途徑。下圖展示了三種標準在核心維度上的差異，下方可點擊查看詳細比較。</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-bold text-center text-teal-700 mb-4">關鍵技術特性評分</h3>
+                    <div class="chart-container h-96">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                </div>
+                <div id="comparison-toggles" class="bg-white p-6 rounded-xl shadow-md space-y-2">
+                    <h3 class="text-xl font-bold text-center text-teal-700 mb-4">詳細技術差異分析</h3>
+                    <div>
+                        <button class="comparison-toggle-btn w-full text-left p-3 bg-slate-100 hover:bg-teal-100 rounded-lg font-medium flex justify-between items-center">
+                            <span>技術基礎與數據格式</span>
+                            <span class="toggle-icon">+</span>
+                        </button>
+                        <div class="comparison-toggle-content p-3 text-sm text-slate-600">
+                            <strong>HL7 V2:</strong> 專有純文字格式，基於 TCP/IP 點對點傳輸。實作複雜，難以擴充。<br>
+                            <strong>HL7 V3:</strong> 基於 XML，採用嚴格的 RIM 模型。數據語意嚴謹，但開發困難。<br>
+                            <strong>FHIR:</strong> 基於 Web 的 RESTful API，使用 JSON/XML。易於開發，技術門檻低。
+                        </div>
+                    </div>
+                    <div>
+                        <button class="comparison-toggle-btn w-full text-left p-3 bg-slate-100 hover:bg-teal-100 rounded-lg font-medium flex justify-between items-center">
+                            <span>數據模型與實作模式</span>
+                            <span class="toggle-icon">+</span>
+                        </button>
+                        <div class="comparison-toggle-content p-3 text-sm text-slate-600">
+                            <strong>HL7 V2:</strong> 以事件驅動的訊息模式，數據散佈在各個欄位中，難以追蹤。<br>
+                            <strong>HL7 V3:</strong> 以文檔為中心，基於 Reference Information Model (RIM) 進行嚴格約束。<br>
+                            <strong>FHIR:</strong> 以「資源」為中心的模組化設計，可獨立存取，易於擴展與二次利用。
+                        </div>
+                    </div>
+                    <div>
+                        <button class="comparison-toggle-btn w-full text-left p-3 bg-slate-100 hover:bg-teal-100 rounded-lg font-medium flex justify-between items-center">
+                            <span>安全與授權</span>
+                            <span class="toggle-icon">+</span>
+                        </button>
+                        <div class="comparison-toggle-content p-3 text-sm text-slate-600">
+                            <strong>HL7 V2/V3:</strong> 缺乏內建的應用層安全機制，主要依賴傳輸層加密與實體防火牆。<br>
+                            <strong>FHIR:</strong> 原生支援 OAuth 2.0 與 OpenID Connect，提供基於使用者角色的精細化存取控制，安全性更強。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Taiwan Blueprint -->
+        <section id="taiwan-blueprint" class="content-section mb-12">
+            <div class="flex items-center mb-4 border-b-4 border-teal-200 pb-2">
+                <h2 class="text-3xl font-bold text-teal-800">台灣實施藍圖：從頂層設計到TW Core IG</h2>
+                <button class="ml-4 px-4 py-2 bg-teal-500 text-white rounded-full font-medium hover:bg-teal-600 transition-colors" onclick="summarizeSection('taiwan-blueprint')">✨ 摘要說明</button>
+            </div>
+            <div id="summary-taiwan-blueprint" class="p-4 bg-teal-50 rounded-lg text-slate-700 hidden mb-6"></div>
+            <p class="text-lg text-slate-600 mb-8">台灣 FHIR 的實施路徑不僅有政策引導，更有具體的技術標準和實作指引。衛福部與各醫學中心、產業合作，建立了一個從國家層級到技術層面的完整生態系。以下是台灣實施藍圖的關鍵技術與政策組成。</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="interactive-card bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-bold text-teal-700 mb-3">台灣FHIR核心指引(TW Core IG)</h3>
+                    <p class="text-slate-600">這是台灣實作 FHIR 的關鍵技術文件，定義了如何對國際標準 FHIR 進行本土化擴充與約束。它包含了一系列「Profile」，用以精確定義台灣特定醫療情境下的資源結構。</p>
+                    <ul class="list-disc list-inside text-sm text-slate-600 mt-4">
+                        <li><strong>TW-Patient：</strong>台灣病患資源定義。</li>
+                        <li><strong>TW-AllergyIntolerance：</strong>台灣過敏史資源定義。</li>
+                        <li><strong>TW-Medication：：</strong>台灣藥物資源定義。</li>
+                        <li><strong>TW-Composition：：</strong>台灣病歷文書資源定義。</li>
+                    </ul>
+                </div>
+                <div class="interactive-card bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-bold text-teal-700 mb-3">「台灣醫療資訊標準大平台」三大策略</h3>
+                    <p class="text-slate-600">透過資料統一、規則統一、應用程式統一，系統性地解決了醫療數據互通的根本問題。它以 FHIR 為數據交換基石，以 CQL (Clinical Quality Language) 為規則語言，以 SMART on FHIR 為應用開發框架。</p>
+                </div>
+                <div class="interactive-card bg-white p-6 rounded-xl shadow-md md:col-span-2">
+                    <h3 class="text-xl font-bold text-teal-700 mb-3">「黑熊版」FHIR公版與電子病歷上雲</h3>
+                    <p class="text-slate-600">「黑熊版」是一個針對中小型醫療院所設計的 FHIR 公版框架，目的是降低其導入成本與技術門檻。搭配衛福部推動的電子病歷上雲計畫，旨在為基層醫療提供一個開箱即用、隨時可連線的 FHIR 解決方案，有效弭平城鄉資訊落差。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Use Cases -->
+        <section id="use-cases" class="content-section mb-12">
+            <div class="flex items-center mb-4 border-b-4 border-teal-200 pb-2">
+                <h2 class="text-3xl font-bold text-teal-800">進階應用實例：從跨院交換到臨床決策</h2>
+                <button class="ml-4 px-4 py-2 bg-teal-500 text-white rounded-full font-medium hover:bg-teal-600 transition-colors" onclick="summarizeSection('use-cases')">✨ 摘要說明</button>
+            </div>
+            <div id="summary-use-cases" class="p-4 bg-teal-50 rounded-lg text-slate-700 hidden mb-6"></div>
+            <p class="text-lg text-slate-600 mb-8">FHIR 的價值不僅體現在數據格式的標準化，更在於其催生的創新應用。以下案例展示了 FHIR 如何在不同層面發揮作用，從根本上提升醫療服務的效率與品質。</p>
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                <div class="lg:col-span-3 bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-bold text-teal-700 mb-3">跨院轉診：新北市PAC計畫</h3>
+                    <p class="text-slate-600 mb-4"><strong>技術實現：</strong>新光醫院與北市聯醫利用 FHIR 平台，實現病患住院資料的即時、結構化交換。核心資源包括 `Composition` (出院病摘)、`DiagnosticReport` (檢驗報告) 等，取代了過去耗時的紙本作業，確保了連續性照護的數據完整性。</p>
+                    <h3 class="text-xl font-bold text-teal-700 mb-3 mt-6">院內效率：敏盛醫療體系</h3>
+                    <p class="text-slate-600"><strong>技術實現：</strong>敏盛導入 FHIR 資料中台，將各個遺留系統（LIS, RIS, PACS）的數據整合，形成統一的資料層。上層應用程式直接呼叫 FHIR API 讀取數據，避免了點對點介面整合的複雜性。結果是醫事作業效率提升 30%，看診時間節省 30%。</p>
+                </div>
+                <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-md flex flex-col justify-center">
+                    <h3 class="text-xl font-bold text-center text-teal-700 mb-4">敏盛醫療體系數據流</h3>
+                    <div class="chart-container h-80 flex items-center justify-center">
+                        <canvas id="efficiencyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Challenges -->
+        <section id="challenges" class="content-section mb-12">
+            <div class="flex items-center mb-4 border-b-4 border-teal-200 pb-2">
+                <h2 class="text-3xl font-bold text-teal-800">挑戰與未來展望：從實作到生態系</h2>
+                <button class="ml-4 px-4 py-2 bg-teal-500 text-white rounded-full font-medium hover:bg-teal-600 transition-colors" onclick="summarizeSection('challenges')">✨ 摘要說明</button>
+            </div>
+            <div id="summary-challenges" class="p-4 bg-teal-50 rounded-lg text-slate-700 hidden mb-6"></div>
+            <p class="text-lg text-slate-600 mb-8">FHIR 的推動是一個系統性的工程，涉及技術、管理與文化等多個層面。以下是目前實施 FHIR 所面臨的主要挑戰，以及台灣未來可以重點發展的方向。</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-bold text-center text-teal-700 mb-4">FHIR 實施挑戰分析</h3>
+                    <div class="chart-container h-96">
+                        <canvas id="challengesChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <h3 class="text-xl font-bold text-teal-700 mb-3">台灣的下一步策略</h3>
+                    <ul class="list-disc list-inside space-y-3 text-slate-600">
+                        <li><strong>深化 TW Core IG：</strong>持續完善核心指引，涵蓋更多臨床情境與資源類型，並與國際同步。</li>
+                        <li><strong>人才培育與認證：</strong>建立 FHIR 專業人才的培訓與認證機制，擴大開發者與架構師社群。</li>
+                        <li><strong>生態系驅動：</strong>透過政府採購與獎勵機制，鼓勵廠商開發符合 FHIR 標準的創新應用。</li>
+                        <li><strong>數據治理與隱私：</strong>在數據共享的同時，持續強化法規框架與技術手段，確保患者數據安全。</li>
+                        <li><strong>漸進式導入：</strong>務實規劃與遺留系統的過渡方案，例如透過 FHIR Adapter 實現平滑轉型。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Gemini Q&A Section -->
+        <section id="gemini-qa" class="content-section mt-12 p-6 bg-teal-50 rounded-xl shadow-md">
+            <div class="flex items-center mb-4 border-b-4 border-teal-200 pb-2">
+                <h2 class="text-3xl font-bold text-teal-800">✨ Gemini 互動問答</h2>
+            </div>
+            <p class="text-lg text-slate-600 mb-4">在這裡輸入您對 FHIR 或醫療資訊技術的任何疑問，Gemini 將為您解答！</p>
+            <div class="flex flex-col md:flex-row gap-4">
+                <input type="text" id="question-input" placeholder="例如：什麼是 FHIR？" class="flex-1 p-3 rounded-lg border-2 border-slate-300 focus:outline-none focus:border-teal-500">
+                <button id="ask-button" class="px-6 py-3 bg-teal-500 text-white rounded-full font-medium hover:bg-teal-600 transition-colors flex-shrink-0">✨ 詢問 Gemini</button>
+            </div>
+            <div id="answer-area" class="mt-6 p-4 bg-white rounded-lg shadow-inner hidden">
+                <p class="text-slate-700 font-bold mb-2">Gemini 的回答：</p>
+                <div id="answer-content" class="text-slate-600 whitespace-pre-wrap"></div>
+                <div class="flex justify-end mt-4">
+                    <button id="read-aloud-button" class="px-4 py-2 bg-slate-200 text-slate-700 rounded-full font-medium hover:bg-slate-300 transition-colors hidden">✨ 朗讀答案</button>
+                </div>
+            </div>
+            <div id="loading-indicator" class="mt-6 p-4 text-center text-slate-500 hidden">
+                <svg class="animate-spin h-5 w-5 mr-3 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>正在思考中...</span>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-white text-center p-6 mt-8">
+        <p>基於 FHIR 深度研究報告製作的互動式儀表板</p>
+        <p class="text-sm mt-1 opacity-70">© 2025・為教育與技術推廣目的而建構</p>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const animateValue = (obj, start, end, duration) => {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const currentValue = Math.floor(progress * (end - start) + start);
+            if (obj.id === 'efficiency-stat') {
+                obj.innerHTML = currentValue + "%" ;
+            } else if (obj.id === 'pac-stat') {
+                 obj.innerHTML = currentValue.toLocaleString() + "+" ;
+            } else {
+                obj.innerHTML = currentValue + "+" ;
+            }
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                if(entry.target.id === 'overview') {
+                    const efficiencyStat = document.getElementById('efficiency-stat');
+                    const pacStat = document.getElementById('pac-stat');
+                    const twIgStat = document.getElementById('tw-ig-stat');
+                    animateValue(efficiencyStat, 0, 30, 1500);
+                    animateValue(pacStat, 0, 26000, 2000);
+                    animateValue(twIgStat, 0, 12, 1000);
+                    observer.unobserve(entry.target);
+                }
+            }
+        });
+    }, { threshold: 0.5 });
+
+    const overviewSection = document.getElementById('overview');
+    if(overviewSection) {
+        observer.observe(overviewSection);
+    }
+
+    const comparisonToggles = document.querySelectorAll('.comparison-toggle-btn');
+    comparisonToggles.forEach(button => {
+        button.addEventListener('click', () => {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('.toggle-icon');
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.textContent = '+';
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.textContent = '-';
+            }
+        });
+    });
+
+    Chart.defaults.font.family = "'Noto Sans TC', sans-serif";
+    Chart.defaults.color = '#334155';
+
+    const comparisonChartCtx = document.getElementById('comparisonChart');
+    if(comparisonChartCtx) {
+        new Chart(comparisonChartCtx, {
+            type: 'bar',
+            data: {
+                labels: ['實作難易度', '資料結構嚴謹性', '擴充性與靈活性', '技術現代化程度'],
+                datasets: [{
+                    label: 'HL7 V2',
+                    data: [8, 3, 2, 1],
+                    backgroundColor: '#fca5a5',
+                    borderColor: '#ef4444',
+                    borderWidth: 1
+                }, {
+                    label: 'HL7 V3',
+                    data: [1, 9, 7, 5],
+                    backgroundColor: '#93c5fd',
+                    borderColor: '#3b82f6',
+                    borderWidth: 1
+                }, {
+                    label: 'FHIR',
+                    data: [9, 7, 10, 10],
+                    backgroundColor: '#6ee7b7',
+                    borderColor: '#10b981',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 10,
+                        title: { display: true, text: '評分 (10為最佳)' }
+                    }
+                },
+                plugins: {
+                    title: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.x !== null) {
+                                    label += context.parsed.x + ' 分';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    const efficiencyChartCtx = document.getElementById('efficiencyChart');
+    if(efficiencyChartCtx) {
+        new Chart(efficiencyChartCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['醫事作業效率提升', '看診時間節省'],
+                datasets: [{
+                    label: '效率提升 (%)',
+                    data: [30, 30],
+                    backgroundColor: ['#5eead4', '#fdba74'],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: false,
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: ${context.raw}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    const challengesChartCtx = document.getElementById('challengesChart');
+    if(challengesChartCtx) {
+        new Chart(challengesChartCtx, {
+            type: 'radar',
+            data: {
+                labels: ['遺留系統整合', '人才與培訓缺口', '標準語意一致性', '法規與隱私保護', '廠商生態系成熟度'],
+                datasets: [{
+                    label: '挑戰程度',
+                    data: [9, 8, 7, 8, 6],
+                    fill: true,
+                    backgroundColor: 'rgba(13, 148, 136, 0.2)',
+                    borderColor: 'rgb(13, 148, 136)',
+                    pointBackgroundColor: 'rgb(13, 148, 136)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(13, 148, 136)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: {
+                            display: true
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 10,
+                        pointLabels: {
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    title: { display: false }
+                }
+            }
+        });
+    }
+    
+    // --- 新增的 Gemini API 相關功能 ---
+    
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const answerArea = document.getElementById('answer-area');
+    const answerContent = document.getElementById('answer-content');
+    const readAloudButton = document.getElementById('read-aloud-button');
+    let currentAudio = null; // 用於儲存目前的音訊物件
+
+    // 輔助函數：將 base64 字串轉換為 ArrayBuffer
+    function base64ToArrayBuffer(base64) {
+        const binaryString = atob(base64);
+        const len = binaryString.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+        }
+        return bytes.buffer;
+    }
+
+    // 輔助函數：將 PCM16 轉換為 WAV Blob
+    function pcmToWav(pcm16, sampleRate) {
+        const numChannels = 1;
+        const bitsPerSample = 16;
+        const blockAlign = numChannels * (bitsPerSample / 8);
+        const byteRate = sampleRate * blockAlign;
+        const dataSize = pcm16.length * (bitsPerSample / 8);
+        
+        const buffer = new ArrayBuffer(44 + dataSize);
+        const view = new DataView(buffer);
+        
+        // RIFF header
+        view.setUint32(0, 0x52494646, false); // "RIFF"
+        view.setUint32(4, 36 + dataSize, true); // 文件長度
+        view.setUint32(8, 0x57415645, false); // "WAVE"
+        
+        // fmt chunk
+        view.setUint32(12, 0x666d7420, false); // "fmt "
+        view.setUint32(16, 16, true); // fmt chunk size
+        view.setUint16(20, 1, true); // 音訊格式 (1 = PCM)
+        view.setUint16(22, numChannels, true);
+        view.setUint32(24, sampleRate, true);
+        view.setUint32(28, byteRate, true);
+        view.setUint16(32, blockAlign, true);
+        view.setUint16(34, bitsPerSample, true);
+        
+        // data chunk
+        view.setUint32(36, 0x64617461, false); // "data"
+        view.setUint32(40, dataSize, true);
+        
+        // 寫入 PCM 數據
+        let offset = 44;
+        for (let i = 0; i < pcm16.length; i++, offset += 2) {
+            view.setInt16(offset, pcm16[i], true);
+        }
+        
+        return new Blob([buffer], { type: 'audio/wav' });
+    }
+
+    /**
+     * 呼叫 Gemini API 進行文字生成。
+     * @param {string} prompt 要發送給 LLM 的提示。
+     * @returns {Promise<string>} LLM 的回應文字。
+     */
+    async function callGeminiForText(prompt) {
+        const apiKey = ""; 
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+        // 使用 exponential backoff 處理 API 節流
+        const maxRetries = 5;
+        let retryDelay = 1000; // 1 second
+
+        for (let i = 0; i < maxRetries; i++) {
+            try {
+                const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                const payload = { contents: chatHistory };
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.status === 429) { // Too many requests
+                    if (i < maxRetries - 1) {
+                        await new Promise(resolve => setTimeout(resolve, retryDelay));
+                        retryDelay *= 2; // Exponential backoff
+                        continue;
+                    }
+                }
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    return result.candidates[0].content.parts[0].text;
+                } else {
+                    return "無法生成回答，請稍後再試。";
+                }
+            } catch (error) {
+                console.error("Gemini API 呼叫失敗:", error);
+                if (i < maxRetries - 1) {
+                    await new Promise(resolve => setTimeout(resolve, retryDelay));
+                    retryDelay *= 2;
+                } else {
+                    return "發生錯誤，無法連線到 Gemini API。";
+                }
+            }
+        }
+    }
+
+    /**
+     * 呼叫 Gemini API 進行 TTS 語音生成。
+     * @param {string} text 要轉換成語音的文字。
+     * @returns {Promise<string>} 包含 WAV Blob URL 的 Promise。
+     */
+    async function callGeminiForTTS(text) {
+        const payload = {
+            contents: [{
+                parts: [{ text: text }]
+            }],
+            generationConfig: {
+                responseModalities: ["AUDIO"],
+                speechConfig: {
+                    voiceConfig: {
+                        prebuiltVoiceConfig: { voiceName: "Puck" } // 使用 upbeat 的聲音
+                    }
+                }
+            },
+            model: "gemini-2.5-flash-preview-tts"
+        };
+        const apiKey = "";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+
+        const maxRetries = 5;
+        let retryDelay = 1000;
+
+        for (let i = 0; i < maxRetries; i++) {
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.status === 429) {
+                    if (i < maxRetries - 1) {
+                        await new Promise(resolve => setTimeout(resolve, retryDelay));
+                        retryDelay *= 2;
+                        continue;
+                    }
+                }
+
+                const result = await response.json();
+                const part = result?.candidates?.[0]?.content?.parts?.[0];
+                const audioData = part?.inlineData?.data;
+                const mimeType = part?.inlineData?.mimeType;
+
+                if (audioData && mimeType && mimeType.startsWith("audio/")) {
+                    // API 返回 raw signed PCM16 音訊數據
+                    const sampleRate = parseInt(mimeType.match(/rate=(\d+)/)[1], 10);
+                    const pcmData = base64ToArrayBuffer(audioData);
+                    const pcm16 = new Int16Array(pcmData);
+                    const wavBlob = pcmToWav(pcm16, sampleRate);
+                    return URL.createObjectURL(wavBlob);
+                } else {
+                    throw new Error("TTS API 回應格式錯誤或內容遺失。");
+                }
+            } catch (error) {
+                console.error("TTS API 呼叫失敗:", error);
+                if (i < maxRetries - 1) {
+                    await new Promise(resolve => setTimeout(resolve, retryDelay));
+                    retryDelay *= 2;
+                } else {
+                    throw new Error("發生錯誤，無法連線到 Gemini TTS API。");
+                }
+            }
+        }
+    }
+
+    /**
+     * 針對特定區塊生成摘要。
+     * @param {string} sectionId 區塊的 ID。
+     */
+    window.summarizeSection = async function(sectionId) {
+        const section = document.getElementById(sectionId);
+        const summaryDiv = document.getElementById(`summary-${sectionId}`);
+        const content = section.innerText;
+        
+        summaryDiv.innerHTML = '<span>正在生成摘要...</span>';
+        summaryDiv.classList.remove('hidden');
+
+        // 定義提示，確保 LLM 知道要總結什麼
+        const prompt = `請將以下關於 FHIR 的技術文件內容，用繁體中文總結成一段簡潔、易懂的摘要：\n\n${content}`;
+        
+        try {
+            const summaryText = await callGeminiForText(prompt);
+            summaryDiv.innerHTML = summaryText;
+        } catch (error) {
+            summaryDiv.innerHTML = '生成摘要時發生錯誤，請稍後再試。';
+        }
+    };
+    
+    // 處理問答功能的點擊事件
+    document.getElementById('ask-button').addEventListener('click', async () => {
+        const questionInput = document.getElementById('question-input');
+        const question = questionInput.value.trim();
+        
+        if (!question) {
+            return;
+        }
+
+        loadingIndicator.classList.remove('hidden');
+        answerArea.classList.add('hidden');
+        answerContent.textContent = '';
+        readAloudButton.classList.add('hidden');
+        if (currentAudio) {
+            currentAudio.pause();
+            currentAudio = null;
+        }
+
+        const dashboardContent = document.body.innerText.replace(/✨\s*[\u4e00-\u9fa5]+/g, '').replace(/[\r\n]+/g, ' ');
+
+        const prompt = `你是一位資深的醫療資訊技術專家。請根據以下網頁內容和你的專業知識，用繁體中文簡要且專業地回答這個問題：\n\n網頁內容：${dashboardContent}\n\n問題：${question}`;
+        
+        try {
+            const answerText = await callGeminiForText(prompt);
+            loadingIndicator.classList.add('hidden');
+            answerContent.textContent = answerText;
+            answerArea.classList.remove('hidden');
+            readAloudButton.classList.remove('hidden');
+        } catch (error) {
+            loadingIndicator.classList.add('hidden');
+            answerContent.textContent = "無法獲取答案，請檢查連線或稍後再試。" ;
+            answerArea.classList.remove('hidden');
+        }
+    });
+
+    // 處理朗讀答案的點擊事件
+    readAloudButton.addEventListener('click', async () => {
+        if (currentAudio) {
+            currentAudio.pause();
+            currentAudio = null;
+            readAloudButton.textContent = '✨ 朗讀答案';
+            return;
+        }
+
+        const textToRead = answerContent.textContent;
+        if (!textToRead) return;
+
+        readAloudButton.textContent = '正在朗讀...';
+        readAloudButton.disabled = true;
+        try {
+            const audioUrl = await callGeminiForTTS(textToRead);
+            currentAudio = new Audio(audioUrl);
+            currentAudio.play();
+            currentAudio.onended = () => {
+                readAloudButton.textContent = '✨ 朗讀答案';
+                readAloudButton.disabled = false;
+                if (currentAudio) { URL.revokeObjectURL(currentAudio.src); }
+                currentAudio = null;
+            };
+            readAloudButton.textContent = '暫停朗讀';
+        } catch (error) {
+            console.error("TTS 錯誤:", error);
+            readAloudButton.textContent = '朗讀失敗';
+        } finally {
+            readAloudButton.disabled = false;
+        }
+    });
+});
+</script>
+
+</body>
+</html>

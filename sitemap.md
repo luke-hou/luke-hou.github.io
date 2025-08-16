@@ -12,8 +12,6 @@
   - `blog.html`
 - **n8n 教學 (n8n Tutorials)**
   - `n8n-tutorials.html`
-- **聯絡我 (Contact)**
-  - `contact.html`
 
 ## 作品集項目 (Portfolio Projects)
 

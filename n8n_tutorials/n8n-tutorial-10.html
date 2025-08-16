@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>n8n 教學 (十)：從快照 (Snapshot) 還原 Qdrant 資料庫</title>
+    <meta name="description" content="n8n 教學系列第十篇！本章將指導您如何利用 Qdrant 的快照功能，快速匯入或還原整個向量資料庫，對於備份、遷移與協作至關重要。">
+    <meta name="keywords" content="n8n教學, Qdrant, Snapshot, 向量資料庫, 資料庫還原, 資料庫備份, AI應用, 私有化">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .tutorial-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.5rem auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .tutorial-content figure {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .tutorial-content figure img {
+            margin: 0 auto;
+        }
+        .step {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            background-color: #f8f9fa;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .step:hover {
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+        }
+        .step h3 {
+            font-size: 1.75rem;
+            color: #0d6efd;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .step h3 .step-icon {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        .tutorial-intro, .tutorial-summary {
+            background-color: #e9f7ff;
+            border-left: 5px solid #0d6efd;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <article class="blog-post">
+                    <h1 class="mb-3 display-5 border-bottom pb-3">n8n 教學 (十)：從快照 (Snapshot) 還原 Qdrant 資料庫</h1>
+                    <p class="text-muted mb-4">發布日期：2025年8月</p>
+
+                    <div class="tutorial-intro">
+                        <h4>前言：資料的備份、遷移與共享</h4>
+                        <p>在本機部署 Qdrant 帶來了資料自主權，但同時也帶來了資料管理的責任。Qdrant 的「快照 (Snapshot)」功能是您最好的朋友，它能讓您輕鬆地將整個 Collection 備份下來，無論是為了資料安全、遷移到另一台機器，或是與團隊成員共享一個標準化的資料集，都非常實用。本章將引導您如何透過 Web UI 快速地從一個快照檔案還原整個向量資料庫。</p>
+                    </div>
+
+                    <div class="tutorial-content">
+                        <section class="step-by-step">
+                            <div class="step">
+                                <h3><i class="fas fa-upload step-icon"></i>步驟一：啟動並上傳快照</h3>
+                                <p>首先，請確保您的 Qdrant 服務正在運行，並打開 Web Dashboard。</p>
+                                <ol>
+                                    <li>在 Qdrant 儀表板的主畫面，點擊右上角的 "UPLOAD SNAPSHOT" 按鈕。</li>
+                                </ol>
+                                <figure>
+                                    <a href="10/image 1.png" target="_blank"><img src="10/image 1.png" alt="上傳快照" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 1: 點擊 "UPLOAD SNAPSHOT" 開始還原流程。</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-edit step-icon"></i>步驟二：命名新的 Collection</h3>
+                                <p>從快照還原時，您可以為新的 Collection 指定一個名稱，這讓您可以還原到一個與原始名稱不同的新 Collection 中。</p>
+                                <ol>
+                                    <li>在 "New collection name" 欄位中，為即將被匯入的 Collection 取一個適合辨認的名字。例如：<code>restored_from_snapshot</code>。</li>
+                                    <li>點擊畫面中的 "Drop here or browse" 區域，打開檔案選擇視窗。</li>
+                                </ol>
+                                <figure>
+                                    <a href="10/image 2.png" target="_blank"><img src="10/image 2.png" alt="命名 Collection" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 2: 為還原後的 Collection 命名。</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-file-import step-icon"></i>步驟三：選擇並匯入快照檔案</h3>
+                                <p>現在，選擇您之前備份好的快照檔案 (通常是 <code>.snapshot</code> 結尾)。</p>
+                                <ol>
+                                    <li>在檔案選擇視窗中，找到您的快照檔案並選取它。</li>
+                                    <li>選取後，系統會自動開始上傳並處理檔案。</li>
+                                    <li>您會看到匯入進度條，請耐心等待其完成。</li>
+                                </ol>
+                                <figure>
+                                    <a href="10/image 3.png" target="_blank"><img src="10/image 3.png" alt="點擊上傳區域" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 3: 點擊 "Drop here or browse" 來選擇快照檔案。</figcaption>
+                                </figure>
+                                <figure>
+                                    <a href="10/image 4.png" target="_blank"><img src="10/image 4.png" alt="選擇快照檔案" class="img-fluid" style="max-width: 400px;"></a>
+                                    <figcaption class="text-muted mt-2">圖 4: 選擇要還原的快照檔案。</figcaption>
+                                </figure>
+                                <figure>
+                                    <a href="10/image 5.png" target="_blank"><img src="10/image 5.png" alt="匯入進度" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 5: 系統正在處理並匯入快照。</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-check-circle step-icon"></i>步驟四：驗證還原結果</h3>
+                                <p>匯入完成後，我們需要確認資料是否已成功還原。</p>
+                                <ol>
+                                    <li>回到 "Collections" 列表，您應該能看到剛剛建立的新 Collection <code>restored_from_snapshot</code>。</li>
+                                    <li>點擊 "Points" 下方的數字，進入 Collection 內部。</li>
+                                    <li>檢查資料點 (Points) 是否如預期般被匯入，包括其內容 (payload) 與向量。</li>
+                                </ol>
+                                <figure>
+                                    <a href="10/image 6.png" target="_blank"><img src="10/image 6.png" alt="還原成功" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 5: 新的 Collection 已成功從快照還原。</figcaption>
+                                </figure>
+                                <figure>
+                                    <a href="10/image 7.png" target="_blank"><img src="10/image 7.png" alt="驗證資料點" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 6: 檢查還原後的資料點，確保資料完整無誤。</figcaption>
+                                </figure>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="tutorial-summary">
+                        <h4>本章總結與系列回顧</h4>
+                        <p>恭喜您完成了 Qdrant 進階系列的最後一篇文章！您不僅學會了如何建立和操作在地化的向量資料庫，更掌握了如何透過快照來進行備份與還原，這對於任何正式的專案來說都是一項不可或缺的技能。</p>
+                        <p>讓我們再次回顧整個 n8n 教學系列的旅程：</p>
+                        <ul>
+                            <li>從零開始，在本地建置了 <strong>n8n</strong> 的運行環境。</li>
+                            <li>學會申請 <strong>Google Gemini API</strong>，並將其強大的語言模型整合至工作流中。</li>
+                            <li>掌握了兩種向量資料庫的操作：雲端的 <strong>Supabase</strong> 與在地化的 <strong>Qdrant</strong>。</li>
+                            <li>建立了自動化的工作流，能將文件處理、向量化並存入雲端或本地資料庫。</li>
+                            <li>最終，打造了一個能與您的私有知識庫互動的 <strong>AI 聊天機器人</strong>，並學會了如何備份與還原它。</li>
+                        </ul>
+                        <p>您現在擁有的不僅是一套工具，更是一套解決問題的方法論。希望這個系列能為您的 AI 自動化之旅提供一個堅實的起點。未來還有無限可能，期待您創造出更多精彩的應用！</p>
+                    </div>
+                </article>
+
+                <div class="mt-5 text-center">
+                    <a href="../n8n-tutorials.html" class="btn btn-primary btn-lg"><i class="fas fa-arrow-left me-2"></i>返回 n8n 教學列表</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2025 侯俊嘉(Luke Hou). All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>
