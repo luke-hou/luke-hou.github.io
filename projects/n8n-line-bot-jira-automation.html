@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>專案: n8n Line Bot 回報問題自動生成多專案 Jira Ticket - Luke的作品集</title>
+    <meta name="description" content="用Line回報問題並附圖，直接建立Jira ticket 到對應的專案，大幅簡化回報流程">
+    <meta name="keywords" content="n8n, Line Bot, Jira, 自動化, 軟體測試, QA, Luke Hou, 侯俊嘉">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0V2L1DQVPY');
+    </script>
+    <style>
+        .project-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/n8n-line-bot-jira-automation/image.png') no-repeat center center;
+            background-size: cover;
+            padding: 4rem 0;
+            color: white;
+        }
+        .project-hero h1 {
+            font-weight: 700;
+        }
+        .summary-card {
+            position: sticky;
+            top: 20px;
+        }
+        .tech-badge {
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .gallery-img {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .gallery-img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">Luke Hou</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="project-hero text-center">
+            <div class="container">
+                <h1 class="display-4">n8n Line Bot 快速生成 Jira Ticket</h1>
+                <p class="lead">用Line回報問題並附圖，直接建立Jira ticket 到對應的專案，大幅簡化回報流程</p>
+            </div>
+        </section>
+
+        <section class="container mt-5">
+            <div class="row">
+                <!-- Main Content -->
+                <div class="col-lg-8">
+                    <div class="card border-0">
+                        <div class="card-body">
+                            
+<h2 class="card-title h3 mb-3"><i class="bi bi-card-text me-2"></i>項目概述</h2>
+<p>在客戶端進行使用者實地測試時，最大的挑戰之一就是如何快速且完整地回報問題。過去，團隊成員需要手動記錄，測試結束後再花費大量時間將問題登錄到 Jira，這個過程不僅耗時，也容易遺漏細節。</p>
+<p>為了解決這個痛點，我利用 n8n 設計了一套自動化流程，讓一線人員可以直接透過 Line 快速回報問題，n8n 會自動在 Jira 中建立對應的 Ticket，並附上圖片、指定負責人與標籤，並自動寫到 Excel 整理表中。這套系統在近期的客戶端測試中發揮了極大的效益，讓每一輪的問題回報的效率從數十分鐘縮短到幾分鐘內。</p>
+<p>這套工作流在近期的客戶端測試中發揮了極大的效益，讓每一輪的問題回報的效率從數十分鐘縮短到幾分鐘內。</p>
+
+<hr class="my-4">
+
+<h2 class="h3 mb-3"><i class="bi bi-lightbulb-fill me-2"></i>核心做法與亮點</h2>
+<ol class="list-group list-group-numbered">
+    <li class="list-group-item"><b>即時回報</b>: 測試人員在現場用 Line 就能立即拍照、打字回報問題，無需攜帶筆電或手寫筆記。</li>
+    <li class="list-group-item"><b>智慧分派</b>: n8n 工作流會根據訊息中的關鍵字（如 Project Key），自動將 Ticket 建立到正確的 Jira 專案。</li>
+    <li class="list-group-item"><b>欄位自動化</b>: 自動填寫 Reporter、Assignee、Labels 等欄位，大幅減少手動建立 Ticket 的時間。</li>
+    <li class="list-group-item"><b>降低溝通成本</b>: 實習生或非開發團隊成員無需 Jira 帳號也能回報問題，節省授權費用的同時，也保護了專案資產的安全性。</li>
+</ol>
+
+<hr class="my-4">
+
+<h2 class="h3 mb-3"><i class="bi bi-kanban me-2"></i>成果展示</h2>
+<p class="text-muted">以下為此工作流的實際運行截圖：</p>
+<div class="row g-4">
+    <div class="col-12">
+        <h5>n8n 整體工作流</h5>
+        <img src="../images/n8n-line-bot-jira-automation/2025-08-30_20-18-32.jpg" alt="n8n 整體工作流" class="img-fluid rounded gallery-img">
+    </div>
+    <div class="col-12">
+        <h5>Line 回報示範</h5>
+        <img src="../images/n8n-line-bot-jira-automation/image.png" alt="Line 回報示範" class="img-fluid rounded gallery-img">
+    </div>
+    <div class="col-md-6">
+        <h6>自動建立的 Jira Ticket (1)</h6>
+        <img src="../images/n8n-line-bot-jira-automation/0f64c0ed-ef64-4a0f-8267-0cda0930e9d2.png" alt="自動建立的 Jira Ticket (1)" class="img-fluid rounded gallery-img">
+    </div>
+    <div class="col-md-6">
+        <h6>自動建立的 Jira Ticket (2)</h6>
+        <img src="../images/n8n-line-bot-jira-automation/580877c3-a8f2-480d-913c-b0a48668253b.png" alt="自動建立的 Jira Ticket (2)" class="img-fluid rounded gallery-img">
+    </div>
+    <div class="col-md-6">
+        <h6>自動建立的 Jira Ticket (3)</h6>
+        <img src="../images/n8n-line-bot-jira-automation/0ae1c778-ebe9-4d6f-9bdf-f7c353ea569a.png" alt="自動建立的 Jira Ticket (3)" class="img-fluid rounded gallery-img">
+    </div>
+    <div class="col-md-6">
+        <h6>手機 Triage 示意圖</h6>
+        <img src="../images/n8n-line-bot-jira-automation/image%201.png" alt="手機 Triage 示意圖" class="img-fluid rounded gallery-img">
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    
+<div class="card shadow-sm summary-card">
+    <div class="card-body">
+        <h3 class="card-title h5 border-bottom pb-2 mb-3"><i class="bi bi-bar-chart-line-fill me-2"></i>價值與影響</h3>
+        <ul class="list-unstyled">
+            <li class="mb-3 d-flex">
+                <i class="bi bi-clock-history h4 text-primary me-3"></i>
+                <div>
+                    <strong class="d-block">節省大量時間</strong>
+                    <small class="text-muted">將回報與建立 Ticket 的時間從數十分鐘縮短至幾分鐘，讓團隊專注於測試本身以及跟使用者的互動。</small>
+                </div>
+            </li>
+            <li class="mb-3 d-flex">
+                <i class="bi bi-check-circle-fill h4 text-primary me-3"></i>
+                <div>
+                    <strong class="d-block">提升問題回報率</strong>
+                    <small class="text-muted">簡化流程，提升回報效率，讓問題能夠被即時且完整地記錄，不再遺漏。</small>
+                </div>
+            </li>
+            <li class="mb-3 d-flex">
+                <i class="bi bi-arrow-left-circle h4 text-primary me-3"></i>
+                <div>
+                    <strong class="d-block">自動寫到 Excel 總表</strong>
+                    <small class="text-muted">自動將每一筆回報的內容跟對應的 Jira 網址登記到 Excel 總表，省去手工作業的時間。</small>
+                </div>
+            </li>            
+            <li class="mb-3 d-flex">
+                <i class="bi bi-shield-check h4 text-primary me-3"></i>
+                <div>
+                    <strong class="d-block">兼顧成本與安全</strong>
+                    <small class="text-muted">無需為所有回報者購買昂貴的 Jira 授權，同時確保專案權限不外流。</small>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="card-footer bg-light">
+        <h3 class="h5 mt-2"><i class="bi bi-gear-fill me-2"></i>使用的技術</h3>
+        <div>
+            <span class="badge bg-primary text-white tech-badge">n8n</span>
+            <span class="badge bg-success text-white tech-badge">Line Bot</span>
+            <span class="badge bg-warning text-dark tech-badge">Jira API</span>
+        </div>
+    </div>
+</div>
+<div class="d-grid mt-3">
+    <a href="../portfolio.html" class="btn btn-outline-primary"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+</div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-light mt-5 py-4">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="" class="img-fluid" id="modalImage" alt="Project Image">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+            const modalImage = document.getElementById('modalImage');
+            
+            document.querySelectorAll('.gallery-img').forEach(img => {
+                img.addEventListener('click', function () {
+                    modalImage.src = this.src;
+                    imageModal.show();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
