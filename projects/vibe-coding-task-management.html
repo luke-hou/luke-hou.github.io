@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>專案: vibeTask - AI 驅動的智慧任務管理系統 - Luke的作品集</title>
+    <meta name="description" content="探索 vibeTask，一個整合 Google Gemini AI 的智慧任務管理系統，旨在透過 AI 智慧排程、自動化報告與心智圖，提升個人工作效率與洞察力。">
+    <meta name="keywords" content="vibeTask, pyVibeTask, AI, 任務管理, FastAPI, HTMX, Python, Google Gemini, Luke Hou, 侯俊嘉, 個人專案">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0V2L1DQVPY');
+    </script>
+    <style>
+        .project-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/vibe-task-ai/2025-09-07_13-28-27.jpg') no-repeat center center;
+            background-size: cover;
+            padding: 4rem 0;
+            color: white;
+        }
+        .project-hero h1 {
+            font-weight: 700;
+        }
+        .summary-card {
+            position: sticky;
+            top: 20px;
+        }
+        .tech-badge {
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .gallery-img {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .gallery-img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">Luke Hou</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="project-hero text-center">
+            <div class="container">
+                <h1 class="display-4">vibeTask: AI 驅動的賽博龐克任務管理系統</h1>
+                <p class="lead">一個能透過 AI 提升工作效率與洞察力的智慧夥伴，而不僅僅是任務的完成。</p>
+            </div>
+        </section>
+
+        <section class="container mt-5">
+            <div class="row">
+                <!-- Main Content -->
+                <div class="col-lg-8">
+                    <div class="card border-0">
+                        <div class="card-body">
+                            <h2 class="card-title h3 mb-3"><i class="bi bi-card-text me-2"></i>項目概述</h2>
+                            <p>在日常工作中，我們常常面對一長串的待辦事項，卻不知從何下手；耗時費力地完成任務後，卻難以從中提取價值與洞見。`vibeTask` (pyVibeTask) 是為了解決這些痛點而生的個人專案，它不僅是一個任務管理器，更是一個整合了 Google Gemini AI 的智慧夥伴。</p>
+                            <p>此專案的核心理念是將大型語言模型 (LLM) 的能力無縫融入日常工具中，自動化處理耗時的文書工作（如撰寫報告）、提供決策輔助（如智慧排程），並透過數據視覺化幫助使用者深入了解自己的工作模式，最終實現效率與洞察力的雙重提升。</p>
+
+                            <hr class="my-4">
+
+                            <h2 class="h3 mb-3"><i class="bi bi-lightbulb-fill me-2"></i>核心做法與亮點</h2>
+                            <ol class="list-group list-group-numbered">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">🤖 AI 智慧排程</div>
+                                        分析當前任務的優先級、價值與依賴性，利用 Gemini AI 產生科學的每日工作排程建議，解決「不知從何下手」的困境。
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">✍️ AI 自動化工作報告</div>
+                                        選定時間範圍，AI 自動抓取已完成的任務，生成結構完整、重點清晰的工作報告（日報/週報），並可自訂 Prompt 以符合個人風格。
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">🧠 AI 任務心智圖</div>
+                                        一鍵將任務清單視覺化為心智圖 (Mind Map)，幫助使用者更好地組織思緒、梳理任務關聯性與規劃專案。
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">🍅 整合番茄鐘 & 儀表板</div>
+                                        內建番茄鐘無縫追蹤專注時間，並透過多維度數據儀表板將工時分佈、任務趨勢視覺化，深入洞察個人生產力。
+                                    </div>
+                                </li>
+                            </ol>
+
+                            <hr class="my-4">
+
+                            <h2 class="h3 mb-3"><i class="bi bi-kanban me-2"></i>成果展示</h2>
+                            <p class="text-muted">以下為此專案的實際運行截圖：</p>
+                            <div id="projectCarousel" class="carousel slide shadow-lg rounded" data-bs-ride="carousel">
+                                <div class="carousel-indicators">
+                                    <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                    <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                    <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                    <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                                    <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                                    <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="5" aria-label="Slide 6"></button>
+                                </div>
+                                <div class="carousel-inner rounded">
+                                    <div class="carousel-item active">
+                                        <img src="../images/vibe-task-ai/2025-09-07_13-28-27.jpg" class="d-block w-100" alt="任務列表主介面">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>任務列表主介面</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="../images/vibe-task-ai/image 6.png" class="d-block w-100" alt="AI 智慧排程建議">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>AI 智慧排程建議</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="../images/vibe-task-ai/image 7.png" class="d-block w-100" alt="AI 自動產生報告">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>AI 自動產生報告</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="../images/vibe-task-ai/2025-09-07_14-40-21.jpg" class="d-block w-100" alt="AI 產生任務心智圖">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>AI 產生任務心智圖</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="../images/vibe-task-ai/image 8.png" class="d-block w-100" alt="數據儀表板">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>數據儀表板</h5>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="../images/vibe-task-ai/2025-09-07_13-14-35.jpg" class="d-block w-100" alt="整合番茄鐘">
+                                        <div class="carousel-caption d-none d-md-block">
+                                            <h5>整合番茄鐘</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#projectCarousel" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#projectCarousel" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <div class="card shadow-sm summary-card">
+                        <div class="card-body">
+                            <h3 class="card-title h5 border-bottom pb-2 mb-3"><i class="bi bi-bar-chart-line-fill me-2"></i>價值與影響</h3>
+                            <ul class="list-unstyled">
+                                <li class="mb-3 d-flex">
+                                    <i class="bi bi-lightbulb-idea h4 text-primary me-3"></i>
+                                    <div>
+                                        <strong class="d-block">提升決策品質</strong>
+                                        <small class="text-muted">選擇比努力重要，AI 排程建議將直覺轉化為數據驅動的決策，確保優先處理高價值任務。</small>
+                                    </div>
+                                </li>
+                                <li class="mb-3 d-flex">
+                                    <i class="bi bi-clock-history h4 text-primary me-3"></i>
+                                    <div>
+                                        <strong class="d-block">節省工作管理時間</strong>
+                                        <small class="text-muted">引入快速工具矩陣、各種 AI 輔助功能等，讓使用者專注於核心工作。</small>
+                                    </div>
+                                </li>
+                                <li class="mb-3 d-flex">
+                                    <i class="bi bi-graph-up-arrow h4 text-primary me-3"></i>
+                                    <div>
+                                        <strong class="d-block">增強工作洞察力</strong>
+                                        <small class="text-muted">透過心智圖與數據儀表板，使用者能輕易發現任務關聯與個人工作模式，持續優化。</small>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-footer bg-light">
+                            <h3 class="h5 mt-2"><i class="bi bi-gear-fill me-2"></i>使用的技術</h3>
+                            <div>
+                                <span class="badge bg-primary text-white tech-badge">VibeCoding</span>
+                                <span class="badge bg-dark tech-badge">Gemini CLI</span>
+                                <span class="badge bg-success text-white tech-badge">Python</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-grid mt-3">
+                        <a href="../portfolio.html" class="btn btn-outline-primary"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-light mt-5 py-4">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="" class="img-fluid" id="modalImage" alt="Project Image">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+            const modalImage = document.getElementById('modalImage');
+            
+            document.querySelectorAll('.gallery-img').forEach(img => {
+                img.addEventListener('click', function () {
+                    modalImage.src = this.src;
+                    imageModal.show();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

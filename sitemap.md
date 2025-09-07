@@ -27,6 +27,10 @@
   - `projects/qa-report-automation.html`
 - **Vibe AI Video Summary**
   - `projects/vibe-ai-video-summary.html`
+- **n8n Line Bot Jira Automation**
+  - `projects/n8n-line-bot-jira-automation.html`
+- **n8n AI Release Notes Automation**
+  - `projects/n8n-ai-release-notes-automation.html`
 
 ## 部落格文章 (Blog Articles)
 
