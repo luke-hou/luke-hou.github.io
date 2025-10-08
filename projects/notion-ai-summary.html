@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>專案: Notion AI 閱讀助理 - Luke的作品集</title>
+    <meta name="description" content="此 n8n 工作流會自動讀取 Notion 中的文章連結，利用 AI 生成摘要與標題，並將結果回寫，打造一個全自動的個人知識庫消化系統。">
+    <meta name="keywords" content="n8n, AI, Notion, Gemini, 自動化, API, 知識管理, Luke Hou, 侯俊嘉">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0V2L1DQVPY');
+    </script>
+    <style>
+        .project-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/notion-ai-summary/hero-bg.png') no-repeat center center;
+            background-size: cover;
+            padding: 4rem 0;
+            color: white;
+        }
+        .project-hero h1 {
+            font-weight: 700;
+        }
+        .summary-card {
+            position: sticky;
+            top: 20px;
+        }
+        .tech-badge {
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .gallery-img {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .gallery-img:hover {
+            transform: scale(1.05);
+        }
+        .img-bordered {
+            border: 1px solid var(--bs-border-color);
+            padding: 5px;
+            border-radius: 0.375rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">♾️ 首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">⚡n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">✈️分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="project-hero text-center">
+            <div class="container">
+                <h1 class="display-4">Notion AI 閱讀助理</h1>
+                <p class="lead">讓 AI 成為你的專屬閱讀助理，自動消化 Notion 知識庫，生成精闢摘要與標題。</p>
+            </div>
+        </section>
+
+        <section class="container mt-5">
+            <div class="row">
+                <!-- Main Content -->
+                <div class="col-lg-8">
+                    <div class="card bg-transparent border-0">
+                        <div class="card-body px-0">
+                            
+<h2 class="card-title h3 mb-3"><i class="bi bi-card-text me-2"></i>專案緣起：當 Notion 成為我的數位雜物間</h2>
+<p>身為一個熱衷於吸收各種雜學的部分工時 QA 工程師，我的 Notion 塞滿了從四面八方蒐集來的文章、報告和連結。原本期望它成為我的第二大腦，卻逐漸變成一個充滿未讀紅點的壓力來源——一個典型的「稍後閱讀，但從不閱讀」的數位雜物間。手動整理？想都別想，那點時間我寧可拿來超慢跑。</p>
+<p>這個工作流，就是我為了解決這個窘境而打造的自動化解方。目標很明確：<b>讓 AI 自動幫我閱讀，並告訴我重點是什麼</b>。我選擇了 n8n，因為它能讓我快速串接各種 API 跟 AI 模型，用視覺化的方式快速實作我的想法，而不用一頭栽進複雜的後端服務建置裡。</p>
+
+<hr class="my-4">
+
+<h2 class="h3 mb-3"><i class="bi bi-lightbulb-fill me-2"></i>技術核心：一個自律的資訊處理流</h2>
+<p>整個流程的核心，是一個自律的循環。首先，<b>排程觸發器 (Schedule Trigger)</b> 像個鬧鐘，每小時會去敲門，問 Notion：「嘿，有新來的文章嗎？」</p>
+<p>接著，<b>Notion 節點</b>會透過 API 進行一次聰明的查詢，它只抓取我還沒產生過摘要的頁面 (<code>contextSummary</code> is empty)，這確保了資源不會浪費在重複處理上。</p>
+<p>最關鍵的一步，是將頁面內容「餵」給 <b>Gemini AI</b>。這裡我下了一道精準的 Prompt Engineering 指令，要求 AI 扮演一位專業編輯，不僅要產出 500 字內的摘要，還要提煉一個畫龍點睛的標題，並嚴格要求回傳標準的 JSON 格式。為了確保穩定性，我還加了一個 <b>Code 節點</b>，專門用來解析並清理 AI 的回傳值，避免任何意外的格式錯誤搞砸後續步驟。</p>
+<p>最後，工作流將乾淨的標題和摘要，透過 API <b>更新回 Notion</b> 的對應欄位，並將狀態改為「Done」。一個完美的閉環就此形成，自此，我只要閱讀摘要，就可以知道我需不需要花時間點開完整文章來閱覽。</p>
+
+<hr class="my-4">
+
+<h2 class="h3 mb-3"><i class="bi bi-kanban me-2"></i>工作流展示</h2>
+<p class="text-muted">以下為此工作流的實際運行截圖：</p>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="workflow-tab" data-bs-toggle="tab" data-bs-target="#workflow" type="button" role="tab" aria-controls="workflow" aria-selected="true">整體工作流</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="output-tab" data-bs-toggle="tab" data-bs-target="#output" type="button" role="tab" aria-controls="output" aria-selected="false">Notion 成果</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="prompt-tab" data-bs-toggle="tab" data-bs-target="#prompt" type="button" role="tab" aria-controls="prompt" aria-selected="false">AI 核心指令</button>
+  </li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content border border-top-0 p-3 rounded-bottom mb-4">
+  <div class="tab-pane active" id="workflow" role="tabpanel" aria-labelledby="workflow-tab">
+    <h5 class="mt-2">n8n 整體工作流</h5>
+    <p>整個自動化流程的鳥瞰圖，展示了從定時觸發、讀取 Notion、呼叫 AI 到最終更新回 Notion 的完整步驟。</p>
+    <img src="../images/notion-ai-summary/workflow.jpg" alt="n8n 整體工作流 (佔位圖片)" class="img-fluid rounded gallery-img img-bordered">
+  </div>
+  <div class="tab-pane" id="output" role="tabpanel" aria-labelledby="output-tab">
+    <h5 class="mt-2">產出成果：AI 摘要與標題自動回填</h5>
+    <p>工作流執行完畢後，AI 生成的標題與摘要會自動填入 Notion 資料庫的對應欄位，並更新狀態。</p>
+    <img src="../images/notion-ai-summary/output.jpg" alt="Notion 成果 (佔位圖片)" class="img-fluid rounded gallery-img img-bordered">
+  </div>
+  <div class="tab-pane" id="prompt" role="tabpanel" aria-labelledby="prompt-tab">
+    <h5 class="mt-2">AI 核心指令 (Prompt Engineering)</h5>
+    <p>為了讓 AI 能穩定輸出我想要的格式與內容，我設計了這段 Prompt，明確定義了它的角色、任務、輸出格式與規則，這是確保工作流穩定可靠的關鍵。</p>
+    <img src="../images/notion-ai-summary/prompt.jpg" alt="AI 核心指令 (佔位圖片)" class="img-fluid rounded gallery-img img-bordered">
+  </div>
+</div>
+
+<hr class="my-4">
+
+<h2 class="h3 mb-3"><i class="bi bi-book-half me-2"></i>從零到一：打造你的 Notion AI 助理</h2>
+<p>想親手打造一個一樣的自動化流程嗎？跟著下面的步驟，你也可以做到。</p>
+
+<div class="accordion" id="tutorialAccordion">
+
+    <!-- Step 0: Prerequisites -->
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingZero">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseZero" aria-expanded="false" aria-controls="collapseZero">
+                <strong>第零步：前置準備</strong>
+            </button>
+        </h2>
+        <div id="collapseZero" class="accordion-collapse collapse" aria-labelledby="headingZero" data-bs-parent="#tutorialAccordion">
+            <div class="accordion-body">
+                <p>在開始之前，請確保你已經擁有：</p>
+                <ul class="list-group">
+                    <li class="list-group-item bg-transparent">一個可以正常運作的 n8n 環境（Cloud 或自架皆可）。</li>
+                    <li class="list-group-item bg-transparent">一個 Notion 帳號，並已建立好與 n8n 的連線。</li>
+                    <li class="list-group-item bg-transparent">一個 Google AI Studio 的 API 金鑰，以便使用 Gemini 模型。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 1: Notion Database -->
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                <strong>步驟一：準備 Notion 資料庫</strong>
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#tutorialAccordion">
+            <div class="accordion-body">
+                <p>這是我們的資料基礎。請在 Notion 中建立一個新的 Database，並確保它至少包含以下四個屬性 (Properties)：</p>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>屬性名稱</th>
+                            <th>屬性類型</th>
+                            <th>用途</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>URL</code></td>
+                            <td>Title</td>
+                            <td>存放文章連結的標題欄位。</td>
+                        </tr>
+                        <tr>
+                            <td><code>contextSummary</code></td>
+                            <td>Text</td>
+                            <td>存放 AI 生成的摘要。工作流會以此欄位是否為空，來判斷是否需要處理。</td>
+                        </tr>
+                        <tr>
+                            <td><code>contextTitle</code></td>
+                            <td>Text</td>
+                            <td>存放 AI 生成的標題。</td>
+                        </tr>
+                        <tr>
+                            <td><code>status</code></td>
+                            <td>Status</td>
+                            <td>用於追蹤處理狀態，建議至少包含一個 "Done" 的選項。</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="mt-3">當你使用 Notion Web Clipper 將文章存入此資料庫時，文章內容會成為頁面內容，而連結會自動成為 <code>URL</code> 欄位的值。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 2: n8n Workflow -->
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <strong>步驟二：建構 n8n 工作流 - 讀取與迴圈</strong>
+            </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#tutorialAccordion">
+            <div class="accordion-body">
+                <ol>
+                    <li><strong>Schedule Trigger 節點</strong>: 設定一個你喜歡的排程，例如每小時執行一次。</li>
+                    <li><strong>Notion 節點 (Get Pages)</strong>: 
+                        <ul>
+                            <li>Resource 選 <code>Database Page</code>，Operation 選 <code>Get All</code>。</li>
+                            <li>選擇你剛才建立的資料庫。</li>
+                            <li><b>關鍵設定</b>：在 Filter 中，設定條件為 <code>contextSummary</code> <code>Is Empty</code>。這就是我們篩選新文章的祕密。</li>
+                        </ul>
+                    </li>
+                    <li><strong>Loop Over Items 節點</strong>: 將 Notion 節點的輸出連接過來，讓工作流可以一筆一筆地處理文章。</li>
+                    <li><strong>Notion 節點 (Get Blocks)</strong>: 
+                        <ul>
+                            <li>放在迴圈內，Resource 選 <code>Block</code>，Operation 選 <code>Get All</code>。</li>
+                            <li>Block ID 使用表達式，指向迴圈中單個頁面的 ID：<code>={{ $json.id }}</code>。</li>
+                        </ul>
+                    </li>
+                    <li><strong>Code 節點 (組合文章)</strong>: 加入一個 Code 節點，貼上下方代碼。它的作用是將零散的 Notion Blocks 組合成一段通順的純文字，方便 AI 閱讀。
+<pre class="bg-dark text-light p-3 rounded"><code>// 從每個 Notion block 物件中，只提取出 'content' 文字內容。
+const contentArray = $input.all().map(item => item.json.content);
+// 過濾掉內容為空的區塊，避免產生多餘的空白段落。
+const nonEmptyContent = contentArray.filter(content => content && content.trim() !== '');
+// 將所有文字片段用「兩個換行符」組合起來，形成段落分明的文章。
+const fullText = nonEmptyContent.join('\n\n');
+// 以 n8n 的標準格式回傳最終結果。
+return [{ json: { textContent: fullText } }];</code></pre>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 3: AI Magic -->
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <strong>步驟三：AI 魔法 - Prompt Engineering</strong>
+            </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#tutorialAccordion">
+            <div class="accordion-body">
+                <p>這是整個專案最有趣的部分。加入一個 <code>AI Agent</code> 節點，並將上一步的 Code 節點連接過來。然後，將一個 <code>Google Gemini</code> 模型節點連接到 AI Agent 上。</p>
+                <p>在 AI Agent 節點中，貼入以下 Prompt：</p>
+<pre class="bg-dark text-light p-3 rounded"><code>=# 角色
+你是一位專業的內容分析師與資深編輯，擅長將複雜資訊整理成結構化的 JSON 資料。
+
+# 任務
+請仔細閱讀下方提供的文章全文，並生成一個包含「標題」與「重點摘要」的 JSON 物件。
+
+# 規則
+1.  **輸出格式**: 你的回答**必須**是一個格式完整的 JSON 物件，**不包含**任何前後的說明文字或程式碼標記 (例如 ```json)。
+2.  **JSON 結構**: 輸出的 JSON 物件必須包含以下兩個固定的鍵 (key)：
+    *   `"title"`: 值為你為文章生成的精簡標題。
+    *   `"summary"`: 值為你生成的重點摘要。
+3.  **標題要求 (title)**: 標題應簡潔有力，準確反映文章核心主題，長度建議在 20 字以內。
+4.  **摘要要求 (summary)**: 摘要必須客觀、精煉，準確捕捉文章的關鍵論點與結論，長度嚴格控制在 500 字以內。
+5.  **語言**: 請使用繁體中文。
+
+# 文章全文
+---
+{{ $json.textContent }}
+---</code></pre>
+                <p class="mt-3">這個 Prompt 的精髓在於「嚴格要求 JSON 輸出」，這讓後續的資料處理變得非常穩定。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 4: Cleanup and Update -->
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingFour">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                <strong>步驟四：完成閉環 - 清理與更新</strong>
+            </button>
+        </h2>
+        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#tutorialAccordion">
+            <div class="accordion-body">
+                <ol>
+                    <li><strong>Code 節點 (處理 AI 輸出)</strong>: AI 的輸出有時可能還是會夾帶非 JSON 的文字。這個節點的目的是「萃取」出純淨的 JSON 字串，確保後續節點不會出錯。
+<pre class="bg-dark text-light p-3 rounded"><code>const rawAiOutput = $input.first().json.output;
+// 使用正規表達式，只提取出被大括號 {} 包圍的 JSON 內容
+const jsonMatch = rawAiOutput.match(/\{[\s\S]*\}/);
+const cleanedJsonString = jsonMatch ? jsonMatch[0] : '{}';
+const parsedData = JSON.parse(cleanedJsonString);
+// 重新建構一個乾淨的輸出物件
+const result = {
+  ai_title: parsedData.title,
+  ai_summary: parsedData.summary
+};
+return [{ json: result }];</code></pre>
+                    </li>
+                    <li><strong>Notion 節點 (Update Page)</strong>:
+                        <ul>
+                            <li>Resource 選 <code>Database Page</code>，Operation 選 <code>Update</code>。</li>
+                            <li>Page ID 使用表達式，指向<b>最一開始 Notion 節點</b>抓到的頁面 ID：<code>={{ $('Get many database pages').item.json.id }}</code>。</li>
+                            <li>在 Properties 中，將 <code>contextTitle</code> 欄位的值設為 <code>={{ $json.ai_title }}</code>，並將 <code>contextSummary</code> 設為 <code>={{ $json.ai_summary }}</code>。</li>
+                            <li>最後，將 <code>status</code> 欄位設為 "Done"。</li>
+                        </ul>
+                    </li>
+                    <li><strong>Wait 節點</strong>: 在迴圈的最後加上一個 1 秒的 Wait 節點，這是一個好習慣，可以避免因處理速度過快而觸發 Notion API 的速率限制 (Rate Limit)。</li>
+                </ol>
+                <p class="mt-3 fw-bold">恭喜！儲存並啟用你的工作流，你的 AI 閱讀助理現在正式上線了！</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    
+<div class="card shadow-sm summary-card bg-body-tertiary">
+    <div class="card-body">
+        <h3 class="card-title h5 border-bottom pb-2 mb-3"><i class="bi bi-trophy-fill me-2"></i>成果與反思：從「收藏家」到「煉金術士」</h3>
+        <p class="text-muted small fst-italic">這個專案最大的價值，是心態上的轉變。我從一個只會囤積資訊的「數位收藏家」，變成了一個能從資訊中提煉價值的「知識煉金術士」(???)。</p>
+        <ul class="list-unstyled mt-3">
+            <li class="mb-3 d-flex">
+                <i class="bi bi-cpu-fill h4 text-primary me-3"></i>
+                <div>
+                    <strong class="d-block">降低認知負擔</strong>
+                    <small class="text-muted">現在看到好文章就安心存入 Notion，AI 助理會處理後續。我只需花幾十秒讀摘要，即可判斷文章價值，決定是否精讀。</small>
+                </div>
+            </li>
+            <li class="mb-3 d-flex">
+                <i class="bi bi-database-check h4 text-primary me-3"></i>
+                <div>
+                    <strong class="d-block">知識庫的重生</strong>
+                    <small class="text-muted">有了統一的標題和摘要，還有分類欄位跟標籤，從原本死氣沉沉的資料庫變得極易檢索。它不再是壓力來源，而是一個真正為我所用的數位資產。</small>
+                </div>
+            </li>
+            <li class="mb-3 d-flex">
+                <i class="bi bi-lightbulb-fill h4 text-primary me-3"></i>
+                <div>
+                    <strong class="d-block">我的工程師理念</strong>
+                    <small class="text-muted">再次驗證了我的理念：一個好的工程師，會善用工具將自己的時間價值最大化。n8n + AI，正是當下這個時代最強大的槓桿之一。</small>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="card-footer">
+        <h3 class="h5 mt-2"><i class="bi bi-gear-fill me-2"></i>使用的技術</h3>
+        <div>
+            <span class="badge text-bg-primary tech-badge">n8n</span>
+            <span class="badge text-bg-info tech-badge">Notion API</span>
+            <span class="badge text-bg-warning tech-badge">AI (Gemini)</span>
+        </div>
+    </div>
+</div>
+<div class="d-grid mt-3">
+    <a href="../portfolio.html" class="btn btn-outline-primary"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+</div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark mt-5 py-4 border-top border-secondary-subtle">
+        <div class="container text-center">
+            <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content bg-dark">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="" class="img-fluid" id="modalImage" alt="Project Image">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+            const modalImage = document.getElementById('modalImage');
+            
+            document.querySelectorAll('.gallery-img').forEach(img => {
+                img.addEventListener('click', function () {
+                    modalImage.src = this.src;
+                    imageModal.show();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
