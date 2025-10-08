@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luke Hou 侯俊嘉的個人作品集 - 專案與技術展示</title>
     <meta name="description" content="Luke Hou 侯俊嘉的個人作品集，展示各類技術專案、創意作品，以及在軟體開發領域的實踐與成長。">
-    <meta name="keywords" content="Luke Hou, 侯俊嘉, 作品集, 個人專案, 技術展示, 軟體開發, 創意作品, 程式設計">
+    <meta name="keywords" content="Luke Hou, 侯俊嘉, 作品集, 個人專案, 技術展示, 軟體開發, 創意作品, 程式設計, n8n, AI, 自動化, LINE Bot">
     <link rel="icon" href="/images/favicon.jpg" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
@@ -19,7 +20,7 @@
     gtag('config', 'G-0V2L1DQVPY');
     </script>      
 </head>
-<body class="body-dark">
+<body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
@@ -33,7 +34,6 @@
                         <li class="nav-item"><a class="nav-link" href="n8n-tutorials.html">⚡n8n 教學</a></li>
                         <li class="nav-item"><a class="nav-link" href="portfolio.html">📚作品集</a></li>
                         <li class="nav-item"><a class="nav-link" href="blog.html">✈️分享</a></li>
-                        
                     </ul>
                 </div>
             </div>
@@ -44,158 +44,201 @@
         <div class="row">
             <div class="col-lg-10 mx-auto text-center portfolio-hero">
                 <h1 class="display-5 mb-3">技術實踐與專案展示</h1>
-                <p class="lead">這裡是我將想法轉化為實際解決方案的紀錄。<br>每個 Side Project 都代表著一次技術探索與實踐的成長。</p>
+                <p class="lead text-body-secondary">這裡是我將想法轉化為實際解決方案的紀錄。<br>每個 Side Project 都代表著一次技術探索與實踐的成長。</p>
             </div>
         </div>
 
-        <div class="row mt-5">
-            <div class="col-lg-12">
+        <!-- Tabs Navigation -->
+        <ul class="nav nav-tabs justify-content-center mt-5" id="portfolioTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all-tab-pane" type="button" role="tab" aria-controls="all-tab-pane" aria-selected="true">全部</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="n8n-automation-tab" data-bs-toggle="tab" data-bs-target="#n8n-automation-tab-pane" type="button" role="tab" aria-controls="n8n-automation-tab-pane" aria-selected="false">n8n 工作流自動化</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="ai-dev-tools-tab" data-bs-toggle="tab" data-bs-target="#ai-dev-tools-tab-pane" type="button" role="tab" aria-controls="ai-dev-tools-tab-pane" aria-selected="false">AI 與開發者工具</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="line-bot-tab" data-bs-toggle="tab" data-bs-target="#line-bot-tab-pane" type="button" role="tab" aria-controls="line-bot-tab-pane" aria-selected="false">LINE Bot 整合</button>
+            </li>
+        </ul>
+
+        <!-- Tabs Content -->
+        <div class="tab-content mt-4" id="portfolioTabsContent">
+            <!-- All Projects Pane -->
+            <div class="tab-pane fade show active" id="all-tab-pane" role="tabpanel" aria-labelledby="all-tab" tabindex="0">
                 <div class="portfolio-grid">
-                    <!-- 作品項目：n8n LINE 名片王 -->
-                    <div class="portfolio-item">
-                        <div class="portfolio-image-container">
-                            <img src="images/n8n-line-business-card-automation/n8n-card-bot-workflow.jpg" alt="n8n LINE 名片管理機器人示意圖">
-                        </div>
+                    <!-- n8n LINE 名片王 -->
+                    <div class="portfolio-item category-line">
+                        <div class="portfolio-image-container"><img src="images/n8n-line-business-card-automation/n8n-card-bot-workflow.jpg" alt="n8n LINE 名片管理機器人示意圖"></div>
                         <h3>用 LINE + AI 打造你的個人 CRM：n8n 名片王</h3>
                         <p>拍照即建檔，AI 自動分析，讓你的人脈活起來。告別手動輸入，迎向智慧人脈管理。</p>
-                        <div class="portfolio-tags">
-                            <span class="tech-tag">n8n</span>
-                            <span class="tech-tag">AI</span>
-                            <span class="tech-tag">LINE Bot</span>
-                            <span class="tech-tag">Google Sheets</span>
-                            <span class="tech-tag">Automation</span>
-                        </div>
+                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span class="tech-tag">AI</span><span class="tech-tag">LINE Bot</span><span class="tech-tag">Google Sheets</span><span class="tech-tag">Automation</span></div>
                         <a href="projects/n8n-line-business-card-automation.html" class="btn btn-primary mt-auto">查看詳情</a>
                     </div>
-                    <!-- 作品項目：vibeTask AI 任務管理系統 -->
-                    <div class="portfolio-item">
-                        <div class="portfolio-image-container">
-                            <img src="images/vibe-task-ai/2025-09-07_13-28-27.jpg" alt="vibeTask AI 智慧任務管理系統示意圖">
-                        </div>
+                    <!-- vibeTask AI 任務管理系統 -->
+                    <div class="portfolio-item category-ai">
+                        <div class="portfolio-image-container"><img src="images/vibe-task-ai/2025-09-07_13-28-27.jpg" alt="vibeTask AI 智慧任務管理系統示意圖"></div>
                         <h3>vibeTask: AI 驅動的賽博龐克任務管理系統</h3>
                         <p>整合 AI 的智慧任務管理系統，旨在透過智慧排程、自動化報告與心智圖，提升個人工作效率與洞察力。</p>
-                        <div class="portfolio-tags">
-                            <span class="tech-tag">Vibe Coding</span>
-                            <span class="tech-tag">Gemini CLI</span>
-                            <span class="tech-tag">Python</span>
-                        </div>
+                        <div class="portfolio-tags"><span class="tech-tag">Vibe Coding</span><span class="tech-tag">Gemini CLI</span><span class="tech-tag">Python</span></div>
                         <a href="projects/vibe-coding-task-management.html" class="btn btn-primary mt-auto">查看詳情</a>
                     </div>
-                    <!-- 作品項目：n8n + AI 自動生成 Release Notes -->
-                    <div class="portfolio-item">
-                        <div class="portfolio-image-container">
-                            <img src="images/n8n-ai-release-notes-automation/n8n-ai-release-notes-workflow.jpg" alt="n8n + AI 自動生成 Release Notes 示意圖">
-                        </div>
+                    <!-- n8n + AI 自動生成 Release Notes -->
+                    <div class="portfolio-item category-n8n">
+                        <div class="portfolio-image-container"><img src="images/n8n-ai-release-notes-automation/n8n-ai-release-notes-workflow.jpg" alt="n8n + AI 自動生成 Release Notes 示意圖"></div>
                         <h3>n8n + AI 自動生成 Release Notes</h3>
                         <p>抓取 Jira Ticket，透過 AI 自動生成包含版本摘要、QA 測試重點的 Release Notes。</p>
-                        <div class="portfolio-tags">
-                            <span class="tech-tag">n8n</span>
-                            <span class="tech-tag">AI</span>
-                            <span class="tech-tag">Jira</span>
-                            <span class="tech-tag">Automation</span>
-                        </div>
+                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span class="tech-tag">AI</span><span class="tech-tag">Jira</span><span class="tech-tag">Automation</span></div>
                         <a href="projects/n8n-ai-release-notes-automation.html" class="btn btn-primary mt-auto">查看詳情</a>
                     </div>
-                    <!-- 作品項目：n8n Line Bot to Jira -->
-                    <div class="portfolio-item">
-                        <div class="portfolio-image-container">
-                            <img src="images/n8n-line-bot-jira-automation/image.png" alt="n8n Line Bot 與 Jira 自動化示意圖">
-                        </div>
+                    <!-- n8n Line Bot to Jira -->
+                    <div class="portfolio-item category-line">
+                        <div class="portfolio-image-container"><img src="images/n8n-line-bot-jira-automation/image.png" alt="n8n Line Bot 與 Jira 自動化示意圖"></div>
                         <h3>n8n Line Bot 回報快速生成 Jira Ticket</h3>
                         <p>用Line回報問題並附圖，直接建立Jira ticket 到對應的專案，大幅簡化回報流程。</p>
-                        <div class="portfolio-tags">
-                            <span class="tech-tag">n8n</span>
-                            <span class="tech-tag">Line Bot</span>
-                            <span class="tech-tag">Jira</span>
-                            <span class="tech-tag">Automation</span>
-                        </div>
+                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span class="tech-tag">Line Bot</span><span class="tech-tag">Jira</span><span class="tech-tag">Automation</span></div>
                         <a href="projects/n8n-line-bot-jira-automation.html" class="btn btn-primary mt-auto">查看詳情</a>
                     </div>
-                    <!-- 作品項目：n8n + AI 自動更新 Jira 狀態至 Excel -->
-                    <div class="portfolio-item">
-                        <div class="portfolio-image-container">
-                            <img src="images/n8n-ai-excel-main.png" alt="n8n + AI 自動更新 Jira 狀態至 Excel 示意圖">
-                        </div>
+                    <!-- n8n + AI 自動更新 Jira 狀態至 Excel -->
+                    <div class="portfolio-item category-n8n">
+                        <div class="portfolio-image-container"><img src="images/n8n-ai-excel-main.png" alt="n8n + AI 自動更新 Jira 狀態至 Excel 示意圖"></div>
                         <h3>n8n + AI 自動更新 Jira 狀態至 Excel</h3>
                         <p>「一週只能更新兩次的測試總表，我用 AI + 自動化做到每天更新兩次，還多省 93% 時間！」</p>
-                        <div class="portfolio-tags">
-                            <span class="tech-tag">n8n</span>
-                            <span class="tech-tag">AI</span>
-                            <span class="tech-tag">Jira</span>
-                            <span class="tech-tag">Excel</span>
-                            <span class="tech-tag">Automation</span>
-                        </div>
+                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span class="tech-tag">AI</span><span class="tech-tag">Jira</span><span class="tech-tag">Excel</span><span class="tech-tag">Automation</span></div>
                         <a href="projects/n8n-ai-excel-automation.html" class="btn btn-primary mt-auto">查看詳情</a>
                     </div>
-                    <!-- 作品項目1：PRD AI 測試案例生成 -->
-                    <div class="portfolio-item">
-                        <div class="portfolio-image-container">
-                            <img src="images/prd-ai-test-case-generation-main.png" alt="PRD AI 測試案例生成示意圖">
-                        </div>
+                    <!-- PRD AI 測試案例生成 -->
+                    <div class="portfolio-item category-n8n">
+                        <div class="portfolio-image-container"><img src="images/prd-ai-test-case-generation-main.png" alt="PRD AI 測試案例生成示意圖"></div>
                         <h3>n8n 從 Confluence PRD 到 Jira：導入 AI 多智能體，自動化測試案例生成</h3>
                         <p>導入 AI 多智能體，利用 n8n 自動化從 PRD 生成 Jira 測試案例，大幅提升效率與案例品質。</p>
-                        <div class="portfolio-tags">
-                            <span class="tech-tag">n8n</span>
-                            <span class="tech-tag">AI</span>
-                            <span class="tech-tag">Jira</span>
-                            <span class="tech-tag">Multi-Agent</span>
-                            <span class="tech-tag">Confluence</span>
-                        </div>
+                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span class="tech-tag">AI</span><span class="tech-tag">Jira</span><span class="tech-tag">Multi-Agent</span><span class="tech-tag">Confluence</span></div>
                         <a href="projects/prd-ai-test-case-generation.html" class="btn btn-primary mt-auto">查看詳情</a>
                     </div>
-                    <!-- 作品項目2：Vibe AI 影片自動摘要 -->
-                    <div class="portfolio-item">
-                        <div class="portfolio-image-container">
-                            <img src="images/vibe-ai-2.png" alt="Vibe AI 影片自動摘要示意圖">
-                        </div>
+                    <!-- Vibe AI 影片自動摘要 -->
+                    <div class="portfolio-item category-ai">
+                        <div class="portfolio-image-container"><img src="images/vibe-ai-2.png" alt="Vibe AI 影片自動摘要示意圖"></div>
                         <h3>Vibe Coding：影片自動摘要與字幕生成器</h3>
                         <p>一個將影片內容轉化為結構化文字，提升資訊獲取效率的 AI 工具，全程本地端運行。</p>
-                        <div class="portfolio-tags">
-                            <span class="tech-tag">AI</span>
-                            <span class="tech-tag">Whisper</span>
-                            <span class="tech-tag">Vibe Coding</span>
-                        </div>
+                        <div class="portfolio-tags"><span class="tech-tag">AI</span><span class="tech-tag">Whisper</span><span class="tech-tag">Vibe Coding</span></div>
                         <a href="projects/vibe-ai-video-summary.html" class="btn btn-primary mt-auto">查看詳情</a>
                     </div>
-                    <!-- 作品項目3：QA 週報自動化 -->
-                    <div class="portfolio-item">
-                        <div class="portfolio-image-container">
-                            <img src="images/qa-report-automation-flow-1.png" alt="QA 週報自動化示意圖">
-                        </div>
+                    <!-- QA 週報自動化 -->
+                    <div class="portfolio-item category-n8n">
+                        <div class="portfolio-image-container"><img src="images/qa-report-automation-flow-1.png" alt="QA 週報自動化示意圖"></div>
                         <h3>n8n + AI：軟體測試週報全自動生成</h3>
                         <p>整合多系統數據，利用 AI 驅動報告生成，將耗時的 QA 週報製作流程徹底自動化。</p>
-                        <div class="portfolio-tags">
-                            <span class="tech-tag">n8n</span>
-                            <span class="tech-tag">AI</span>
-                            <span class="tech-tag">Jira</span>
-                            <span class="tech-tag">Google Sheets</span>
-                            <span class="tech-tag">Automation</span>
-                        </div>
+                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span class="tech-tag">AI</span><span class="tech-tag">Jira</span><span class="tech-tag">Google Sheets</span><span class="tech-tag">Automation</span></div>
                         <a href="projects/qa-report-automation.html" class="btn btn-primary mt-auto">查看詳情</a>
                     </div>
-                    <!-- 作品項目4：健保公告自動通知 -->
-                    <div class="portfolio-item">
-                        <div class="portfolio-image-container">
-                            <img src="images/nhi-notice-automation-main.png" alt="健保公告自動通知示意圖">
-                        </div>
+                    <!-- 健保公告自動通知 -->
+                    <div class="portfolio-item category-n8n">
+                        <div class="portfolio-image-container"><img src="images/nhi-notice-automation-main.png" alt="健保公告自動通知示意圖"></div>
                         <h3>n8n 健保公告自動監控與通知 - 外掛 AI 搜尋摘要</h3>
                         <p>為醫療資訊產業打造的自動化工作流，確保關鍵政策變動即時掌握，降低資訊延誤風險。</p>
-                        <div class="portfolio-tags">
-                            <span class="tech-tag">n8n</span>
-                            <span class="tech-tag">AI</span>
-                            <span class="tech-tag">Web Scraping</span>
-                            <span class="tech-tag">Automation</span>
-                        </div>
+                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span class="tech-tag">AI</span><span class="tech-tag">Web Scraping</span><span class="tech-tag">Automation</span></div>
                         <a href="projects/nhi-notice-automation.html" class="btn btn-primary mt-auto">查看詳情</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- n8n Workflow Automation Pane -->
+            <div class="tab-pane fade" id="n8n-automation-tab-pane" role="tabpanel" aria-labelledby="n8n-automation-tab" tabindex="0">
+                <div class="portfolio-grid">
+                    <!-- n8n + AI 自動生成 Release Notes -->
+                    <div class="portfolio-item">
+                        <div class="portfolio-image-container"><img src="images/n8n-ai-release-notes-automation/n8n-ai-release-notes-workflow.jpg" alt="n8n + AI 自動生成 Release Notes 示意圖"></div>
+                        <h3>n8n + AI 自動生成 Release Notes</h3>
+                        <p>抓取 Jira Ticket，透過 AI 自動生成包含版本摘要、QA 測試重點的 Release Notes。</p>
+                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span class="tech-tag">AI</span><span class="tech-tag">Jira</span><span class="tech-tag">Automation</span></div>
+                        <a href="projects/n8n-ai-release-notes-automation.html" class="btn btn-primary mt-auto">查看詳情</a>
+                    </div>
+                    <!-- n8n + AI 自動更新 Jira 狀態至 Excel -->
+                    <div class="portfolio-item">
+                        <div class="portfolio-image-container"><img src="images/n8n-ai-excel-main.png" alt="n8n + AI 自動更新 Jira 狀態至 Excel 示意圖"></div>
+                        <h3>n8n + AI 自動更新 Jira 狀態至 Excel</h3>
+                        <p>「一週只能更新兩次的測試總表，我用 AI + 自動化做到每天更新兩次，還多省 93% 時間！」</p>
+                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span class="tech-tag">AI</span><span class="tech-tag">Jira</span><span class="tech-tag">Excel</span><span class="tech-tag">Automation</span></div>
+                        <a href="projects/n8n-ai-excel-automation.html" class="btn btn-primary mt-auto">查看詳情</a>
+                    </div>
+                    <!-- PRD AI 測試案例生成 -->
+                    <div class="portfolio-item">
+                        <div class="portfolio-image-container"><img src="images/prd-ai-test-case-generation-main.png" alt="PRD AI 測試案例生成示意圖"></div>
+                        <h3>n8n 從 Confluence PRD 到 Jira：導入 AI 多智能體，自動化測試案例生成</h3>
+                        <p>導入 AI 多智能體，利用 n8n 自動化從 PRD 生成 Jira 測試案例，大幅提升效率與案例品質。</p>
+                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span class="tech-tag">AI</span><span class="tech-tag">Jira</span><span class="tech-tag">Multi-Agent</span><span class="tech-tag">Confluence</span></div>
+                        <a href="projects/prd-ai-test-case-generation.html" class="btn btn-primary mt-auto">查看詳情</a>
+                    </div>
+                    <!-- QA 週報自動化 -->
+                    <div class="portfolio-item">
+                        <div class="portfolio-image-container"><img src="images/qa-report-automation-flow-1.png" alt="QA 週報自動化示意圖"></div>
+                        <h3>n8n + AI：軟體測試週報全自動生成</h3>
+                        <p>整合多系統數據，利用 AI 驅動報告生成，將耗時的 QA 週報製作流程徹底自動化。</p>
+                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span class="tech-tag">AI</span><span class="tech-tag">Jira</span><span class="tech-tag">Google Sheets</span><span class="tech-tag">Automation</span></div>
+                        <a href="projects/qa-report-automation.html" class="btn btn-primary mt-auto">查看詳情</a>
+                    </div>
+                    <!-- 健保公告自動通知 -->
+                    <div class="portfolio-item">
+                        <div class="portfolio-image-container"><img src="images/nhi-notice-automation-main.png" alt="健保公告自動通知示意圖"></div>
+                        <h3>n8n 健保公告自動監控與通知 - 外掛 AI 搜尋摘要</h3>
+                        <p>為醫療資訊產業打造的自動化工作流，確保關鍵政策變動即時掌握，降低資訊延誤風險。</p>
+                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span class="tech-tag">AI</span><span class="tech-tag">Web Scraping</span><span class="tech-tag">Automation</span></div>
+                        <a href="projects/nhi-notice-automation.html" class="btn btn-primary mt-auto">查看詳情</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI & Developer Tools Pane -->
+            <div class="tab-pane fade" id="ai-dev-tools-tab-pane" role="tabpanel" aria-labelledby="ai-dev-tools-tab" tabindex="0">
+                <div class="portfolio-grid">
+                    <!-- vibeTask AI 任務管理系統 -->
+                    <div class="portfolio-item">
+                        <div class="portfolio-image-container"><img src="images/vibe-task-ai/2025-09-07_13-28-27.jpg" alt="vibeTask AI 智慧任務管理系統示意圖"></div>
+                        <h3>vibeTask: AI 驅動的賽博龐克任務管理系統</h3>
+                        <p>整合 AI 的智慧任務管理系統，旨在透過智慧排程、自動化報告與心智圖，提升個人工作效率與洞察力。</p>
+                        <div class="portfolio-tags"><span class="tech-tag">Vibe Coding</span><span class="tech-tag">Gemini CLI</span><span class="tech-tag">Python</span></div>
+                        <a href="projects/vibe-coding-task-management.html" class="btn btn-primary mt-auto">查看詳情</a>
+                    </div>
+                    <!-- Vibe AI 影片自動摘要 -->
+                    <div class="portfolio-item">
+                        <div class="portfolio-image-container"><img src="images/vibe-ai-2.png" alt="Vibe AI 影片自動摘要示意圖"></div>
+                        <h3>Vibe Coding：影片自動摘要與字幕生成器</h3>
+                        <p>一個將影片內容轉化為結構化文字，提升資訊獲取效率的 AI 工具，全程本地端運行。</p>
+                        <div class="portfolio-tags"><span class="tech-tag">AI</span><span class="tech-tag">Whisper</span><span class="tech-tag">Vibe Coding</span></div>
+                        <a href="projects/vibe-ai-video-summary.html" class="btn btn-primary mt-auto">查看詳情</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LINE Bot Integrations Pane -->
+            <div class="tab-pane fade" id="line-bot-tab-pane" role="tabpanel" aria-labelledby="line-bot-tab" tabindex="0">
+                <div class="portfolio-grid">
+                    <!-- n8n LINE 名片王 -->
+                    <div class="portfolio-item">
+                        <div class="portfolio-image-container"><img src="images/n8n-line-business-card-automation/n8n-card-bot-workflow.jpg" alt="n8n LINE 名片管理機器人示意圖"></div>
+                        <h3>用 LINE + AI 打造你的個人 CRM：n8n 名片王</h3>
+                        <p>拍照即建檔，AI 自動分析，讓你的人脈活起來。告別手動輸入，迎向智慧人脈管理。</p>
+                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span class="tech-tag">AI</span><span class="tech-tag">LINE Bot</span><span class="tech-tag">Google Sheets</span><span class="tech-tag">Automation</span></div>
+                        <a href="projects/n8n-line-business-card-automation.html" class="btn btn-primary mt-auto">查看詳情</a>
+                    </div>
+                    <!-- n8n Line Bot to Jira -->
+                    <div class="portfolio-item">
+                        <div class="portfolio-image-container"><img src="images/n8n-line-bot-jira-automation/image.png" alt="n8n Line Bot 與 Jira 自動化示意圖"></div>
+                        <h3>n8n Line Bot 回報快速生成 Jira Ticket</h3>
+                        <p>用Line回報問題並附圖，直接建立Jira ticket 到對應的專案，大幅簡化回報流程。</p>
+                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span class="tech-tag">Line Bot</span><span class="tech-tag">Jira</span><span class="tech-tag">Automation</span></div>
+                        <a href="projects/n8n-line-bot-jira-automation.html" class="btn btn-primary mt-auto">查看詳情</a>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer class="bg-dark mt-5 py-4">
+    <footer class="bg-dark mt-5 py-4 border-top border-secondary-subtle">
         <div class="container text-center">
-            <p>&copy; 2025 Luke Hou. All rights reserved.</p>
+            <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
         </div>
     </footer>
 

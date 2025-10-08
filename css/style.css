@@ -67,7 +67,7 @@ h3 {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 2rem;
-    margin-top: 2rem;
+    /* margin-top: 2rem; */ /* Replaced by tab content margin */
 }
 
 .portfolio-item {
@@ -447,6 +447,7 @@ footer {
 
 /* === Dark Theme & Professional Styles === */
 
+/* --- Index Page --- */
 .profile-img {
     width: 180px;
     height: 180px;
@@ -510,4 +511,155 @@ footer {
     color: var(--bs-primary);
     margin-left: 5px;
     vertical-align: middle;
+}
+
+/* --- Portfolio Page --- */
+:root {
+    --category-n8n-color: #4dabf7;
+    --category-ai-color: #9b59b6;
+    --category-line-color: #06C755;
+}
+
+[data-bs-theme="dark"] .portfolio-hero h1 {
+    color: #ffffff;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+[data-bs-theme="dark"] .portfolio-hero p {
+    color: #a0a0a0;
+    font-size: 1.1rem;
+}
+
+[data-bs-theme="dark"] .portfolio-item {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-left: 4px solid transparent; /* Default transparent border */
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, border-left-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+[data-bs-theme="dark"] .portfolio-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 16px rgba(77, 171, 247, 0.2);
+    border-color: #4dabf7;
+}
+
+/* Category-specific styles for "All" tab */
+#all-tab-pane .portfolio-item.category-n8n {
+    border-left-color: var(--category-n8n-color);
+}
+#all-tab-pane .portfolio-item.category-ai {
+    border-left-color: var(--category-ai-color);
+}
+#all-tab-pane .portfolio-item.category-line {
+    border-left-color: var(--category-line-color);
+}
+
+#all-tab-pane .portfolio-item.category-n8n:hover {
+    border-color: var(--category-n8n-color);
+    box-shadow: 0 8px 16px rgba(77, 171, 247, 0.25);
+}
+#all-tab-pane .portfolio-item.category-ai:hover {
+    border-color: var(--category-ai-color);
+    box-shadow: 0 8px 16px rgba(155, 89, 182, 0.25);
+}
+#all-tab-pane .portfolio-item.category-line:hover {
+    border-color: var(--category-line-color);
+    box-shadow: 0 8px 16px rgba(6, 199, 85, 0.25);
+}
+
+
+[data-bs-theme="dark"] .portfolio-item .portfolio-image-container {
+    width: 100%;
+    height: 200px;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    overflow: hidden; /* To contain the image */
+}
+
+[data-bs-theme="dark"] .portfolio-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+[data-bs-theme="dark"] .portfolio-item:hover img {
+    transform: scale(1.05);
+}
+
+[data-bs-theme="dark"] .portfolio-item h3 {
+    color: #f5f5f5;
+    font-size: 1.3rem;
+    min-height: 0; /* Override previous style */
+}
+
+[data-bs-theme="dark"] .portfolio-item p {
+    color: #a0a0a0;
+    font-size: 0.95rem;
+    flex-grow: 1;
+}
+
+[data-bs-theme="dark"] .portfolio-tags {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+[data-bs-theme="dark"] .tech-tag {
+    background-color: #333;
+    color: #4dabf7;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+[data-bs-theme="dark"] .btn-primary {
+    background-color: #4dabf7;
+    border-color: #4dabf7;
+    color: #121212;
+    font-weight: bold;
+}
+
+[data-bs-theme="dark"] .btn-primary:hover {
+    background-color: #ffffff;
+    border-color: #ffffff;
+}
+
+[data-bs-theme="dark"] footer {
+    background-color: #1e1e1e;
+    color: #a0a0a0;
+    box-shadow: none;
+    border-top: 1px solid #333;
+}
+
+/* Portfolio Tabs */
+[data-bs-theme="dark"] .nav-tabs {
+    border-bottom-color: #444;
+}
+
+[data-bs-theme="dark"] .nav-tabs .nav-link {
+    background-color: transparent;
+    border-color: transparent;
+    color: #a0a0a0;
+    transition: all 0.2s ease-in-out;
+}
+
+[data-bs-theme="dark"] .nav-tabs .nav-link:hover {
+    border-color: transparent;
+    color: #ffffff;
+}
+
+[data-bs-theme="dark"] .nav-tabs .nav-link.active {
+    background-color: #1e1e1e;
+    color: #4dabf7;
+    border-color: #444 #444 #1e1e1e;
+    font-weight: bold;
 }
