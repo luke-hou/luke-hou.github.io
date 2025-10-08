@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luke Hou 侯俊嘉 - 個人網站</title>
     <meta name="description" content="Luke Hou 侯俊嘉的個人網站，分享個人專案、作品集、n8n自動化教學，以及提升工作效率的工具。">
     <meta name="keywords" content="Luke Hou, 侯俊嘉, 個人網站, 作品集, n8n教學, 自動化, 效率工具, 個人專案, 部落格, n8n, Vibe Coding, AI, HIS, BA">
-    <link rel="icon" href="/images/favicon.png" type="image/png">
+    <link rel="icon" href="/images/favicon.jpg" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -23,7 +23,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,7 +35,6 @@
                         <li class="nav-item"><a class="nav-link" href="n8n-tutorials.html">⚡n8n 教學</a></li>
                         <li class="nav-item"><a class="nav-link" href="portfolio.html">📚作品集</a></li>
                         <li class="nav-item"><a class="nav-link" href="blog.html">✈️分享</a></li>
-                        
                     </ul>
                 </div>
             </div>
@@ -45,117 +44,95 @@
     <main class="container mt-5">
         <div class="row">
             <div class="col-lg-10 mx-auto">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="card mb-4">
-                            <img src="images/index.jpg" class="card-img-top" alt="Luke Hou">
-                            <div class="card-body text-center">
-                                <h5 class="card-title">Luke Hou 侯俊嘉</h5>
-                                <p class="card-text text-muted">我是 Luke Hou 侯俊嘉，一位在醫療資訊領域擁有超過 15 年經驗的資深個人貢獻者(Individual Contributor)。</p>
-                                <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank" class="btn btn-primary btn-sm">LinkedIn</a>
+
+                <!-- Profile Section -->
+                <section class="text-center mb-5">
+                    <img src="images/index.jpg" class="profile-img mb-4" alt="Luke Hou">
+                    <h1 class="display-5 fw-bold">Luke Hou 侯俊嘉</h1>
+                    <p class="lead">資深醫療資訊系統分析師 | 開發與品保雙棲</p>
+                    <p>我是 Luke Hou 侯俊嘉，一位在醫療資訊領域擁有超過 15 年經驗的資深個人貢獻者(Individual Contributor)。<br>我致力於將複雜的醫療流程轉化為穩定、高效且安全的技術解決方案，並對提升開發與測試效率抱有極大熱情。</p>
+                    <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank" class="btn btn-primary">前往 LinkedIn</a>
+                </section>
+
+                <!-- Core Competencies -->
+                <section class="mb-5">
+                    <h2 class="section-title-dark">核心專業能力</h2>
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 text-center bg-body-tertiary p-4">
+                                <i class="fas fa-exchange-alt fa-3x text-danger mb-3"></i>
+                                <h5>HIS系統轉置經驗</h5>
+                                <p class="small">參與醫學中心級HIS轉置，從UAT到維運，確保核心業務無縫轉移。</p>
                             </div>
                         </div>
-
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 text-center bg-body-tertiary p-4">
+                                <i class="fas fa-laptop-medical fa-3x text-primary mb-3"></i>
+                                <h5>醫療系統開發與維運</h5>
+                                <p class="small">具備HIS開發、優化與維運能力，擁有豐富的跨部門協作與系統整合經驗。</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 text-center bg-body-tertiary p-4">
+                                <i class="fas fa-shield-alt fa-3x text-success mb-3"></i>
+                                <h5>嚴謹的品質保證 (QA)</h5>
+                                <p class="small">從功能、效能到安全，建立全面測試策略，確保系統品質。</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-9">
-                        <!-- ========== START: 「關於我」 ========== -->
-                        <section class="mb-5">
-                            <h2>關於我</h2>
-                            <p class="lead">
-                                我致力於將複雜的醫療流程轉化為穩定、高效且安全的技術解決方案，並對提升開發與測試效率抱有極大熱情。
+                </section>
+
+                <!-- Productivity & Tech Highlights -->
+                <section class="mb-5">
+                    <h2 class="section-title-dark">生產力與技術亮點</h2>
+                    <div class="list-group">
+                        <div class="list-group-item d-flex gap-3 bg-transparent border-secondary-subtle">
+                            <i class="fas fa-robot text-info fa-2x mt-1"></i>
+                            <div>
+                                <h5 class="mb-1">n8n AI 自動化工作流</h5>
+                                <p class="mb-0 small">導入 n8n 建立 AI 驅動的自動化流程，串聯開發、測試與監控環節，大幅減少重複性工作，將團隊資源專注於核心創新。</p>
+                            </div>
+                        </div>
+                        <div class="list-group-item d-flex gap-3 bg-transparent border-secondary-subtle">
+                            <i class="fas fa-bolt text-warning fa-2x mt-1"></i>
+                            <div>
+                                <h5 class="mb-1">Vibe Coding 生產力哲學</h5>
+                                <p class="mb-0 small">提倡並實踐「Vibe Coding」，透過營造高效專注的開發氛圍與環境，實現快速、高質量的各種"工作輔助程式"開發，大幅度提升工作效益。</p>
+                            </div>
+                        </div>
+                        <div class="list-group-item d-flex gap-3 bg-transparent border-secondary-subtle">
+                            <i class="fas fa-sitemap text-success fa-2x mt-1"></i>
+                            <div>
+                                <h5 class="mb-1">全方位專案能力</h5>
+                                <p class="mb-0 small">具備從商業分析 (BA)、使用者訪談、系統開發與維運、品保測試 (QA) 到參與院方跨部門會議的完整能力。以系統負責人的視角貫穿專案全局，確保需求精準實現。</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Professional Philosophy -->
+                <section class="mb-5">
+                    <div class="card bg-body-tertiary border-0">
+                        <div class="card-body p-4">
+                            <h4 class="card-title text-center mb-4"><i class="fas fa-compass me-2"></i>我的專業理念</h4>
+                            <blockquote class="blockquote text-center">
+                                <p>"最卓越的品質保證 (QA) 源自於深厚的開發與系統維運經驗。如同資深船長方能擔任「引水人」，指引船隻安全入港；我將多年積累的技術洞察力應用於 QA 工作，從源頭預防風險、規劃最佳路徑，確保每一個專案都能精準、高效地達成目標。"</p>
+                            </blockquote>
+                            <hr class="w-50 mx-auto my-4">
+                            <p class="text-center fw-bold">
+                                憑藉在醫療資訊領域開發、品保與系統整合的多年實戰經驗，我能提供的不僅是技術執行力，更是一份確保專案成功落地的穩定力量。
                             </p>
-
-                            <div class="card mt-4">
-                                <div class="card-body">
-                                    <h5 class="card-title"><i class="fas fa-cogs me-2"></i>核心專業能力</h5>
-                                    <div class="row">
-                                        <div class="col-md-12 mb-3">
-                                            <div class="d-flex p-3 bg-light rounded h-100">
-                                                <i class="fas fa-exchange-alt fa-2x text-danger mt-1 me-3"></i>
-                                                <div>
-                                                    <strong>大型HIS系統轉置經驗</strong>
-                                                    <p class="small mb-0">參與醫學中心等級的醫院資訊系統 (HIS) 轉置專案，涵蓋從使用者驗收測試 (UAT)、系統上線至穩定維運的各個關鍵階段，確保所負責的系統無縫轉移，維持核心業務不中斷。</p>
-                                                </div>
-                                            </div>
-                                        </div>                                        
-                                        <div class="col-md-6 mb-3">
-                                            <div class="d-flex p-3 bg-light rounded h-100">
-                                                <i class="fas fa-laptop-medical fa-2x text-primary mt-1 me-3"></i>
-                                                <div>
-                                                    <strong>醫療系統開發與整合</strong>
-                                                    <p class="small mb-0">精通醫院資訊系統 (HIS) 開發、優化與維運，具備豐富的跨部門協作與系統整合經驗。</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <div class="d-flex p-3 bg-light rounded h-100">
-                                                <i class="fas fa-shield-alt fa-2x text-success mt-1 me-3"></i>
-                                                <div>
-                                                    <strong>嚴謹的品質保證 (QA)</strong>
-                                                    <p class="small mb-0">從功能、效能到安全性測試，建立全面的自動化測試策略，確保軟體品質與合規性。</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card mt-4">
-                                <div class="card-body">
-                                    <h5 class="card-title"><i class="fas fa-rocket me-2"></i>生產力與技術亮點</h5>
-                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item d-flex align-items-start">
-                                            <i class="fas fa-robot text-info fa-fw me-3 mt-1"></i>
-                                            <div>
-                                                <strong>n8n AI 自動化工作流</strong>
-                                                <p class="small mb-0">導入 n8n.io 建立 AI 驅動的自動化流程，串聯開發、測試與監控環節，大幅減少重複性工作，將團隊資源專注於核心創新。</p>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item d-flex align-items-start">
-                                            <i class="fas fa-bolt text-warning fa-fw me-3 mt-1"></i>
-                                            <div>
-                                                <strong>Vibe Coding 生產力哲學</strong>
-                                                <p class="small mb-0">提倡並實踐「Vibe Coding」，透過營造高效專注的開發氛圍與環境，實現快速、高質量的各種"工作輔助程式"開發，大幅度提升工作效益。</p>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item d-flex align-items-start">
-                                            <i class="fas fa-sitemap text-success fa-fw me-3 mt-1"></i>
-                                            <div>
-                                                <strong>全方位專案主導能力</strong>
-                                                <p class="small mb-0">具備從商業分析 (BA)、使用者訪談、系統開發、品保測試 (QA) 到參與院方跨部門會議的完整能力。以系統負責人的視角貫穿專案全局，確保需求精準實現。</p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="card mt-4 border-0" style="background-color: #f8f9fa;">
-                                <div class="card-body">
-                                    <h5 class="card-title"><i class="fas fa-compass me-2"></i>我的專業理念</h5>
-                                    <p class="mb-0">
-                                        我相信，最卓越的品質保證 (QA) 源自於深厚的開發與系統維運經驗。如同資深船長方能擔任「引水人」，指引船隻安全入港；我將多年積累的技術洞察力應用於 QA 工作，從源頭預防風險、規劃最佳路徑，確保每一個專案都能精準、高效地達成目標。
-                                    </p>
-                                    <hr>
-                                    <!-- ========== START: 修改後的結尾句 ========== -->
-                                    <p class="mb-0 fw-bold">
-                                        憑藉在醫療資訊領域開發、品保與系統整合的多年實戰經驗，我能提供的不僅是技術執行力，更是一份確保專案成功落地的穩定力量。
-                                    </p>
-                                    <!-- ========== END: 修改後的結尾句 ========== -->
-                                </div>
-                            </div>
-                        </section>
-                        <!-- ========== END: 「關於我」 ========== -->
-                        
-
+                        </div>
                     </div>
-                </div>
+                </section>
+
             </div>
         </div>
     </main>
 
-    <footer class="bg-light mt-5 py-3">
+    <footer class="bg-dark mt-5 py-4 border-top border-secondary-subtle">
         <div class="container text-center">
-            <p>&copy; 2025 Luke Hou. All rights reserved.</p>
+            <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
         </div>
     </footer>
 

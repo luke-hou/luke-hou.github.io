@@ -2,7 +2,6 @@
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
-    color: #333;
 }
 
 /* 導航欄樣式 */
@@ -16,7 +15,6 @@ body {
 }
 
 .nav-link {
-    color: #333;
     transition: color 0.3s ease;
 }
 
@@ -447,118 +445,69 @@ footer {
     border-radius: 0.25rem;
 }
 
-/* === Dark Theme & Professional Portfolio Styles === */
+/* === Dark Theme & Professional Styles === */
 
-.body-dark {
-    background-color: #121212;
-    color: #e0e0e0;
-}
-
-.body-dark .navbar {
-    background-color: #1e1e1e !important;
-    box-shadow: 0 2px 4px rgba(0,0,0,.5);
-}
-
-.body-dark .navbar-brand,
-.body-dark .nav-link {
-    color: #e0e0e0 !important;
-}
-
-.body-dark .nav-link:hover {
-    color: #4dabf7 !important; /* A nice tech blue */
-}
-
-.body-dark .portfolio-hero h1 {
-    color: #ffffff;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-.body-dark .portfolio-hero p {
-    color: #a0a0a0;
-    font-size: 1.1rem;
-}
-
-.body-dark .portfolio-item {
-    background-color: #1e1e1e;
-    border: 1px solid #333;
-    border-radius: 10px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    display: flex;
-    flex-direction: column;
-}
-
-.body-dark .portfolio-item:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 16px rgba(77, 171, 247, 0.2);
-    border-color: #4dabf7;
-}
-
-.body-dark .portfolio-item .portfolio-image-container {
-    width: 100%;
-    height: 200px;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-    overflow: hidden; /* To contain the image */
-}
-
-.body-dark .portfolio-item img {
-    width: 100%;
-    height: 100%;
+.profile-img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    border: 4px solid var(--bs-primary);
+    box-shadow: 0 0 20px rgba(var(--bs-primary-rgb), 0.3);
 }
 
-.body-dark .portfolio-item:hover img {
-    transform: scale(1.05);
-}
-
-
-.body-dark .portfolio-item h3 {
-    color: #f5f5f5;
-    font-size: 1.3rem;
-    min-height: 0; /* Override previous style */
-}
-
-.body-dark .portfolio-item p {
-    color: #a0a0a0;
-    font-size: 0.95rem;
-    flex-grow: 1;
-}
-
-.body-dark .portfolio-tags {
-    margin-bottom: 1rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
-
-.body-dark .tech-tag {
-    background-color: #333;
-    color: #4dabf7;
-    padding: 0.25rem 0.75rem;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    font-weight: 500;
-}
-
-.body-dark .btn-primary {
-    background-color: #4dabf7;
-    border-color: #4dabf7;
-    color: #121212;
+.section-title-dark {
+    text-align: center;
     font-weight: bold;
+    margin-bottom: 2.5rem;
+    color: var(--bs-body-color);
+    position: relative;
+    padding-bottom: 10px;
 }
 
-.body-dark .btn-primary:hover {
-    background-color: #ffffff;
-    border-color: #ffffff;
+.section-title-dark::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: var(--bs-primary);
 }
 
-.body-dark footer {
-    background-color: #1e1e1e;
-    color: #a0a0a0;
-    box-shadow: none;
-    border-top: 1px solid #333;
+[data-bs-theme="dark"] .card {
+    transition: all 0.3s ease;
+    border: 1px solid var(--bs-border-color);
+}
+
+[data-bs-theme="dark"] .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-color: var(--bs-primary);
+}
+
+[data-bs-theme="dark"] .list-group-item {
+    border-color: var(--bs-border-color-translucent) !important;
+}
+
+[data-bs-theme="dark"] .blockquote {
+    font-size: 1.1rem;
+    color: var(--bs-secondary-color);
+}
+
+[data-bs-theme="dark"] .blockquote p::before {
+    content: '“';
+    font-size: 2rem;
+    color: var(--bs-primary);
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+[data-bs-theme="dark"] .blockquote p::after {
+    content: '”';
+    font-size: 2rem;
+    color: var(--bs-primary);
+    margin-left: 5px;
+    vertical-align: middle;
 }
