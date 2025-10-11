@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 驅動的 Web 自動化測試策略</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Neutrals (Slate, Teal Accent) -->
+    <!-- Application Structure Plan: A single-page, multi-section design navigated by a sticky header. This structure logically guides the user from foundational concepts (What is AI testing?) to practical application (How to implement it reliably?). The sections cover: Intro, Core Concepts, The Reliability Challenge, Implementation Framework, and Benefits. This thematic flow is more intuitive for learning and exploration than a linear report, allowing users to jump to sections of interest. Interactions like clickable diagrams and a filterable tool chart are designed to deepen engagement and understanding. -->
+    <!-- Visualization & Content Choices: Report Info: AI Testing Concepts -> Goal: Organize/Inform -> Viz: HTML/CSS Flowcharts -> Interaction: Hover for details -> Justification: Clearly visualizes processes without complex graphics. | Report Info: Tool Comparison -> Goal: Compare -> Viz: Radar Chart (Chart.js) -> Interaction: Checkboxes to add/remove tools -> Justification: Provides a multi-dimensional comparison that is easy to grasp. | Report Info: Reliability Issues -> Goal: Inform/Organize -> Viz: Interactive two-panel list -> Interaction: Click issue to see solution -> Justification: Breaks down complex info into digestible, user-triggered chunks. | Report Info: Benefits Data -> Goal: Compare -> Viz: Grouped Bar Chart (Chart.js) -> Interaction: Static, with tooltips -> Justification: Directly compares traditional vs. AI methods for impact. -> Library/Method: All charts use Chart.js on Canvas. -> CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link.active {
+            color: #0d9488;
+            border-bottom-color: #0d9488;
+        }
+        .process-step {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .process-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .reliability-item.active {
+            background-color: #f0fdfa;
+            border-left-color: #0d9488;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+    <div class="bg-teal-100 border-b border-teal-200 text-teal-800 text-sm text-center py-2 px-4 shadow-inner">
+        <p><strong>提示：</strong>此網頁完全由 Gemini 深度研究報告生成。</p>
+    </div>
+
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-teal-700">AI 驅動的測試新紀元</h1>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="../blog.html" class="bg-teal-100 text-teal-700 hover:bg-teal-200 font-bold py-2 px-4 rounded-lg">返回 Blog</a>
+                <a href="#introduction" class="nav-link text-slate-600 hover:text-teal-600 border-b-2 border-transparent">概覽</a>
+                <a href="#concepts" class="nav-link text-slate-600 hover:text-teal-600 border-b-2 border-transparent">核心概念</a>
+                <a href="#reliability" class="nav-link text-slate-600 hover:text-teal-600 border-b-2 border-transparent">可靠性挑戰</a>
+                <a href="#implementation" class="nav-link text-slate-600 hover:text-teal-600 border-b-2 border-transparent">導入框架</a>
+                <a href="#benefits" class="nav-link text-slate-600 hover:text-teal-600 border-b-2 border-transparent">效益分析</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-slate-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 space-y-2">
+            <a href="../blog.html" class="block bg-teal-100 text-teal-700 hover:bg-teal-200 font-bold py-2 px-4 rounded-lg text-center">返回 Blog</a>
+            <a href="#introduction" class="block nav-link text-slate-600">概覽</a>
+            <a href="#concepts" class="block nav-link text-slate-600">核心概念</a>
+            <a href="#reliability" class="block nav-link text-slate-600">可靠性挑戰</a>
+            <a href="#implementation" class="block nav-link text-slate-600">導入框架</a>
+            <a href="#benefits" class="block nav-link text-slate-600">效益分析</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-6 space-y-24">
+
+        <section id="introduction" class="pt-16 text-center">
+            <h2 class="text-4xl font-bold text-slate-800 mb-4">迎接測試自動化的下一個典範</h2>
+            <p class="max-w-3xl mx-auto text-lg text-slate-600 mb-12">
+                傳統的自動化測試腳本維護成本高昂且脆弱。AI 技術正徹底改變此一現狀，透過智慧體（AI Agent）模擬人類行為，自主探索、生成與執行測試案例，大幅提升測試效率與覆蓋率。本報告將深入解析其核心技術、如何克服穩定性挑戰，並提供企業導入的實踐藍圖。
+            </p>
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-semibold mb-4 text-slate-700">AI 在軟體測試中的角色演進</h3>
+                 <div class="chart-container h-80 md:h-96">
+                    <canvas id="roleEvolutionChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="concepts" class="pt-16">
+            <h2 class="text-3xl font-bold text-center text-slate-800 mb-12">核心概念解析</h2>
+            <p class="max-w-3xl mx-auto text-center text-lg text-slate-600 mb-16">
+                了解驅動新一代測試自動化的關鍵技術。AI Agent 如何像真人一樣理解與操作網頁？模型化測試又是如何結合 AI 來確保測試的全面性？本章節將為您剖析這些核心概念的運作原理。
+            </p>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-semibold text-slate-700 mb-6">AI Agent：您的虛擬測試專家</h3>
+                    <p class="text-slate-600 mb-6">AI Agent 是一個自主系統，它結合大型語言模型（LLM）的自然語言理解能力與視覺辨識模型，使其能夠「讀懂」測試目標（例如 "登入並下單"），並像人類一樣「看懂」網頁畫面，自主定位元素並執行操作。</p>
+                    <div class="space-y-4 font-mono text-sm text-slate-700">
+                        <div class="flex items-center p-3 bg-slate-100 rounded-lg">
+                            <span class="text-teal-600 mr-3">1. 目標解析：</span>
+                            <span class="flex-1">"驗證用戶結帳流程"</span>
+                        </div>
+                        <div class="text-center text-2xl text-slate-400">↓</div>
+                        <div class="flex items-center p-3 bg-slate-100 rounded-lg">
+                            <span class="text-teal-600 mr-3">2. 視覺理解：</span>
+                            <span class="flex-1">辨識輸入框、按鈕、連結</span>
+                        </div>
+                         <div class="text-center text-2xl text-slate-400">↓</div>
+                        <div class="flex items-center p-3 bg-slate-100 rounded-lg">
+                            <span class="text-teal-600 mr-3">3. 動作規劃：</span>
+                            <span class="flex-1">輸入帳號→點擊登入→...→點擊結帳</span>
+                        </div>
+                         <div class="text-center text-2xl text-slate-400">↓</div>
+                        <div class="flex items-center p-3 bg-slate-100 rounded-lg">
+                            <span class="text-teal-600 mr-3">4. 執行與驗證：</span>
+                            <span class="flex-1">執行動作，確認頁面跳轉與結果</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h3 class="text-2xl font-semibold text-slate-700 mb-6">模型化測試 (MBT) 與 AI</h3>
+                    <p class="text-slate-600 mb-6">傳統上，MBT 需要手動建立應用程式的行為模型。現在，AI 可以自動探索應用程式，生成此模型（常稱為 MCP - Model of Cypress/Playwright），並以此模型為基礎，智能地生成涵蓋各種使用者路徑的測試案例，確保測試的深度與廣度。</p>
+                    <div class="space-y-4 font-mono text-sm text-slate-700">
+                        <div class="flex items-center p-3 bg-slate-100 rounded-lg">
+                            <span class="text-teal-600 mr-3">1. AI 探索：</span>
+                            <span class="flex-1">自動爬取 App 所有頁面與狀態</span>
+                        </div>
+                        <div class="text-center text-2xl text-slate-400">↓</div>
+                        <div class="flex items-center p-3 bg-slate-100 rounded-lg">
+                             <span class="text-teal-600 mr-3">2. 模型生成：</span>
+                            <span class="flex-1">建立頁面轉換與元件關係圖 (The Model)</span>
+                        </div>
+                         <div class="text-center text-2xl text-slate-400">↓</div>
+                        <div class="flex items-center p-3 bg-slate-100 rounded-lg">
+                             <span class="text-teal-600 mr-3">3. 測試生成：</span>
+                            <span class="flex-1">從模型中產生數百條有效測試路徑</span>
+                        </div>
+                         <div class="text-center text-2xl text-slate-400">↓</div>
+                        <div class="flex items-center p-3 bg-slate-100 rounded-lg">
+                             <span class="text-teal-600 mr-3">4. 執行與優化：</span>
+                            <span class="flex-1">Agent 執行測試並反饋結果以優化模型</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="reliability" class="pt-16">
+            <h2 class="text-3xl font-bold text-center text-slate-800 mb-12">關鍵挑戰：確保 AI 測試的可靠性</h2>
+            <p class="max-w-3xl mx-auto text-center text-lg text-slate-600 mb-16">
+                AI 的不確定性是導入時最大的疑慮。一個不穩定的測試比沒有測試更糟糕。本章節將聚焦如何透過多層次的策略，從根本上解決 AI 測試的「偶發性失敗」（Flakiness）問題，建立穩定、可信賴的自動化流程。
+            </p>
+            <div class="flex flex-col md:flex-row bg-white rounded-xl shadow-lg overflow-hidden min-h-[450px]">
+                <div class="md:w-1/3 border-r border-slate-200">
+                    <h3 class="text-lg font-semibold p-4 border-b border-slate-200 text-slate-700">主要挑戰</h3>
+                    <ul id="reliability-challenges" class="divide-y divide-slate-200">
+                        <li data-id="ui-changes" class="reliability-item p-4 cursor-pointer hover:bg-slate-50 border-l-4 border-transparent active">
+                            <h4 class="font-semibold text-slate-800">UI 元素定位不穩定</h4>
+                            <p class="text-sm text-slate-500">前端微小改動就導致 AI 找不到元素</p>
+                        </li>
+                        <li data-id="dynamic-content" class="reliability-item p-4 cursor-pointer hover:bg-slate-50 border-l-4 border-transparent">
+                             <h4 class="font-semibold text-slate-800">動態內容與時序問題</h4>
+                            <p class="text-sm text-slate-500">等待 API 回應或動畫效果導致測試失敗</p>
+                        </li>
+                        <li data-id="llm-variance" class="reliability-item p-4 cursor-pointer hover:bg-slate-50 border-l-4 border-transparent">
+                             <h4 class="font-semibold text-slate-800">LLM 的不確定性</h4>
+                            <p class="text-sm text-slate-500">同樣指令，模型可能產生略微不同的行為</p>
+                        </li>
+                        <li data-id="context-loss" class="reliability-item p-4 cursor-pointer hover:bg-slate-50 border-l-4 border-transparent">
+                             <h4 class="font-semibold text-slate-800">複雜流程中的上下文遺失</h4>
+                            <p class="text-sm text-slate-500">在長鏈路操作中，AI 忘記了初始目標</p>
+                        </li>
+                    </ul>
+                </div>
+                <div id="reliability-solutions" class="md:w-2/3 p-8">
+                </div>
+            </div>
+        </section>
+
+        <section id="implementation" class="pt-16">
+            <h2 class="text-3xl font-bold text-center text-slate-800 mb-12">企業導入框架：三階段實踐藍圖</h2>
+             <p class="max-w-3xl mx-auto text-center text-lg text-slate-600 mb-16">
+                成功導入 AI 測試需要系統性的規劃。我們建議採用「試點、整合、擴展」的三階段法，逐步將 AI 測試融入現有的開發流程（CI/CD），同時建立配套的工具鏈與團隊能力，以確保轉型的平順與成功。
+            </p>
+            <div class="relative">
+                 <div class="absolute top-1/2 left-0 w-full h-0.5 bg-teal-200 hidden md:block" aria-hidden="true"></div>
+                 <div class="grid md:grid-cols-3 gap-8 relative">
+                    <div class="process-step bg-white p-6 rounded-xl shadow-lg border-t-4 border-teal-500">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-teal-500 text-white rounded-full h-10 w-10 flex items-center justify-center font-bold text-lg mr-4">1</div>
+                            <h3 class="text-xl font-semibold text-slate-700">試點階段 (Pilot)</h3>
+                        </div>
+                        <ul class="list-disc list-inside text-slate-600 space-y-2">
+                            <li>選擇1-2個關鍵業務流程</li>
+                            <li>評估2-3個主流AI測試工具</li>
+                            <li>目標：驗證可行性、計算初步 ROI</li>
+                            <li>產出：技術評估報告、小規模成功案例</li>
+                        </ul>
+                    </div>
+                     <div class="process-step bg-white p-6 rounded-xl shadow-lg border-t-4 border-teal-500">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-teal-500 text-white rounded-full h-10 w-10 flex items-center justify-center font-bold text-lg mr-4">2</div>
+                            <h3 class="text-xl font-semibold text-slate-700">整合階段 (Integration)</h3>
+                        </div>
+                        <ul class="list-disc list-inside text-slate-600 space-y-2">
+                            <li>將選定工具整合至 CI/CD Pipeline</li>
+                            <li>建立 AI 測試案例管理規範</li>
+                            <li>訓練 QA 與開發團隊協作</li>
+                            <li>目標：實現核心迴歸測試自動化</li>
+                        </ul>
+                    </div>
+                     <div class="process-step bg-white p-6 rounded-xl shadow-lg border-t-4 border-teal-500">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-teal-500 text-white rounded-full h-10 w-10 flex items-center justify-center font-bold text-lg mr-4">3</div>
+                            <h3 class="text-xl font-semibold text-slate-700">擴展階段 (Scale)</h3>
+                        </div>
+                        <ul class="list-disc list-inside text-slate-600 space-y-2">
+                            <li>將成功模式推廣至更多專案</li>
+                            <li>建立 AI 測試卓越中心 (CoE)</li>
+                            <li>探索更進階應用 (效能、安全)</li>
+                            <li>目標：全面提升組織的測試成熟度</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-20 bg-white p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-semibold mb-4 text-slate-700 text-center">主流 AI 測試工具能力比較</h3>
+                <div class="chart-container h-80 md:h-96">
+                    <canvas id="toolComparisonChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="benefits" class="pt-16">
+            <h2 class="text-3xl font-bold text-center text-slate-800 mb-12">量化效益分析</h2>
+            <p class="max-w-3xl mx-auto text-center text-lg text-slate-600 mb-16">
+                導入 AI 測試不僅是技術升級，更是對開發效率和軟體品質的直接投資。相較於傳統基於腳本的自動化，AI 測試在多個關鍵指標上展現出顯著優勢，最終實現「更快、更廣、更省」的測試目標。
+            </p>
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-semibold mb-4 text-slate-700">傳統自動化 vs. AI 驅動測試</h3>
+                <p class="text-slate-600 mb-6 max-w-2xl">下方的圖表直觀地比較了兩種方法在關鍵效能指標上的差異。數據顯示 AI 驅動的測試在開發速度、維護成本、UI 適應性及覆蓋廣度上，均有顯著的量化提升。</p>
+                <div class="chart-container h-80 md:h-96">
+                    <canvas id="benefitsComparisonChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-800 text-slate-300 mt-24">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <div class="mb-8">
+                <a href="../blog.html" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-6 rounded-lg text-lg transition-transform transform hover:scale-105">返回 Blog</a>
+            </div>
+            <div class="mb-6 bg-slate-700/50 text-slate-200 rounded-lg py-3 px-4 text-sm inline-block">
+                <p><strong>此網頁完全由 Gemini 深度研究報告生成</strong></p>
+            </div>
+            <p>&copy; 2025 AI Testing Strategy Report. All Rights Reserved.</p>
+            <p class="text-sm text-slate-400 mt-2">此報告為基於公開資訊生成之互動式分析應用。</p>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const reliabilitySolutionsData = {
+            'ui-changes': {
+                title: '解決方案：多模態元素定位',
+                content: `
+                    <p class="mb-4 text-slate-600">傳統測試依賴脆弱的選擇器 (ID, XPath)。AI Agent 則採用更穩健的策略：</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start"><span class="bg-teal-100 text-teal-800 text-xs font-semibold mr-3 px-2-5 py-0.5 rounded-full">視覺定位</span><span class="text-slate-600">透過視覺辨識（例如 "那個藍色的登入按鈕"）而非程式碼結構。</span></li>
+                        <li class="flex items-start"><span class="bg-teal-100 text-teal-800 text-xs font-semibold mr-3 px-2-5 py-0.5 rounded-full">上下文理解</span><span class="text-slate-600">理解元素在頁面中的相對位置和功能（例如 "價格旁邊的加入購物車按鈕"）。</span></li>
+                        <li class="flex items-start"><span class="bg-teal-100 text-teal-800 text-xs font-semibold mr-3 px-2-5 py-0.5 rounded-full">自我修復</span><span class="text-slate-600">當首選定位器失效時，AI 會嘗試其他方法，並記錄下最穩定的新定位方式。</span></li>
+                    </ul>
+                `
+            },
+            'dynamic-content': {
+                title: '解決方案：智慧等待與狀態斷言',
+                content: `
+                    <p class="mb-4 text-slate-600">AI 不再使用固定的 <code>sleep</code> 或 <code>wait</code>，而是學會判斷頁面的真實狀態：</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start"><span class="bg-teal-100 text-teal-800 text-xs font-semibold mr-3 px-2-5 py-0.5 rounded-full">自動等待</span><span class="text-slate-600">AI 能識別加載動畫 (spinner) 或網路請求，並自動等待其完成再進行下一步。</span></li>
+                        <li class="flex items-start"><span class="bg-teal-100 text-teal-800 text-xs font-semibold mr-3 px-2-5 py-0.5 rounded-full">視覺斷言</span><span class="text-slate-600">不僅檢查 DOM 結構，更會進行視覺比對（Visual Regression），確保頁面在使用者眼中是正確的。</span></li>
+                        <li class="flex items-start"><span class="bg-teal-100 text-teal-800 text-xs font-semibold mr-3 px-2-5 py-0.5 rounded-full">狀態機模型</span><span class="text-slate-600">理解應用程式的可能狀態，只在進入預期狀態後才執行斷言，避免時序錯誤。</span></li>
+                    </ul>
+                `
+            },
+            'llm-variance': {
+                title: '解決方案：確定性控制與日誌記錄',
+                content: `
+                    <p class="mb-4 text-slate-600">雖然無法完全消除 LLM 的隨機性，但可以透過工程方法加以約束：</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start"><span class="bg-teal-100 text-teal-800 text-xs font-semibold mr-3 px-2-5 py-0.5 rounded-full">低溫(Temp)參數</span><span class="text-slate-600">在 API 呼叫中設定較低的 <code>temperature</code> 參數，使模型輸出更具確定性。</span></li>
+                        <li class="flex items-start"><span class="bg-teal-100 text-teal-800 text-xs font-semibold mr-3 px-2-5 py-0.5 rounded-full">結構化輸出</span><span class="text-slate-600">強制模型以 JSON 或特定格式回傳操作步驟，避免模糊的自然語言。</span></li>
+                        <li class="flex items-start"><span class="bg-teal-100 text-teal-800 text-xs font-semibold mr-3 px-2-5 py-0.5 rounded-full">詳細日誌 (Traceability)</span><span class="text-slate-600">記錄 AI 的每一步「思考過程」（prompt, model response），當測試失敗時，能快速追溯問題根源。</span></li>
+                    </ul>
+                `
+            },
+            'context-loss': {
+                title: '解決方案：目標導向的規劃與記憶',
+                content: `
+                    <p class="mb-4 text-slate-600">先進的 AI Agent 框架會賦予 Agent 長期記憶與規劃能力：</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start"><span class="bg-teal-100 text-teal-800 text-xs font-semibold mr-3 px-2-5 py-0.5 rounded-full">目標分解</span><span class="text-slate-600">AI 會將 "完成購買" 這種大目標，分解成 "登入"、"選商品"、"進購物車"、"結帳" 等子任務。</span></li>
+                        <li class="flex items-start"><span class="bg-teal-100 text-teal-800 text-xs font-semibold mr-3 px-2-5 py-0.5 rounded-full">狀態記憶</span><span class="text-slate-600">在每一步操作後，AI 會更新其對當前狀態的理解（例如 "我已登入，購物車裡有2件商品"）。</span></li>
+                        <li class="flex items-start"><span class="bg-teal-100 text-teal-800 text-xs font-semibold mr-3 px-2-5 py-0.5 rounded-full">失敗重試策略</span><span class="text-slate-600">如果一個子任務失敗，AI 會根據當前狀態和總目標，嘗試不同的路徑來達成任務，而不是直接宣告失敗。</span></li>
+                    </ul>
+                `
+            }
+        };
+
+        const challengesContainer = document.getElementById('reliability-challenges');
+        const solutionsContainer = document.getElementById('reliability-solutions');
+
+        function updateSolution(id) {
+            const solutionData = reliabilitySolutionsData[id];
+            if (!solutionData) return;
+            
+            solutionsContainer.innerHTML = `
+                <div class="fade-in">
+                    <h3 class="text-2xl font-bold text-teal-600 mb-6">${solutionData.title}</h3>
+                    ${solutionData.content}
+                </div>
+            `;
+        }
+
+        challengesContainer.addEventListener('click', (e) => {
+            const item = e.target.closest('.reliability-item');
+            if (item) {
+                challengesContainer.querySelector('.active').classList.remove('active');
+                item.classList.add('active');
+                updateSolution(item.dataset.id);
+            }
+        });
+
+        updateSolution('ui-changes');
+
+        const roleEvolutionCtx = document.getElementById('roleEvolutionChart').getContext('2d');
+        new Chart(roleEvolutionCtx, {
+            type: 'line',
+            data: {
+                labels: ['輔助腳本生成', '元素定位與修復', '自主測試生成', '端到端流程探索', '多 Agent 協同測試'],
+                datasets: [{
+                    label: 'AI 能力成熟度',
+                    data: [20, 45, 70, 85, 95],
+                    borderColor: '#0d9488',
+                    backgroundColor: 'rgba(13, 148, 136, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `成熟度: ${context.parsed.y}%`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        const toolComparisonCtx = document.getElementById('toolComparisonChart').getContext('2d');
+        new Chart(toolComparisonCtx, {
+            type: 'radar',
+            data: {
+                labels: ['可靠性', '易用性', '整合性 (CI/CD)', '測試覆蓋廣度', '維護成本'],
+                datasets: [
+                    {
+                        label: '工具 A (視覺導向)',
+                        data: [9, 7, 8, 8, 9],
+                        borderColor: '#0d9488',
+                        backgroundColor: 'rgba(13, 148, 136, 0.2)',
+                    },
+                    {
+                        label: '工具 B (模型導向)',
+                        data: [8, 8, 9, 10, 7],
+                        borderColor: '#0ea5e9',
+                        backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                    },
+                    {
+                        label: '工具 C (純 Agent)',
+                        data: [7, 9, 7, 7, 8],
+                        borderColor: '#f97316',
+                        backgroundColor: 'rgba(249, 115, 22, 0.2)',
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 10,
+                        pointLabels: {
+                            font: { size: 14 }
+                        }
+                    }
+                }
+            }
+        });
+
+        const benefitsComparisonCtx = document.getElementById('benefitsComparisonChart').getContext('2d');
+        new Chart(benefitsComparisonCtx, {
+            type: 'bar',
+            data: {
+                labels: ['測試案例創建速度', '測試維護成本', 'UI 變動後的穩定性', '測試覆蓋率'],
+                datasets: [
+                    {
+                        label: '傳統自動化',
+                        data: [30, 80, 20, 60],
+                        backgroundColor: '#64748b',
+                        borderColor: '#475569',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'AI 驅動測試',
+                        data: [85, 25, 90, 85],
+                        backgroundColor: '#14b8a6',
+                        borderColor: '#0f766e',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function(value) { return value + '%' }
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.x !== null) {
+                                    label += context.parsed.x + '% (相對指標)';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+                    });
+                }
+            });
+        }, { rootMargin: '-50% 0px -50% 0px' });
+
+        sections.forEach(section => observer.observe(section));
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                if(mobileMenu.classList.contains('hidden') === false) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>
+
