@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>專案: Go-Live Jira 工單自動化 - Luke的作品集</title>
+    <meta name="description" content="在系統上線的關鍵時刻，此 n8n 工作流自動將 Google Sheet 中的回報轉換為結構化的 Jira 工單，並主動發送到 Teams，實現零人工介入的即時問題追蹤。">
+    <meta name="keywords" content="n8n, Jira, Google Sheets, Microsoft Teams, 自動化, API, Go-Live, DevOps, Luke Hou, 侯俊嘉">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0V2L1DQVPY');
+    </script>
+    <style>
+        .project-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/golive_jira_automation/workflow.jpg') no-repeat center center;
+            background-size: cover;
+            padding: 4rem 0;
+            color: white;
+        }
+        .project-hero h1 {
+            font-weight: 700;
+        }
+        .summary-card {
+            position: sticky;
+            top: 20px;
+        }
+        .tech-badge {
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .gallery-img {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .gallery-img:hover {
+            transform: scale(1.05);
+        }
+        .img-bordered {
+            border: 1px solid var(--bs-border-color);
+            padding: 5px;
+            border-radius: 0.375rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">♾️ 首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">⚡n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">✈️分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="project-hero text-center">
+            <div class="container">
+                <h1 class="display-4">Go-Live：Google Sheet to Jira 工單自動化</h1>
+                <p class="lead">從雜亂的回報到結構化的 Jira 工單，實現零人工、高品質、即時通知的自動化閉環。</p>
+            </div>
+        </section>
+
+        <section class="container mt-5">
+            <div class="row">
+                <!-- Main Content -->
+                <div class="col-lg-8">
+                    <div class="card bg-transparent border-0">
+                        <div class="card-body px-0">
+                            
+<h2 class="card-title h3 mb-3"><i class="bi bi-exclamation-triangle-fill me-2"></i>專案緣起：Go-Live 期間的大作戰</h2>
+<p>系統上線 (Go-Live) 初期，是資訊團隊壓力最大的時刻。問題回報會從四面八方湧入：電話、LINE 群組、甚至是走廊上的攔截。為了快速記錄，大家習慣先將問題登記在一個共用的 Google Sheet，等釐清問題後，再手動建立 Jira Ticket。</p>
+<p>但這個過程也衍生了一些後遺症：</p>
+<ul>
+    <li><b>大量人工：</b> 開票時的複製貼上、欄位對應，開一張平均耗時 3-5 分鐘，一天下來就是數小時的人工作業。</li>
+    <li><b>品質不一：</b> 不同人開的票，格式、資訊完整度參差不齊，PM 跟 RD 可能需要來回溝通才能釐清問題。</li>
+    <li><b>資訊延遲：</b> 手動轉錄造成延遲，緊急問題可能無法在第一時間被看見，更麻煩的是，開完票還得手動貼連結到 Teams 通知大家。</li>
+</ul>
+<p>身為一個懶惰卻追求效率的部分工時 QA 工程師，我覺得這樣其實不可以。因此，在專案上線的緊繃時刻，我擠出一些業餘時間，用 n8n 打造了這個自動化工作流，旨在將團隊從繁瑣的人工作業中解放出來。</p>
+🐦重點重點重點是我把這個工作流，跟之前做的 LineBot 工作流結合成 Combo 技：</br>
+<p>第一線同仁用 Line 回報並自動寫到 Google Sheets，然後再由這個工作流來自動 Create Jira Ticket，完美。 <a href="https://luke.ninja/projects/n8n-line-bot-jira-automation.html" class="text-decoration-none">(查看 LineBot 回報機器人介紹 <i class="fas fa-link fa-xs"></i>)</a></p>
+<hr class="my-4">
+
+<h2 class="h3 mb-3"><i class="bi bi-arrows-fullscreen me-2"></i>理念核心：一個聰明且自律的自動化閉環</h2> 
+<p>這個 n8n 工作流的核心思想是「監控、處理、回饋、通知」，形成一個完整的自動化閉環。</p>
+
+<ol>
+    <li><b>定時監控 (Schedule Trigger):</b> 工作流每 15 分鐘自動啟動一次，像個忠誠的哨兵，檢查 Google Sheet 中是否有新的任務。</li>
+    <li><b>智慧篩選 (Google Sheets Node):</b> 它只抓取滿足兩個條件的資料列：<code>Jira Link</code> 欄位為空，且 <code>可Jira</code> 欄位被標記為 "Y"。這確保了只有經過核對確認、且尚未開票的回報才會進入流程。</li>
+    <li><b>格式化處理 (Code Node):</b> 這是確保工單品質的關鍵。此節點會讀取所有相關欄位，將其組合成一個結構清晰、重點分明、甚至帶有彩色區塊的 Jira Wiki Markup 描述。同時，它會根據回報的「嚴重度等級」自動對應成 Jira 的 Priority ID。</li>
+    <li><b>自動開票 (Jira Node):</b> 將格式化後的內容，連同 Assignee、Reporter、Labels 等資訊，自動建立一張高品質的 Jira Bug Ticket。</li>
+    <li><b>即時回饋 (Google Sheets Node):</b> Jira Ticket 建立成功後，工作流會立即將含有連結的 Jira Key 回寫到 Google Sheet 的 <code>Jira Link</code> 欄位，並將 <code>可Jira</code> 狀態更新為 "Done"，形成完美的資訊閉環。</li>
+    <li><b>主動通知 (HTTP Request to Power Automate):</b> 最後，工作流會組合一個精美的 Teams Adaptive Card，透過呼叫 Power Automate 的 Webhook，將新工單的關鍵資訊即時推送到團隊頻道，確保重要問題不會被遺漏。</li>
+    <li><b>錯誤告警 (Telegram Node):</b> 在流程的關鍵節點（如讀取資料、建立工單）都設置了錯誤處理，一旦發生問題，會立即發送通知到我的 Telegram，讓我能即時介入。</li>
+</ol>
+
+<hr class="my-4">
+
+<h2 class="h3 mb-3"><i class="bi bi-kanban me-2"></i>工作流展示</h2>
+<p class="text-muted">點擊下方頁籤，查看此工作流的實際運行示意：</p>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="workflow-tab" data-bs-toggle="tab" data-bs-target="#workflow" type="button" role="tab" aria-controls="workflow" aria-selected="true">n8n 工作流</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="sheet-tab" data-bs-toggle="tab" data-bs-target="#sheet" type="button" role="tab" aria-controls="sheet" aria-selected="false">Google Sheet 輸入</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="jira-tab" data-bs-toggle="tab" data-bs-target="#jira" type="button" role="tab" aria-controls="jira" aria-selected="false">Jira 產出</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="teams-tab" data-bs-toggle="tab" data-bs-target="#teams" type="button" role="tab" aria-controls="teams" aria-selected="false">Teams 通知</button>
+  </li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content border border-top-0 p-3 rounded-bottom mb-4">
+  <div class="tab-pane active" id="workflow" role="tabpanel" aria-labelledby="workflow-tab">
+    <h5 class="mt-2">n8n 整體工作流</h5>
+    <p>從定時觸發、讀取 Google Sheet、格式化、建立 Jira Ticket、回寫狀態，到最後發送 Teams 通知，所有步驟一目了然。</p>
+    <img src="../images/golive_jira_automation/workflow.jpg" alt="n8n 整體工作流" class="img-fluid rounded gallery-img img-bordered">
+  </div>
+  <div class="tab-pane" id="sheet" role="tabpanel" aria-labelledby="sheet-tab">
+    <h5 class="mt-2">輸入源：Google Sheet</h5>
+    <p>維運團隊只需專注於填寫這張表單，並在確認問題後，於「可Jira」欄位填上 "Y"，剩下的就交給自動化。</p>
+    <img src="../images/golive_jira_automation/googlesheets.jpg" alt="Google Sheet 輸入" class="img-fluid rounded gallery-img img-bordered">
+  </div>
+  <div class="tab-pane" id="jira" role="tabpanel" aria-labelledby="jira-tab">
+    <h5 class="mt-2">產出成果：結構化的 Jira Ticket</h5>
+    <p>自動化流程確保每一張 Ticket 都擁有標準、清晰、帶有彩色區塊的描述，大幅提升 RD 的處理效率。</p>
+    <img src="../images/golive_jira_automation/jiraticket.jpg" alt="Jira 產出" class="img-fluid rounded gallery-img img-bordered">
+  </div>
+  <div class="tab-pane" id="teams" role="tabpanel" aria-labelledby="teams-tab">
+    <h5 class="mt-2">主動通知：Microsoft Teams 卡片</h5>
+    <p>工單建立後，關鍵資訊會被整理成一張精美的卡片，即時發送到團隊頻道，讓所有人同步最新動態。</p>
+    <img src="../images/golive_jira_automation/teams.jpg" alt="Teams 通知" class="img-fluid rounded gallery-img img-bordered">
+  </div>
+</div>
+
+                        </div>
+                    </div>
+                    
+                    <hr class="my-5">
+
+                    <section id="tutorial" class="mt-5">
+                        <h2 class="h3 mb-4"><i class="bi bi-mortarboard-fill me-2"></i>從 0 到 1：建立你的 Go-Live 自動化工作流</h2>
+                        <p class="text-muted">本教學將引導你完成這個 n8n 工作流的每一步。在開始之前，請確保你已經擁有 n8n 環境，並準備好 Google、Jira 和 (可選的) Telegram / Power Automate 的 API 權限。</p>
+
+                        <div class="accordion" id="n8n-tutorial-accordion">
+
+                            <!-- Step 1: Schedule Trigger -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <strong>步驟 1：設定定時觸發器 (Schedule Trigger)</strong>
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#n8n-tutorial-accordion">
+                                    <div class="accordion-body">
+                                        <p>這是工作流的起點，決定了 n8n 檢查新任務的頻率。</p>
+                                        <ol>
+                                            <li>在 n8n 畫布中，新增一個 <strong>Schedule Trigger</strong> 節點。</li>
+                                            <li>將 <strong>Trigger Interval</strong> 設定為你需要的頻率，例如每 <strong>15 分鐘 (Minutes)</strong>。</li>
+                                        </ol>
+                                        <p class="mt-2">這個節點會定時啟動，並將一個空的執行訊號傳遞給下一個節點。</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 2: Google Sheets -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <strong>步驟 2：讀取待辦事項 (Google Sheets)</strong>
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#n8n-tutorial-accordion">
+                                    <div class="accordion-body">
+                                        <p>此節點負責從 Google Sheet 中讀取需要被建立為 Jira Ticket 的回報。</p>
+                                        <ol>
+                                            <li>新增一個 <strong>Google Sheets</strong> 節點。</li>
+                                            <li>在 <strong>Authentication</strong> 中選擇或建立你的 Google API 憑證。</li>
+                                            <li><strong>Resource</strong> 選擇 <strong>Row</strong>，<strong>Operation</strong> 選擇 <strong>Get</strong>。</li>
+                                            <li>填入你的 <strong>Spreadsheet ID</strong> 和 <strong>Sheet Name</strong>。</li>
+                                            <li>在 <strong>Filters</strong> 區塊設定篩選條件，這是確保不重複開票的關鍵：
+                                                <ul>
+                                                    <li>Filter 1: <code>Jira Link</code> | <strong>Condition</strong>: Is Empty | <strong>Value</strong>: (留空)</li>
+                                                    <li>Filter 2: <code>可Jira</code> | <strong>Condition</strong>: Equals | <strong>Value</strong>: Y</li>
+                                                    <li>Filter 3: <code>問題描述</code> | <strong>Condition</strong>: Not Equals | <strong>Value</strong>: (留空)</li>
+                                                </ul>
+                                            </li>
+                                             <li>(重要) 在節點設定的 <strong>Settings</strong> 頁籤中，將 <strong>On Error</strong> 設定為 <strong>"Continue (using error output)"</strong>。這會產生一個額外的 "error" 輸出錨點，讓我們可以連接到錯誤通知節點。</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 3: Error Handling -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        <strong>步驟 3 (可選)：設定讀取失敗的警報 (Telegram)</strong>
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#n8n-tutorial-accordion">
+                                    <div class="accordion-body">
+                                        <p>如果 Google Sheet 節點因為權限、網路問題等原因執行失敗，我們希望立即收到通知。</p>
+                                        <ol>
+                                            <li>新增一個 <strong>Telegram</strong> 節點。</li>
+                                            <li>設定你的 <strong>Telegram API Credentials</strong> 和 <strong>Chat ID</strong>。</li>
+                                            <li>在 <strong>Text</strong> 欄位中，填寫一個清晰的錯誤訊息，例如：「❌ GoLive Jira 自動化 - 讀取 Google Sheet 失敗！」。</li>
+                                            <li>將上一個 Google Sheets 節點的 <strong>error output</strong> (紅色圓點) 連接到此 Telegram 節點的 input。</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 4: Loop Over Items -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFour">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        <strong>步驟 4：逐一處理項目 (Split in Batches)</strong>
+                                    </button>
+                                </h2>
+                                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#n8n-tutorial-accordion">
+                                    <div class="accordion-body">
+                                        <p>Google Sheet 節點可能一次返回多個需要處理的列。為了確保每個回報都被獨立、穩定地處理，我們需要一個迴圈。<strong>Split in Batches</strong> 節點可以完美勝任此工作。</p>
+                                        <ol>
+                                            <li>新增一個 <strong>Split in Batches</strong> 節點。</li>
+                                            <li>將 <strong>Batch Size</strong> 設定為 <code>1</code>。</li>
+                                        </ol>
+                                        <p>這樣設定後，該節點會將收到的多個項目(Items)拆分成獨立的執行，一次只處理一個，直到所有項目都處理完畢。</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 5: Code Node for Jira -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFive">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                        <strong>步驟 5：格式化 Jira 內容 (Code Node)</strong>
+                                    </button>
+                                </h2>
+                                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#n8n-tutorial-accordion">
+                                    <div class="accordion-body">
+                                        <p>這是提升工單品質的核心。此節點會用 JavaScript 將 Google Sheet 的原始資料轉換成結構化的 Jira Wiki Markup，並對應優先級。</p>
+                                        <ol>
+                                            <li>新增一個 <strong>Code</strong> 節點。</li>
+                                            <li>將以下 JavaScript 程式碼貼入程式碼編輯區。</li>
+                                        </ol>
+                                        <pre><code class="language-javascript">
+/**
+ * n8n Code Node: Format Issue Report for Jira Description (Wiki Markup) & Map Priority
+ * 
+ * This script takes raw issue data and performs two tasks:
+ * 1. Transforms it into a structured Wiki Markup string for Jira descriptions.
+ * 2. Maps the text-based priority level ('嚴重度等級') to a numeric Jira Priority ID.
+ *    If the priority level is not found or is empty, it defaults to a standard ID.
+ */
+
+// --- 1. Get data from the upstream node ---
+const itemJson = $input.item.json;
+
+// --- 2. Priority Mapping ---
+const priorityMap = {
+  'P1': '1', // Highest
+  'P2': '2', // High
+  'P3': '3', // Medium
+  'P4': '4', // Low
+  // Default/fallback value if no match is found
+  '_': '3'  // Default to Medium
+};
+
+// --- 3. Helper function to create a wiki markup list item ---
+function createListItem(emoji, label, value, defaultValue = 'N/A') {
+  let displayValue = value;
+  if (typeof value === 'boolean') {
+    displayValue = value ? '是' : '否';
+  }
+  // Ensure the value is not null or undefined before displaying
+  return `* ${emoji} *${label}：* ${displayValue || defaultValue}`;
+}
+
+// --- 4. Build the Wiki Markup String ---
+
+// Panel 1: Issue Report Information
+const reportInfoPanel = [
+  '{panel:title=問題回報資訊|bgColor=#DEEBFF|borderColor=#B3D4FF}',
+  createListItem('💻', '系統別/地點', itemJson['系統別/地點']),  
+  createListItem('📝', '問題簡述', itemJson['問題簡述']),
+  createListItem('👤', '回報者姓名', itemJson['提出者']),  
+  createListItem('🚨', '緊急', itemJson['緊急']),  
+  createListItem('👨‍⚕️', '職務', itemJson['職務']),
+  createListItem('📞', '聯絡方式', itemJson['聯絡方式']),
+  createListItem('🗂️', '病歷號/住院號', itemJson['病歷號/住院號']),
+  createListItem('📍', '診間或病房編號', itemJson['診間或病房編號']),
+  '{panel}'
+].join('\n');
+
+// Panel 2: Internal Processing Status
+const internalStatusPanel = [
+  '{panel:title=內部處理狀態|bgColor=#FEF0B5|borderColor=#FFC400}',
+  createListItem('🚦', '嚴重度等級', itemJson['嚴重度等級'], '未分類'),
+  createListItem('🧑‍💻', 'Owner', itemJson['Owner(RD)'], '未指派'),
+  createListItem('⏳', '處理狀態', itemJson['處理狀態'], '待處理'),
+  createListItem('🛠️', '處理方式', itemJson['處理方式'], '分析中'),
+  '{panel}'
+].join('\n');
+
+// --- 5. Combine all parts and map priority ---
+// Combine panels into a single description string
+itemJson.jiraDescriptionString = `${reportInfoPanel}\n\n${internalStatusPanel}`;
+
+// Map the priority using the text from the sheet, or use the default
+itemJson.priorityId = priorityMap[itemJson['嚴重度等級']] || priorityMap['_'];
+
+// --- 6. Return the enhanced item ---
+return itemJson;
+                                        </code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 6: Create Jira Issue -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSix">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                        <strong>步驟 6：建立 Jira 工單 (Jira Node)</strong>
+                                    </button>
+                                </h2>
+                                <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#n8n-tutorial-accordion">
+                                    <div class="accordion-body">
+                                        <p>使用上一步格式化好的內容，正式在 Jira 中建立一張 Bug 單。</p>
+                                        <ol>
+                                            <li>新增一個 <strong>Jira</strong> 節點，設定好 API 憑證。</li>
+                                            <li><strong>Resource</strong> 選擇 <strong>Issue</strong>，<strong>Operation</strong> 選擇 <strong>Create</strong>。</li>
+                                            <li>選擇你的 <strong>Project</strong> 和 <strong>Issue Type</strong> (例如：Bug)。</li>
+                                            <li>在 <strong>Summary</strong> 欄位，使用表達式填入標題，例如：<code>=[Hospital] Prod - {{ $json['問題簡述'] }}</code>。</li>
+                                            <li>點擊 <strong>Add Field</strong>，選擇 <strong>Description</strong>。在 Description 欄位中，使用表達式填入上一步產生的 Wiki Markup 字串：<code>={{ $json.jiraDescriptionString }}</code>。</li>
+                                            <li>同樣地，點擊 <strong>Add Field</strong> -> <strong>Priority</strong>。在 Priority 欄位右側點擊「...」選擇 <strong>Add Expression</strong>，然後填入 <code>={{ $json.priorityId }}</code>。</li>
+                                            <li>你可以用同樣的方式設定 <strong>Assignee (負責人)</strong>、<strong>Reporter (回報人)</strong>、<strong>Labels (標籤)</strong> 等欄位。</li>
+                                            <li>同樣地，為此節點設定 <strong>On Error</strong> 為 <strong>"Continue (using error output)"</strong>，並連接到另一個 Telegram 錯誤通知節點。</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 7: Update Google Sheet -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSeven">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                        <strong>步驟 7：回寫狀態到 Google Sheet</strong>
+                                    </button>
+                                </h2>
+                                <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#n8n-tutorial-accordion">
+                                    <div class="accordion-body">
+                                        <p>建立成功後，必須更新 Google Sheet 的狀態，以形成閉環，避免重複處理。</p>
+                                        <ol>
+                                            <li>新增另一個 <strong>Google Sheets</strong> 節點。</li>
+                                            <li><strong>Operation</strong> 選擇 <strong>Update</strong>。</li>
+                                            <li>填寫與步驟 2 相同的 <strong>Spreadsheet ID</strong> 和 <strong>Sheet Name</strong>。</li>
+                                            <li>在 <strong>Key Column</strong> 中，填入你的 Google Sheet 中用來唯一識別每一列的欄位名稱，例如 <code>row_number</code> 。</li>
+                                            <li>在 <strong>Fields to Update</strong> 區塊：
+                                                <ul>
+                                                    <li><strong>Key</strong>: <code>Jira Link</code> | <strong>Value</strong> (使用表達式): <code>=https://YOUR_JIRA_DOMAIN/browse/{{ $('Create an issue').item.json.key }}</code></li>
+                                                    <li><strong>Key</strong>: <code>可Jira</code> | <strong>Value</strong>: <code>Done</code></li>
+                                                </ul>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 8: Teams Notification -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingEight">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                                        <strong>步驟 8 (可選)：發送精美的 Teams 通知</strong>
+                                    </button>
+                                </h2>
+                                <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#n8n-tutorial-accordion">
+                                    <div class="accordion-body">
+                                        <p>最後，我們將新建立的工單資訊，以易於閱讀的卡片形式發送到 Teams 頻道。</p>
+                                        <ol>
+                                            <li>(Power Automate) 建立一個 Power Automate 流程，觸發器選擇 "When an HTTP request is received"，儲存後會產生一個 Webhook URL。</li>
+                                            <li>(n8n) 新增一個 <strong>Code</strong> 節點，用來產生 Teams Adaptive Card 的 JSON 結構。這需要你熟悉 Adaptive Card 的語法，或使用 <a href="https://adaptivecards.io/designer/" target="_blank">Adaptive Card Designer</a> 來設計。</li>
+                                            <li>(n8n) 新增一個 <strong>HTTP Request</strong> 節點。</li>
+                                            <li><strong>Method</strong> 設為 <strong>POST</strong>。</li>
+                                            <li>在 <strong>URL</strong> 欄位貼上你在 Power Automate 取得的 Webhook URL。</li>
+                                            <li><strong>Body Content Type</strong> 選擇 <strong>JSON</strong>。</li>
+                                            <li>在 <strong>Body</strong> 欄位，使用表達式填入上一步 Code 節點產生的 Adaptive Card JSON 變數。</li>
+                                        </ol>
+                                        <p>當工作流執行到此處時，就會呼叫 Power Automate，進而將一張包含工單摘要、負責人、嚴重性等關鍵資訊的卡片發送到指定的 Teams 頻道。</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    
+<div class="card shadow-sm summary-card bg-body-tertiary">
+    <div class="card-body">
+        <h3 class="card-title h5 border-bottom pb-2 mb-3"><i class="bi bi-trophy-fill me-2"></i>成果與反思：將時間還給「人」</h3>
+        <p class="text-muted small fst-italic">這個專案的價值，遠不止是省下幾分鐘的複製貼上。</p>
+        <ul class="list-unstyled mt-3">
+            <li class="mb-3 d-flex">
+                <i class="bi bi-clock-history h4 text-primary me-3"></i>
+                <div>
+                    <strong class="d-block">時間價值的最大化</strong>
+                    <small class="text-muted">將團隊從重複性、低價值的行政工作中解放，讓團隊成員能專注於問題分析與用戶溝通。</small>
+                </div>
+            </li>
+            <li class="mb-3 d-flex">
+                <i class="bi bi-check-circle-fill h4 text-primary me-3"></i>
+                <div>
+                    <strong class="d-block">品質與一致性</strong>
+                    <small class="text-muted">自動化確保了每張工單的品質與格式一致，降低了溝通成本，也讓問題追蹤與數據分析變得更加可靠。</small>
+                </div>
+            </li>
+            <li class="mb-3 d-flex">
+                <i class="bi bi-broadcast h4 text-primary me-3"></i>
+                <div>
+                    <strong class="d-block">主動的團隊協作</strong>
+                    <small class="text-muted">從「被動查詢」到「主動通知」，Teams 的即時通知機制，讓團隊的反應速度與協作效率提升了一個檔次。</small>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="card-footer">
+        <h3 class="h5 mt-2"><i class="bi bi-gear-fill me-2"></i>使用的技術</h3>
+        <div>
+            <span class="badge text-bg-primary tech-badge">n8n</span>
+            <span class="badge text-bg-danger tech-badge">Jira API</span>
+            <span class="badge text-bg-success tech-badge">Google Sheets API</span>
+            <span class="badge text-bg-warning tech-badge">Microsoft Power Automate</span>
+        </div>
+    </div>
+</div>
+<div class="d-grid mt-3">
+    <a href="../portfolio.html" class="btn btn-outline-primary"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+</div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark mt-5 py-4 border-top border-secondary-subtle">
+        <div class="container text-center">
+            <a href="../portfolio.html" class="btn btn-outline-light mb-3"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+            <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content bg-dark">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="" class="img-fluid" id="modalImage" alt="Project Image">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+            const modalImage = document.getElementById('modalImage');
+            
+            document.querySelectorAll('.gallery-img').forEach(img => {
+                img.addEventListener('click', function () {
+                    modalImage.src = this.src;
+                    imageModal.show();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
