@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,11 +43,27 @@
         .gallery-img:hover {
             transform: scale(1.05);
         }
+        .floating-toggle-btn {
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            z-index: 1050;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            padding: 1rem 0.5rem;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
+    <a href="n8n-ai-excel-automation-business.html" class="btn btn-primary floating-toggle-btn" title="切換至商業視角說明">
+        <i class="bi bi-briefcase-fill"></i> 商業視角說明
+    </a>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="../index.html">Luke Hou</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,10 +93,10 @@
             <div class="row">
                 <!-- Main Content -->
                 <div class="col-lg-8">
-                    <div class="card border-0">
+                    <div class="card border-0 bg-transparent">
                         <div class="card-body">
                             <h2 class="card-title h3 mb-3"><i class="bi bi-card-text me-2"></i>項目概述</h2>
-                            <p>測試團隊依賴人工更新 Excel 測試總表來追蹤 Jira ticket 狀況，這份總表是跨團隊 review 會議的重要依據。然而，這個流程非常耗時且容易出錯：單次更新需耗費 2.5 小時以上，導致資訊更新頻率低，進而影響測試覆蓋率與決策速度，Review 會議中也常因等待查詢 Jira 而打亂節奏。</p>
+                            <p>測試團隊依賴人工更新 Excel 測試總表來追蹤 Jira ticket 狀況，這份總表是跨團隊 review 會議的重要依據。然而，這個流程非常耗時且容易漏失：單次更新需耗費 2 小時以上，導致資訊更新頻率低，進而影響測試覆蓋率與決策速度，Review 會議中也常因等待查詢 Jira 而打亂節奏。</p>
                             <p>為了解決此瓶頸，我設計了一套基於 n8n 的自動化工作流，串接 Jira API 與 Excel，並搭配 AI 自動摘要功能，讓測試總表能每日兩次自動更新，即時反映專案品質狀況，徹底改變了原有的工作模式。</p>
 
                             <hr class="my-4">
@@ -168,7 +184,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="card-footer bg-light">
+                        <div class="card-footer">
                             <h3 class="h5 mt-2"><i class="bi bi-gear-fill me-2"></i>使用的技術</h3>
                             <div>
                                 <span class="badge bg-primary text-white tech-badge">n8n</span>
@@ -186,9 +202,9 @@
         </section>
     </main>
 
-    <footer class="bg-light mt-5 py-4">
+    <footer class="bg-dark mt-5 py-4 border-top border-secondary-subtle">
         <div class="container text-center">
-            <p class="mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
+            <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
         </div>
     </footer>
 

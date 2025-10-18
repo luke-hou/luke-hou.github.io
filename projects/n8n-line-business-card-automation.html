@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,8 +44,8 @@
             transform: scale(1.05);
         }
         .gallery-item {
-            background-color: #fff;
-            border: 1px solid #dee2e6;
+            background-color: #212529;
+            border: 1px solid #495057;
             border-radius: 0.5rem;
             box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
             transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
@@ -53,11 +53,11 @@
             margin-bottom: 1.5rem; /* Add some space between items */
         }
         .gallery-item:hover {
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.15);
             transform: translateY(-5px);
         }
         .gallery-item .gallery-img {
-            border-bottom: 1px solid #dee2e6;
+            border-bottom: 1px solid #495057;
             border-radius: 0; /* Reset border-radius as the container handles it */
         }
         .gallery-item .caption {
@@ -65,13 +65,29 @@
             text-align: center;
             font-size: 0.9rem;
             font-weight: 600;
-            color: #495057;
+            color: #f8f9fa;
+        }
+        .floating-toggle-btn {
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            z-index: 1050;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            padding: 1rem 0.5rem;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
         }
     </style>
 </head>
 <body>
+    <a href="n8n-line-business-card-automation-business.html" class="btn btn-primary floating-toggle-btn" title="切換至商業視角說明">
+        <i class="bi bi-briefcase-fill"></i> 商業視角說明
+    </a>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="../index.html">Luke Hou</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,7 +117,7 @@
             <div class="row">
                 <!-- Main Content -->
                 <div class="col-lg-8">
-                    <div class="card border-0">
+                    <div class="card border-0 bg-transparent">
                         <div class="card-body">
                             <h2 class="card-title h3 mb-3"><i class="bi bi-card-text me-2"></i>項目概述</h2>
                             <p>在商務社交場合，交換名片是日常，但後續的整理與建檔卻是件麻煩事。傳統手動輸入不僅耗時，資料也難以活化利用。為了解決這個痛點，我利用 n8n 打造了一個自動化名片管理系統，串接 LINE Bot、Google Gemini AI 與 Google Sheets，將繁瑣的名片管理流程變成一個簡單的 LINE 互動。</p>
@@ -202,7 +218,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="card-footer bg-light">
+                        <div class="card-footer">
                             <h3 class="h5 mt-2"><i class="bi bi-gear-fill me-2"></i>使用的技術</h3>
                             <div>
                                 <span class="badge bg-primary text-white tech-badge">n8n</span>
@@ -221,9 +237,9 @@
         </section>
     </main>
 
-    <footer class="bg-light mt-5 py-4">
+    <footer class="bg-dark mt-5 py-4 border-top border-secondary-subtle">
         <div class="container text-center">
-            <p class="mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
+            <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
         </div>
     </footer>
 

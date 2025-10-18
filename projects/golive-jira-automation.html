@@ -48,9 +48,25 @@
             padding: 5px;
             border-radius: 0.375rem;
         }
+        .floating-toggle-btn {
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            z-index: 1050;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            padding: 1rem 0.5rem;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
+    <a href="golive-jira-automation-business.html" class="btn btn-primary floating-toggle-btn" title="切換至商業視角說明">
+        <i class="bi bi-briefcase-fill"></i> 商業視角說明
+    </a>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>案例研究：打造AI報告產生器，將數據轉為決策洞察 - Luke Hou 作品集</title>
+    <meta name="description" content="了解我如何打造一個AI報告自動化系統，整合Jira、Google Sheets等多源數據，將每週2小時的報告製作時間縮短至1分鐘，並提供隨點即用的「On-Demand Reporting」能力。">
+    <meta name="keywords" content="商業智慧, BI, 報告自動化, AI, n8n, Jira, 數據分析, Luke Hou, 侯俊嘉">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0V2L1DQVPY');
+    </script>
+    <style>
+        .hero-section { background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/qa-report-automation-main.png') no-repeat center center; background-size: cover; padding: 5rem 0; color: white; }
+        .hero-section h1 { font-weight: 700; }
+        .impact-card { background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: .5rem; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .impact-card .icon { font-size: 2.5rem; color: #0d6efd; }
+        .feature-card { text-align: center; padding: 1.5rem; }
+        .feature-card .icon { font-size: 3rem; margin-bottom: 1rem; color: #0d6efd; }
+        body { background-color: #fdf5e6; }
+        .floating-toggle-btn {
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            z-index: 1050;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            padding: 1rem 0.5rem;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <a href="qa-report-automation.html" class="btn btn-dark floating-toggle-btn" title="切換至技術視角說明">
+        <i class="bi bi-code-slash"></i> 技術視角說明
+    </a>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">♾️ 首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">⚡n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">✈️分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section text-center">
+            <div class="container">
+                <h1 class="display-4">你的團隊每週花多少時間在「做」報告，而非「用」報告？</h1>
+                <p class="lead col-lg-8 mx-auto">我如何打造一個AI報告自動化系統，整合Jira、Google Sheets等多源數據，將每週2小時的報告製作時間縮短至1分鐘，並提供隨點即用的「On-Demand Reporting」能力。</p>
+            </div>
+        </section>
+
+        <section class="container mt-5 py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+
+                    <div class="text-center mb-5">
+                        <h2 class="h1 mb-3"><i class="bi bi-table text-danger me-2"></i>The Challenge: 報告的詛咒</h2>
+                        <p class="lead text-muted">製作週報，是許多團隊的必要之惡。為了產出一份QA品質週報，負責人必須手動從 Jira、Excel、測試管理工具等多個地方撈取數據，再花費大量時間整理、製圖、撰寫摘要。這個過程充滿痛點。</p>
+                    </div>
+                    <div class="row text-center mb-5">
+                        <div class="col-md-4">
+                            <h4><i class="bi bi-cone-striped me-2"></i>高昂的人力成本</h4>
+                            <p>每週投入 2-3 小時的高度重複性工作，占用了資深人員本應用於分析和改進的時間。</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h4><i class="bi bi-calendar3-week me-2"></i>數據的時效差</h4>
+                            <p>週一製作的報告，到週五早已過時。團隊在會議中討論的，永遠是幾天前的舊數據。</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h4><i class="bi bi-clipboard-x me-2"></i>單一的數據視角</h4>
+                            <p>手動報告往往只呈現冰冷的數字，缺乏趨勢分析和風險洞察，難以驅動有效的決策。</p>
+                        </div>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="text-center mb-5">
+                        <h2 class="h1 mb-3"><i class="bi bi-cpu-fill text-primary me-2"></i>The Solution: 隨傳隨到的 AI 數據分析師</h2>
+                        <p class="lead text-muted">我打造了一個「AI 數據分析師」自動化流程，它不僅能代勞所有繁瑣的數據整合工作，更能賦予報告「智慧」，將數據轉化為 actionable 的洞察。</p>
+                    </div>
+                    
+                    <div class="row g-4 mb-5 align-items-center">
+                        <div class="col-md-7">
+                            <h4>從數據到洞察的全自動化流程</h4>
+                            <p>此工作流會自動連接 Jira 和 Google Sheets，抓取最新的 Defect 數量、測試案例執行狀況等原始數據。接著，AI 會分析這些數據，自動生成對本週品質狀況的文字摘要與風險提示。最後，所有資訊被渲染成一份專業的 HTML 報告。</p>
+                            <div class="alert alert-info text-center mt-3">
+                                <a href="../demo_files/Quality Assurance Weekly Report(Demo).html" class="alert-link fw-bold" target="_blank"><i class="bi bi-file-earmark-text-fill me-2"></i>點此查看完整互動式 Demo 週報</a>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                             <img src="../images/qa-report-automation-flow-1.png" alt="主工作流" class="img-fluid rounded shadow">
+                        </div>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="text-center mb-5">
+                        <h2 class="h1 mb-3"><i class="bi bi-gem text-success me-2"></i>The Impact: 讓數據說話，讓團隊專注</h2>
+                        <p class="lead text-muted">這個系統的導入，讓團隊的工作模式從「為報告而工作」轉變為「用報告來工作」。</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="impact-card text-center h-100">
+                                <div class="icon"><i class="bi bi-person-fill-gear"></i></div>
+                                <h4 class="mt-3">生產力釋放</h4>
+                                <p class="display-6 fw-bold">-99%</p>
+                                <p class="text-muted">報告製作時間從 2 小時縮短至 1 分鐘，將資深 QA 的時間與精力，重新聚焦在測試策略與品質改進上。</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="impact-card text-center h-100">
+                                <div class="icon"><i class="bi bi-lightbulb-fill"></i></div>
+                                <h4 class="mt-3">決策品質提升</h4>
+                                <p class="display-6 fw-bold">AI-Driven</p>
+                                <p class="text-muted">AI 產生的洞察與風險提示，幫助管理層快速掌握專案的真實健康度，做出更精準的資源調度與決策。</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="impact-card text-center h-100">
+                                <div class="icon"><i class="bi bi-arrow-clockwise"></i></div>
+                                <h4 class="mt-3">數據即時性</h4>
+                                <p class="display-6 fw-bold">On-Demand</p>
+                                <p class="text-muted">透過 Webhook，團隊可在任何會議前一秒，獲取最新的數據報告，確保所有討論都基於事實，而非過時的資訊。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="accordion" id="tech-deep-dive">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-tech"><strong>對技術實現細節感興趣？點此展開</strong></button></h2>
+                            <div id="collapse-tech" class="accordion-collapse collapse" data-bs-parent="#tech-deep-dive">
+                                <div class="accordion-body">
+                                    <h4 class="h5">核心做法</h4>
+                                    <ol>
+                                        <li><strong>多源數據自動整合:</strong> 工作流會自動抓取多個 Google Sheets 的測試數據表，並透過 API 連接 Jira，獲取最新的 Defect 與 Task 狀態，無需手動導出。</li>
+                                        <li><strong>AI 智慧摘要與洞察:</strong> 將匯總的數據交給 AI 進行分析，自動生成對品質狀況的觀察摘要與潛在風險提示，讓報告不僅有數據，更有洞見。</li>
+                                        <li><strong>精美報告一鍵生成:</strong> 所有數據與圖表最終會被渲染到一個預設的 HTML 模板中，產出排版專業、易於閱讀的週報。</li>
+                                        <li><strong>Webhook 隨時觸發:</strong> 提供 Webhook 功能，讓團隊成員或主管在任何需要的時候，只需點擊一個連結，即可立即獲取最新的報告，實現真正的「On-Demand Reporting」。</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white mt-5 py-4 border-top">
+        <div class="container text-center">
+            <a href="../portfolio.html" class="btn btn-outline-primary mb-3"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+            <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

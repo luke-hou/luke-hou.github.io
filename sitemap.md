@@ -15,22 +15,44 @@
 
 ## 作品集項目 (Portfolio Projects)
 
-此頁面隸屬於「作品集」。
+此頁面隸屬於「作品集」。每個專案都提供「商業視角說明」與「技術視角說明」兩種版本。
 
-- **n8n AI Excel Automation**
-  - `projects/n8n-ai-excel-automation.html`
-- **NHI Notice Automation**
-  - `projects/nhi-notice-automation.html`
-- **PRD AI Test Case Generation**
-  - `projects/prd-ai-test-case-generation.html`
-- **QA Report Automation**
-  - `projects/qa-report-automation.html`
-- **Vibe AI Video Summary**
-  - `projects/vibe-ai-video-summary.html`
-- **n8n Line Bot Jira Automation**
-  - `projects/n8n-line-bot-jira-automation.html`
-- **n8n AI Release Notes Automation**
-  - `projects/n8n-ai-release-notes-automation.html`
+- **Go-Live 利器：Sheet to Jira 自動化**
+  - 技術視角說明: `projects/golive-jira-automation.html`
+  - 商業視角說明: `projects/golive-jira-automation-business.html`
+- **Gmail 重要郵件自動彙報**
+  - 技術視角說明: `projects/gmail-telegram-digest.html`
+  - 商業視角說明: `projects/gmail-telegram-digest-business.html`
+- **Notion AI 閱讀助理**
+  - 技術視角說明: `projects/notion-ai-summary.html`
+  - 商業視角說明: `projects/notion-ai-summary-business.html`
+- **用 LINE + AI 打造你的個人 CRM：n8n 名片王**
+  - 技術視角說明: `projects/n8n-line-business-card-automation.html`
+  - 商業視角說明: `projects/n8n-line-business-card-automation-business.html`
+- **vibeTask: AI 驅動的賽博龐克任務管理系統**
+  - 技術視角說明: `projects/vibe-coding-task-management.html`
+  - 商業視角說明: `projects/vibe-coding-task-management-business.html`
+- **n8n + AI 自動生成 Release Notes**
+  - 技術視角說明: `projects/n8n-ai-release-notes-automation.html`
+  - 商業視角說明: `projects/n8n-ai-release-notes-automation-business.html`
+- **n8n Line Bot 回報快速生成 Jira Ticket**
+  - 技術視角說明: `projects/n8n-line-bot-jira-automation.html`
+  - 商業視角說明: `projects/n8n-line-bot-jira-automation-business.html`
+- **n8n + AI 自動更新 Jira 狀態至 Excel**
+  - 技術視角說明: `projects/n8n-ai-excel-automation.html`
+  - 商業視角說明: `projects/n8n-ai-excel-automation-business.html`
+- **n8n 從 Confluence PRD 到 Jira：導入 AI 多智能體**
+  - 技術視角說明: `projects/prd-ai-test-case-generation.html`
+  - 商業視角說明: `projects/prd-ai-test-case-generation-business.html`
+- **Vibe Coding：影片自動摘要與字幕生成器**
+  - 技術視角說明: `projects/vibe-ai-video-summary.html`
+  - 商業視角說明: `projects/vibe-ai-video-summary-business.html`
+- **n8n + AI：軟體測試週報全自動生成**
+  - 技術視角說明: `projects/qa-report-automation.html`
+  - 商業視角說明: `projects/qa-report-automation-business.html`
+- **n8n 健保公告自動監控與通知**
+  - 技術視角說明: `projects/nhi-notice-automation.html`
+  - 商業視角說明: `projects/nhi-notice-automation-business.html`
 
 ## 部落格文章 (Blog Articles)
 

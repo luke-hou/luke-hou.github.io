@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>案例研究：導入AI智能體，將產品需求(PRD)自動轉化為測試藍圖 - Luke Hou 作品集</title>
+    <meta name="description" content="了解我如何設計一個AI多智能體系統，讓AI讀懂PRD、參考歷史案例，並自動在Jira中生成高品質的測試案例，將單一功能的測試準備時間從數小時縮短至數分鐘。">
+    <meta name="keywords" content="AI, Multi-Agent, RAG, 測試自動化, QA, Jira, Confluence, 流程優化, Luke Hou, 侯俊嘉">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0V2L1DQVPY');
+    </script>
+    <style>
+        .hero-section { background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/prd-ai-test-case-generation-main.png') no-repeat center center; background-size: cover; padding: 5rem 0; color: white; }
+        .hero-section h1 { font-weight: 700; }
+        .impact-card { background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: .5rem; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .impact-card .icon { font-size: 2.5rem; color: #0d6efd; }
+        .feature-card { text-align: center; padding: 1.5rem; }
+        .feature-card .icon { font-size: 3rem; margin-bottom: 1rem; color: #0d6efd; }
+        body { background-color: #fdf5e6; }
+        .floating-toggle-btn {
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            z-index: 1050;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            padding: 1rem 0.5rem;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <a href="prd-ai-test-case-generation.html" class="btn btn-dark floating-toggle-btn" title="切換至技術視角說明">
+        <i class="bi bi-code-slash"></i> 技術視角說明
+    </a>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">♾️ 首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">⚡n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">✈️分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section text-center">
+            <div class="container">
+                <h1 class="display-4">你的團隊還在「手抄」需求文件來寫測試案例嗎？</h1>
+                <p class="lead col-lg-8 mx-auto">我如何設計一個AI多智能體系統，讓AI讀懂PRD、參考歷史案例，並自動在Jira中生成高品質的測試案例，將單一功能的測試準備時間從數小時縮短至數分鐘。</p>
+            </div>
+        </section>
+
+        <section class="container mt-5 py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+
+                    <div class="text-center mb-5">
+                        <h2 class="h1 mb-3"><i class="bi bi-pen-fill text-danger me-2"></i>The Challenge: 軟體測試的「最初一哩路」瓶頸</h2>
+                        <p class="lead text-muted">在軟體開發生命週期(SDLC)中，QA工程師根據產品需求文件(PRD)手動撰寫測試案例，是一項極其重要但又充滿挑戰的工作。這個「最初一哩路」往往成為整個測試週期的瓶頸。</p>
+                    </div>
+                    <div class="row text-center mb-5">
+                        <div class="col-md-4">
+                            <h4><i class="bi bi-person-workspace me-2"></i>高度依賴人力</h4>
+                            <p>撰寫品質高度依賴工程師的經驗與細心程度，耗時且難以規模化，新人上手門檻高。</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h4><i class="bi bi-arrow-repeat me-2"></i>需求變更的惡夢</h4>
+                            <p>當PRD頻繁變更時，手動更新、刪除、重新撰寫大量測試案例，是一項令人崩潰的重複性工作。</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h4><i class="bi bi-rulers me-2"></i>品質不一致</h4>
+                            <p>不同工程師寫出的案例風格、顆粒度難以統一，增加了後續維護與自動化測試的難度。</p>
+                        </div>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="text-center mb-5">
+                        <h2 class="h1 mb-3"><i class="bi bi-people-fill text-primary me-2"></i>The Solution: 協同作戰的 AI 智能體團隊</h2>
+                        <p class="lead text-muted">我沒有使用單一的 AI，而是設計了一個「AI 智能體團隊」，讓不同的 AI 角色各司其職，協同作戰，以產出最符合團隊需求的測試案例。</p>
+                    </div>
+                    
+                    <div class="row g-4 mb-5 text-center">
+                        <div class="col-md-4">
+                            <div class="feature-card">
+                                <div class="icon"><i class="bi bi-book-half"></i></div>
+                                <h5>PRD 需求分析師</h5>
+                                <p>這個 AI 專門負責深入研讀 Confluence 上的 PRD 文件，理解產品的規格、功能與使用者流程。</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature-card">
+                                <div class="icon"><i class="bi bi-vector-pen"></i></div>
+                                <h5>格式模仿專家</h5>
+                                <p>這個 AI 學習了團隊過去所有的 Jira 測試案例，精通我們的寫作風格、格式與用詞習慣。</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature-card">
+                                <div class="icon"><i class="bi bi-person-check-fill"></i></div>
+                                <h5>測試案例總監</h5>
+                                <p>作為團隊的領導，它會整合「需求分析師」與「格式專家」的意見，最終拍板生成高品質的測試案例，並自動建立 Jira tickets。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <img src="../images/prd-ai-test-case-generation-flow-1.png" alt="工作流程圖" class="img-fluid rounded shadow-lg">
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="text-center mb-5">
+                        <h2 class="h1 mb-3"><i class="bi bi-gem text-success me-2"></i>The Impact: 解放專業，聚焦價值</h2>
+                        <p class="lead text-muted">這個系統不僅是效率工具，更是對 QA 工作模式的一次升級，讓資深人員能從重複性工作中解放。</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="impact-card text-center h-100">
+                                <div class="icon"><i class="bi bi-pc-display-horizontal"></i></div>
+                                <h4 class="mt-3">撰寫效率提升</h4>
+                                <p class="display-6 fw-bold">-90%</p>
+                                <p class="text-muted">將撰寫測試案例草稿的時間從數小時縮短至數分鐘，讓 QA 能更早進入實際的測試規劃與執行。</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="impact-card text-center h-100">
+                                <div class="icon"><i class="bi bi-check2-all"></i></div>
+                                <h4 class="mt-3">品質與覆蓋率提升</h4>
+                                <p class="display-6 fw-bold">+80%</p>
+                                <p class="text-muted">AI 產出的案例草稿有近 80% 的可用性，且能基於歷史數據提示潛在的邊界條件，有效提升測試覆蓋廣度。</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="impact-card text-center h-100">
+                                <div class="icon"><i class="bi bi-mortarboard-fill"></i></div>
+                                <h4 class="mt-3">加速團隊成長</h4>
+                                <p class="display-6 fw-bold">AI-Powered</p>
+                                <p class="text-muted">AI 成為新進成員的「虛擬導師」，幫助他們快速學習團隊的最佳實踐，降低了知識傳承的門檻與成本。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="accordion" id="tech-deep-dive">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-tech"><strong>對技術實現細節感興趣？點此展開</strong></button></h2>
+                            <div id="collapse-tech" class="accordion-collapse collapse" data-bs-parent="#tech-deep-dive">
+                                <div class="accordion-body">
+                                    <h4 class="h5">核心做法：AI 智能體協作 (AI Agent Collaboration)</h4>
+                                    <p>此專案基於 n8n 的多智能體 (Multi-Agent) 框架，並採用了 RAG (Retrieval-Augmented Generation) 技術來提升 AI 回覆的準確性與相關性。</p>
+                                    <ol>
+                                        <li><strong>建立向量知識庫 (Vector Stores):</strong> 分別將 Confluence 上的 PRD 文件和 Jira 上的歷史測試案例，處理後存入兩個獨立的向量資料庫，作為 AI 的長期記憶。</li>
+                                        <li><strong>設計 AI 智能體 (AI Agents):</strong>
+                                            <ul>
+                                                <li><strong>PRD 需求分析師:</strong> 該 Agent 被設定為只能從 PRD 向量知識庫中檢索資訊，以回答關於產品規格的問題。</li>
+                                                <li><strong>格式模仿專家:</strong> 該 Agent 被設定為只能從歷史測試案例向量知識庫中檢索資訊，以學習團隊的寫作風格。</li>
+                                                <li><strong>測試案例總監:</strong> 作為主智能體，它不直接連接任何知識庫，而是透過工具(Tools)來呼叫上述兩個專家，並根據他們的回答來生成最終的測試案例。</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>自動化 Jira 整合:</strong> 總監智能體產出的結果會被格式化，並透過 Jira API 批次建立 tickets，同時自動填入系統、測試分類等客製化欄位。</li>
+                                        <li><strong>智慧型版本更新:</strong> 當 PRD 文件更新時，可選擇性觸發工作流，自動清除舊版測試案例並生成新版，大幅降低需求變更時的維護成本。</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white mt-5 py-4 border-top">
+        <div class="container text-center">
+            <a href="../portfolio.html" class="btn btn-outline-primary mb-3"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+            <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

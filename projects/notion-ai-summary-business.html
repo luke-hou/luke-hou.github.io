@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>案例研究：用AI將資訊收藏轉化為知識資產 - Luke Hou 作品集</title>
+    <meta name="description" content="了解我如何打造一個AI閱讀助理，自動消化堆積如山的未讀文章，將「稍後閱讀」變為「即時洞察」，把數位雜物間改造成真正的第二大腦。">
+    <meta name="keywords" content="知識管理, AI, Notion, 自動化, 效率提升, 資訊過載, Luke Hou, 侯俊嘉">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0V2L1DQVPY');
+    </script>
+    <style>
+        .hero-section { background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/notion-ai-summary/output.jpg') no-repeat center center; background-size: cover; padding: 5rem 0; color: white; }
+        .hero-section h1 { font-weight: 700; }
+        body { background-color: #fdf5e6; }
+        .impact-card { background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: .5rem; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .impact-card .icon { font-size: 2.5rem; color: #0d6efd; }
+        .gallery-img { cursor: pointer; transition: transform 0.2s; }
+        .gallery-img:hover { transform: scale(1.05); }
+        .img-bordered { border: 1px solid #dee2e6; padding: 5px; border-radius: 0.375rem; }
+        .floating-toggle-btn {
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            z-index: 1050;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            padding: 1rem 0.5rem;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <a href="notion-ai-summary.html" class="btn btn-dark floating-toggle-btn" title="切換至技術視角說明">
+        <i class="bi bi-code-slash"></i> 技術視角說明
+    </a>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">♾️ 首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">⚡n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">✈️分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section text-center">
+            <div class="container">
+                <h1 class="display-4">你的知識庫是資產，還是數位雜物間？</h1>
+                <p class="lead col-lg-8 mx-auto">我如何打造一個AI閱讀助理，自動消化堆積如山的未讀文章，將「稍後閱讀」變為「即時洞察」，把數位雜物間改造成真正的第二大腦。</p>
+            </div>
+        </section>
+
+        <section class="container mt-5 py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+
+                    <div class="text-center mb-5">
+                        <h2 class="h1 mb-3"><i class="bi bi-archive-fill text-danger me-2"></i>The Challenge: 數位收藏家的焦慮</h2>
+                        <p class="lead text-muted">我們都一樣：看到好文章就用 Notion Web Clipper 收藏起來，心想「總有一天會讀」。但現實是，知識庫越積越多，變成一個充滿未讀紅點、難以檢索的數位雜物間，帶來了無形的壓力。</p>
+                    </div>
+                    <div class="row text-center mb-5">
+                        <div class="col-md-4">
+                            <h4><i class="bi bi-info-circle me-2"></i>資訊過載</h4>
+                            <p>收藏的文章遠超過能消化的速度，有價值的資訊被埋沒，無法轉化為真正的知識。</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h4><i class="bi bi-search me-2"></i>檢索困難</h4>
+                            <p>僅靠原始標題和連結，難以快速找到需要的資料，知識庫無法發揮應有的價值。</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h4><i class="bi bi-cloud-slash me-2"></i>知識斷鏈</h4>
+                            <p>「收藏」和「學習」之間出現巨大鴻溝，知識沒有被內化，只是從一個地方搬到另一個地方。</p>
+                        </div>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="text-center mb-5">
+                        <h2 class="h1 mb-3"><i class="bi bi-magic text-primary me-2"></i>The Solution: 知識煉金術士 AI</h2>
+                        <p class="lead text-muted">我打造了一個「知識煉金術士」自動化流程。它能將未經處理的原始資訊（文章），提煉成高價值的黃金（摘要與洞察），並自動整理歸檔。</p>
+                    </div>
+                    
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                      <li class="nav-item" role="presentation"><button class="nav-link active" id="workflow-tab" data-bs-toggle="tab" data-bs-target="#workflow">煉金流程圖</button></li>
+                      <li class="nav-item" role="presentation"><button class="nav-link" id="output-tab" data-bs-toggle="tab" data-bs-target="#output">煉金成果</button></li>
+                      <li class="nav-item" role="presentation"><button class="nav-link" id="prompt-tab" data-bs-toggle="tab" data-bs-target="#prompt">煉金咒語 (AI Prompt)</button></li>
+                    </ul>
+                    <div class="tab-content border border-top-0 p-3 rounded-bottom mb-5">
+                      <div class="tab-pane active" id="workflow" role="tabpanel">
+                        <h5 class="mt-2">自動化煉金流程</h5>
+                        <p>從定時檢查新文章、送入 AI 進行深度閱讀、提煉摘要與標題，到最後將成品回填至 Notion，全程自動化。</p>
+                        <img src="../images/notion-ai-summary/workflow.jpg" alt="n8n 整體工作流" class="img-fluid rounded gallery-img img-bordered">
+                      </div>
+                      <div class="tab-pane" id="output" role="tabpanel">
+                        <h5 class="mt-2">煉金成果：結構化的知識資產</h5>
+                        <p>原本雜亂的資料庫，現在每一篇文章都擁有了由 AI 生成的統一標題和精準摘要，變得清晰、可管理。</p>
+                        <img src="../images/notion-ai-summary/output.jpg" alt="Notion 成果" class="img-fluid rounded gallery-img img-bordered">
+                      </div>
+                      <div class="tab-pane" id="prompt" role="tabpanel">
+                        <h5 class="mt-2">煉金咒語：與 AI 的溝通的藝術</h5>
+                        <p>成功的關鍵在於給予 AI 清晰、結構化的指令 (Prompt)，引導它穩定地輸出我們想要的結果，這是人機協作的核心。</p>
+                        <img src="../images/notion-ai-summary/prompt.jpg" alt="AI 核心指令" class="img-fluid rounded gallery-img img-bordered">
+                      </div>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="text-center mb-5">
+                        <h2 class="h1 mb-3"><i class="bi bi-gem text-success me-2"></i>The Impact: 將時間花在思考，而非閱讀</h2>
+                        <p class="lead text-muted">這個系統不僅僅是整理工具，它從根本上改變了我與資訊互動的方式。</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="impact-card text-center h-100">
+                                <div class="icon"><i class="bi bi-graph-up-arrow"></i></div>
+                                <h4 class="mt-3">學習效率 x10</h4>
+                                <p class="display-6 fw-bold">10x</p>
+                                <p class="text-muted">過去花 10 分鐘閱讀一篇文章，現在只需 1 分鐘閱讀摘要，即可掌握核心，決定是否深入研究。</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="impact-card text-center h-100">
+                                <div class="icon"><i class="bi bi-safe-fill"></i></div>
+                                <h4 class="mt-3">知識資產化</h4>
+                                <p class="display-6 fw-bold">100%</p>
+                                <p class="text-muted">所有收藏的文章都被轉化為結構化、可搜尋的知識資產，讓「第二大腦」真正可用。</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="impact-card text-center h-100">
+                                <div class="icon"><i class="bi bi-emoji-smile-fill"></i></div>
+                                <h4 class="mt-3">心態轉變</h4>
+                                <p class="display-6 fw-bold">-99%</p>
+                                <p class="text-muted">消除了「資訊焦慮」，讓我能更專注於思考與創造，而非被動地整理與消化。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="accordion" id="tech-deep-dive">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-tech"><strong>對技術實現細節感興趣？點此展開</strong></button></h2>
+                            <div id="collapse-tech" class="accordion-collapse collapse" data-bs-parent="#tech-deep-dive">
+                                <div class="accordion-body">
+                                    <h4 class="h5">核心做法：一個自律的資訊處理流</h4>
+                                    <p>整個流程的核心，是一個自律的循環。它透過 n8n 實現，串連了 Notion 與 Google Gemini AI。</p>
+                                    <ol>
+                                        <li><b>定時觸發 (Schedule Trigger):</b> 每小時自動啟動，透過 Notion API 查詢是否有新的、尚未處理的文章（篩選條件為「摘要」欄位為空）。</li>
+                                        <li><b>讀取與組合:</b> 抓取到新文章後，讀取其所有文字區塊 (Blocks) 並組合成一篇完整的純文字文章。</li>
+                                        <li><b>AI 摘要與標題生成:</b> 將組合後的全文發送給 Gemini AI，並透過精準的 Prompt 指令，要求 AI 扮演專業編輯，生成摘要與標題，並以標準的 JSON 格式回傳。</li>
+                                        <li><b>清理與回寫:</b> 為了確保穩定性，一個 Code 節點會先解析並清理 AI 的回傳值，只取出純淨的 JSON 內容。</li>
+                                        <li><b>完成閉環:</b> 最後，工作流將乾淨的標題和摘要，透過 Notion API 更新回對應的欄位，並將處理狀態改為「Done」。</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white mt-5 py-4 border-top">
+        <div class="container text-center">
+            <a href="../portfolio.html" class="btn btn-outline-primary mb-3"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+            <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () { /* ... Modal script ... */ });
+    </script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>案例研究：建立AI驅動的法規情報哨兵，化被動為主動 - Luke Hou 作品集</title>
+    <meta name="description" content="了解我如何為醫療資訊產業打造一個自動化情報系統，每日監控健保署網站，用AI提煉政策摘要，將關鍵資訊的獲取延遲從數天縮短至數小時，搶佔市場先機。">
+    <meta name="keywords" content="法規科技, RegTech, AI, 自動化, 競爭情報, 醫療資訊, n8n, Luke Hou, 侯俊嘉">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0V2L1DQVPY');
+    </script>
+    <style>
+        .hero-section { background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/nhi-notice-automation-main.png') no-repeat center center; background-size: cover; padding: 5rem 0; color: white; }
+        .hero-section h1 { font-weight: 700; }
+        .impact-card { background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: .5rem; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .impact-card .icon { font-size: 2.5rem; color: #0d6efd; }
+        .feature-card { text-align: center; padding: 1.5rem; }
+        .feature-card .icon { font-size: 3rem; margin-bottom: 1rem; color: #0d6efd; }
+        body { background-color: #fdf5e6; }
+        .floating-toggle-btn {
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            z-index: 1050;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            padding: 1rem 0.5rem;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <a href="nhi-notice-automation.html" class="btn btn-dark floating-toggle-btn" title="切換至技術視角說明">
+        <i class="bi bi-code-slash"></i> 技術視角說明
+    </a>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">♾️ 首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">⚡n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">✈️分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section text-center">
+            <div class="container">
+                <h1 class="display-4">當你的競爭對手已經開始行動時，你還在等公文嗎？</h1>
+                <p class="lead col-lg-8 mx-auto">我如何為醫療資訊產業打造一個自動化情報系統，每日監控健保署網站，用AI提煉政策摘要，將關鍵資訊的獲取延遲從數天縮短至數小時，搶佔市場先機。</p>
+            </div>
+        </section>
+
+        <section class="container mt-5 py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+
+                    <div class="text-center mb-5">
+                        <h2 class="h1 mb-3"><i class="bi bi-signpost-split-fill text-danger me-2"></i>The Challenge: 被動的資訊與錯失的先機</h2>
+                        <p class="lead text-muted">在高度管制的醫療資訊產業，健保署的每一則公告都可能牽動產品的開發方向與市場策略。然而，依賴傳統公文傳遞或人工定期查閱，意味著我們永遠是市場上最後知道消息的一群人。</p>
+                    </div>
+                    <div class="row text-center mb-5">
+                        <div class="col-md-4">
+                            <h4><i class="bi bi-hourglass-split me-2"></i>資訊延遲</h4>
+                            <p>從公告發布到團隊內部知曉，往往存在數天甚至一週以上的時間差，完全錯失了應對的黃金時間。</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h4><i class="bi bi-person-slash me-2"></i>人力浪費</h4>
+                            <p>需要有專人定期登入政府網站，手動檢查、下載、轉發，這些都是高成本的低價值活動。</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h4><i class="bi bi-exclamation-diamond me-2"></i>風險劇增</h4>
+                            <p>若遺漏了關鍵的政策變更，可能導致產品不合規、專案重工，甚至影響公司信譽，造成巨大損失。</p>
+                        </div>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="text-center mb-5">
+                        <h2 class="h1 mb-3"><i class="bi bi-broadcast-pin text-primary me-2"></i>The Solution: 24/7 的 AI 法規情報哨兵</h2>
+                        <p class="lead text-muted">我打造了一個全天候自動運作的「AI情報哨兵」，它取代了所有的人工環節，確保我們在第一時間就能掌握所有關鍵的政策變動。</p>
+                    </div>
+                    
+                    <div class="row g-4 mb-5 align-items-center">
+                        <div class="col-md-7">
+                            <h4>從監控、摘要到預警的全自動化流程</h4>
+                            <p>「AI情報哨兵」每日自動爬取健保署網站，一旦發現新公告，便立即啟動AI進行分析，將冗長的公文轉化為精簡的商業摘要，並附上相關連結，最後透過Email即時發送到所有利害關係人的信箱。</p>
+                        </div>
+                        <div class="col-md-5">
+                             <img src="../images/nhi-notice-automation-2.png" alt="Email 通知範例" class="img-fluid rounded shadow">
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <p>整個流程的核心大腦，是一個在 n8n 中運行的自動化工作流。</p>
+                        <img src="../images/nhi-notice-automation-main.png" alt="n8n 工作流" class="img-fluid rounded shadow-lg" style="max-width: 80%;">
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="text-center mb-5">
+                        <h2 class="h1 mb-3"><i class="bi bi-gem text-success me-2"></i>The Impact: 從被動應對到主動佈局</h2>
+                        <p class="lead text-muted">這個系統的價值，在於將整個團隊從「資訊的接收者」轉變為「策略的制定者」。</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="impact-card text-center h-100">
+                                <div class="icon"><i class="bi bi-trophy-fill"></i></div>
+                                <h4 class="mt-3">搶佔市場先機</h4>
+                                <p class="display-6 fw-bold">Real-time</p>
+                                <p class="text-muted">將資訊獲取延遲從「天」級縮短至「小時」級，讓我們比競爭對手更早一步進行產品策略調整與佈局。</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="impact-card text-center h-100">
+                                <div class="icon"><i class="bi bi-shield-fill-check"></i></div>
+                                <h4 class="mt-3">顯著降低風險</h4>
+                                <p class="display-6 fw-bold">-99%</p>
+                                <p class="text-muted">消除了因人工遺漏或延誤造成的合規性風險與專案重工成本，讓開發團隊能安心專注於產品創新。</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="impact-card text-center h-100">
+                                <div class="icon"><i class="bi bi-person-up"></i></div>
+                                <h4 class="mt-3">釋放高階人力</h4>
+                                <p class="display-6 fw-bold">Focus</p>
+                                <p class="text-muted">將PM與資深工程師從重複性的情報搜集工作中解放，專注於分析、決策等更高價值的策略性任務。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="accordion" id="tech-deep-dive">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-tech"><strong>對技術實現細節感興趣？點此展開</strong></button></h2>
+                            <div id="collapse-tech" class="accordion-collapse collapse" data-bs-parent="#tech-deep-dive">
+                                <div class="accordion-body">
+                                    <h4 class="h5">核心做法</h4>
+                                    <ol>
+                                        <li><strong>定時網頁爬蟲 (Scheduled Web Scraping):</strong> 設定每日定時觸發，透過 n8n 的 HTTP Request 節點，自動爬取健保署「近期公告」頁面，並解析 HTML 內容，確保資訊獲取的即時性。</li>
+                                        <li><strong>AI 智慧摘要與擴大檢索:</strong> 將爬取到的公告內容送入 OpenAI API，不僅能生成簡潔易懂的重點摘要，更能透過語意搜尋，找出可能相關的歷史公告，提供更完整的決策參考。</li>
+                                        <li><strong>可靠的通知機制:</strong> 無論當天是否有新公告，系統都會發送通知信。若有新公告，信件會包含 AI 生成的摘要；若無，則會發送「今日無新公告」的提醒，讓接收者明確知道系統正常運行，而非流程故障。這個設計大幅提升了使用者對自動化系統的信任感。</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white mt-5 py-4 border-top">
+        <div class="container text-center">
+            <a href="../portfolio.html" class="btn btn-outline-primary mb-3"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+            <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

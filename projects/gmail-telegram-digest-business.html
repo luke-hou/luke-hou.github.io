@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>案例研究：打造個人化資訊流，終結Email焦慮 - Luke Hou 作品集</title>
+    <meta name="description" content="一個解決資訊過載的真實案例。了解我如何打造一個 24/7 的自動化資訊管家，每日過濾上百封郵件，只為您呈現最重要的 1%，有效降低數位焦慮並提升專注力。">
+    <meta name="keywords" content="資訊管理, 效率提升, 自動化, n8n, Gmail, Telegram, 數位健康, Luke Hou, 侯俊嘉">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0V2L1DQVPY');
+    </script>
+    <style>
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/gmail-digest/output.jpg') no-repeat center center;
+            background-size: cover;
+            padding: 5rem 0;
+            color: white;
+        }
+        .hero-section h1 { font-weight: 700; }
+        body { background-color: #fdf5e6; }
+        .impact-card { background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: .5rem; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .impact-card .icon { font-size: 2.5rem; color: #0d6efd; }
+        .gallery-img { cursor: pointer; transition: transform 0.2s; }
+        .gallery-img:hover { transform: scale(1.05); }
+        .img-bordered { border: 1px solid #dee2e6; padding: 5px; border-radius: 0.375rem; }
+        .floating-toggle-btn {
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            z-index: 1050;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            padding: 1rem 0.5rem;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <a href="gmail-telegram-digest.html" class="btn btn-dark floating-toggle-btn" title="切換至技術視角說明">
+        <i class="bi bi-code-slash"></i> 技術視角說明
+    </a>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">♾️ 首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">⚡n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">✈️分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section text-center">
+            <div class="container">
+                <h1 class="display-4">別讓重要訊息，淹沒在信海裡</h1>
+                <p class="lead col-lg-8 mx-auto">我如何打造一個 24/7 的自動化資訊管家，每日過濾上百封郵件，只為您呈現最重要的 1%，從根本解決數位資訊焦慮。</p>
+            </div>
+        </section>
+
+        <section class="container mt-5 py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+
+                    <div class="text-center mb-5">
+                        <h2 class="h1 mb-3"><i class="bi bi-envelope-exclamation-fill text-danger me-2"></i>The Challenge: 無盡的信箱與錯失的恐懼</h2>
+                        <p class="lead text-muted">每天，我們的信箱都被廣告、電子報和無關緊要的通知淹沒。而真正重要的資訊——帳單、預約確認、付款收據——卻隱身其中，一不小心就會錯過。</p>
+                    </div>
+                    <div class="row text-center mb-5">
+                        <div class="col-md-4">
+                            <h4><i class="bi bi-clock me-2"></i>時間浪費</h4>
+                            <p>每天花費大量時間在重複的篩選、刪除動作上，只為了找到那幾封關鍵郵件。</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h4><i class="bi bi-exclamation-triangle me-2"></i>錯失風險</h4>
+                            <p>錯過繳費期限、重要通知的潛在後果，可能導致不必要的罰款或損失。</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h4><i class="bi bi-activity me-2"></i>心力耗損</h4>
+                            <p>持續的「信箱檢查」動作打斷專注力，造成無形的數位焦慮與精神負擔。</p>
+                        </div>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="text-center mb-5">
+                        <h2 class="h1 mb-3"><i class="bi bi-shield-check text-primary me-2"></i>The Solution: 專屬的個人資訊管家</h2>
+                        <p class="lead text-muted">我利用 n8n 打造了一個全自動的「資訊管家」，它像一個忠誠的秘書，在幕後默默為我工作，確保我不再錯過任何重要訊息。</p>
+                    </div>
+                    
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                      <li class="nav-item" role="presentation"><button class="nav-link active" id="workflow-tab" data-bs-toggle="tab" data-bs-target="#workflow">運作藍圖</button></li>
+                      <li class="nav-item" role="presentation"><button class="nav-link" id="output-tab" data-bs-toggle="tab" data-bs-target="#output">每日摘要成果</button></li>
+                    </ul>
+                    <div class="tab-content border border-top-0 p-3 rounded-bottom mb-5">
+                      <div class="tab-pane active" id="workflow" role="tabpanel">
+                        <h5 class="mt-2">自動化運作藍圖</h5>
+                        <p>資訊管家的大腦：定時啟動，自動登入 Gmail 掃描，根據我設定的關鍵字（如「帳單」、「收據」）進行智慧過濾，最後生成報告。</p>
+                        <img src="../images/gmail-digest/workflow.jpg" alt="n8n 整體工作流" class="img-fluid rounded gallery-img img-bordered">
+                      </div>
+                      <div class="tab-pane" id="output" role="tabpanel">
+                        <h5 class="mt-2">每日摘要成果</h5>
+                        <p>這是我每天收到的最終報告。所有重要郵件被整理成一份清晰的摘要，並透過 Telegram 推送到我的手機，讓我一目了然。</p>
+                        <img src="../images/gmail-digest/output.jpg" alt="Telegram 摘要報告" class="img-fluid rounded gallery-img img-bordered" style="max-width: 400px;">
+                      </div>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="text-center mb-5">
+                        <h2 class="h1 mb-3"><i class="bi bi-gem text-success me-2"></i>The Impact: 奪回時間與專注力</h2>
+                        <p class="lead text-muted">這個小工具帶來不成比例的巨大效益，徹底改變了我處理數位資訊的方式。</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="impact-card text-center h-100">
+                                <div class="icon"><i class="bi bi-calendar-check"></i></div>
+                                <h4 class="mt-3">時間的解放</h4>
+                                <p class="display-6 fw-bold">+50<span class="fs-4">小時/年</span></p>
+                                <p class="text-muted">每日省下約10分鐘篩選郵件的時間，一年累積超過50小時，能投入更高價值的事務。</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="impact-card text-center h-100">
+                                <div class="icon"><i class="bi bi-shield-fill-check"></i></div>
+                                <h4 class="mt-3">零錯失風險</h4>
+                                <p class="display-6 fw-bold">100%</p>
+                                <p class="text-muted">自動化確保所有關鍵郵件都被捕捉，再也不用擔心遺漏帳單或重要通知。</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="impact-card text-center h-100">
+                                <div class="icon"><i class="bi bi-peace-fill"></i></div>
+                                <h4 class="mt-3">專注力回歸</h4>
+                                <p class="display-6 fw-bold">-90%</p>
+                                <p class="text-muted">減少了「必須檢查信箱」的心理負擔與頻率，讓我可以長時間專注於深度工作。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="accordion" id="tech-deep-dive">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-tech"><strong>對技術實現細節感興趣？點此展開</strong></button></h2>
+                            <div id="collapse-tech" class="accordion-collapse collapse" data-bs-parent="#tech-deep-dive">
+                                <div class="accordion-body">
+                                    <h4 class="h5">技術核心：打造個人化的郵件過濾網</h4>
+                                    <p>這個 n8n 工作流的目標，就是扮演一個忠實的秘書，每天在我指定的時間，幫我完成郵件的篩選與彙報工作。它的運作流程如下：</p>
+                                    <ol>
+                                        <li><b>定時觸發 (Schedule Trigger)</b>: 每天晚上 9 點，工作流會自動啟動，開始一天一次的郵件檢查任務。</li>
+                                        <li><b>讀取未讀郵件 (Gmail Node)</b>: 首先，它會登入我的 Gmail，並且只抓取「未讀」的郵件，避免重複處理已經看過的信件。</li>
+                                        <li><b>關鍵字過濾 (Filter Node)</b>: 我設定了多組關鍵字，例如「收據」、「帳單」、「重要」等。只有郵件主旨符合這些關鍵字的信件，才能進入下一個階段。</li>
+                                        <li><b>格式化報告 (Code Node)</b>: 將所有篩選出來的郵件，整理成一份乾淨、易讀的 HTML 格式通知，並加上 Emoji 分類，讓其一目了然。</li>
+                                        <li><b>即時推播 (Telegram Node)</b>: 最後，這份精美的摘要報告會透過 Telegram Bot，準時推送到我的手機。</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white mt-5 py-4 border-top">
+        <div class="container text-center">
+            <a href="../portfolio.html" class="btn btn-outline-primary mb-3"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+            <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () { /* ... Modal script ... */ });
+    </script>
+</body>
+</html>

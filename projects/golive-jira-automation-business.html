@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-TW" data-bs-theme="dark">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,42 +19,39 @@
     </script>
     <style>
         .hero-section {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/golive_jira_automation/workflow.jpg') no-repeat center center;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/golive_jira_automation/workflow.jpg') no-repeat center center;
             background-size: cover;
             padding: 5rem 0;
             color: white;
         }
-        .hero-section h1 {
-            font-weight: 700;
-        }
-        .impact-card {
-            background-color: var(--bs-tertiary-bg);
-            border: 1px solid var(--bs-border-color);
-            border-radius: .5rem;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .impact-card .icon {
-            font-size: 2.5rem;
-            color: var(--bs-primary);
-        }
-        .gallery-img {
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .gallery-img:hover {
-            transform: scale(1.05);
-        }
-        .img-bordered {
-            border: 1px solid var(--bs-border-color);
-            padding: 5px;
-            border-radius: 0.375rem;
+        .hero-section h1 { font-weight: 700; }
+        body { background-color: #fdf5e6; }
+        .impact-card { background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: .5rem; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .impact-card .icon { font-size: 2.5rem; color: #0d6efd; }
+        .gallery-img { cursor: pointer; transition: transform 0.2s; }
+        .gallery-img:hover { transform: scale(1.05); }
+        .img-bordered { border: 1px solid #dee2e6; padding: 5px; border-radius: 0.375rem; }
+        .floating-toggle-btn {
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            z-index: 1050;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            padding: 1rem 0.5rem;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
         }
     </style>
 </head>
 <body>
+    <a href="golive-jira-automation.html" class="btn btn-dark floating-toggle-btn" title="切換至技術視角說明">
+        <i class="bi bi-code-slash"></i> 技術視角說明
+    </a>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,7 +72,7 @@
     <main>
         <section class="hero-section text-center">
             <div class="container">
-                <h1 class="display-4">從混亂到有序：終結上線期的溝通惡夢</h1>
+                <h1 class="display-4">從匆忙到從容：上線期的效率救星</h1>
                 <p class="lead col-lg-8 mx-auto">一個串連 Google Sheet、Jira 與 Teams 的自動化流程，將問題回報到任務指派的處理時間從數小時縮短至數秒，將團隊從繁瑣的行政工作中解放。</p>
             </div>
         </section>
@@ -86,21 +83,21 @@
 
                     <!-- 1. The Challenge -->
                     <div class="text-center mb-5">
-                        <h2 class="h1 mb-3"><i class="bi bi-exclamation-octagon-fill text-danger me-2"></i>The Challenge: 上線期的溝通惡夢</h2>
-                        <p class="lead text-muted">系統上線 (Go-Live) 是壓力最大的時刻。問題從四面八方湧入，團隊成員習慣先記在共用試算表，再手動轉成 Jira 開發任務。這個看似可行的方法，卻是團隊效率的隱形殺手。</p>
+                        <h2 class="h1 mb-3"><i class="bi bi-exclamation-octagon-fill text-danger me-2"></i>The Challenge: 一線回饋的任務管理</h2>
+                        <p class="lead text-muted">系統上線 (Go-Live) 是壓力最大的時刻。問題從四面八方湧入，團隊成員習慣先記在共用試算表，再手動轉成 Jira 開發任務。然而這個「手動」的步驟，卻是團隊效率的隱形殺手。</p>
                     </div>
                     <div class="row text-center mb-5">
                         <div class="col-md-4">
                             <h4><i class="bi bi-person-bounding-box me-2"></i>大量人工</h4>
-                            <p>PM 和資深成員每天花費數小時複製貼上，而非專注於解決問題與溝通協調。</p>
+                            <p>團隊成員每天花費數小時複製貼上，導致無法全心專注於解決問題。</p>
                         </div>
                         <div class="col-md-4">
                             <h4><i class="bi bi-bar-chart-line-fill me-2"></i>品質不一</h4>
-                            <p>手動開單格式混亂，資訊不全，工程師需反覆溝通才能釐清問題，拖慢開發進度。</p>
+                            <p>團隊成員各自手動開單，恐造成格式不一、資訊不全，進而導致需要與工程師反覆溝通以釐清問題。</p>
                         </div>
                         <div class="col-md-4">
                             <h4><i class="bi bi-hourglass-split me-2"></i>資訊延遲</h4>
-                            <p>手動轉錄造成數小時甚至半天的延遲，緊急問題無法在第一時間被處理。</p>
+                            <p>手動轉錄造成數十分鐘甚至幾小時的延遲，緊急問題可能無法在第一時間被處理。</p>
                         </div>
                     </div>
 
@@ -109,7 +106,7 @@
                     <!-- 2. The Solution -->
                     <div class="text-center mb-5">
                         <h2 class="h1 mb-3"><i class="bi bi-robot text-primary me-2"></i>The Solution: 一個 7x24 小時的智慧數位助理</h2>
-                        <p class="lead text-muted">我主動發起這個專案，利用 n8n 打造了一個自動化工作流，扮演團隊的「數位助理」。它串連了我們日常使用的工具，建立一個無縫的資訊閉環。</p>
+                        <p class="lead text-muted">在發現原訂問題回報流程恐有以上潛在風險後，我主動發起並完成這個專案，利用 n8n 打造了一個自動化工作流，扮演團隊的「數位助理」。它串連了我們任務管理所需的眾多工具，建立一個無縫的自動化流程閉環。</p>
                     </div>
                     
                     <!-- Gallery -->
@@ -131,11 +128,12 @@
                       <div class="tab-pane active" id="workflow" role="tabpanel" aria-labelledby="workflow-tab">
                         <h5 class="mt-2">自動化流程藍圖</h5>
                         <p>這就是數位助理的大腦。它定時監控、過濾、處理、派工、反饋、通知，所有步驟一氣呵成。</p>
+                        <p>減少人工轉錄資訊不清楚或格式混亂的潛在風險，同時提升團隊效率，在人力資源有限的情況下，讓團隊可以將更多時間投注在解決問題上。</p>
                         <img src="../images/golive_jira_automation/workflow.jpg" alt="n8n 整體工作流" class="img-fluid rounded gallery-img img-bordered">
                       </div>
                       <div class="tab-pane" id="sheet" role="tabpanel" aria-labelledby="sheet-tab">
                         <h5 class="mt-2">唯一的資訊入口：Google Sheet</h5>
-                        <p>團隊成員只需專注於填寫這張表單，確認問題後標記 "Y"，剩下的全交給數位助理。</p>
+                        <p>團隊成員只需專注於填寫這張表單，確認問題後標記 "Y"，剩下的全交給數位助理自動完成。</p>
                         <img src="../images/golive_jira_automation/googlesheets.jpg" alt="Google Sheet 輸入" class="img-fluid rounded gallery-img img-bordered">
                       </div>
                       <div class="tab-pane" id="jira" role="tabpanel" aria-labelledby="jira-tab">
@@ -163,7 +161,7 @@
                                 <div class="icon"><i class="bi bi-clock-history"></i></div>
                                 <h4 class="mt-3">時間價值最大化</h4>
                                 <p class="display-6 fw-bold">95%</p>
-                                <p class="text-muted">將每日約 2-3 小時的行政時間釋放，讓團隊能專注於分析、溝通等更高價值的工作。</p>
+                                <p class="text-muted">將每日約 1~2 小時的人工處理時間釋放，讓團隊能專注於分析、溝通等更高價值的工作。</p>
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -171,7 +169,7 @@
                                 <div class="icon"><i class="bi bi-check-circle-fill"></i></div>
                                 <h4 class="mt-3">品質與一致性</h4>
                                 <p class="display-6 fw-bold">100%</p>
-                                <p class="text-muted">確保所有任務單格式統一、資訊完整，大幅降低因資訊不全造成的溝通成本與錯誤。</p>
+                                <p class="text-muted">確保所有任務單格式統一、資訊完整，大幅降低因資訊不全造成的溝通成本與失誤。</p>
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -179,7 +177,7 @@
                                 <div class="icon"><i class="bi bi-broadcast"></i></div>
                                 <h4 class="mt-3">反應速度提升</h4>
                                 <p class="display-6 fw-bold">&gt;10x</p>
-                                <p class="text-muted">從「被動查詢」到「主動通知」，問題反應時間從數小時縮短至 15 分鐘內，加速問題解決週期。</p>
+                                <p class="text-muted">從「被動查詢」到「主動通知」，問題反應時間從小時縮短至 15 分鐘內，加速問題解決週期。</p>
                             </div>
                         </div>
                     </div>
@@ -190,10 +188,10 @@
                     <div class="mb-5">
                         <h2 class="text-center h1 mb-4">My Role & Skills</h2>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item bg-transparent"><i class="bi bi-search me-2 text-primary"></i><strong>主動性與問題定義:</strong> 自主發現團隊工作流程中的瓶頸，並將其定義為一個可被解決的具體問題。</li>
-                            <li class="list-group-item bg-transparent"><i class="bi bi-diagram-3-fill me-2 text-primary"></i><strong>流程設計與自動化:</strong> 規劃並實施端到端的自動化解決方案，串連多個異質系統。</li>
-                            <li class="list-group-item bg-transparent"><i class="bi bi-puzzle-fill me-2 text-primary"></i><strong>跨系統整合能力:</strong> 熟練運用 API 與 Webhook，讓 Google Sheets, Jira, Teams 等工具協同工作。</li>
-                            <li class="list-group-item bg-transparent"><i class="bi bi-people-fill me-2 text-primary"></i><strong>使用者中心思維:</strong> 站在團隊成員的角度思考，設計出符合他們使用習慣且能無痛導入的流程。</li>
+                            <li class="list-group-item"><i class="bi bi-search me-2 text-primary"></i><strong>主動性與問題定義:</strong> 自主發現團隊工作流程中的瓶頸，並將其定義為一個可被解決的具體問題。</li>
+                            <li class="list-group-item"><i class="bi bi-diagram-3-fill me-2 text-primary"></i><strong>流程設計與自動化:</strong> 規劃並實施端到端的自動化解決方案，串連多個異質系統，達到零人工介入。</li>
+                            <li class="list-group-item"><i class="bi bi-puzzle-fill me-2 text-primary"></i><strong>跨系統整合能力:</strong> 熟練運用 API 與 Webhook，讓 Google Sheets, Jira, Teams 等工具協同工作。</li>
+                            <li class="list-group-item"><i class="bi bi-people-fill me-2 text-primary"></i><strong>使用者中心思維:</strong> 站在團隊成員的角度思考，設計出符合他們使用習慣且能無痛導入的流程。</li>
                         </ul>
                     </div>
 
@@ -213,153 +211,22 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="heading-tech">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-tech" aria-expanded="false" aria-controls="collapse-tech">
-                                    <strong>對技術實現細節感興趣？點此展開 (for Engineers)</strong>
+                                    <strong>對技術實現細節感興趣？點此展開</strong>
                                 </button>
                             </h2>
                             <div id="collapse-tech" class="accordion-collapse collapse" aria-labelledby="heading-tech" data-bs-parent="#tech-deep-dive">
                                 <div class="accordion-body">
-                                    <!-- Copied technical content starts here -->
-                                    <p class="text-muted">本教學將引導你完成這個 n8n 工作流的每一步。在開始之前，請確保你已經擁有 n8n 環境，並準備好 Google、Jira 和 (可選的) Telegram / Power Automate 的 API 權限。</p>
-                                    <div class="accordion" id="n8n-tutorial-accordion">
-                                        <!-- Step 1: Schedule Trigger -->
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="headingOne">
-                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                    <strong>步驟 1：設定定時觸發器 (Schedule Trigger)</strong>
-                                                </button>
-                                            </h2>
-                                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#n8n-tutorial-accordion">
-                                                <div class="accordion-body">
-                                                    <p>這是工作流的起點，決定了 n8n 檢查新任務的頻率。</p>
-                                                    <ol>
-                                                        <li>在 n8n 畫布中，新增一個 <strong>Schedule Trigger</strong> 節點。</li>
-                                                        <li>將 <strong>Trigger Interval</strong> 設定為你需要的頻率，例如每 <strong>15 分鐘 (Minutes)</strong>。</li>
-                                                    </ol>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- ... (The rest of the tutorial steps are copied here) ... -->
-                                        <!-- Step 2: Google Sheets -->
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="headingTwo">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                    <strong>步驟 2：讀取待辦事項 (Google Sheets)</strong>
-                                                </button>
-                                            </h2>
-                                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#n8n-tutorial-accordion">
-                                                <div class="accordion-body">
-                                                    <p>此節點負責從 Google Sheet 中讀取需要被建立為 Jira Ticket 的回報。</p>
-                                                    <ol>
-                                                        <li>新增一個 <strong>Google Sheets</strong> 節點。</li>
-                                                        <li>在 <strong>Authentication</strong> 中選擇或建立你的 Google API 憑證。</li>
-                                                        <li><strong>Resource</strong> 選擇 <strong>Row</strong>，<strong>Operation</strong> 選擇 <strong>Get</strong>。</li>
-                                                        <li>填入你的 <strong>Spreadsheet ID</strong> 和 <strong>Sheet Name</strong>。</li>
-                                                        <li>在 <strong>Filters</strong> 區塊設定篩選條件，這是確保不重複開票的關鍵：
-                                                            <ul>
-                                                                <li>Filter 1: <code>Jira Link</code> | <strong>Condition</strong>: Is Empty | <strong>Value</strong>: (留空)</li>
-                                                                <li>Filter 2: <code>可Jira</code> | <strong>Condition</strong>: Equals | <strong>Value</strong>: Y</li>
-                                                                <li>Filter 3: <code>問題描述</code> | <strong>Condition</strong>: Not Equals | <strong>Value</strong>: (留空)</li>
-                                                            </ul>
-                                                        </li>
-                                                         <li>(重要) 在節點設定的 <strong>Settings</strong> 頁籤中，將 <strong>On Error</strong> 設定為 <strong>"Continue (using error output)"</strong>。這會產生一個額外的 "error" 輸出錨點，讓我們可以連接到錯誤通知節點。</li>
-                                                    </ol>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Step 3: Error Handling -->
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="headingThree">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                    <strong>步驟 3 (可選)：設定讀取失敗的警報 (Telegram)</strong>
-                                                </button>
-                                            </h2>
-                                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#n8n-tutorial-accordion">
-                                                <div class="accordion-body">
-                                                    <p>如果 Google Sheet 節點因為權限、網路問題等原因執行失敗，我們希望立即收到通知。</p>
-                                                    <ol>
-                                                        <li>新增一個 <strong>Telegram</strong> 節點。</li>
-                                                        <li>設定你的 <strong>Telegram API Credentials</strong> 和 <strong>Chat ID</strong>。</li>
-                                                        <li>在 <strong>Text</strong> 欄位中，填寫一個清晰的錯誤訊息，例如：「❌ GoLive Jira 自動化 - 讀取 Google Sheet 失敗！」。</li>
-                                                        <li>將上一個 Google Sheets 節點的 <strong>error output</strong> (紅色圓點) 連接到此 Telegram 節點的 input。</li>
-                                                    </ol>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Step 4: Loop Over Items -->
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="headingFour">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                                    <strong>步驟 4：逐一處理項目 (Split in Batches)</strong>
-                                                </button>
-                                            </h2>
-                                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#n8n-tutorial-accordion">
-                                                <div class="accordion-body">
-                                                    <p>Google Sheet 節點可能一次返回多個需要處理的列。為了確保每個回報都被獨立、穩定地處理，我們需要一個迴圈。<strong>Split in Batches</strong> 節點可以完美勝任此工作。</p>
-                                                    <ol>
-                                                        <li>新增一個 <strong>Split in Batches</strong> 節點。</li>
-                                                        <li>將 <strong>Batch Size</strong> 設定為 <code>1</code>。</li>
-                                                    </ol>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Step 5: Code Node for Jira -->
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="headingFive">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                                    <strong>步驟 5：格式化 Jira 內容 (Code Node)</strong>
-                                                </button>
-                                            </h2>
-                                            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#n8n-tutorial-accordion">
-                                                <div class="accordion-body">
-                                                    <p>這是提升工單品質的核心。此節點會用 JavaScript 將 Google Sheet 的原始資料轉換成結構化的 Jira Wiki Markup，並對應優先級。</p>
-                                                    <pre><code class="language-javascript">
-// ... (code content) ...
-/**
- * n8n Code Node: Format Issue Report for Jira Description (Wiki Markup) & Map Priority
- */
-
-// --- 1. Get data from the upstream node ---
-const itemJson = $input.item.json;
-
-// --- 2. Priority Mapping ---
-const priorityMap = {
-  'P1': '1', 'P2': '2', 'P3': '3', 'P4': '4', '_': '3'
-};
-
-// --- 3. Helper function ---
-function createListItem(emoji, label, value, defaultValue = 'N/A') {
-  let displayValue = value;
-  if (typeof value === 'boolean') displayValue = value ? '是' : '否';
-  return `* ${emoji} *${label}：* ${displayValue || defaultValue}`;
-}
-
-// --- 4. Build the Wiki Markup String ---
-const reportInfoPanel = [
-  '{panel:title=問題回報資訊|bgColor=#DEEBFF|borderColor=#B3D4FF}',
-  createListItem('💻', '系統別/地點', itemJson['系統別/地點']),  
-  createListItem('📝', '問題簡述', itemJson['問題簡述']),
-  createListItem('👤', '回報者姓名', itemJson['提出者']),  
-  '{panel}'
-].join('\n');
-
-const internalStatusPanel = [
-  '{panel:title=內部處理狀態|bgColor=#FEF0B5|borderColor=#FFC400}',
-  createListItem('🚦', '嚴重度等級', itemJson['嚴重度等級'], '未分類'),
-  createListItem('🧑‍💻', 'Owner', itemJson['Owner(RD)'], '未指派'),
-  '{panel}'
-].join('\n');
-
-itemJson.jiraDescriptionString = `${reportInfoPanel}\n\n${internalStatusPanel}`;
-itemJson.priorityId = priorityMap[itemJson['嚴重度等級']] || priorityMap['_'];
-
-return itemJson;
-                                                    </code></pre>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- ... (rest of the steps) ... -->
-                                    </div>
-                                    <!-- Copied technical content ends here -->
+                                    <h4 class="h5">核心做法：一個聰明且自律的自動化閉環</h4> 
+                                    <p>這個 n8n 工作流的核心思想是「監控、處理、回饋、通知」，形成一個完整的自動化閉環。</p>
+                                    <ol>
+                                        <li><b>定時監控 (Schedule Trigger):</b> 工作流每 15 分鐘自動啟動一次，檢查 Google Sheet 中是否有新的任務。</li>
+                                        <li><b>智慧篩選 (Google Sheets Node):</b> 只抓取<code>Jira Link</code> 欄位為空，且 <code>可Jira</code> 欄位被標記為 "Y" 的資料列，確保只有經過核對確認、且尚未開票的回報才會進入流程。</li>
+                                        <li><b>格式化處理 (Code Node):</b> 將所有相關欄位，組合成一個結構清晰的 Jira Wiki Markup 描述。同時，根據回報的「嚴重度等級」自動對應成 Jira 的 Priority ID。</li>
+                                        <li><b>自動開票 (Jira Node):</b> 將格式化後的內容，連同 Assignee、Reporter、Labels 等資訊，自動建立一張高品質的 Jira Bug Ticket。</li>
+                                        <li><b>即時回饋 (Google Sheets Node):</b> Jira Ticket 建立成功後，立即將含有連結的 Jira Key 回寫到 Google Sheet，並將狀態更新為 "Done"。</li>
+                                        <li><b>主動通知 (HTTP Request to Power Automate):</b> 組合一個精美的 Teams Adaptive Card，透過 Webhook 將新工單的關鍵資訊即時推送到團隊頻道。</li>
+                                        <li><b>錯誤告警 (Telegram Node):</b> 在關鍵節點設置了錯誤處理，一旦發生問題，會立即發送通知到我的 Telegram，以便即時介入。</li>
+                                    </ol>
                                 </div>
                             </div>
                         </div>
@@ -370,9 +237,9 @@ return itemJson;
         </section>
     </main>
 
-    <footer class="bg-dark mt-5 py-4 border-top border-secondary-subtle">
+    <footer class="bg-white mt-5 py-4 border-top">
         <div class="container text-center">
-            <a href="../portfolio.html" class="btn btn-outline-light mb-3"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+            <a href="../portfolio.html" class="btn btn-outline-primary mb-3"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
             <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
         </div>
     </footer>
@@ -380,7 +247,7 @@ return itemJson;
     <!-- Image Modal -->
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content bg-dark">
+            <div class="modal-content">
                 <div class="modal-header border-0">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>

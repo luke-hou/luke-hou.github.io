@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>案例研究：用AI與LINE打造個人CRM，活化人脈資產 - Luke Hou 作品集</title>
+    <meta name="description" content="了解如何透過LINE和AI，將傳統名片管理轉變為一個拍照即建檔、開口就能搜的智慧人脈庫，將每張名片處理時間從5分鐘縮短至5秒，將人脈轉為真正的商業資產。">
+    <meta name="keywords" content="CRM, 人脈管理, AI, LINE Bot, 自動化, 效率提升, Luke Hou, 侯俊嘉">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0V2L1DQVPY');
+    </script>
+    <style>
+        .hero-section { background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/n8n-line-business-card-automation/n8n-card-bot-line-demo.jpg') no-repeat center center; background-size: cover; padding: 5rem 0; color: white; }
+        .hero-section h1 { font-weight: 700; }
+        .impact-card { background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: .5rem; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .impact-card .icon { font-size: 2.5rem; color: #0d6efd; }
+        .gallery-img { cursor: pointer; transition: transform 0.2s; }
+        .gallery-img:hover { transform: scale(1.05); }
+        .img-bordered { border: 1px solid #dee2e6; padding: 5px; border-radius: 0.375rem; }
+        body { background-color: #fdf5e6; }
+        .floating-toggle-btn {
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            z-index: 1050;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            padding: 1rem 0.5rem;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <a href="n8n-line-business-card-automation.html" class="btn btn-dark floating-toggle-btn" title="切換至技術視角說明">
+        <i class="bi bi-code-slash"></i> 技術視角說明
+    </a>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">♾️ 首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../n8n-tutorials.html">⚡n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">✈️分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section text-center">
+            <div class="container">
+                <h1 class="display-4">你的名片夾，是資產還是負擔？</h1>
+                <p class="lead col-lg-8 mx-auto">我如何透過LINE和AI，將傳統名片管理轉變為一個拍照即建檔、開口就能搜的智慧人脈庫，將每張名片處理時間從5分鐘縮短至5秒。</p>
+            </div>
+        </section>
+
+        <section class="container mt-5 py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+
+                    <div class="text-center mb-5">
+                        <h2 class="h1 mb-3"><i class="bi bi-briefcase-fill text-danger me-2"></i>The Challenge: 被遺忘的人脈資產</h2>
+                        <p class="lead text-muted">在社交場合中，我們交換了無數名片，但它們的終點往往是抽屜的角落。手動輸入耗時且枯燥，導致寶貴的人脈資訊變成無法利用的「死資料」。</p>
+                    </div>
+                    <div class="row text-center mb-5">
+                        <div class="col-md-4">
+                            <h4><i class="bi bi-keyboard me-2"></i>繁瑣的手動輸入</h4>
+                            <p>將一張名片的資訊輸入手機或電腦，平均耗時3-5分鐘，過程枯燥且容易出錯。</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h4><i class="bi bi-folder-x me-2"></i>資訊孤島</h4>
+                            <p>紙本名片和數位聯絡人分散各處，難以統一管理和搜尋，無法形成有效的人脈網絡。</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h4><i class="bi bi-question-circle me-2"></i>價值遺忘</h4>
+                            <p>幾個月後，我們可能只記得一個名字，卻忘了對方的專業背景和潛在合作機會。</p>
+                        </div>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="text-center mb-5">
+                        <h2 class="h1 mb-3"><i class="bi bi-chat-quote-fill text-primary me-2"></i>The Solution: 會思考的LINE人脈管家</h2>
+                        <p class="lead text-muted">我打造了一個住在LINE裡的「人脈管家」。它不僅能處理名片，更能理解你的需求，讓管理人脈就像聊天一樣簡單自然。</p>
+                    </div>
+                    
+                    <div class="row g-4 mb-5">
+                        <div class="col-md-6">
+                            <h5>1. 拍照即建檔</h5>
+                            <p>只需將名片拍照傳給LINE機器人，剩下的交給它。</p>
+                            <img src="../images/n8n-line-business-card-automation/n8n-card-bot-line-demo.jpg" alt="LINE Bot 互動" class="img-fluid rounded img-bordered gallery-img">
+                        </div>
+                        <div class="col-md-6">
+                            <h5>2. AI分析與洞察</h5>
+                            <p>AI不僅提取基本資料，更會生成背景摘要和潛力評分，幫你記住每個人的價值。</p>
+                             <img src="../images/n8n-line-business-card-automation/n8n-card-bot-sheet-output.png" alt="AI分析結果" class="img-fluid rounded img-bordered gallery-img">
+                        </div>
+                        <div class="col-md-6">
+                            <h5>3. 雲端自動歸檔</h5>
+                            <p>結構化資料存入Google Sheets，名片圖片備份至Google Drive，資料安全且易於管理。</p>
+                            <img src="../images/n8n-line-business-card-automation/n8n-card-bot-drive-backup.png" alt="雲端備份" class="img-fluid rounded img-bordered gallery-img">
+                        </div>
+                        <div class="col-md-6">
+                            <h5>4. 開口就能搜</h5>
+                            <p>直接在LINE用自然語言提問（例如「幫我找上次遇到的那位行銷經理」），AI助理立刻幫你找到人。</p>
+                            <img src="../images/n8n-line-business-card-automation/n8n-card-bot-line-search.jpg" alt="自然語言搜尋" class="img-fluid rounded img-bordered gallery-img">
+                        </div>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="text-center mb-5">
+                        <h2 class="h1 mb-3"><i class="bi bi-gem text-success me-2"></i>The Impact: 將人脈轉化為即戰力</h2>
+                        <p class="lead text-muted">這個系統讓「人脈管理」不再是一件苦差事，而是真正能創造價值的商業活動。</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="impact-card text-center h-100">
+                                <div class="icon"><i class="bi bi-hourglass-split"></i></div>
+                                <h4 class="mt-3">效率革命</h4>
+                                <p class="display-6 fw-bold">x60</p>
+                                <p class="text-muted">將每張名片的處理時間從 5 分鐘縮短至 5 秒，效率提升 60 倍，讓你專注於建立關係，而非文書處理。</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="impact-card text-center h-100">
+                                <div class="icon"><i class="bi bi-lightbulb-fill"></i></div>
+                                <h4 class="mt-3">人脈活化</h4>
+                                <p class="display-6 fw-bold">AI</p>
+                                <p class="text-muted">AI摘要與評分功能，將靜態資訊轉化為動態洞察，讓你隨時掌握每位聯絡人的核心價值。</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="impact-card text-center h-100">
+                                <div class="icon"><i class="bi bi-phone-vibrate-fill"></i></div>
+                                <h4 class="mt-3">即時存取</h4>
+                                <p class="display-6 fw-bold">LINE</p>
+                                <p class="text-muted">在最熟悉的通訊軟體中，隨時隨地查詢、管理人脈，讓你的專業網絡成為真正的隨身智囊。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="accordion" id="tech-deep-dive">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-tech"><strong>對技術實現細節感興趣？點此展開</strong></button></h2>
+                            <div id="collapse-tech" class="accordion-collapse collapse" data-bs-parent="#tech-deep-dive">
+                                <div class="accordion-body">
+                                    <h4 class="h5">核心做法</h4>
+                                    <ol>
+                                        <li><strong>LINE Bot 接收圖片:</strong> 使用者傳送名片照片至 LINE Bot，n8n 的 Webhook 節點接收圖片二進制資料。</li>
+                                        <li><strong>AI 智慧辨識與分析:</strong> 整合 Google Gemini Pro Vision 模型，能精準地辨識圖片中的文字，並根據 Prompt 指令提取名片上的姓名、職稱、公司等資訊，更能扮演專業秘書，為聯絡人進行潛在價值評分並生成專業背景摘要。</li>
+                                        <li><strong>雲端建檔與備份:</strong> n8n 工作流自動將結構化資料存入 Google Sheets，同時將原始名片圖檔以「公司＋職稱＋姓名」的格式命名，備份至 Google Drive 指定資料夾。</li>
+                                        <li><strong>自然語言搜尋:</strong> 串接 AI Agent，讓使用者可直接在 LINE 中下達自然語言指令（如：「幫我找做水電的人」），AI 即會自動搜尋 Google Sheets 並回傳格式化結果。</li>
+                                    </ol>
+                                    <img src="../images/n8n-line-business-card-automation/n8n-card-bot-workflow.jpg" alt="n8n 核心工作流" class="img-fluid rounded img-bordered">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white mt-5 py-4 border-top">
+        <div class="container text-center">
+            <a href="../portfolio.html" class="btn btn-outline-primary mb-3"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+            <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
