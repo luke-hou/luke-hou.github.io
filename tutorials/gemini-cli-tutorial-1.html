@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM x Gemini CLI (一)：完整環境設定與專案準備 - Luke Hou 侯俊嘉的AI自動化與工作流指南</title>
+    <meta name="description" content="PM 與 Gemini CLI 協作系列第一篇，從零開始，詳細介紹 Gemini CLI 的安裝、設定，以及 VS Code 環境的準備，為後續的協作流程打下堅實基礎。">
+    <meta name="keywords" content="Gemini CLI, Gemini CLI 教學, Gemini CLI 安裝, PM, 產品經理, AI 協作, 環境設定, VS Code, Markdown, Luke Hou, 侯俊嘉">
+    <link rel="icon" href="../images/favicon.jpg" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .tutorial-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.5rem auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .tutorial-content figure {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .tutorial-content figure img {
+            margin: 0 auto;
+        }
+        .step {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            background-color: #f8f9fa;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .step:hover {
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+        }
+        .step h3 {
+            font-size: 1.75rem;
+            color: #198754;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .step h3 .step-icon {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        code {
+            background-color: #e9ecef;
+            padding: .2rem .4rem;
+            border-radius: .2rem;
+            font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: .875em;
+        }
+        pre {
+            background-color: #212529;
+            color: #f8f9fa;
+            padding: 1rem;
+            border-radius: .3rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: inherit;
+            font-size: 1em;
+        }
+        .tutorial-intro, .tutorial-summary {
+            background-color: #eef8f3;
+            border-left: 5px solid #198754;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .platform-comparison {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .platform-column {
+            flex: 1;
+            min-width: 300px;
+            padding: 1.5rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0.5rem;
+            background-color: #ffffff;
+        }
+        .platform-column h4 {
+            color: #198754;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學文章</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <article class="blog-post">
+                    <h1 class="mb-3 display-5 border-bottom pb-3">PM x Gemini CLI (一)：環境設定與專案準備</h1>
+                    <p class="text-muted mb-4">發布日期：2025年10月</p>
+
+                    <div class="tutorial-intro">
+                        <h4>本篇文章將引導您完成 Gemini CLI 的基礎環境建置，並準備好您的專案工作環境，為後續的深度協作打下堅實基礎。</h4>
+                        <p>我們將涵蓋以下要點：</p>
+                        <ul>
+                            <li>安裝 Node.js，這是 Gemini CLI 的運行基礎。</li>
+                            <li>安裝 Gemini CLI 工具本身。</li>
+                            <li>安裝 Visual Studio Code，並設定必要的擴充功能。</li>
+                            <li>建立專案資料夾，為您的 AI 協作專案做好準備。</li>
+                        </ul>
+                    </div>
+
+                    <div class="tutorial-content">
+                        <section class="step-by-step">
+                            <div class="step">
+                                <h3><i class="fas fa-code step-icon"></i>步驟一：安裝 Node.js</h3>
+                                <p>Gemini CLI 是一個基於 Node.js 的工具，因此在安裝 Gemini CLI 之前，您需要先安裝 Node.js。</p>
+                                <p>請參考 <a href="../n8n_tutorials/n8n-tutorial-1.html#步驟一：下載 Node.js" target="_blank">n8n 教學 (一)：本地安裝 Node.js 與 n8n 環境建置 - 步驟一：下載 Node.js</a> 的說明，完成 Node.js 的安裝。</p>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-terminal step-icon"></i>步驟二：安裝 Gemini CLI</h3>
+                                <p>Node.js 安裝完成後，您可以使用 npm (Node.js 的套件管理器) 來安裝 Gemini CLI。請根據您的作業系統選擇對應的安裝指令。</p>
+                                <div class="platform-comparison">
+                                    <div class="platform-column">
+                                        <h4>Windows</h4>
+                                        <p>開啟命令提示字元 (CMD) 或 PowerShell，輸入以下指令：</p>
+                                        <pre><code>npm install -g @google/gemini-cli</code></pre>
+                                    </div>
+                                    <div class="platform-column">
+                                        <h4>macOS</h4>
+                                        <p>開啟終端機 (Terminal)，輸入以下指令：</p>
+                                        <pre><code>npm install -g @google/gemini-cli</code></pre>
+                                        <p>如果遇到權限問題，您可能需要使用 <code>sudo</code>：</p>
+                                        <pre><code>sudo npm install -g @google/gemini-cli</code></pre>
+                                    </div>
+                                </div>
+                                <p class="mt-3">安裝完成後，您可以輸入以下指令來驗證 Gemini CLI 是否成功安裝：</p>
+                                <pre><code>gemini -v</code></pre>
+                                <p>如果成功安裝，您會看到類似 <code>1.0.0</code> 的版本號碼回傳。</p>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-desktop step-icon"></i>步驟三：安裝 Visual Studio Code</h3>
+                                <p>Visual Studio Code (VS Code) 是一個輕量且功能強大的程式碼編輯器，我們將使用它來編輯和管理我們的專案檔案。</p>
+                                <div class="platform-comparison">
+                                    <div class="platform-column">
+                                        <h4>Windows</h4>
+                                        <p>前往 <a href="https://code.visualstudio.com/download" target="_blank">VS Code 官方網站</a> 下載 Windows 版本的安裝程式，並按照指示完成安裝。</p>
+                                    </div>
+                                    <div class="platform-column">
+                                        <h4>macOS</h4>
+                                        <p>前往 <a href="https://code.visualstudio.com/download" target="_blank">VS Code 官方網站</a> 下載 macOS 版本的安裝程式，並按照指示完成安裝。</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-folder-open step-icon"></i>步驟四：建立專案資料夾</h3>
+                                <p>首先，在您的電腦上建立一個新的資料夾，用來存放所有與 Gemini CLI 協作相關的資料和文件。建議命名為清晰的名稱如 <code>NHI-payment-guidelines</code> 之類有意義的名稱。</p>
+                                <div class="platform-comparison">
+                                    <div class="platform-column">
+                                        <h4>Windows</h4>
+                                        <p>在您希望建立專案的位置，例如 <code>C:\Users\您的使用者名稱\Documents</code>，右鍵點擊空白處，選擇「新增」->「資料夾」，然後輸入資料夾名稱。</p>
+                                        <pre><code>mkdir C:\Users\您的使用者名稱\Documents\gemini-cli-projects</code></pre>
+                                    </div>
+                                    <div class="platform-column">
+                                        <h4>macOS</h4>
+                                        <p>開啟 Finder，導航到您希望建立專案的位置，例如 <code>~/Documents</code>，然後右鍵點擊空白處，選擇「新增檔案夾」，然後輸入檔案夾名稱。</p>
+                                        <pre><code>mkdir ~/Documents/gemini-cli-projects</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-file-code step-icon"></i>步驟五：使用 VS Code 開啟專案資料夾</h3>
+                                <p>開啟 Visual Studio Code，然後將您剛才建立的專案資料夾開啟。</p>
+                                <div class="platform-comparison">
+                                    <div class="platform-column">
+                                        <h4>Windows</h4>
+                                        <p>點擊 VS Code 左上角的「檔案」->「開啟資料夾...」，然後選擇您剛才建立的 <code>gemini-cli-projects</code> 資料夾。</p>
+                                        <p>或者，您可以在命令提示字元或 PowerShell 中，導航到該資料夾，然後輸入 <code>code .</code>：</p>
+                                        <pre><code>cd C:\Users\您的使用者名稱\Documents\gemini-cli-projects
+code .</code></pre>
+                                    </div>
+                                    <div class="platform-column">
+                                        <h4>macOS</h4>
+                                        <p>點擊 VS Code 左上角的「檔案」->「開啟...」，然後選擇您剛才建立的 <code>gemini-cli-projects</code> 檔案夾。</p>
+                                        <p>或者，您可以在終端機中，導航到該檔案夾，然後輸入 <code>code .</code>：</p>
+                                        <pre><code>cd ~/Documents/gemini-cli-projects
+code .</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-puzzle-piece step-icon"></i>步驟六：安裝 Markdown 渲染外掛</h3>
+                                <p>為了更好地預覽和編輯 Markdown 文件 (Gemini CLI 經常會輸出 Markdown 格式的內容)，我們建議安裝一個 Markdown 渲染外掛。這裡以「Markdown Preview Enhanced」為例。</p>
+                                <ol>
+                                    <li>開啟 VS Code。</li>
+                                    <li>點擊左側活動欄的「擴充功能」圖示 (或按下 <code>Ctrl+Shift+X</code>)。</li>
+                                    <li>在搜尋框中輸入 <code>Markdown Preview Enhanced</code>。</li>
+                                    <li>找到該擴充功能後，點擊「安裝」。</li>
+                                </ol>
+                                <p>安裝完成後，您可以在編輯 Markdown 文件時，點擊右上角的預覽按鈕，或右鍵點擊文件選擇「開啟預覽」，即可看到渲染後的 Markdown 內容。</p>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="tutorial-summary">
+                        <h4>本章總結</h4>
+                        <p>在本篇文章中，您已經成功：</p>
+                        <ul>
+                            <li>安裝了 Node.js 和 Gemini CLI。</li>
+                            <li>安裝了 Visual Studio Code，並設定了專案資料夾。</li>
+                            <li>安裝了 Markdown 渲染外掛，提升了文件編輯體驗。</li>
+                        </ul>
+                        <p>現在，您的工作環境已經準備就緒，下一篇文章我們將正式開始與 Gemini CLI 進行互動！</p>
+                    </div>
+                </article>
+
+                <div class="d-flex justify-content-between flex-wrap mt-5">
+                    <a href="../tutorials.html" class="btn btn-primary btn-lg mb-2 mb-md-0"><i class="fas fa-list me-2"></i>返回 教學列表</a>
+                    <a href="gemini-cli-tutorial-2.html" class="btn btn-secondary btn-lg">下一篇：Gemini CLI 基本指令與認證 <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

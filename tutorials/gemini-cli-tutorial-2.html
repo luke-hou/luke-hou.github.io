@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM x Gemini CLI (二)：Gemini CLI 基本指令與認證 - Luke Hou 侯俊嘉的AI自動化與工作流指南</title>
+    <meta name="description" content="PM 與 Gemini CLI 協作系列第二篇，詳細介紹如何在專案資料夾中啟動 Gemini CLI，進行 Google 帳號認證，並說明 /init 和 /clear 指令的使用時機與功能。">
+    <meta name="keywords" content="Gemini CLI, Gemini CLI 教學, PM, 產品經理, AI 協作, Gemini CLI 指令, Gemini CLI 認證, /auth, /init, /clear, Luke Hou, 侯俊嘉">
+    <link rel="icon" href="../images/favicon.jpg" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .tutorial-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.5rem auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .tutorial-content figure {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .tutorial-content figure img {
+            margin: 0 auto;
+        }
+        .step {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            background-color: #f8f9fa;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .step:hover {
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+        }
+        .step h3 {
+            font-size: 1.75rem;
+            color: #198754;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .step h3 .step-icon {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        code {
+            background-color: #e9ecef;
+            padding: .2rem .4rem;
+            border-radius: .2rem;
+            font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: .875em;
+        }
+        pre {
+            background-color: #212529;
+            color: #f8f9fa;
+            padding: 1rem;
+            border-radius: .3rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: inherit;
+            font-size: 1em;
+        }
+        .tutorial-intro, .tutorial-summary {
+            background-color: #eef8f3;
+            border-left: 5px solid #198754;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .platform-comparison {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .platform-column {
+            flex: 1;
+            min-width: 300px;
+            padding: 1.5rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 0.5rem;
+            background-color: #ffffff;
+        }
+        .platform-column h4 {
+            color: #198754;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 0.5rem;
+        }
+        .back-to-top-float {
+            position: fixed;
+            top: 50%; /* Vertically center */
+            transform: translateY(-50%); /* Adjust for element's own height */
+            right: 20px;
+            z-index: 1000; /* Ensure it's above other content */
+        }
+        .back-to-top-float .btn {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學文</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <article class="blog-post">
+                    <h1 class="mb-3 display-5 border-bottom pb-3">PM x Gemini CLI (二)：Gemini CLI 基本指令與認證</h1>
+                    <p class="text-muted mb-4">發布日期：2025年10月</p>
+
+                    <div class="tutorial-intro" id="table-of-contents">
+                        <h4>經過前篇文章的環境建置與專案設定，現在我們將正式開始與 Gemini CLI 互動！</h4>
+                        <p><strong>文章大綱：</strong></p>
+                        <ul>
+                            <li><a href="#step-1">步驟一：在專案資料夾中啟動 Gemini CLI</a></li>
+                            <li><a href="#step-2">步驟二：使用 Google Account 進行認證 (<code>/auth</code>)</a></li>
+                            <li><a href="#step-3">步驟三：<code>/init</code> 指令的使用時機與說明</a></li>
+                            <li><a href="#step-4">步驟四：<code>/clear</code> 指令的使用時機與說明</a></li>
+                            <li><a href="#step-5">步驟五：其他常用指令</a></li>
+                            <li><a href="#step-6">Gemini 2.5 Pro 與 Gemini 2.5 Flash 的切換與應用</a></li>
+                            <li><a href="#step-7">PM 實用應用範例</a></li>
+                        </ul>
+                        <p>掌握這些基本操作，您就能開始利用 Gemini CLI 提升工作效率。</p>
+                    </div>
+
+                    <div class="tutorial-content">
+                        <section class="step-by-step">
+                            <div class="step">
+                                <h3 id="step-1"><i class="fas fa-play-circle step-icon"></i>步驟一：在專案資料夾中啟動 Gemini CLI</h3>
+                                <p>開啟您的 Visual Studio Code，並確保您已經開啟了之前建立的專案資料夾 (例如 <code>NHI-payment-guidelines</code>)，以便與 Gemini CLI 一起協作。</p>
+                                <p>接著開啟作業系統內建的終端機 (Terminal)，您需要先切換到您的專案資料夾。假設您的專案資料夾路徑為 <code>C:\Users\YourUser\Documents\NHI-payment-guidelines</code> (Windows) 或 <code>/Users/YourUser/Documents/NHI-payment-guidelines</code> (macOS)，請輸入以下指令：</p>
+                                <p><strong>Windows:</strong></p>
+                                <pre><code>cd C:\Users\YourUser\Documents\NHI-payment-guidelines</code></pre>
+                                <p><strong>macOS/Linux:</strong></p>
+                                <pre><code>cd /Users/YourUser/Documents/NHI-payment-guidelines</code></pre>
+                                <p>切換到專案資料夾後，輸入 <code>gemini</code> 指令來啟動 Gemini CLI：</p>
+                                <pre><code>gemini</code></pre>
+                                <p>首次啟動時，Gemini CLI 會提示您進行認證。您也可以使用 <code>--help</code> 參數查看更多啟動選項：</p>
+                                <pre><code>gemini --help</code></pre>
+                                <p>這將顯示所有可用的啟動參數，例如設定模型、溫度等。</p>
+                            </div>
+
+                            <div class="step">
+                                <h3 id="step-2"><i class="fas fa-user-check step-icon"></i>步驟二：使用 Google Account 進行認證 (<code>/auth</code>)</h3>
+                                <p><code>/auth</code> 指令用於變更認證方式。當您首次啟動 Gemini CLI 時，它會提示您進行認證。您也可以手動輸入 <code>/auth</code> 指令來啟動認證流程：</p>
+                                <pre><code>/auth</code></pre>
+                                <p><strong>認證流程詳解：</strong></p>
+                                <ul>
+                                    <li>當您執行 <code>gemini</code> 或 <code>/auth</code> 時，CLI 會生成一個唯一的設備代碼和一個驗證 URL。</li>
+                                    <li>瀏覽器會自動打開該 URL，請授權 Gemini CLI 訪問您的 Google 帳戶。</li>
+                                    <li>授權成功後，CLI 會自動獲取一個訪問令牌，用於後續與 Gemini API 的互動。</li>
+                                    <li>如果遇到認證失敗或過期，您可以隨時重新執行 <code>/auth</code> 指令。</li>
+                                </ul>
+                            </div>
+
+                            <div class="step">
+                                <h3 id="step-3"><i class="fas fa-sync-alt step-icon"></i>步驟三：<code>/init</code> 指令的使用時機與說明</h3>
+                                <p><code>/init</code> 指令用於分析專案並建立一個客製化的 <code>GEMINI.md</code> 檔案。當您在一個新的專案資料夾中首次使用 Gemini CLI，或者您希望重置 Gemini CLI 的內部狀態時，可以使用這個指令。</p>
+                                <p>執行 <code>/init</code> 指令後，Gemini CLI 會建立一些必要的設定檔和資料夾，以確保後續的操作能夠正常進行。這些設定檔通常包括：</p>
+                                <ul>
+                                    <li><code>.gemini-cli-config.json</code>：存放 Gemini CLI 的配置，例如預設模型、溫度等。</li>
+                                    <li><code>.gemini-cli-history.json</code>：存放您的對話歷史紀錄。</li>
+                                    <li><code>GEMINI.md</code>：客製化的專案設定檔。</li>
+                                </ul>
+                                <pre><code>/init</code></pre>
+                                <p><strong>使用時機：</strong></p>
+                                <ul>
+                                    <li>在新的專案資料夾中首次啟動 Gemini CLI。</li>
+                                    <li>當您遇到 Gemini CLI 行為異常，希望重置其內部狀態時。</li>
+                                    <li>當您希望清除之前的對話紀錄和上下文，重新開始一個新的對話時。</li>
+                                    <li>當您需要自定義 Gemini CLI 的行為時，可以修改 <code>.gemini-cli-config.json</code> 或 <code>GEMINI.md</code>。</li>
+                                </ul>
+                            </div>
+
+                            <div class="step">
+                                <h3 id="step-4"><i class="fas fa-eraser step-icon"></i>步驟四：<code>/clear</code> 指令的使用時機與說明</h3>
+                                <p><code>/clear</code> 指令用於清除螢幕和對話歷史紀錄。這對於開始一個全新的對話，或者當您覺得之前的對話內容已經不再相關時非常有用。</p>
+                                <p>執行 <code>/clear</code> 指令後，Gemini CLI 會忘記之前的所有對話內容，並回到初始狀態。</p>
+                                <pre><code>/clear</code></pre>
+                                <p><strong>使用時機：</strong></p>
+                                <ul>
+                                    <li>開始一個全新的對話主題。</li>
+                                    <li>當您希望 Gemini CLI 忽略之前的對話內容，避免其受到舊有上下文的影響時。</li>
+                                    <li>在進行敏感資訊處理後，希望清除相關紀錄時 (請注意，這僅清除本地紀錄，不影響 Google 伺服器上的資料)。</li>
+                                </ul>
+                                <p><strong>與 <code>/init</code> 的區別：</strong></p>
+                                <ul>
+                                    <li><code>/clear</code> 僅清除當前會話的對話紀錄和上下文，不會影響配置檔。</li>
+                                    <li><code>/init</code> 會重新初始化整個工作環境，包括配置檔和對話紀錄。</li>
+                                </ul>
+                            </div>
+
+                            <div class="step">
+                                <h3 id="step-5"><i class="fas fa-info-circle step-icon"></i>步驟五：其他常用指令</h3>
+                                <p>除了上述指令，Gemini CLI 還提供了一些其他實用的指令，可以幫助您更好地管理和使用它：</p>
+                                <ul>
+                                    <li><code>/help</code>：顯示 Gemini CLI 的幫助資訊。</li>
+                                    <pre><code>/help</code></pre>
+                                    <li><code>/about</code>：顯示版本資訊。</li>
+                                    <pre><code>/about</code></pre>
+                                    <li><code>/chat</code>：管理對話歷史。您可以儲存、恢復、刪除或分享對話檢查點。</li>
+                                    <pre><code>/chat save &lt;tag&gt;</code></pre>
+                                    <pre><code>/chat resume &lt;tag&gt;</code></pre>
+                                    <li><code>/docs</code>：在瀏覽器中開啟 Gemini CLI 的完整文件。</li>
+                                    <pre><code>/docs</code></pre>
+                                    <li><code>/directory</code>：管理工作區目錄。您可以新增或顯示工作區中的目錄。</li>
+                                    <pre><code>/directory add &lt;path&gt;</code></pre>
+                                    <pre><code>/directory show</code></pre>
+                                    <li><code>/memory</code>：管理記憶體內容。您可以顯示、新增、刷新或列出記憶體中的 GEMINI.md 檔案路徑。</li>
+                                    <pre><code>/memory show</code></pre>
+                                    <pre><code>/memory add &lt;content&gt;</code></pre>
+                                    <pre><code>/memory list</code></pre>
+                                </ul>
+                            </div>
+
+                            <div class="step">
+                                <h3 id="step-6"><i class="fas fa-exchange-alt step-icon"></i>Gemini 2.5 Pro 與 Gemini 2.5 Flash 的切換與應用</h3>
+                                <p>Gemini CLI 支援多種模型，其中 Gemini 2.5 Pro 和 Gemini 2.5 Flash 是兩個功能強大且各有側重的模型。了解它們的特性並適時切換，能讓您更高效地利用 Gemini CLI。</p>
+
+                                <h4>模型切換觸發機制</h4>
+                                <p>在實際使用中，您可能會基於以下情境考慮切換模型：</p>
+                                <ul>
+                                    <li><strong>免費額度考量：</strong> Gemini 2.5 Pro 通常會消耗較多的配額或有較高的使用成本。當您的 Pro 模型免費額度用盡，或希望節省成本時，可以切換到 Gemini 2.5 Flash。</li>
+                                    <li><strong>回應速度需求：</strong> Gemini 2.5 Flash 在設計上更注重速度和效率，對於需要快速獲得結果的任務，Flash 模型會是更好的選擇。</li>
+                                    <li><strong>任務複雜度：</strong> 對於複雜的分析、內容生成或需要深入理解上下文的任務，Pro 模型能提供更精確和全面的結果。而對於格式修正、簡單摘要等明確任務，Flash 模型足以勝任。</li>
+                                    <li><strong>API 限制：</strong> 某些情況下，Pro 模型可能會遇到暫時性的 API 速率限制或服務不穩定，此時切換到 Flash 模型可以作為備用方案。</li>
+                                </ul>
+
+                                <h4>Gemini 2.5 Pro 適用情境</h4>
+                                <p>Gemini 2.5 Pro 是一個多功能、高性能的模型，擅長處理複雜的任務，提供深入的理解和高品質的內容生成。</p>
+                                <ul>
+                                    <li><strong>綜合參考資料與發想：</strong> 當您需要綜合大量文件、網頁內容或程式碼，並從中提取關鍵資訊、進行分析、生成新的想法時，Pro 模型表現卓越。例如，撰寫產品需求文件 (PRD) 時，它可以幫助您分析市場報告、用戶回饋，並提出創新的功能點。</li>
+                                    <li><strong>複雜問題解決：</strong> 對於需要多步驟推理、邏輯判斷或跨領域知識的問題，Pro 模型能提供更精確和全面的解決方案。</li>
+                                    <li><strong>創意內容生成：</strong> 撰寫部落格文章、行銷文案、劇本或任何需要高度創意和流暢表達的內容時，Pro 模型能生成更具吸引力和原創性的文本。</li>
+                                    <li><strong>程式碼生成與除錯：</strong> 生成複雜的程式碼片段、解釋程式碼邏輯、找出潛在的錯誤或提供優化建議。</li>
+                                </ul>
+
+                                <h4>Gemini 2.5 Flash 適用情境</h4>
+                                <p>Gemini 2.5 Flash 則是一個輕量級、高效率的模型，專為需要快速響應和處理簡單、明確任務而設計。</p>
+                                <ul>
+                                    <li><strong>文件格式修正與排版：</strong> 對於修正 Markdown 格式、調整程式碼縮排、統一文件風格等任務，Flash 模型可以快速完成，且成本較低。</li>
+                                    <li><strong>快速摘要與提取：</strong> 從較短的文本中快速提取關鍵資訊、生成簡短摘要或回答事實性問題。</li>
+                                    <li><strong>簡單的內容生成：</strong> 生成簡短的郵件、通知、社群媒體貼文等，這些內容對語氣和風格要求不高，但需要快速產出。</li>
+                                    <li><strong>即時互動與聊天：</strong> 在需要快速來回對話的場景中，Flash 模型能提供更流暢的互動體驗。</li>
+                                    <li><strong>初步篩選與分類：</strong> 對於大量數據進行初步的篩選、分類或標籤，例如將用戶回饋分為「Bug 報告」、「功能請求」等。</li>
+                                </ul>
+                                <p>透過靈活運用這兩個模型，您可以根據任務需求，最大化 Gemini CLI 的效益。</p>
+                            </div>
+
+                            <div class="step">
+                                <h3 id="step-7"><i class="fas fa-lightbulb step-icon"></i>PM 實用應用範例</h3>
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>重要提醒：</strong> 請勿將公司機密資料或個人隱私資料上傳至 Gemini CLI 進行處理。一旦資料上傳，即可能被用於模型訓練，且此過程不可逆。請務必確保您處理的資料符合公司政策與隱私法規。
+                                </div>
+                                    <p><strong>使用 `@` 引用本地文件或資料夾：</strong></p>
+                                    <p>作為產品經理，您可以利用 Gemini CLI 執行多種任務，提升工作效率：</p><p>Gemini CLI 支援使用 `@` 符號來引用本地的檔案或資料夾。這表示您可以將文件內容作為輸入，或者讓 Gemini CLI 處理整個資料夾中的文件。例如：</p>
+                                    <ul>
+                                        <li><code>@filename.txt</code>：引用單一檔案的內容。</li>
+                                        <li><code>@folder_name</code>：引用整個資料夾中的所有文件內容。</li>
+                                    </ul>
+                                    <p>這對於處理大量本地資料，例如多個使用者回饋文件、多份會議記錄等，非常方便。</p>                                
+                                <ul>
+                                    <li><strong>快速摘要會議記錄：</strong> 將會議記錄貼入 Gemini CLI，然後使用指令要求其生成摘要。您也可以直接引用本地文件：</li>
+                                    <pre><code>請摘要以下會議記錄的重點：
+@meeting_notes.txt</code></pre>
+                                    <li><strong>分析使用者回饋：</strong> 將大量使用者回饋整理成文本，讓 Gemini CLI 協助您分析情緒、提取關鍵問題或建議。您也可以直接引用本地文件：</li>
+                                    <pre><code>分析以下使用者回饋，並列出前三大痛點：
+@user_feedback.md</code></pre>
+                                    <li><strong>生成 PRD 初稿：</strong> 提供產品需求的基本資訊，讓 Gemini CLI 協助您生成 PRD 的初步框架或內容。您也可以直接引用本地文件：</li>
+                                    <pre><code>請為一個新的社交媒體功能生成 PRD 初稿，功能包括：發布動態、按讚、留言、分享。
+@product_brief.txt</code></pre>
+                                    <li><strong>腦力激盪新功能：</strong> 提供一個主題，讓 Gemini CLI 協助您發想新的產品功能或改進點。您也可以直接引用本地文件：</li>
+                                    <pre><code>針對提升用戶留存率，請提供 5 個新的產品功能點。
+@brainstorm_ideas.md</code></pre>
+
+                                </ul>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="tutorial-summary">
+                        <h4>本章總結</h4>
+                        <p>在本篇文章中，您已經成功：</p>
+                        <ul>
+                            <li>在專案資料夾中啟動了 Gemini CLI。</li>
+                            <li>使用 Google 帳號完成了 Gemini CLI 的認證。</li>
+                            <li>了解了 <code>/init</code> 和 <code>/clear</code> 指令的使用時機與功能。</li>
+                            <li>掌握了其他常用的 Gemini CLI 指令，例如 <code>/help</code>、<code>/about</code>、<code>/chat</code>、<code>/copy</code>、<code>/docs</code>、<code>/directory</code>、<code>/memory</code> 和 <code>!</code>。</li>
+                            <li>了解了 Gemini 2.5 Pro 與 Gemini 2.5 Flash 的切換機制與適用情境。</li>
+                            <li>探索了 Gemini CLI 在 PM 工作中的實用應用範例。</li>
+                        </ul>
+                        <p>現在，您已經掌握了 Gemini CLI 的基本操作，可以開始利用它來處理您的工作了！</p>
+                    </div>
+                </article>
+
+                <div class="d-flex justify-content-between flex-wrap mt-5">
+                    <a href="gemini-cli-tutorial-1.html" class="btn btn-secondary btn-lg mb-2 mb-md-0"><i class="fas fa-arrow-left me-2"></i>上一篇：環境設定與專案準備</a>
+                    <a href="../tutorials.html" class="btn btn-primary btn-lg mb-2 mb-md-0"><i class="fas fa-list me-2"></i>返回 教學列表</a>
+                    <a href="gemini-cli-tutorial-3.html" class="btn btn-secondary btn-lg">下一篇：AI 賦能產品探索與需求釐清 <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="back-to-top-float">
+        <a href="#table-of-contents" class="btn btn-primary rounded-circle shadow-lg">
+            <i class="fas fa-arrow-up"></i>
+        </a>
+    </div>
+
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

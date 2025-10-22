@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM x Gemini CLI (四)：AI 驅動敏捷開發與活文件實踐 - Luke Hou 侯俊嘉的AI自動化與工作流指南</title>
+    <meta name="description" content="PM 與 Gemini CLI 協作系列第五篇，探討 AI 如何驅動敏捷開發，實現規格驅動開發 (SDD) 和活文件，並轉變 PM 與開發者的角色。">
+    <meta name="keywords" content="Gemini CLI, Gemini CLI 教學, PM, 產品經理, AI 協作, 敏捷開發, 規格驅動開發, SDD, 活文件, AI Agent, Luke Hou, 侯俊嘉">
+    <link rel="icon" href="../images/favicon.jpg" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .tutorial-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.5rem auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .tutorial-content figure {
+            margin: 1.5rem 0; 
+            text-align: center;
+        }
+        .tutorial-content figure img {
+            margin: 0 auto;
+        }
+        .step {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            background-color: #f8f9fa;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .step:hover {
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+        }
+        .step h3 {
+            font-size: 1.75rem;
+            color: #198754;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .step h3 .step-icon {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        code {
+            background-color: #e9ecef;
+            padding: .2rem .4rem;
+            border-radius: .2rem;
+            font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: .875em;
+        }
+        pre {
+            background-color: #212529;
+            color: #f8f9fa;
+            padding: 1rem;
+            border-radius: .3rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: inherit;
+            font-size: 1em;
+        }
+        .tutorial-intro, .tutorial-summary {
+            background-color: #eef8f3;
+            border-left: 5px solid #198754;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .alert-info-custom {
+            background-color: #eef8f3;
+            border-color: #a6d9c1;
+            color: #198754;
+        }
+        .back-to-top-float {
+            position: fixed;
+            top: 50%; /* Vertically center */
+            transform: translateY(-50%); /* Adjust for element's own height */
+            right: 20px;
+            z-index: 1000; /* Ensure it's above other content */
+        }
+        .back-to-top-float .btn {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學文</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="alert alert-danger text-center" role="alert">
+        <strong>重要提醒：</strong> 請勿將公司機密資料或個人隱私資料上傳至 Gemini CLI 進行處理。一旦資料上傳，即可能被用於模型訓練，且此過程不可逆。請務必確保您處理的資料符合公司政策與隱私法規。
+    </div>
+
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <article class="blog-post">
+                    <h1 class="mb-3 display-5 border-bottom pb-3">PM x Gemini CLI (四)：AI 驅動敏捷開發與活文件實踐</h1>
+                    <p class="text-muted mb-4">發布日期：2025年10月</p>
+
+                    <div class="tutorial-intro" id="table-of-contents">
+                        <h4>本篇文章將深入探討 AI 如何在敏捷產品開發流程中扮演關鍵角色，從「程式碼驅動」轉向「規格驅動開發 (SDD)」，並實現「活文件」的願景。</h4>
+                        <p><strong>文章大綱：</strong></p>
+                        <ul>
+                            <li><a href="#section-1">要點一：典範轉移：從「程式碼驅動」到「規格驅動開發 (SDD)」</a></li>
+                            <li><a href="#section-2">要點二：建立你的 AI 協作團隊</a></li>
+                            <li><a href="#section-3">要點三：AI 輔助的產品開發生命週期</a></li>
+                            <li><a href="#section-4">要點四：人類角色的轉變：從執行者到決策者與創意者</a></li>
+                            <li><a href="#section-5">要點五：「活文件」的實現：讓規格文件與產品實作保持同步</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tutorial-content">
+                        <section class="step-by-step">
+                            <div class="step">
+                                <h3 id="section-1"><i class="fas fa-exchange-alt step-icon"></i>要點一：典範轉移：從「程式碼驅動」到「規格驅動開發 (SDD)」</h3>
+                                <p>在傳統的產品開發流程中，程式碼往往被視為產品的最終真相，而規格文件則容易在開發過程中逐漸與實際產品脫節，直到幾乎沒有參考價值，甚至讓過時的規格造成誤導。然而，在 AI 時代，我們可以重新思考這個模式，轉向「規格驅動開發 (Specification-Driven Development, SDD)」。</p>
+                                <p>在 SDD 的核心理念中，<strong>「規格」不再僅僅是一份靜態的說明文件，它本身就是產品的核心資產，是驅動開發的唯一真相來源。</strong></p>
+                                <ul>
+                                    <li><strong>規格即真理</strong>：PM 撰寫的規格文件成為整個專案的中心，所有開發工作都圍繞著它進行。</li>
+                                    <li><strong>AI 輔助同步</strong>：當 PM 更新規格時，AI 工具可以輔助開發團隊自動更新相關的程式碼或測試，確保文件與產品實作始終保持一致。</li>
+                                    <li><strong>持續迭代</strong>：產品上線後，PM 可以根據用戶回饋或數據分析來優化規格，AI 則能協助推動新一輪的開發迭代，形成一個高效的閉環。</li>
+                                </ul>
+                                <p>這種典範轉移，將 PM 從追趕程式碼進度的角色中解放出來，讓 PM 能夠更專注於產品的策略規劃與用戶價值的創造。PM 可以利用 Gemini CLI 協助管理和追蹤規格的變更，例如：</p>
+                                <pre><code>比較 PRD_v1.0.md 和 PRD_v1.1.md 之間的差異，並生成一份變更摘要。</code></pre>
+                                <p>Gemini CLI 模擬輸出：</p>
+                                <pre><code>**PRD 變更摘要 (v1.0 to v1.1)**
+
+**主要變更點：**
+*   **新增功能**：在「用戶管理」模組中，新增了「兩步驟驗證」功能。
+*   **功能調整**：將「訂單管理」模組中的「取消訂單」流程，增加了管理員審核環節。
+*   **介面優化**：更新了「產品詳情頁」的佈局，提升了圖片顯示比例。
+
+**影響範圍評估：**
+*   **開發**：需要新增兩步驟驗證的後端 API 和前端介面；修改訂單取消的業務邏輯。
+*   **測試**：需要針對新增和修改的功能編寫新的測試案例。
+*   **用戶體驗**：用戶在登入時將會體驗到更安全的兩步驟驗證流程；訂單取消流程將會更嚴謹。</code></pre>
+                            </div>
+
+                            <div class="step">
+                                <h3 id="section-2"><i class="fas fa-users-cog step-icon"></i>要點二：建立你的 AI 協作團隊</h3>
+                                <p>將 AI 視為團隊中的協作者，而非單純的工具，是提升效率的關鍵。PM 可以透過精準的指令 (Prompt Engineering)，為 AI 設定不同的「角色」，讓它在產品開發的不同階段提供專業協助。</p>
+                                <p><strong>PM 的 AI 協作團隊範例：</strong></p>
+                                <ul>
+                                    <li><strong>市場分析師 AI</strong>：協助 PM 進行競品分析、市場趨勢研究，提供數據支持。</li>
+                                    <li><strong>用戶研究員 AI</strong>：分析用戶回饋、訪談紀錄，提煉用戶痛點與需求。</li>
+                                    <li><strong>產品設計師 AI</strong>：根據 PM 的需求，生成 UI/UX 的概念草圖或流程圖。</li>
+                                    <li><strong>文案撰寫 AI</strong>：協助 PM 撰寫產品描述、用戶故事 (User Story) 或行銷文案。</li>
+                                    <li><strong>專案助理 AI</strong>：協助 PM 拆解任務、規劃時程，甚至生成初步的驗收標準 (Acceptance Criteria)。</li>
+                                </ul>
+                                <p>PM 的核心工作，轉變為管理和引導這些 AI 協作者，確保它們的產出符合產品目標，並將精力集中在更高層次的決策與創新上。例如，PM 可以這樣指示「用戶研究員 AI」：</p>
+                                <pre><code>分析 @user_feedback_q3.txt 中的用戶回饋，提煉出最常被提及的 3 個痛點和 5 個改進建議。</code></pre>
+                                <p>Gemini CLI 模擬輸出：</p>
+                                <pre><code>**用戶研究員 AI 報告：第三季度用戶回饋分析**
+
+**最常被提及的 3 個痛點：**
+1.  **功能操作複雜**：許多用戶反映新上線的「數據儀表板」功能操作流程不直觀，難以快速找到所需數據。
+2.  **通知訊息過載**：用戶收到過多不相關的通知，導致重要訊息被淹沒。
+3.  **移動端體驗不佳**：在手機或平板上使用 App 時，介面顯示異常或操作卡頓。
+
+**5 個改進建議：**
+1.  **優化儀表板導航**：重新設計數據儀表板的導航結構，增加新手引導。
+2.  **提供通知偏好設定**：允許用戶自定義接收通知的類型和頻率。
+3.  **提升移動端性能**：針對移動設備進行性能優化和介面適配。
+4.  **增加個性化推薦**：根據用戶行為推薦相關功能或內容。
+5.  **強化客服響應機制**：提供更便捷的客服入口和更快的響應速度。</code></pre>
+                            </div>
+
+                            <div class="step">
+                                <h3 id="section-3"><i class="fas fa-recycle step-icon"></i>要點三：AI 輔助的產品開發生命週期</h3>
+                                <p>AI 可以融入產品開發的各個階段，形成一個高效的生命週期：</p>
+                                <ul>
+                                    <li><strong>構思階段</strong>：PM 提出初步的產品想法，AI 協助提問、釐清，並將其結構化為具體的需求和功能點。</li>
+                                    <li><strong>驗證階段</strong>：AI 輔助生成 UI 概念或用戶故事，PM 快速驗證想法，收集早期回饋。</li>
+                                    <li><strong>迭代階段</strong>：PM 優化規格，AI 協助更新相關文件，確保產品持續演進。</li>
+                                </ul>
+                                <p>在這個過程中，PM 的角色從繁瑣的執行者轉變為策略的制定者和創意的引導者，確保產品開發的每個環節都高效且有價值。例如，在構思階段，PM 可以這樣與 AI 互動：</p>
+                                <pre><code>我有一個關於「提升用戶參與度」的產品想法，請你協助我將其拆解為 3 個核心功能點，並為每個功能點提供簡要的用戶故事。</code></pre>
+                                <p>Gemini CLI 模擬輸出：</p>
+                                <pre><code>**產品想法拆解：提升用戶參與度**
+
+**核心功能點一：個性化內容推薦**
+*   **用戶故事**：作為一名用戶，我希望 App 能根據我的興趣和歷史行為，推薦我可能喜歡的內容，這樣我能更快找到感興趣的資訊，並花更多時間在 App 上。
+
+**核心功能點二：互動式挑戰任務**
+*   **用戶故事**：作為一名用戶，我希望 App 能提供有趣的挑戰任務，完成後能獲得成就或獎勵，這樣我會更有動力持續使用 App 並與其他用戶互動。
+
+**核心功能點三：社群分享與討論**
+*   **用戶故事**：作為一名用戶，我希望能夠輕鬆地將 App 內的內容分享到社交媒體，並參與相關話題的討論，這樣我能與朋友互動，並從社群中獲得更多價值。</code></pre>
+                            </div>
+
+                            <div class="step">
+                                <h3 id="section-4"><i class="fas fa-user-tie step-icon"></i>要點四：人類角色的轉變：從執行者到決策者與創意者</h3>
+                                <p>AI 的導入，並非要取代 PM，而是要將 PM 從重複性高、耗時費力的工作中解放出來。PM 的核心價值將更加凸顯在以下方面：</p>
+                                <ul>
+                                    <li>策略思維：洞察市場趨勢，制定產品願景和發展藍圖。</li>
+                                    <li>用戶洞察：深入理解用戶需求，將抽象的痛點轉化為具體的產品機會。</li>
+                                    <li>跨職能協調：有效溝通，整合設計、開發、行銷等團隊資源。</li>
+                                    <li>決策與風險管理：在不確定性中做出明智決策，並管理產品開發過程中的風險。</li>
+                                </ul>
+                                <p>AI 成為 PM 的得力助手，協助處理資訊、生成初稿，讓 PM 有更多時間專注於這些不可取代的核心職能。</p>
+                            </div>
+
+                            <div class="step">
+                                <h3 id="section-5"><i class="fas fa-book-open step-icon"></i>要點五：「活文件」的實現：讓規格文件與產品實作保持同步</h3>
+                                <p>產品開發中常見的痛點是規格文件與實際產品脫節，導致文件成為「遺跡」。AI 可以幫助我們實現「活文件」的概念，讓規格文件始終與產品實作保持同步。</p>
+                                <p><strong>實現「活文件」的策略：</strong></p>
+                                <ul>
+                                    <li><strong>AI 輔助文件更新</strong>：當產品功能更新或調整時，PM 可以利用 AI Agent 掃描最新的產品狀態（例如，透過 Gemini CLI 引用相關文件或程式碼片段），並建議更新 PRD、用戶故事或測試案例。例如，當一個新功能開發完成後，PM 可以這樣詢問 Gemini CLI：</li>
+                                    <pre><code>根據最新的程式碼變更 @src/features/new_feature.js，請建議如何更新 PRD 中的「功能描述」和「驗收條件」章節。</code></pre>
+                                    <p>Gemini CLI 模擬輸出：</p>
+                                    <pre><code>**PRD 更新建議：新功能「即時通知」**
+
+**功能描述更新建議：**
+*   **原描述**：用戶可在 App 內接收到系統通知。
+*   **建議更新**：用戶現在可以透過 App 內通知中心和推播通知，即時接收到系統發送的各類訊息，包括訂單狀態更新、活動提醒、以及個人化推薦內容。通知支援文字和圖片展示，並可點擊跳轉至相關頁面。
+
+**驗收條件更新建議：**
+*   **新增驗收條件**：
+    *   用戶在 App 關閉狀態下，仍能收到推播通知。
+    *   通知中心能正確顯示所有歷史通知，並支援已讀未讀狀態標記。
+    *   點擊通知後，能正確導航至對應的 App 頁面。
+    *   後台管理系統能發送不同類型的推播通知，並追蹤發送狀態。</code></pre>
+                                    <li><strong>版本控制與追溯</strong>：將規格文件納入版本控制系統，並利用 AI 輔助生成每次變更的摘要或影響分析，確保所有團隊成員都能追溯文件的演進。</li>
+                                    <li><strong>自動化報告生成</strong>：AI 可以根據最新的規格和開發進度，自動生成專案報告或狀態更新，減少 PM 手動整理的時間。</li>
+                                </ul>
+                                <p>透過 AI 的協助，規格文件不再是開發完成後的附屬品，而是產品持續演進的動態指南，確保團隊始終在正確的方向上協作。</p>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="tutorial-summary">
+                        <h4>本章總結</h4>
+                        <p>在本篇文章中，我們深入探討了 AI 如何驅動敏捷開發，實現規格驅動開發 (SDD) 和活文件：</p>
+                        <ul>
+                            <li>認識到人類角色的轉變，從執行者到決策者與審核者，<strong>並且為 AI 產出負責任！</strong></li>
+                            <li>知曉並理解從「程式碼驅動」到「規格驅動開發 (SDD)」的典範轉移。</li>
+                            <li>學習建立你的 AI 協作團隊，並賦予 AI 不同角色。</li>
+                            <li>實踐 AI 輔助的產品開發生命週期，讓 AI 在構思發想、概念驗證、迭代優化階段發揮作用。</li>
+                            <li>利用 AI 實現「活文件」，讓規格文件與產品實作保持同步。</li>
+                        </ul>
+                        <p>AI 無法取代 PM(至少現在)，但懂用 AI 的 PM 將更具競爭力。我們必須為 AI 的產出負責，並持續學習，將時間花在刀口上，用省下來的時間去做更重要、更有價值的事。</p>
+                    </div>
+                </article>
+
+                <div class="d-flex justify-content-between flex-wrap mt-5">
+                    <a href="gemini-cli-tutorial-3.html" class="btn btn-secondary btn-lg mb-2 mb-md-0"><i class="fas fa-arrow-left me-2"></i>上一篇：AI 賦能產品探索與需求釐清</a>
+                    <a href="../tutorials.html" class="btn btn-primary btn-lg">返回 教學列表 <i class="fas fa-list ms-2"></i></a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="alert alert-danger text-center" role="alert">
+        <strong>重要提醒：</strong> 請勿將公司機密資料或個人隱私資料上傳至 Gemini CLI 進行處理。一旦資料上傳，即可能被用於模型訓練，且此過程不可逆。請務必確保您處理的資料符合公司政策與隱私法規。
+    </div>
+
+    <div class="back-to-top-float">
+        <a href="#table-of-contents" class="btn btn-primary rounded-circle shadow-lg">
+            <i class="fas fa-arrow-up"></i>
+        </a>
+    </div>
+
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

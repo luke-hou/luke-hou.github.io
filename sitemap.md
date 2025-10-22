@@ -11,7 +11,7 @@
 - **部落格 (Blog)**
   - `blog.html`
 - **n8n 教學 (n8n Tutorials)**
-  - `n8n-tutorials.html`
+  - `tutorials.html`
 
 ## 作品集項目 (Portfolio Projects)
 
@@ -93,6 +93,19 @@
   - `n8n_tutorials/n8n-tutorial-8.html`
 - **第九章：改造 Chat 工作流**
   - `n8n_tutorials/n8n-tutorial-9.html`
+
+## Gemini CLI 教學系列 (Gemini CLI Tutorial Series)
+
+此頁面隸屬於「教學文章」。
+
+- **第一章：環境設定與專案準備**
+  - `tutorials/gemini-cli-tutorial-1.html`
+- **第二章：Gemini CLI 基本指令與認證**
+  - `tutorials/gemini-cli-tutorial-2.html`
+- **第三章：AI 賦能產品探索與需求釐清**
+  - `tutorials/gemini-cli-tutorial-3.html`
+- **第四章：AI 驅動敏捷開發與活文件實踐**
+  - `tutorials/gemini-cli-tutorial-4.html`
 
 ---
 *注意：此地圖不包含 CSS、JavaScript、圖片、音檔或暫存文件等資源文件。*

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>n8n 教學 - Luke Hou 侯俊嘉的AI自動化工作流指南</title>
-    <meta name="description" content="Luke Hou 侯俊嘉提供的 n8n 自動化工作流教學，包含本地安裝、Supabase、Qdrant 向量資料庫、Gemini API 申請、向量資料庫填充與 AI 應用等實用指南。">
-    <meta name="keywords" content="AI, n8n教學, n8n自動化, Luke Hou, 侯俊嘉, 工作流, Supabase, Qdrant, 向量資料庫, Gemini API, AI應用, 自動化工具">
+    <title>教學文 - Luke Hou 侯俊嘉的AI自動化與工作流指南</title>
+    <meta name="description" content="Luke Hou 侯俊嘉提供的 AI 自動化與工作流教學，包含 n8n、Gemini CLI 協作、資料整理、PRD 撰寫等實用指南。">
+    <meta name="keywords" content="AI, n8n教學, Gemini CLI, PM, 產品經理, PRD, 自動化, Luke Hou, 侯俊嘉, 工作流, Supabase, Qdrant, 向量資料庫, AI應用, 自動化工具">
     <link rel="icon" href="/images/favicon.jpg" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -59,6 +59,25 @@
             background-color: #a07900;
             border-color: #a07900;
         }
+        .tutorial-series-pm {
+            background-color: #eef8f3;
+            border-color: #a6d9c1;
+        }
+        .tutorial-series-pm h2 {
+            color: #198754;
+            border-bottom-color: #198754;
+        }
+        .tutorial-series-pm h2 .series-icon {
+            color: #198754;
+        }
+        .tutorial-series-pm .btn-primary {
+            background-color: #198754;
+            border-color: #198754;
+        }
+        .tutorial-series-pm .btn-primary:hover {
+            background-color: #146c43;
+            border-color: #13653f;
+        }
     </style>
 </head>
 <body>
@@ -72,7 +91,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="index.html">♾️ 首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="n8n-tutorials.html">⚡n8n 教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="tutorials.html">⚡教學文</a></li>
                         <li class="nav-item"><a class="nav-link" href="portfolio.html">📚作品集</a></li>
                         <li class="nav-item"><a class="nav-link" href="blog.html">✈️分享</a></li>
                         
@@ -85,15 +104,69 @@
     <main class="container mt-5">
         <div class="row">
             <div class="col-lg-10 mx-auto">
-                <h1 class="text-center mb-4">鄉下人的質樸 n8n 自動化AI工作流實踐</h1>
+                <h1 class="text-center mb-4">AI 自動化與工作流教學</h1>
                 
                 <div class="intro-text mb-5">
-                    <p>歡迎來到我的 n8n 教學頁面。這裡將會從一個純樸鄉下人的角度介紹 n8n 相關的實用但不炫酷的教學內容，從基礎設定到進階的在地化部署，帶您一步步打造專屬於您的 AI 自動化流程。</p>
+                    <p>歡迎來到我的教學頁面。這裡將會分享各種 AI 自動化與工作流的實用教學，從 n8n 的基礎與進階應用，到產品經理如何與 AI 協作，提升工作效率，帶您一步步打造專屬於您的智慧流程。</p>
                 </div>
+
+                <div class="quick-links mb-5 p-4 bg-light rounded shadow-sm" id="quick-links">
+                    <h3 class="mb-3 text-primary"><i class="fas fa-external-link-alt me-2"></i>快速連結</h3>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <a href="#gemini-pm-series" class="btn btn-outline-primary w-100"><i class="fas fa-user-tie me-2"></i>PM x Gemini CLI 系列</a>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <a href="#basic-series" class="btn btn-outline-success w-100"><i class="fas fa-cogs me-2"></i>n8n 系列：基礎</a>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <a href="#advanced-series" class="btn btn-outline-warning w-100"><i class="fas fa-server me-2"></i>n8n 系列：進階</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PM & Gemini CLI 系列 -->
+                <section id="gemini-pm-series" class="tutorial-series tutorial-series-pm">
+                    <div class="text-end mb-3">
+                        <a href="#quick-links" class="btn btn-sm btn-outline-secondary"><i class="fas fa-arrow-up me-2"></i>回到快速連結</a>
+                    </div>
+                    <h2><i class="fas fa-user-tie series-icon"></i>PM x Gemini CLI 協作系列</h2>
+                    <p class="series-intro">本系列專為產品經理 (PM) 與任何需要處理大量文字資訊的工作者設計。我們將探索如何運用 Gemini CLI 工具，高效地整理使用者回饋、分析數據、發想功能、乃至於撰寫結構化的產品需求文件 (PRD)，讓 AI 成為您最強大的工作夥伴。</p>
+                    <div class="portfolio-grid">
+                        <!-- 教學項目 -->
+                        <div class="portfolio-item">
+                            <h3>PM x Gemini CLI (一)：環境設定與專案準備</h3>
+                            <img src="images/gemini_cli_tutorial01.jpg" alt="PM x Gemini CLI (一)：環境設定與專案準備" class="img-fluid">
+                            <p>從零開始，詳細介紹 Gemini CLI 的安裝、設定，以及 VS Code 環境的準備，為後續的協作流程打下堅實基礎。</p>
+                            <a href="tutorials/gemini-cli-tutorial-1.html" class="btn btn-primary">查看詳情</a>
+                        </div>
+                        <div class="portfolio-item">
+                            <h3>PM x Gemini CLI (二)：Gemini CLI 基本指令與認證</h3>
+                            <img src="images/gemini_cli_tutorial02.jpg" alt="PM x Gemini CLI (二)：Gemini CLI 基本指令與認證" class="img-fluid">
+                            <p>在專案資料夾中啟動 Gemini CLI，進行 Google 帳號認證，並說明 /init 和 /clear 指令的使用時機與功能。</p>
+                            <a href="tutorials/gemini-cli-tutorial-2.html" class="btn btn-primary">查看詳情</a>
+                        </div>
+                        <div class="portfolio-item">
+                            <h3>PM x Gemini CLI (三)：AI 賦能產品探索與需求釐清</h3>
+                            <img src="images/gemini_cli_tutorial03.jpg" alt="PM x Gemini CLI (三)：AI 賦能產品探索與需求釐清" class="img-fluid">
+                            <p>深入探討如何利用 AI 進行產品探索、需求釐清、UI 概念發想，以及自動化資訊整理與分析，讓 PM 更專注於策略與創新。</p>
+                            <a href="tutorials/gemini-cli-tutorial-3.html" class="btn btn-primary">查看詳详情</a>
+                        </div>
+                        <div class="portfolio-item">
+                            <h3>PM x Gemini CLI (四)：AI 驅動敏捷開發與活文件實踐</h3>
+                            <img src="images/gemini_cli_tutorial04.jpg" alt="PM x Gemini CLI (四)：AI 驅動敏捷開發與活文件實踐" class="img-fluid">
+                            <p>探討 AI 如何驅動敏捷開發，實現規格驅動開發 (SDD) 和活文件，並轉變 PM 與開發者的角色。</p>
+                            <a href="tutorials/gemini-cli-tutorial-4.html" class="btn btn-primary">查看詳情</a>
+                        </div>
+                    </div>
+                </section>
                 
-                <!-- 基礎系列 -->
+                <!-- n8n 基礎系列 -->
                 <section id="basic-series" class="tutorial-series">
-                    <h2><i class="fas fa-cloud series-icon"></i>基礎系列 (Supabase 雲端整合)</h2>
+                    <div class="text-end mb-3">
+                        <a href="#quick-links" class="btn btn-sm btn-outline-secondary"><i class="fas fa-arrow-up me-2"></i>回到快速連結</a>
+                    </div>
+                    <h2><i class="fas fa-cogs series-icon"></i>n8n 系列：基礎 (Supabase 雲端整合)</h2>
                     <p class="series-intro">本系列將帶您從零開始，學習 n8n 的基本操作，並整合 Supabase 雲端向量資料庫與 Gemini AI。完成後，您將擁有一個能透過雲端知識庫回答問題的基礎 RAG (檢索增強生成) 應用。</p>
                     <div class="portfolio-grid">
                         <!-- 教學項目1 -->
@@ -138,9 +211,12 @@
                     </div>
                 </section>
 
-                <!-- 在地化部署系列 -->
+                <!-- n8n 在地化部署系列 -->
                 <section id="advanced-series" class="tutorial-series tutorial-series-advanced">
-                    <h2><i class="fas fa-server series-icon"></i>進階系列：在地化部署 (Qdrant)</h2>
+                    <div class="text-end mb-3">
+                        <a href="#quick-links" class="btn btn-sm btn-outline-secondary"><i class="fas fa-arrow-up me-2"></i>回到快速連結</a>
+                    </div>
+                    <h2><i class="fas fa-server series-icon"></i>n8n 系列：進階 (在地化部署 Qdrant)</h2>
                     <p class="series-intro">本系列專為重視資料隱私與自主性的使用者設計。我們將學習如何在本地環境安裝並設定 Qdrant 向量資料庫，並將先前的工作流無縫對接到這個私有化知識庫，實現一個完全由您掌控的 RAG 應用。</p>
                     <div class="portfolio-grid">
                         <!-- 教學項目6 -->

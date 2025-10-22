@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM x Gemini CLI (三)：AI 賦能產品探索與需求釐清 - Luke Hou 侯俊嘉的AI自動化與工作流指南</title>
+    <meta name="description" content="PM 與 Gemini CLI 協作系列第四篇，深入探討如何利用 AI 進行產品探索、需求釐清、UI 概念發想，以及自動化資訊整理與分析，讓 PM 更專注於策略與創新。">
+    <meta name="keywords" content="Gemini CLI, Gemini CLI 教學, PM, 產品經理, AI 協作, 產品探索, 需求釐清, UI 概念, 資訊整理, 使用者回饋, Luke Hou, 侯俊嘉">
+    <link rel="icon" href="../images/favicon.jpg" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .tutorial-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.5rem auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .tutorial-content figure {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .tutorial-content figure img {
+            margin: 0 auto;
+        }
+        .step {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            background-color: #f8f9fa;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .step:hover {
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+        }
+        .step h3 {
+            font-size: 1.75rem;
+            color: #198754;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .step h3 .step-icon {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        code {
+            background-color: #e9ecef;
+            padding: .2rem .4rem;
+            border-radius: .2rem;
+            font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: .875em;
+        }
+        pre {
+            background-color: #212529;
+            color: #f8f9fa;
+            padding: 1rem;
+            border-radius: .3rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: inherit;
+            font-size: 1em;
+        }
+        .tutorial-intro, .tutorial-summary {
+            background-color: #eef8f3;
+            border-left: 5px solid #198754;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .alert-info-custom {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-left: 6px solid #0d6efd; /* Blue accent */
+            padding: 2rem;
+            margin: 2.5rem 0;
+            border-radius: .5rem;
+            box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+        }
+        .alert-info-custom h4 {
+            color: #0d6efd;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .alert-info-custom p, .alert-info-custom ul {
+            color: #212529;
+            font-size: 1.05rem; /* Slightly larger font for readability */
+        }
+        .alert-info-custom ul {
+            padding-left: 1.5rem;
+        }
+        .alert-info-custom ul li {
+            margin-bottom: 0.75rem;
+        }
+        .back-to-top-float {
+            position: fixed;
+            top: 50%; /* Vertically center */
+            transform: translateY(-50%); /* Adjust for element's own height */
+            right: 20px;
+            z-index: 1000; /* Ensure it's above other content */
+        }
+        .back-to-top-float .btn {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學文</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="alert alert-danger text-center" role="alert">
+        <strong>重要提醒：</strong> 請勿將公司機密資料或個人隱私資料上傳至 Gemini CLI 進行處理。一旦資料上傳，即可能被用於模型訓練，且此過程不可逆。請務必確保您處理的資料符合公司政策與隱私法規。
+    </div>
+
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <article class="blog-post">
+                    <h1 class="mb-3 display-5 border-bottom pb-3">PM x Gemini CLI (三)：AI 賦能產品探索與需求釐清</h1>
+                    <p class="text-muted mb-4">發布日期：2025年10月</p>
+
+                    <div class="tutorial-intro" id="table-of-contents">
+                        <h4>本篇文章將深入探討如何將 AI 系統性地整合到產品經理 (PM) 的工作流程中，從產品發想、需求釐清、UI 概念發想，到自動化資訊整理與分析，讓 PM 更專注於策略與創新。</h4>
+                        <p><strong>文章大綱：</strong></p>
+                        <ul>
+                            <li><a href="#section-1">要點一：AI 助力產品探索與創意發想</a></li>
+                            <li><a href="#section-2">要點二：AI 輔助 UI 概念發想與溝通</a></li>
+                            <li><a href="#section-3">要點三：AI 整理與分析使用者回饋</a></li>
+                            <li><a href="#section-4">要點四：AI 輔助規格文件初稿生成與任務拆解</a></li>
+                            <li><a href="#section-5">要點五：利用 Gemini CLI 協作產生 Mermaid 流程圖</a></li>
+                            <li><a href="#section-6">要點六：利用 Gemini CLI 聯網搜尋能力蒐集資料</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="alert alert-info-custom" role="alert">
+                        <h4>開始之前：為什麼選擇 Gemini CLI 搭配 Visual Studio Code 協作？</h4>
+                        <p>相較於網頁版的 AI 服務，將 Gemini CLI 整合到 Visual Studio Code 中進行協作，能為產品經理 (PM) 帶來顯著的效率提升與工作流優化：</p>
+                        <ul>
+                            <li><strong>直接操作與生成檔案：</strong> Gemini CLI 能夠直接讀取、修改、生成專案中的文件（如 PRD、使用者故事、程式碼等），無需手動複製貼上或上傳，大幅減少重複性工作。</li>
+                            <li><strong>即時瀏覽與編輯：</strong> 在 VS Code 中，您可以即時查看 Gemini CLI 生成的內容，並直接進行編輯和調整，確保內容符合您的需求。</li>
+                            <li><strong>上下文感知：</strong> Gemini CLI 能夠感知您當前專案的檔案結構和內容，提供更精準、更符合專案上下文的建議和輸出。</li>
+                            <li><strong>版本控制整合：</strong> 所有由 Gemini CLI 生成或修改的檔案，都能直接納入版本控制系統（如 Git）進行管理，方便追溯和協作。</li>
+                        </ul>
+                        <p>此外，您也可以建立 Agent 協作模式，為不同的任務設定專屬的 AI Agent，例如：</p>
+                        <ul>
+                            <li><strong>UI/UX Agent：</strong> 專注於介面設計、用戶體驗流程的優化與建議。</li>
+                            <li><strong>資料分析 Agent：</strong> 負責整理及分析原始資料，提供更優質的資料來源。</li>
+                            <li><strong>程式碼生成 Agent：</strong> 協助生成前端 UI 介面草稿，方便與設計師或開發人員溝通。</li>
+                        </ul>
+                        <p>透過調用不同的 AI Agent 協作，您可以更精細化地將任務分配給各個專家 Agent，讓每個 Agent 在其擅長的領域發揮最大效用，進一步提升整體效率。</p>
+                        <p>這種深度整合的協作模式，讓 PM 能夠更專注於高價值的策略思考和創新，將繁瑣的執行性工作交給 AI 處理。</p>
+                    </div>                    
+
+                    <div class="tutorial-content">
+                        <section class="step-by-step">
+                            <div class="step">
+                                <h3 id="section-1"><i class="fas fa-lightbulb step-icon"></i>要點一：AI 助力產品探索與創意發想</h3>
+                                <p>在產品發想或新需求出現的初期階段，大型語言模型 (LLM) 是 PM 絕佳的腦力激盪夥伴。我們可以透過它來進行市場趨勢分析、競品功能比較、使用者情境模擬，或是創意發想。</p>
+                                <p><strong>範例：利用 AI 進行新功能創意發想</strong></p>
+                                <p>假設我們要為一個「智慧家居 App」新增功能，以提升用戶的居家安全感。我們可以向 Gemini CLI 提出以下問題：</p>
+                                <pre><code>請為一個智慧家居 App 提出 5 個新功能，以提升用戶的居家安全感。請考慮到不同用戶群體的需求，並為每個功能提供簡要說明和潛在的用戶價值。</code></pre>
+                                <p>Gemini CLI 模擬輸出：</p>
+                                <pre><code>以下是為智慧家居 App 提出的 5 個新功能，旨在提升用戶的居家安全感：
+
+1.  **AI 異常行為偵測**
+    *   **簡要說明**：透過學習用戶日常在家中的行為模式（例如：開關燈時間、門窗進出頻率），當偵測到與常規模式顯著不同的活動時（如長時間無人活動、夜間異常移動），App 會自動發出警報通知用戶或預設的緊急聯絡人。
+    *   **潛在用戶價值**：提供主動式安全防護，減少用戶對家中安全的擔憂，尤其適合獨居老人或經常出差的用戶。
+
+2.  **虛擬看家模式**
+    *   **簡要說明**：當用戶外出時，App 可啟動「虛擬看家模式」。在此模式下，App 會隨機控制家中的燈光開關、窗簾升降，甚至播放預設的聲音（如電視聲），模擬家中有人活動的狀態。
+    *   **潛在用戶價值**：有效嚇阻潛在的竊賊，增加房屋的安全性，讓用戶外出時更加安心。
+
+3.  **緊急聯絡人一鍵通知**
+    *   **簡要說明**：在緊急情況下（例如：偵測到火災、瓦斯洩漏或用戶手動觸發），App 提供一個顯眼的一鍵通知功能，可立即向預設的緊急聯絡人（如家人、鄰居、保全公司）發送包含即時位置和事件類型的警報訊息。
+    *   **潛在用戶價值**：在危急時刻爭取寶貴的救援時間，為用戶提供快速求助的途徑。
+
+4.  **智慧門窗感應聯動**
+    *   **簡要說明**：當智慧門窗感應器偵測到未經授權的開啟或異常震動時，App 不僅會發出警報，還會自動聯動其他智慧設備，例如開啟室內燈光、啟動監控攝影機錄影，並將即時畫面推送到用戶手機。
+    *   **潛在用戶價值**：提供多層次的安全防護，讓用戶能即時掌握家中異常狀況，並提供證據。
+
+5.  **訪客遠端視訊對講**
+    *   **簡要說明**：當有訪客按門鈴時，即使用戶不在家，也能透過 App 接收到視訊通話。用戶可以遠端與訪客對話，確認身份，甚至遠端控制智慧門鎖，允許訪客進入。
+    *   **潛在用戶價值**：提升居家便利性與安全性，用戶無需擔心錯過重要訪客或包裹，同時也能有效過濾陌生人。</code></pre>
+                                <p>這些由 AI 快速生成的點子，能幫助 PM 拓寬思路，為後續的需求定義提供豐富的素材。</p>
+                            </div>
+
+                            <div class="step">
+                                <h3 id="section-2"><i class="fas fa-paint-brush step-icon"></i>要點二：AI 輔助 UI 概念發想與溝通</h3>
+                                <p>在產品提案初期，UI 設計稿的溝通往往需要耗費大量時間。PM 可以利用 Gemini CLI 直接根據自然語言描述生成前端網頁，這不僅能快速產出可互動的 UI 概念原型，更能有效加速與設計師和開發團隊的溝通效率。</p>
+                                <p><strong>範例：利用 AI 生成 UI 概念圖與前端原型</strong></p>
+                                <p>Gemini CLI 可以直接根據您的描述生成 HTML/CSS 程式碼，讓您立即看到一個基礎的前端網頁原型。這對於快速驗證想法、與團隊成員對齊視覺概念非常有幫助。當然，也可以產出詳細的 UI 元素和佈局描述，提供給其他 AI 設計工具（例如 Midjourney, Stable Diffusion 等）來生成更精緻的視覺稿。</p>
+                                <pre><code>請為一個「智慧門窗感應聯動」功能設計一個 App 介面草圖。介面應包含：門窗狀態顯示、警報開關、歷史事件記錄、緊急聯絡人設定。請描述主要元素的佈局和風格。</code></pre>
+                                <p>Gemini CLI 模擬輸出：</p>
+                                <pre><code>以下是「智慧門窗感應聯動」功能的 App 介面草圖建議：
+
+**整體風格**：簡潔、直觀，以藍色和灰色為主色調，搭配紅色警示色。
+
+**介面佈局**：
+
+1.  **頂部導覽列 (Header)**
+    *   **左側**：返回按鈕 (箭頭圖示)。
+    *   **中間**：標題「居家安全」或「門窗監控」。
+    *   **右側**：設定圖示 (齒輪圖示)。
+
+2.  **核心區域 (Main Content)**
+    *   **門窗狀態總覽卡片**：
+        *   位於介面頂部，顯示「所有門窗狀態正常」或「偵測到異常開啟」等總體狀態。
+        *   正常狀態顯示綠色勾選圖示，異常狀態顯示紅色警示圖示。
+    *   **各門窗感應器列表**：
+        *   以列表形式展示家中所有已安裝的門窗感應器（例如：「主臥窗戶」、「客廳陽台門」）。
+        *   每個列表項包含：
+            *   **圖示**：代表門或窗戶的圖示。
+            *   **名稱**：感應器名稱。
+            *   **即時狀態**：顯示「已關閉」、「已開啟」、「離線」等。異常開啟時，狀態文字顯示為紅色。
+            *   **快速操作**：可能包含一個小圖示，點擊可查看該感應器的詳細歷史記錄。
+
+3.  **底部操作區 (Footer/Action Bar)**
+    *   **警報開關**：一個明顯的開關按鈕，標示「布防」/「撤防」，用於啟用或禁用整體警報系統。
+    *   **歷史事件記錄**：一個按鈕或圖示，點擊後導航至歷史事件列表頁面，顯示所有警報、開啟/關閉記錄等。
+    *   **緊急聯絡人設定**：一個按鈕或圖示，點擊後導航至緊急聯絡人設定頁面，方便用戶管理緊急通知對象。
+
+**風格建議**：
+*   使用圓角卡片和按鈕，提升視覺親和力。
+*   重要資訊和警示使用粗體和鮮明顏色。
+*   圖示應簡潔明瞭，符合直觀操作習慣。</code></pre>
+                                <p class="mt-4">接著，我們可以直接請 Gemini CLI 生成對應的 HTML 程式碼，並直接在頁面上預覽結果：</p>
+                                <pre><code>請為「智慧門窗感應聯動」功能生成一個 Bootstrap 5 的 UI 介面 HTML 程式碼。</code></pre>
+                                <p><strong>Gemini CLI 模擬輸出 HTML : (程式碼可以跳過不看沒關係)</strong></p>
+                                <pre><code>&lt;div class="card mx-auto" style="width: 100%; max-width: 400px; font-family: sans-serif;"&gt;
+    &lt;div class="card-header text-center fw-bold"&gt;
+        居家安全
+    &lt;/div&gt;
+    &lt;div class="card-body" style="background-color: #f8f9fa;"&gt;
+        &lt;div class="card mb-3"&gt;
+            &lt;div class="card-body d-flex justify-content-between align-items-center"&gt;
+                &lt;div&gt;
+                    &lt;i class="fas fa-door-closed me-2"&gt;&lt;/i&gt;
+                    &lt;span&gt;主臥窗戶&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;span class="badge bg-success"&gt;已關閉&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="card mb-3 border-danger border-2"&gt;
+            &lt;div class="card-body d-flex justify-content-between align-items-center"&gt;
+                &lt;div&gt;
+                    &lt;i class="fas fa-door-open me-2 text-danger"&gt;&lt;/i&gt;
+                    &lt;span class="fw-bold text-danger"&gt;客廳陽台門&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;span class="badge bg-danger"&gt;異常開啟&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="card mb-3"&gt;
+            &lt;div class="card-body d-flex justify-content-between align-items-center"&gt;
+                &lt;div&gt;
+                    &lt;i class="fas fa-door-closed me-2"&gt;&lt;/i&gt;
+                    &lt;span&gt;廚房後門&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;span class="badge bg-secondary"&gt;離線&lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="card-footer d-flex justify-content-around"&gt;
+        &lt;button type="button" class="btn btn-primary"&gt;布防&lt;/button&gt;
+        &lt;button type="button" class="btn btn-outline-secondary"&gt;歷史記錄&lt;/button&gt;
+        &lt;button type="button" class="btn btn-outline-secondary"&gt;設定&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                <p class="mt-4"><strong>實際渲染效果：</strong></p>
+                                <div class="card mx-auto my-4" style="width: 100%; max-width: 400px; font-family: sans-serif;">
+                                    <div class="card-header text-center fw-bold">
+                                        居家安全
+                                    </div>
+                                    <div class="card-body" style="background-color: #f8f9fa;">
+                                        <div class="card mb-3">
+                                            <div class="card-body d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <i class="fas fa-door-closed me-2"></i>
+                                                    <span>主臥窗戶</span>
+                                                </div>
+                                                <span class="badge bg-success">已關閉</span>
+                                            </div>
+                                        </div>
+                                        <div class="card mb-3 border-danger border-2">
+                                            <div class="card-body d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <i class="fas fa-door-open me-2 text-danger"></i>
+                                                    <span class="fw-bold text-danger">客廳陽台門</span>
+                                                </div>
+                                                <span class="badge bg-danger">異常開啟</span>
+                                            </div>
+                                        </div>
+                                        <div class="card mb-3">
+                                            <div class="card-body d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <i class="fas fa-door-closed me-2"></i>
+                                                    <span>廚房後門</span>
+                                                </div>
+                                                <span class="badge bg-secondary">離線</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer d-flex justify-content-around">
+                                        <button type="button" class="btn btn-primary">布防</button>
+                                        <button type="button" class="btn btn-outline-secondary">歷史記錄</button>
+                                        <button type="button" class="btn btn-outline-secondary">設定</button>
+                                    </div>
+                                </div>
+                                <p>這些文字描述可以作為與設計師溝通的起點，幫助快速收斂設計方向，減少來回修改的時間。</p>
+                                <p>當然，您也可以提供對標產品或現有產品的實際圖片，直接 "@" 該檔案讓多模態的 Gemini 解讀，來生成更符合內部設計語言的網頁。<strong>(請注意資安規範)</strong></p>
+                            </div>
+
+                            <div class="step">
+                                <h3 id="section-3"><i class="fas fa-comments step-icon"></i>要點三：AI 整理與分析使用者回饋</h3>
+                                <p>PM 經常需要處理大量的用戶回饋，從中提取有價值的資訊。Gemini CLI 可以協助您快速整理、分析這些非結構化數據，找出關鍵痛點或需求。</p>
+                                <p><strong>範例：分析用戶回饋並生成摘要</strong></p>
+                                <p>假設您收集了大量用戶對某個新功能的意見，您可以將這些回饋去識別化，隱去所有個資跟隱私後，整理成文件（例如 <code>user_feedback.txt</code>），然後使用 Gemini CLI 進行分析：</p>
+                                <pre><code>分析以下使用者回饋，並列出前三大痛點、用戶最常提出的 5 個建議，以及整體情緒傾向：
+@user_feedback.txt</code></pre>
+                                <p>Gemini CLI 模擬輸出：</p>
+                                <pre><code>**使用者回饋分析報告**
+
+**前三大痛點：**
+1.  **功能複雜，學習曲線陡峭**：許多新用戶反映 App 功能過多，介面不夠直觀，導致上手困難，需要花費大量時間學習。
+2.  **通知過於頻繁或不精準**：用戶抱怨 App 推送的通知過於頻繁，且部分通知內容與其需求不符，造成打擾。
+3.  **數據同步延遲或錯誤**：部分用戶遇到數據同步不及時，或顯示錯誤數據的情況，影響使用體驗。
+
+**用戶最常提出的 5 個建議：**
+1.  **簡化新手引導流程**：建議增加互動式教學或更清晰的指引，幫助新用戶快速了解核心功能。
+2.  **提供通知自定義選項**：允許用戶根據個人偏好，自定義通知的類型、頻率和時間段。
+3.  **優化數據同步機制**：提升數據同步的即時性和準確性，減少延遲和錯誤。
+4.  **增加個性化推薦功能**：根據用戶的使用習慣和偏好，推薦相關內容或功能。
+5.  **改善客戶服務響應速度**：用戶希望在遇到問題時，能更快獲得客服支援。
+
+**整體情緒傾向：**
+*   **正面情緒 (35%)**：主要集中在對 App 核心功能的認可和對未來改進的期待。
+*   **中性情緒 (40%)**：多為功能性描述或一般性建議，情緒波動不大。
+*   **負面情緒 (25%)**：主要來自於對功能複雜性、通知問題和數據同步問題的不滿。</code></pre>
+                                <p>如果回饋分散在多個文件中，您可以將它們放在一個資料夾中，讓 Gemini CLI 處理整個資料夾：</p>
+                                <pre><code>分析以下資料夾中的使用者回饋文件，生成一份總結報告，包含主要問題、建議和情緒分析：
+@feedback_folder</code></pre>
+                                <p>Gemini CLI 模擬輸出：</p>
+                                <pre><code>**資料夾內使用者回饋綜合分析報告**
+
+**主要問題彙總：**
+*   **介面操作不便**：多份回饋文件均提及介面設計不夠人性化，部分功能入口隱藏較深。
+*   **性能問題**：App 在特定操作下出現卡頓或響應慢的情況，尤其是在數據量較大時。
+*   **兼容性問題**：部分用戶在舊版作業系統或特定型號手機上遇到閃退或功能異常。
+
+**綜合建議：**
+1.  **重新設計關鍵操作流程**：簡化常用功能的導航路徑，提升操作流暢度。
+2.  **進行性能優化**：針對數據加載和處理進行優化，減少卡頓現象。
+3.  **擴展兼容性測試**：確保 App 在不同設備和系統版本上的穩定運行。
+
+**整體情緒趨勢：**
+*   綜合分析顯示，用戶對產品的期望值較高，但對當前版本的功能穩定性和易用性存在較多不滿。負面情緒主要集中在技術層面和用戶體驗方面。</code></pre>
+                                <p>透過這種方式，PM 可以快速從海量數據中獲得洞察，為產品決策提供數據支持。</p>
+                            </div>
+
+                            <div class="step">
+                                <h3 id="section-4"><i class="fas fa-file-alt step-icon"></i>要點四：AI 輔助規格文件初稿生成與任務拆解</h3>
+                                <p>撰寫產品需求文件 (PRD) 或功能規格 (Spec) 是 PM 的核心工作之一。AI Agent 可以協助 PM 快速生成文件初稿，並進行初步的任務拆解，節省大量時間。</p>
+                                <p><strong>範例：生成 PRD 初稿</strong></p>
+                                <p>您可以向 Gemini CLI 提供一個高層次的功能描述，讓它協助您生成 PRD 的初步框架或內容：</p>
+                                <pre><code>請為一個「線上學習平台」的新功能「社群討論區」生成 PRD 初稿。功能應包含：發布貼文、回覆、按讚、檢舉、版主管理。請提供功能描述、使用者情境、成功指標等章節。</code></pre>
+                                <p>Gemini CLI 模擬輸出：</p>
+                                <pre><code>**產品需求文件 (PRD) 初稿：社群討論區功能**
+
+**1. 功能描述**
+    *   提供用戶一個互動交流的平台，用戶可以在課程相關的討論區發布貼文、回覆他人留言、對貼文或回覆按讚，以及檢舉不當內容。
+    *   平台管理員（版主）擁有管理討論區內容的權限，包括刪除貼文、禁言用戶等。
+
+**2. 使用者情境**
+    *   **情境一：學生提問**
+        *   小明在學習某門課程時遇到問題，他可以在該課程的討論區發布一個貼文，描述他的問題。
+        *   其他同學或助教看到後，可以回覆他的貼文，提供幫助。
+    *   **情境二：版主管理**
+        *   版主發現討論區有用戶發布不當言論，可以對該貼文進行刪除，並對發布者進行禁言處理。
+
+**3. 成功指標**
+    *   **用戶參與度**：每月活躍討論區用戶數 (MAU) 達到 30%。
+    *   **互動頻次**：平均每位活躍用戶每月發布/回覆貼文數達到 5 次。
+    *   **內容品質**：不當內容檢舉率低於 0.5%。
+    *   **問題解決率**：用戶在討論區提出的問題，70% 能在 24 小時內獲得有效回覆。</code></pre>
+                                <p>基於 AI 生成的 PRD 初稿，PM 可以進一步細化內容。此外，AI 也能協助進行初步的任務拆解：</p>
+                                <pre><code>根據上述「社群討論區」的 PRD 初稿，請將核心功能拆解為開發任務，並為每個任務提供簡要的驗收條件。</code></pre>
+                                <p>Gemini CLI 模擬輸出：</p>
+                                <pre><code>**開發任務拆解與驗收條件：社群討論區功能**
+
+**核心功能一：貼文發布與管理**
+*   **任務 1.1：用戶發布貼文**
+    *   **描述**：用戶可以在指定課程的討論區發布新的貼文，包含標題和內容。
+    *   **驗收條件**：
+        *   用戶成功發布貼文後，貼文顯示在討論區列表頂部。
+        *   貼文內容支援文字、圖片（可選）。
+        *   發布者資訊（用戶名、時間）正確顯示。
+*   **任務 1.2：貼文編輯與刪除**
+    *   **描述**：用戶可以編輯或刪除自己發布的貼文。
+    *   **驗收條件**：
+        *   只有貼文發布者可以編輯或刪除自己的貼文。
+        *   編輯後內容即時更新，刪除後貼文從列表中移除。
+
+**核心功能二：回覆與互動**
+*   **任務 2.1：用戶回覆貼文**
+    *   **描述**：用戶可以對任何貼文進行回覆。
+    *   **驗收條件**：
+        *   回覆內容顯示在對應貼文下方，並按時間排序。
+        *   回覆者資訊（用戶名、時間）正確顯示。
+*   **任務 2.2：按讚功能**
+    *   **描述**：用戶可以對貼文或回覆進行按讚操作。
+    *   **驗收條件**：
+        *   點擊按讚後，按讚數即時更新。
+        *   用戶可以取消按讚。
+
+**核心功能三：內容審核與管理 (版主功能)**
+*   **任務 3.1：檢舉不當內容**
+    *   **描述**：用戶可以檢舉討論區內的不當貼文或回覆。
+    *   **驗收條件**：
+        *   檢舉後，內容進入版主審核列表。
+        *   檢舉者資訊匿名化。
+*   **任務 3.2：版主管理介面**
+    *   **描述**：版主可以透過專屬介面審核被檢舉內容，並執行刪除貼文、禁言用戶等操作。
+    *   **驗收條件**：
+        *   版主成功刪除貼文後，貼文從討論區移除。
+        *   版主成功禁言用戶後，該用戶無法在討論區發布內容。</code></pre>
+                                <p>這能幫助 PM 快速建立專案骨架，並與開發團隊進行初步的溝通與評估。</p>
+                            </div>
+
+                            <div class="step">
+                                <h3 id="section-5"><i class="fas fa-project-diagram step-icon"></i>要點五：利用 Gemini CLI 協作產生 Mermaid 流程圖</h3>
+                                <p>在產品開發過程中，流程圖是溝通複雜邏輯和用戶旅程的有效工具。Mermaid 語法讓您能夠以文本形式快速繪製流程圖，而 Gemini CLI 則能協助您自動生成這些圖表代碼。</p>
+                                <p><strong>Mermaid 流程圖的優勢：</strong></p>
+                                <ul>
+                                    <li><strong>文本即代碼：</strong> 無需複雜的繪圖工具，只需簡單的文本描述即可生成圖表。</li>
+                                    <li><strong>版本控制友好：</strong> 流程圖代碼可以像其他代碼一樣進行版本控制，方便追蹤和協作。</li>
+                                    <li><strong>易於分享：</strong> 文本形式的流程圖可以輕鬆嵌入到文件、Wiki 或程式碼註釋中。</li>
+                                    <li><strong>AI 生成：</strong> Gemini CLI 可以根據您的需求描述，自動生成符合 Mermaid 語法的流程圖代碼。</li>
+                                </ul>
+
+                                <p><strong>範例：利用 Gemini CLI 生成用戶登入流程圖</strong></p>
+                                <p>假設您需要為一個 App 的用戶登入流程繪製流程圖，您可以向 Gemini CLI 提出以下要求：</p>
+                                <pre><code>請為一個 App 的用戶登入流程生成 Mermaid 流程圖代碼。流程應包含：
+1. 用戶打開 App
+2. 檢查是否已登入
+3. 若已登入，進入主頁
+4. 若未登入，顯示登入頁面
+5. 用戶輸入帳號密碼
+6. 點擊登入按鈕
+7. 驗證帳號密碼
+8. 若驗證成功，進入主頁
+9. 若驗證失敗，顯示錯誤訊息，返回登入頁面</code></pre>
+                                <p>Gemini CLI 模擬輸出：</p>
+                                <pre><code>```mermaid
+graph TD
+    A[用戶打開 App] --> B{檢查是否已登入?};
+    B -- 是 --> C[進入主頁];
+    B -- 否 --> D[顯示登入頁面];
+    D --> E[用戶輸入帳號密碼];
+    E --> F[點擊登入按鈕];
+    F --> G{驗證帳號密碼?};
+    G -- 成功 --> C;
+    G -- 失敗 --> H[顯示錯誤訊息];
+    H --> D;
+```</code></pre>
+                                <p>您可以將這段代碼複製到支援 Mermaid 渲染的工具（如 Notion、VS Code 擴充功能、HackMD、Mermaid.live 等）中，即可看到生成的流程圖。</p>
+
+                                <figure>
+                                    <img src="../images/gemini_cli_tutorial_mermaid.jpg" alt="更複雜的訂單處理流程圖範例">
+                                    <figcaption>圖：利用 Gemini CLI 生成用戶登入流程圖</figcaption>
+                                </figure>
+                                <p><strong>範例：利用 Gemini CLI 生成複雜業務流程圖</strong></p>
+                                <p>對於更複雜的業務流程，Gemini CLI 也能協助您快速構建：</p>
+                                <pre><code>請為一個電商平台的訂單處理流程生成 Mermaid 流程圖代碼。流程應包含：
+1. 用戶下單
+2. 檢查庫存
+3. 若庫存不足，取消訂單，通知用戶
+4. 若庫存充足，生成訂單
+5. 處理支付
+6. 若支付失敗，取消訂單，通知用戶
+7. 若支付成功，更新訂單狀態為「待出貨」
+8. 通知倉庫出貨
+9. 倉庫出貨，更新訂單狀態為「已出貨」
+10. 用戶收到商品，更新訂單狀態為「已完成」</code></pre>
+                                <p>Gemini CLI 模擬輸出：</p>
+                                <pre><code>```mermaid
+graph TD
+    A[用戶下單] --> B{檢查庫存?};
+    B -- 庫存不足 --> C[取消訂單];
+    C --> D[通知用戶];
+    B -- 庫存充足 --> E[生成訂單];
+    E --> F{處理支付?};
+    F -- 支付失敗 --> C;
+    F -- 支付成功 --> G[更新訂單狀態為「待出貨」];
+    G --> H[通知倉庫出貨];
+    H --> I[倉庫出貨];
+    I --> J[更新訂單狀態為「已出貨」];
+    J --> K[用戶收到商品];
+    K --> L[更新訂單狀態為「已完成」];
+```</code></pre>
+                                <figure>
+                                    <img src="../images/gemini_cli_tutorial_mermaid2.jpg" alt="更複雜的訂單處理流程圖範例">
+                                    <figcaption>圖：利用 Gemini CLI 生成複雜業務流程圖</figcaption>
+                                </figure>
+                                <p>透過這種方式，PM 可以快速將複雜的業務邏輯視覺化，提升團隊溝通效率，並減少潛在的理解偏差。</p>
+                            </div>
+
+                            <div class="step">
+                                <h3 id="section-6"><i class="fas fa-globe step-icon"></i>要點六：利用 Gemini CLI 聯網搜尋能力蒐集資料</h3>
+                                <p>在產品探索和需求釐清階段，PM 經常需要蒐集大量的市場資訊、競品分析或技術趨勢。Gemini CLI 整合了聯網搜尋能力，可以直接在對話中執行網路搜尋，並將結果帶回進行整理和分析，大幅提升資料蒐集的效率。</p>
+                                <p><strong>聯網搜尋的優勢：</strong></p>
+                                <ul>
+                                    <li><strong>即時性：</strong> 獲取最新的網路資訊，避免使用過時的資料。</li>
+                                    <li><strong>整合性：</strong> 直接在 CLI 環境中完成搜尋、閱讀和分析，無需頻繁切換應用程式。</li>
+                                    <li><strong>自動化整理：</strong> Gemini CLI 可以根據您的指令，自動從搜尋結果中提取關鍵資訊、生成摘要或進行比較分析。</li>
+                                </ul>
+
+                                <p><strong>範例：利用 Gemini CLI 進行競品功能分析</strong></p>
+                                <p>假設您正在開發一個新的專案管理工具，需要了解市場上主流競品（例如 Asana, Jira, Trello）的「甘特圖」功能。您可以向 Gemini CLI 提出以下要求：</p>
+                                <pre><code>請搜尋市場上主流專案管理工具（例如 Asana, Jira, Trello）的甘特圖功能，並比較它們的優缺點。</code></pre>
+                                <p>Gemini CLI 模擬輸出：</p>
+                                <pre><code>**主流專案管理工具甘特圖功能比較**
+
+GoogleSearch Searching the web for: "Asana, Jira, Trello 甘特圖功能 比較"   ：
+
+**1. Asana**
+*   **優點**：
+    *   視覺化介面直觀，易於拖放調整任務時間軸。
+    *   與 Asana 任務管理深度整合，可直接從甘特圖創建、編輯任務。
+    *   支援任務依賴關係設定，方便追蹤專案路徑。
+*   **缺點**：
+    *   部分進階功能（如基準線）可能需要更高階付費方案。
+    *   對於超大型複雜專案，性能可能受限。
+
+**2. Jira (搭配插件)**
+*   **優點**：
+    *   透過豐富的第三方插件（如 Advanced Roadmaps, BigPicture），提供高度客製化的甘特圖功能。
+    *   與 Jira 強大的問題追蹤和敏捷開發功能無縫結合。
+    *   適合技術團隊和複雜的軟體開發專案。
+*   **缺點**：
+    *   原生功能不包含甘特圖，需要額外安裝和配置插件，增加複雜度。
+    *   插件費用可能較高。
+
+**3. Trello (搭配 Power-Up)**
+*   **優點**：
+    *   透過 Power-Up (如 Gantt Chart by Planyway, Elegantt) 實現甘特圖功能，與 Trello 的看板介面結合。
+    *   操作簡單，適合小型團隊或個人專案。
+    *   視覺化效果清晰，易於理解任務進度。
+*   **缺點**：
+    *   功能相對基礎，不適合需要複雜資源管理或進度追蹤的專案。
+    *   Power-Up 可能有使用限制或額外費用。
+
+**總結**：
+*   **Asana** 適合需要直觀視覺化和任務整合的團隊。
+*   **Jira** 適合需要高度客製化和與敏捷開發流程深度整合的技術團隊。
+*   **Trello** 適合小型、簡單的專案，追求輕量級和易用性。
+
+PM 可以根據團隊規模、專案複雜度和預算，選擇最適合的工具。</code></pre>
+                                <p>透過這種方式，PM 可以快速獲取和整理網路上的公開資訊，為產品決策提供更全面的參考依據。</p>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="tutorial-summary">
+                        <h4>本章總結</h4>
+                        <p>在本篇文章中，我們探討了 AI 如何在產品探索與需求釐清階段賦能 PM：</p>
+                        <ul>
+                            <li>利用 LLM 進行創意發想與市場分析。</li>
+                            <li>透過 AI 輔助 UI 概念發想，加速設計溝通。</li>
+                            <li>實現使用者回饋的自動化整理與分析。</li>
+                            <li>結合 AI Agent 進行規格文件初稿生成與任務拆解。</li>
+                            <li>利用 Gemini CLI 協作產生 Mermaid 流程圖。</li>
+                            <li>利用 Gemini CLI 聯網搜尋能力蒐集資料。</li>
+                        </ul>
+                        <p>透過這些 AI 驅動的策略，PM 可以將更多精力投入到策略思考和創新決策中，從「忙碌的管理者」轉型為「產品賦能者」，帶領團隊高效達成產品目標。</p>
+                    </div>
+                </article>
+
+                <div class="d-flex justify-content-between flex-wrap mt-5">
+                    <a href="gemini-cli-tutorial-2.html" class="btn btn-secondary btn-lg mb-2 mb-md-0"><i class="fas fa-arrow-left me-2"></i>上一篇：Gemini CLI 基本指令與認證</a>
+                    <a href="../tutorials.html" class="btn btn-primary btn-lg mb-2 mb-md-0"><i class="fas fa-list me-2"></i>返回 教學列表</a>
+                    <a href="gemini-cli-tutorial-4.html" class="btn btn-secondary btn-lg">下一篇：AI 驅動敏捷開發與活文件實踐 <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="alert alert-danger text-center" role="alert">
+        <strong>重要提醒：</strong> 請勿將公司機密資料或個人隱私資料上傳至 Gemini CLI 進行處理。一旦資料上傳，即可能被用於模型訓練，且此過程不可逆。請務必確保您處理的資料符合公司政策與隱私法規。
+    </div>
+
+    <div class="back-to-top-float">
+        <a href="#table-of-contents" class="btn btn-primary rounded-circle shadow-lg">
+            <i class="fas fa-arrow-up"></i>
+        </a>
+    </div>
+
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>
