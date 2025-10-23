@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PM x Gemini CLI (五)：AI 驅動敏捷開發與活文件實踐 - Luke Hou 侯俊嘉的AI自動化與工作流指南</title>
+    <meta name="description" content="PM 與 Gemini CLI 協作系列第五篇，探討 AI 如何驅動敏捷開發，實現規格驅動開發 (SDD) 和活文件，並轉變 PM 與開發者的角色。">
+    <meta name="keywords" content="Gemini CLI, Gemini CLI 教學, PM, 產品經理, AI 協作, 敏捷開發, 規格驅動開發, SDD, 活文件, AI Agent, Luke Hou, 侯俊嘉">
+    <link rel="icon" href="../images/favicon.jpg" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .tutorial-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.5rem auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .tutorial-content figure {
+            margin: 1.5rem 0; 
+            text-align: center;
+        }
+        .tutorial-content figure img {
+            margin: 0 auto;
+        }
+        .step {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            background-color: #f8f9fa;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .step:hover {
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+        }
+        .step h3 {
+            font-size: 1.75rem;
+            color: #198754;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .step h3 .step-icon {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        code {
+            background-color: #e9ecef;
+            padding: .2rem .4rem;
+            border-radius: .2rem;
+            font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: .875em;
+        }
+        pre {
+            background-color: #212529;
+            color: #f8f9fa;
+            padding: 1rem;
+            border-radius: .3rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: inherit;
+            font-size: 1em;
+        }
+        .tutorial-intro, .tutorial-summary {
+            background-color: #eef8f3;
+            border-left: 5px solid #198754;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .alert-info-custom {
+            background-color: #eef8f3;
+            border-color: #a6d9c1;
+            color: #198754;
+        }
+        .back-to-top-float {
+            position: fixed;
+            top: 50%; /* Vertically center */
+            transform: translateY(-50%); /* Adjust for element's own height */
+            right: 20px;
+            z-index: 1000; /* Ensure it's above other content */
+        }
+        .back-to-top-float .btn {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學文</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="alert alert-danger text-center" role="alert">
+        <strong>重要提醒：</strong> 請勿將公司機密資料或個人隱私資料上傳至 Gemini CLI 進行處理。一旦資料上傳，即可能被用於模型訓練，且此過程不可逆。請務必確保您處理的資料符合公司政策與隱私法規。
+    </div>
+
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <article class="blog-post">
+                    <h1 class="mb-3 display-5 border-bottom pb-3">PM x Gemini CLI (五)：AI 驅動敏捷開發與活文件實踐</h1>
+                    <p class="text-muted mb-4">發布日期：2025年10月</p>
+
+                    <div class="tutorial-intro" id="table-of-contents">
+                        <h4>本篇文章將深入探討 AI 如何在敏捷產品開發流程中扮演關鍵角色，從「程式碼驅動」轉向「規格驅動開發 (SDD)」，並實現「活文件」的願景。</h4>
+                        <p><strong>文章大綱：</strong></p>
+                        <ul>
+                            <li><a href="#section-1">要點一：典範轉移：從「程式碼驅動」到「規格驅動開發 (SDD)」</a></li>
+                            <li><a href="#section-2">要點二：建立你的 AI 協作團隊</a></li>
+                            <li><a href="#section-3">要點三：AI 輔助的產品開發生命週期</a></li>
+                            <li><a href="#section-4">要點四：人類角色的轉變：從執行者到決策者與創意者</a></li>
+                            <li><a href="#section-5">要點五：「活文件」的實現：讓規格文件與產品實作保持同步</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tutorial-content">
+                        <section class="step-by-step">
+                            <div class="step">
+                                <h3 id="section-1"><i class="fas fa-exchange-alt step-icon"></i>要點一：改變工作順序：先有「清晰規格」，再有「程式碼」</h3>
+                                <p><strong>傳統的痛點：</strong> 在許多開發團隊中，規格文件 (PRD) 常常在交付給工程師後，就與實際的開發過程脫節。幾次迭代後，規格文件的參考價值越來越低，最終，產品的「真相」只存在於程式碼中，文件反而成了誤導的來源。</p>
+                                <p>AI 協作讓我們有機會重新強調**「規格優先」**的價值。因為 AI 能理解我們寫的規格文件，並輔助後續的開發與測試，這使得「維護一份清晰、準確的規格」這件事，變得空前重要且有價值。</p>
+                                
+                                <p><strong>工作流程的轉變：</strong></p>
+                                <ul>
+                                    <li><strong>規格成為「可執行的藍圖」</strong>：一份寫得好的規格，不再只是給人看的說明書。您可以直接將它交給 AI，讓 AI 根據這份「藍圖」，自動生成使用者故事、測試案例、甚至初步的程式碼框架。這讓規格本身變得「有用」，而不只是「備查」。</li>
+                                    <li><strong>PM 的精力轉移</strong>：您的主要工作，從「追著工程師問現在做到哪」的事後追蹤，轉移到「如何在一開始就定義清楚需求」的事前準備。當規格定義得越清晰，與工程師的溝通誤差空間就越小。</li>
+                                </ul>
+                                <p>在這種模式下，追蹤規格的變更也變得至關重要。您可以利用 AI 快速比對文件版本，產出清楚的變更紀錄，方便與團隊同步。</p>
+                                <pre><code>你現在是我的專案助理，請比較 @PRD_v1.0.md 和 @PRD_v1.1.md 這兩個版本的差異，並生成一份簡潔的變更摘要，讓我能快速在會議上報告。</code></pre>
+                            </div>
+
+                            <div class="step">
+                                <h3 id="section-2"><i class="fas fa-users-cog step-icon"></i>要點二：建立您的「AI 專家」，各司其職</h3>
+                                <p>一個成功的領導者，懂得如何組建團隊。在與 AI 協作時，您就是領導者，而您可以透過「角色扮演」指令，建立一個各司其職的「AI 專家團隊」。</p>
+                                <p><strong>您的 AI 專家團隊可能包含：</strong></p>
+                                <ul>
+                                    <li><strong>市場分析師</strong>：專門負責上網研究、分析競品、產出報告。</li>
+                                    <li><strong>用戶研究員</strong>：專門負責閱讀使用者回饋、訪談稿，提煉洞見。</li>
+                                    <li><strong>產品設計師</strong>：專門負責發想 UI/UX 概念、繪製流程圖。</li>
+                                    <li><strong>文案大師</strong>：專門負責撰寫引人入勝的產品文案或使用者故事。</li>
+                                    <li><strong>QA 專家</strong>：專門負責將您的規格轉化為滴水不漏的測試案例。</li>
+                                </ul>
+                                <p class="mt-3">這種指派具體角色的作法，若能搭配我們在<a href="gemini-cli-tutorial-4.html#section-3"><strong>第四篇提到的「用 todo.md 管理你的 AI 開發團隊」</strong></a>技巧，將會發揮最大的效果。</p>
+
+                                <div class="alert alert-light mt-4 border-start-3 border-success">
+                                    <h5 class="alert-heading text-success"><i class="fas fa-seedling me-2"></i>如何「培養」你的 AI 專家成員？</h5>
+                                    <p>更進一步地，您可以為每一位 AI 專家建立一個專屬的 Prompt 指令稿 (例如 <code>market_analyst.md</code>, <code>qa_expert.md</code>)，將您對這個角色的期望、工作流程、產出格式等都定義清楚。</p>
+                                    <p>您可以把這些 <code>.md</code> 檔案看作是您為每位 AI 專家量身打造的「工作手冊」。隨著您與他們協作的次數越多，您就越清楚該如何優化這些手冊，讓他們更懂您的風格、更快進入狀況。持續迭代您的 Agent Prompt，是培養與 AI 之間「默契」的關鍵，也是確保產出品質不斷提升的不二法門。</p>
+                                    <hr>
+                                    <p class="mt-3 mb-2"><strong>例如，一個「產品設計師」的指令稿 <code>product_designer.md</code> 可能會長這樣：</strong></p>
+                                    <pre class="bg-white text-dark"><code># [AI Agent] 產品設計師 (Product Designer)
+
+## 角色與目標 (Role & Goal)
+你是一位資深的產品設計師 (Product Designer)，專長是 UI/UX 與使用者體驗。你的主要目標是將模糊的產品概念，轉化為清晰、直觀、且對使用者友善的介面流程與設計草圖。你追求的不是華麗的視覺，而是流暢的體驗。
+
+## 核心原則 (Core Principles)
+- **使用者中心**：永遠將使用者的需求與心智模型放在第一位。
+- **簡潔至上**：信奉 "Don't make me think" 原則，移除所有不必要的元素。
+- **一致性**：確保你的設計與產品現有的設計語言和模式保持一致。
+- **可行性**：你的設計不僅要美觀，也要考慮到工程師實現的合理性。
+
+## 工作流程 (Workflow)
+當我給你一個功能需求時，請依照以下步驟回應：
+1.  **釐清需求**：如果我的需求不夠清晰，請主動向我提出 2-3 個關鍵問題。
+2.  **發想用戶旅程 (User Journey)**：用條列式的方式，描述使用者為了完成這個任務，會經歷的主要步驟。
+3.  **產出介面草圖描述**：根據用戶旅程，用文字詳細描述介面的佈局、核心元件、以及互動方式。
+4.  **(如果我要求)** 才生成 Mermaid 流程圖或 HTML/CSS 原型碼。
+
+## 產出格式 (Output Format)
+請嚴格使用 Markdown 格式，並依照以下的結構來組織你的回答：
+
+### 1. 需求釐清 (Clarification)
+- (你的問題)
+### 2. 使用者旅程 (User Journey)
+- 步驟一：...
+### 3. 介面草圖 (UI Sketch)
+- **畫面一：(畫面名稱)**
+  - **佈局**：...
+  - **元件**：...</code></pre>
+                                    <hr>
+                                    <p class="mt-3 mb-2"><strong>再舉一個「QA 專家」的指令稿 <code>qa_expert.md</code> 範例：</strong></p>
+                                    <pre class="bg-white text-dark"><code># [AI Agent] QA 測試專家 (QA Expert)
+
+## 角色與目標 (Role & Goal)
+你是一位經驗豐富、心思縝密但性格憤世嫉俗的 QA 測試專家。你對產品經理寫的任何規格都抱持著懷疑的態度。你的目標不是證明規格是對的，而是找出規格中所有可能的漏洞、模糊地帶與邊界條件，並將它們轉化為滴水不漏的測試案例。
+
+## 核心原則 (Core Principles)
+- **預設使用者會犯錯**：總是考慮使用者會做出非預期的、錯誤的操作。
+- **預設開發者會偷懶**：總是考慮開發者可能會忽略的邊界條件。
+- **追求 100% 覆蓋率**：你的測試案例需要涵蓋所有正面、負面、及邊界情境。
+- **清晰可執行**：每個測試案例的步驟和預期結果都必須極度清晰，任何人都能照著執行。
+
+## 工作流程 (Workflow)
+當我提供一份規格文件 (Spec) 給你時，請依照以下步驟回應：
+1.  **閱讀與質疑**：仔細閱讀規格，並對任何你覺得不明確或有歧義的地方，向我提出質疑。
+2.  **設計測試情境**：根據規格，在腦中構思所有可能的測試情境。
+3.  **產出測試案例**：將測試情境轉化為結構化的測試案例表格。
+
+## 產出格式 (Output Format)
+請嚴格使用 Markdown 表格，並依照以下的欄位來組織你的測試案例：
+
+| 案例 ID | 測試項目 | 測試情境分類 | 步驟 | 預期結果 |
+| :--- | :--- | :--- | :--- | :--- |
+| TC-XXX | (測試哪個功能) | 正面 / 負面 / 邊界 | 1. (操作步驟一)&lt;br&gt;2. (操作步驟二) | 1. (預期結果一) |</code></pre>
+                                </div>
+
+                                <p>您的核心工作，不再是親自執行所有事，而是像一位總指揮，清晰地定義問題，並將任務指派給最適合的 AI 專家去處理。例如，您可以對您的「用戶研究員 AI」下達指令：</p>
+                                <pre><code>@ux_expert.md (標記 UX 專家 Agent)
+
+這份是我們第三季度的使用者回饋，檔案在 @user_feedback_q3.txt。請深入分析，並給我一份專業報告，包含：
+1.  使用者最核心的三個抱怨是什麼？請引用原文佐證。
+2.  根據這些抱怨，你認為我們最應該優先處理的五個改進建議是什麼？請排序。
+3.  從字裡行間，你觀察到使用者對我們產品的「情緒」是什麼？是失望，還是愛之深責之切？</code></pre>
+                            </div>
+
+                            <div class="step">
+                                <h3 id="section-3"><i class="fas fa-recycle step-icon"></i>要點三：AI 驅動的敏捷開發新流程</h3>
+                                <p>當 AI 成為您團隊的一員後，整個敏捷開發的樣貌將會從瀑布式的線性流程，轉變為一個快速反應的「概念-驗證-迭代」閉環。我們可以將這個新流程視覺化如下：</p>
+                                
+                                <div class="mermaid">
+
+graph LR
+    subgraph "AI 賦能的敏捷迴圈"
+        A(PM 提出想法) --> B[第一階段：構思<br>AI 協助腦力激盪];
+        B --> C(PM 產出規格 v1);
+        C --> D[第二階段：驗證<br>AI 生成原型/使用者故事];
+        D --> E(PM 收集內外部回饋);
+        E --> F[第三階段：迭代<br>PM 優化規格 v2];
+        F --> D;
+    end
+
+    C --> G((開發團隊<br>開始實作));
+    F --> G;
+
+    style B fill:#eef8f3,stroke:#198754,stroke-width:2px
+    style D fill:#eef8f3,stroke:#198754,stroke-width:2px
+    style F fill:#eef8f3,stroke:#198754,stroke-width:2px
+
+                                </div>
+
+                                <p>這個流程的核心在於，AI 大幅縮短了每個環節所需的時間：</p>
+                                <ul>
+                                    <li><strong>構思階段</strong>：PM 提出初步的產品想法，AI 協助提問、釐清，並將其結構化為具體的需求和功能點。</li>
+                                    <pre><code>我有一個關於「提升用戶參與度」的產品想法，請你協助我將其拆解為 3 個核心功能點，並為每個功能點提供簡要的用戶故事。</code></pre>
+                                    <li><strong>驗證階段</strong>：AI 輔助生成 UI 概念或用戶故事，PM 快速驗證想法，收集早期回饋。</li>
+                                    <li><strong>迭代階段</strong>：PM 根據回饋優化規格，AI 則能快速地讀取回饋、比對規格，並產出新版的規格文件草稿。</li>
+                                    <pre><code>你現在是我的產品助理。這是上一版的使用者回饋 @feedback.txt，以及目前的規格 @spec_v1.md。請總結回饋中的主要問題，並針對規格提出修改建議，直接輸出一份更新後的規格文件 @spec_v2.md。</code></pre>
+                                </ul>
+                                <p>在這個流程中，PM 的角色更像是一位「產品建築師」，專注於設計藍圖與驗證結構，而 AI 則像是高效的施工團隊，負責將藍圖精準地實現出來。</p>
+                            </div>
+
+                            <div class="step">
+                                <h3 id="section-4"><i class="fas fa-user-tie step-icon"></i>要點四：您的角色轉變：從「執行者」到「決策者」</h3>
+                                <p>AI 的崛起，並非要取代 PM，而是要「解放」PM，或者說，是「昇華」PM。</p>
+                                <p>過去，PM 的許多時間被花在撰寫文件、整理回饋、追蹤進度等「執行性」工作上。現在，這些都可以交給 AI 處理。</p>
+                                <p><strong>您的核心價值，將更聚焦在那些真正無法被 AI 取代的、屬於人類的獨特能力上：</strong></p>
+                                <ul>
+                                    <li><strong>願景與策略</strong>：定義產品的靈魂，決定「為什麼做」以及「要做什麼」。</li>
+                                    <li><strong>同理心與洞察</strong>：真正走入用戶的世界，理解他們言語之外的需求與渴望。</li>
+                                    <li><strong>溝通與領導</strong>：凝聚團隊共識，激發團隊熱情，帶領大家朝著共同的目標前進。</li>
+                                    <li><strong>決策與擔當</strong>：在充滿不確定性的專案路上，憑藉經驗與直覺，做出關鍵決策，並為結果負責。</li>
+                                </ul>
+                                <p>AI 是您最強大的槓桿，讓您能從繁瑣的日常中脫身，專注於成為一位真正的「產品領袖」。</p>
+
+                                <div class="alert alert-warning mt-4" role="alert">
+                                    <h5 class="alert-heading"><i class="fas fa-brain me-2"></i>給每個人的提醒：如何避免「AI 腦萎縮」</h5>
+                                    <p>在享受 AI 帶來效率的同時，我們必須警惕一個陷阱：過度依賴導致自身能力下降。因此，請將 AI 的每一次產出，都當成一次「學習」與「校準」的機會。</p>
+                                    <p class="mb-0">仔細閱讀 AI 生成的內容，不僅是為了對產出負責、把關品質，更是為了持續鍛鍊您自己的判斷力。AI 越強大，您自身的獨立思考和批判性思維就越珍貴。您是最終的決策者，這個角色，AI 無法取代。</p>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <h3 id="section-5"><i class="fas fa-sync-alt step-icon"></i>要點五：讓文件跟上變化，維持規格與程式碼的同步</h3>
+                                <p>產品開發中最常見的麻煩之一，就是規格文件在幾次迭代後就失去參考價值，因為沒人有時間去手動更新它，導致文件與程式碼產生脫鉤 (out of sync)。</p>
+                                <p>AI 工具提供了一個新的可能性：透過「半自動化」的方式，大幅降低維持文件同步的時間成本，讓「活文件」不再只是個理想口號。</p>
+                                
+                                <p><strong>核心作法一：以「測試報告」為基準，更新文件</strong></p>
+                                <p>當工程師完成一個功能後，QA 團隊的測試報告是描述「產品實際上長什麼樣子」最準確的依據。您可以命令 AI 讀取這份報告，並反向更新您的規格文件，以反映產品的「真實狀態」。</p>
+                                <pre><code>你現在是我的文件同步助理。
+
+這是 QA 團隊剛產出的測試報告 @qa_report_v1.md，裡面記錄了功能的最終行為。
+
+請閱讀它，並比對我們原有的規格文件 @PRD_v1.0.md，然後幫我更新 PRD 中「功能描述」和「驗收條件」的章節，以反映產品的「實際現狀」。</code></pre>
+                                <p>這種作法，能確保您的 PRD 或規格文件，在每次開發衝刺 (Sprint) 結束後，都能快速地「追上」產品的最新狀態。</p>
+
+                                <p class="mt-4"><strong>核心作法二：以「規格文件」為基準，產生變更摘要</strong></p>
+                                <p>當您身為 PM，主動更新了規格文件後，下一個挑戰是如何快速告知所有利害關係人（工程師、設計師、測試人員）到底改了什麼。這時，您可以讓 AI 幫您做「版本比對」。</p>
+                                <pre><code>你現在是我的專案助理。
+
+請比較 @PRD_v1.1.md 和 @PRD_v1.2.md 這兩個版本的差異，並用條列式的方式，生成一份簡潔的「版本變更摘要」，讓我直接貼到 Slack 上通知團隊。</code></pre>
+                                <p>Gemini CLI 模擬輸出：</p>
+                                <pre><code>**PRD v1.2 版本變更摘要**
+
+大家好，本次 PRD 更新重點如下：
+
+- **功能調整**：登入流程中，移除了「使用 Facebook 登入」的選項。
+- **介面優化**：個人資料頁面，將「大頭貼」的顯示尺寸從 100x100px 調整為 150x150px。
+- **文案修改**：註冊按鈕的文字從「立即註冊」修改為「免費開始使用」。
+
+詳細內容請參考最新版文件，謝謝！</code></pre>
+                                <p>透過這些半自動化的作法，能大幅降低維護文件的時間成本，讓文件在整個產品生命週期中，持續保持其參考價值，真正成為團隊溝通的有效依據。</p>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="tutorial-summary">
+                        <h4>系列總結：您已完成進化！</h4>
+                        <p>恭喜您完成了整個系列的學習！您已從一位傳統的產品經理，進化為一位懂得駕馭 AI 的「產品賦能者」。</p>
+                        <p>回顧這趟旅程，您學到的不僅僅是幾個指令，而是一套全新的工作哲學：</p>
+                        <ul>
+                            <li>您學會了將 AI 當成<strong>可動手的「執行者」</strong>，而不只是聊天的對象。</li>
+                            <li>您學會了像管理團隊一樣，<strong>拆解任務、指派角色、控制流程</strong>。</li>
+                            <li>您學會了將規格文件當成<strong>「指揮中心」</strong>，並圍繞它建立高效的開發閉環。</li>
+                            <li>最重要的是，您深刻體會到，您的價值在於<strong>「提出好問題」與「做出好決策」</strong>，而非親手完成所有事。</li>
+                        </ul>
+                        <p>AI 無法取代您的願景、您的同理心、您的決策力。但它能為您掃除一切通往偉大產品之路上的繁瑣障礙。</p>
+                        <p class="fw-bold">現在，去運用您的新超能力，打造出令人驚豔的產品吧！</p>
+
+                        <div class="alert alert-info mt-4" role="alert">
+                            <h5 class="alert-heading"><i class="fas fa-crown me-2"></i>給管理者的最後一段話</h5>
+                            <p>最後，給身為管理者的您一個誠懇的建議：<strong>親自下場玩一玩。</strong></p>
+                            <p>唯有親身實踐，您才能真正理解 AI 的強大與侷限，避免因錯誤的期待，而對團隊產生「虛假的生產力幻覺」。當管理者與執行者對工具的理解出現巨大落差時，信任的裂痕也將隨之而來。共同學習、共同成長，才是通往真正 AI 賦能團隊的唯一路徑。</p>
+                        </div>
+                    </div>
+                </article>
+
+                <div class="d-flex justify-content-between flex-wrap mt-5">
+                    <a href="gemini-cli-tutorial-4.html" class="btn btn-secondary btn-lg mb-2 mb-md-0"><i class="fas fa-arrow-left me-2"></i>上一篇：AI 提升 PM 工作效率的進階實踐</a>
+                    <a href="../tutorials.html" class="btn btn-primary btn-lg">返回 教學列表 <i class="fas fa-list ms-2"></i></a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="alert alert-danger text-center" role="alert">
+        <strong>重要提醒：</strong> 請勿將公司機密資料或個人隱私資料上傳至 Gemini CLI 進行處理。一旦資料上傳，即可能被用於模型訓練，且此過程不可逆。請務必確保您處理的資料符合公司政策與隱私法規。
+    </div>
+
+    <div class="back-to-top-float">
+        <a href="#table-of-contents" class="btn btn-primary rounded-circle shadow-lg">
+            <i class="fas fa-arrow-up"></i>
+        </a>
+    </div>
+
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+</body>
+</html>

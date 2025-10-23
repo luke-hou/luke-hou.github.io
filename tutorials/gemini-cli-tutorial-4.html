@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PM x Gemini CLI (四)：AI 驅動敏捷開發與活文件實踐 - Luke Hou 侯俊嘉的AI自動化與工作流指南</title>
-    <meta name="description" content="PM 與 Gemini CLI 協作系列第五篇，探討 AI 如何驅動敏捷開發，實現規格驅動開發 (SDD) 和活文件，並轉變 PM 與開發者的角色。">
-    <meta name="keywords" content="Gemini CLI, Gemini CLI 教學, PM, 產品經理, AI 協作, 敏捷開發, 規格驅動開發, SDD, 活文件, AI Agent, Luke Hou, 侯俊嘉">
+    <title>PM x Gemini CLI (四)：AI 提升 PM 工作效率的進階實踐 - Luke Hou 侯俊嘉的AI自動化與工作流指南</title>
+    <meta name="description" content="PM 與 Gemini CLI 協作系列第四篇，介紹能貫穿整個產品開發流程的實用 AI 技巧，如利用 Mermaid 語法產生流程圖、透過聯網搜尋高效蒐集資訊，提升溝通與分析效率。">
+    <meta name="keywords" content="Gemini CLI, Gemini CLI 教學, PM, 產品經理, AI 協作, Mermaid, 流程圖, 聯網搜尋, 競品分析, Luke Hou, 侯俊嘉">
     <link rel="icon" href="../images/favicon.jpg" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -20,7 +20,7 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         .tutorial-content figure {
-            margin: 1.5rem 0; 
+            margin: 1.5rem 0;
             text-align: center;
         }
         .tutorial-content figure img {
@@ -75,11 +75,6 @@
             padding: 1.5rem;
             margin: 2rem 0;
         }
-        .alert-info-custom {
-            background-color: #eef8f3;
-            border-color: #a6d9c1;
-            color: #198754;
-        }
         .back-to-top-float {
             position: fixed;
             top: 50%; /* Vertically center */
@@ -125,157 +120,192 @@
         <div class="row">
             <div class="col-lg-10 mx-auto">
                 <article class="blog-post">
-                    <h1 class="mb-3 display-5 border-bottom pb-3">PM x Gemini CLI (四)：AI 驅動敏捷開發與活文件實踐</h1>
+                    <h1 class="mb-3 display-5 border-bottom pb-3">PM x Gemini CLI (四)：AI 提升 PM 工作效率的進階實踐</h1>
                     <p class="text-muted mb-4">發布日期：2025年10月</p>
 
                     <div class="tutorial-intro" id="table-of-contents">
-                        <h4>本篇文章將深入探討 AI 如何在敏捷產品開發流程中扮演關鍵角色，從「程式碼驅動」轉向「規格驅動開發 (SDD)」，並實現「活文件」的願景。</h4>
+                        <h4>本篇文章將介紹能貫穿整個產品開發流程的實用 AI 技巧，提升溝通與分析效率。</h4>
                         <p><strong>文章大綱：</strong></p>
                         <ul>
-                            <li><a href="#section-1">要點一：典範轉移：從「程式碼驅動」到「規格驅動開發 (SDD)」</a></li>
-                            <li><a href="#section-2">要點二：建立你的 AI 協作團隊</a></li>
-                            <li><a href="#section-3">要點三：AI 輔助的產品開發生命週期</a></li>
-                            <li><a href="#section-4">要點四：人類角色的轉變：從執行者到決策者與創意者</a></li>
-                            <li><a href="#section-5">要點五：「活文件」的實現：讓規格文件與產品實作保持同步</a></li>
+                            <li><a href="#section-1">要點一：利用 Gemini CLI 協作產生 Mermaid 流程圖</a></li>
+                            <li><a href="#section-2">要點二：利用 Gemini CLI 聯網搜尋能力蒐集資料</a></li>
+                            <li><a href="#section-3">要點三：建立 todo.md，讓 AI 逐步完成複雜任務</a></li>
+                            <li><a href="#section-4">要點四：AI 輔助撰寫驗收測試案例 (Test Case)</a></li>
+                            <li><a href="#section-5">要點五：善用 Markdown 檔案管理複雜指令</a></li>
                         </ul>
                     </div>
 
                     <div class="tutorial-content">
                         <section class="step-by-step">
                             <div class="step">
-                                <h3 id="section-1"><i class="fas fa-exchange-alt step-icon"></i>要點一：典範轉移：從「程式碼驅動」到「規格驅動開發 (SDD)」</h3>
-                                <p>在傳統的產品開發流程中，程式碼往往被視為產品的最終真相，而規格文件則容易在開發過程中逐漸與實際產品脫節，直到幾乎沒有參考價值，甚至讓過時的規格造成誤導。然而，在 AI 時代，我們可以重新思考這個模式，轉向「規格驅動開發 (Specification-Driven Development, SDD)」。</p>
-                                <p>在 SDD 的核心理念中，<strong>「規格」不再僅僅是一份靜態的說明文件，它本身就是產品的核心資產，是驅動開發的唯一真相來源。</strong></p>
-                                <ul>
-                                    <li><strong>規格即真理</strong>：PM 撰寫的規格文件成為整個專案的中心，所有開發工作都圍繞著它進行。</li>
-                                    <li><strong>AI 輔助同步</strong>：當 PM 更新規格時，AI 工具可以輔助開發團隊自動更新相關的程式碼或測試，確保文件與產品實作始終保持一致。</li>
-                                    <li><strong>持續迭代</strong>：產品上線後，PM 可以根據用戶回饋或數據分析來優化規格，AI 則能協助推動新一輪的開發迭代，形成一個高效的閉環。</li>
-                                </ul>
-                                <p>這種典範轉移，將 PM 從追趕程式碼進度的角色中解放出來，讓 PM 能夠更專注於產品的策略規劃與用戶價值的創造。PM 可以利用 Gemini CLI 協助管理和追蹤規格的變更，例如：</p>
-                                <pre><code>比較 PRD_v1.0.md 和 PRD_v1.1.md 之間的差異，並生成一份變更摘要。</code></pre>
+                                <h3 id="section-1"><i class="fas fa-project-diagram step-icon"></i>要點一：用「說」的畫流程圖 (Mermaid 語法)</h3>
+                                <p><strong>痛點場景：</strong> 為了跟工程師溝通一個複雜的用戶流程，您是否還在用 PowerPoint 或其他繪圖工具，辛苦地拉著線條、對齊著方塊？</p>
+                                <p>現在，您可以換個方式：<strong>用「說」的畫流程圖</strong>。您只需用簡單的文字描述流程，AI 就能為您生成一種叫做 「Mermaid」的標準化圖表代碼。</p>
+                                
+                                <p><strong>範例：請 AI 生成「用戶登入流程圖」</strong></p>
+                                <p>您只要像平常一樣，條列出您的邏輯步驟：</p>
+                                <pre><code>請幫我生成一個 App 用戶登入的 Mermaid 流程圖，步驟如下：
+1.  用戶打開 App
+2.  檢查是否已登入
+3.  如果已登入，就直接進主頁
+4.  如果未登入，就顯示登入頁
+5.  用戶輸入帳號密碼後點擊登入
+6.  系統驗證帳密
+7.  如果成功，進主頁
+8.  如果失敗，顯示錯誤訊息並留在登入頁</code></pre>
+                                <p>Gemini CLI 就會產出對應的 Mermaid 代碼：</p>
+                                <pre><code>```mermaid
+graph TD
+    A[用戶打開 App] --> B{檢查是否已登入?};
+    B -- 是 --> C[進入主頁];
+    B -- 否 --> D[顯示登入頁面];
+    D --> E[用戶輸入帳號密碼];
+    E --> F[點擊登入按鈕];
+    F --> G{驗證帳號密碼?};
+    G -- 成功 --> C;
+    G -- 失敗 --> H[顯示錯誤訊息];
+    H --> D;
+```</code></pre>
+                                <p>您可以將這段純文字的代碼，貼到任何支援 Mermaid 的地方 (例如 Notion、HackMD、VS Code 外掛，甚至是公司的 Wiki)，它就會自動變成一張漂亮的流程圖。這代表您的流程圖可以被版本控制、可以被輕易地複製分享，徹底告別過去的截圖地獄。</p>
+
+                                <figure>
+                                    <img src="../images/gemini_cli_tutorial_mermaid.jpg" alt="更複雜的訂單處理流程圖範例">
+                                    <figcaption>圖：將上述代碼貼到 mermaid.live 網站，即可生成流程圖</figcaption>
+                                </figure>
+                                <p>從此以後，當流程變動時，您再也不用重新拉線對齊，只需修改幾個字，就能產生新的流程圖，大幅提升溝通效率。</p>
+                            </div>
+
+                            <div class="step">
+                                <h3 id="section-2"><i class="fas fa-globe step-icon"></i>要點二：讓 AI 當您的「24 小時情報蒐集員」</h3>
+                                <p><strong>痛點場景：</strong> 明天就要報告新功能的市場分析，您還在 Google 上手動搜尋、一篇篇點開文章、複製重點到筆記中？</p>
+                                <p>Gemini CLI 內建了強大的聯網搜尋能力，能讓 AI 直接上網找資料，並根據您的要求進行即時的整理、分析、總結。它就是您最得力的情報官。</p>
+
+                                <p><strong>範例：10 分鐘完成競品功能分析</strong></p>
+                                <p>假設您想知道市場上的主流專案管理工具 (Asana, Jira, Trello) 是如何做「甘特圖」功能的，您可以這樣問：</p>
+                                <pre><code>你現在是一位資深的產品分析師。請幫我分析一下市面上三個主要專案管理工具 Asana, Jira, Trello 的「甘特圖」功能。
+
+請直接上網搜尋最新資料，並從以下三個角度比較它們的優缺點：
+1.  **易用性** (對非技術人員是否友善)
+2.  **功能深度** (是否支援複雜的專案管理需求)
+3.  **整合性** (與自身平台其他功能的結合程度)
+
+最後，請用一個總結表格呈現你的分析。</code></pre>
                                 <p>Gemini CLI 模擬輸出：</p>
-                                <pre><code>**PRD 變更摘要 (v1.0 to v1.1)**
+                                <pre><code>好的，正在為您進行競品分析... 
+GoogleSearch Searching the web for: "Asana vs Jira vs Trello Gantt chart features comparison 2025"
 
-**主要變更點：**
-*   **新增功能**：在「用戶管理」模組中，新增了「兩步驟驗證」功能。
-*   **功能調整**：將「訂單管理」模組中的「取消訂單」流程，增加了管理員審核環節。
-*   **介面優化**：更新了「產品詳情頁」的佈局，提升了圖片顯示比例。
+分析報告如下：
 
-**影響範圍評估：**
-*   **開發**：需要新增兩步驟驗證的後端 API 和前端介面；修改訂單取消的業務邏輯。
-*   **測試**：需要針對新增和修改的功能編寫新的測試案例。
-*   **用戶體驗**：用戶在登入時將會體驗到更安全的兩步驟驗證流程；訂單取消流程將會更嚴謹。</code></pre>
+**主流專案管理工具甘特圖功能比較**
+
+| 工具 | 易用性 | 功能深度 | 整合性 |
+| :--- | :--- | :--- | :--- |
+| **Asana** | ⭐⭐⭐⭐⭐ (非常直觀) | ⭐⭐⭐⭐ (中大型專案適用) | ⭐⭐⭐⭐⭐ (與任務無縫整合) |
+| **Jira** | ⭐⭐ (較為複雜) | ⭐⭐⭐⭐⭐ (極度強大，適合開發) | ⭐⭐⭐⭐ (需透過插件整合) |
+| **Trello**| ⭐⭐⭐⭐ (簡單好上手) | ⭐⭐ (適合小型專案) | ⭐⭐⭐ (需透過 Power-Up 整合) |
+
+**總結觀察：**
+- **Asana** 在易用性和功能深度上取得了最佳平衡，適合大部分混合型團隊。
+- **Jira** 功能最專業、最深度，但學習曲線也最陡峭，是軟體開發團隊的首選。
+- **Trello** 最輕量、最簡單，但功能也最受限，適合個人或小型團隊的簡單任務管理。
+
+**給您的建議：** 如果您的目標用戶包含大量非技術人員 (如 PM、行銷、設計)，**Asana** 的設計會是最好的參考起點。</code></pre>
+                                <p>過去需要一小時的資料搜集與整理，現在 AI 在幾分鐘內就能完成，讓您能把時間專注在更高層次的策略判斷上。</p>
+                            </div>
+                            <div class="step">
+                                <h3 id="section-3"><i class="fas fa-tasks step-icon"></i>要點三：用 <code>todo.md</code> 管理你的「AI 開發團隊」</h3>
+                                <p><strong>痛點場景：</strong> 您是否試過給 AI 一個非常複雜的指令，例如「幫我分析這份50頁的 PDF 市場報告，並做成簡報」，結果 AI 不是當機，就是給出牛頭不對馬嘴的答案？</p>
+                                <p>這是因為大型語言模型就像人類一樣，一次只能專注做好一件事情。與其把 AI 當成一個什麼都懂的魔術師，不如把它當成一個「能力極強、但需要清晰指令的開發者」。而您，就是那個負責拆解任務的 PM。</p>
+                                <p><strong>最佳實踐：用 <code>todo.md</code> 進行敏捷協作</strong></p>
+                                <ol>
+                                    <li><strong>建立 <code>todo.md</code></strong>：在專案中建立一個任務清單檔案。</li>
+                                    <li><strong>拆解任務</strong>：作為 PM，將您的最終目標拆解成一系列具體、可執行的小步驟。</li>
+                                    <li><strong>逐一指派</strong>：一次只給 AI 一個指令，對應清單上的一個任務。</li>
+                                    <li><strong>更新進度</strong>：AI 完成後，回到 <code>todo.md</code> 將該項任務打勾 <code>[x]</code>，然後再進行下一步。</li>
+                                </ol>
+                                <p><strong>範例：請 AI 幫您重構一個網頁</strong></p>
+                                <p>您的 <code>todo.md</code> 可能長這樣：</p>
+                                <pre><code># 重構「用戶個人資料」頁面
+
+- [ ] 讀取並理解 `user-profile.html` 的現有結構。
+- [ ] 分析並列出現有的 CSS 樣式有哪些問題。
+- [ ] 使用 Bootstrap 5 重新設計一個更現代化的版面，並生成新的 HTML 檔案 `user-profile-new.html`。
+- [ ] 為新版面撰寫一段簡要的設計說明，解釋改動的理由。</code></pre>
+                                <p>接著，您可以開始指派第一個任務：</p>
+                                <pre><code>我們開始執行 `todo.md` 的第一個任務。請先讀取 `@user-profile.html` 這個檔案，並告訴我你理解了它的結構。</code></pre>
+                                <p>這種模式能確保您永遠掌握主導權，AI 的每一步都在您的控制之下，最終產出的品質自然會大幅提升。</p>
                             </div>
 
                             <div class="step">
-                                <h3 id="section-2"><i class="fas fa-users-cog step-icon"></i>要點二：建立你的 AI 協作團隊</h3>
-                                <p>將 AI 視為團隊中的協作者，而非單純的工具，是提升效率的關鍵。PM 可以透過精準的指令 (Prompt Engineering)，為 AI 設定不同的「角色」，讓它在產品開發的不同階段提供專業協助。</p>
-                                <p><strong>PM 的 AI 協作團隊範例：</strong></p>
-                                <ul>
-                                    <li><strong>市場分析師 AI</strong>：協助 PM 進行競品分析、市場趨勢研究，提供數據支持。</li>
-                                    <li><strong>用戶研究員 AI</strong>：分析用戶回饋、訪談紀錄，提煉用戶痛點與需求。</li>
-                                    <li><strong>產品設計師 AI</strong>：根據 PM 的需求，生成 UI/UX 的概念草圖或流程圖。</li>
-                                    <li><strong>文案撰寫 AI</strong>：協助 PM 撰寫產品描述、用戶故事 (User Story) 或行銷文案。</li>
-                                    <li><strong>專案助理 AI</strong>：協助 PM 拆解任務、規劃時程，甚至生成初步的驗收標準 (Acceptance Criteria)。</li>
-                                </ul>
-                                <p>PM 的核心工作，轉變為管理和引導這些 AI 協作者，確保它們的產出符合產品目標，並將精力集中在更高層次的決策與創新上。例如，PM 可以這樣指示「用戶研究員 AI」：</p>
-                                <pre><code>分析 @user_feedback_q3.txt 中的用戶回饋，提煉出最常被提及的 3 個痛點和 5 個改進建議。</code></pre>
+                                <h3 id="section-4"><i class="fas fa-vial step-icon"></i>要點四：讓 AI 自動生成「QA 的驗收清單」</h3>
+                                <p><strong>痛點場景：</strong> 您辛苦寫完的 PRD，交給 QA 團隊後，他們寫出來的測試案例，總是因為對需求的理解有偏差，而漏掉一些您在意的細節或邊界條件？</p>
+                                <p>現在，您可以讓 AI 扮演 PM 和 QA 之間的橋樑。在您寫完規格後，直接讓 AI 根據您的規格，產出第一版的「驗收測試案例 (Test Case)」。</p>
+                                
+                                <p><strong>範例：將「貼文發布」規格轉為測試案例</strong></p>
+                                <p>假設您的規格文件 <code>spec.md</code> 中有一段：</p>
+                                <pre><code>**功能：貼文發布**
+- **使用者故事**：作為社群成員，我希望能發布一篇包含標題和內容的貼文。
+- **驗收條件**：
+    - 標題和內容都是必填。
+    - 標題不可超過 100 字。
+    - 成功發布後，應跳轉到新貼文頁面。</code></pre>
+                                <p>您可以這樣對 AI 下指令：</p>
+                                <pre><code>你是一位頂尖的 QA 專家。請根據我提供的規格文件 `@spec.md`，為「貼文發布」功能撰寫詳盡的驗收測試案例。
+
+請務必包含：
+- **正面案例** (正常操作)
+- **負面案例** (錯誤操作)
+- **邊界案例** (測試極端條件)
+
+請用表格形式呈現，欄位包含「案例ID、測試項目、步驟、預期結果」。</code></pre>
                                 <p>Gemini CLI 模擬輸出：</p>
-                                <pre><code>**用戶研究員 AI 報告：第三季度用戶回饋分析**
+                                <pre><code>**「貼文發布」功能驗收測試案例**
 
-**最常被提及的 3 個痛點：**
-1.  **功能操作複雜**：許多用戶反映新上線的「數據儀表板」功能操作流程不直觀，難以快速找到所需數據。
-2.  **通知訊息過載**：用戶收到過多不相關的通知，導致重要訊息被淹沒。
-3.  **移動端體驗不佳**：在手機或平板上使用 App 時，介面顯示異常或操作卡頓。
-
-**5 個改進建議：**
-1.  **優化儀表板導航**：重新設計數據儀表板的導航結構，增加新手引導。
-2.  **提供通知偏好設定**：允許用戶自定義接收通知的類型和頻率。
-3.  **提升移動端性能**：針對移動設備進行性能優化和介面適配。
-4.  **增加個性化推薦**：根據用戶行為推薦相關功能或內容。
-5.  **強化客服響應機制**：提供更便捷的客服入口和更快的響應速度。</code></pre>
+| 案例 ID | 測試項目 | 步驟 | 預期結果 |
+| :--- | :--- | :--- | :--- |
+| TC-001 | **正面**：成功發布 | 1. 輸入50字標題<br>2. 輸入200字內容<br>3. 點擊「發布」 | 1. 貼文成功<br>2. 頁面跳轉到新貼文 URL |
+| TC-002 | **負面**：標題為空 | 1. 不輸入標題<br>2. 輸入內容<br>3. 點擊「發布」 | 1. 提示「標題為必填」<br>2. 停在原頁面 |
+| TC-003 | **負面**：內容為空 | 1. 輸入標題<br>2. 不輸入內容<br>3. 點擊「發布」 | 1. 提示「內容為必填」<br>2. 停在原頁面 |
+| TC-004 | **邊界**：標題剛好100字 | 1. 輸入100字標題<br>2. 輸入內容<br>3. 點擊「發布」 | 1. 貼文成功<br>2. 頁面跳轉 |
+| TC-005 | **邊界**：標題101字 | 1. 輸入101字標題<br>2. 輸入內容<br>3. 點擊「發布」 | 1. 提示「標題不可超過100字」<br>2. 停在原頁面 |</code></pre>
+                                <p>這份由 AI 生成的測試案例，可以作為您和 QA 團隊討論的基礎，確保每個人對需求的理解都在同一個水平上，從源頭提升產品質量。</p>
                             </div>
-
                             <div class="step">
-                                <h3 id="section-3"><i class="fas fa-recycle step-icon"></i>要點三：AI 輔助的產品開發生命週期</h3>
-                                <p>AI 可以融入產品開發的各個階段，形成一個高效的生命週期：</p>
+                                <h3 id="section-5"><i class="fas fa-file-alt step-icon"></i>要點五：用 Markdown 檔案準備「給 AI 的書面簡報」</h3>
+                                <p><strong>痛點場景：</strong> 當您有一個複雜的想法或任務，想在小小的終端機對話框裡一次打完，是不是常常覺得很難編輯、很容易按錯送出、或是事後很難找回當初完整的指令？</p>
+                                <p>一個專業的工作習慣是：<strong>不要在對話框裡寫長篇大論</strong>。而是先把您的想法，有條理地寫在一個 Markdown (`.md`) 檔案裡。這對於處理我們在<a href="gemini-cli-tutorial-3.html#section-4"><strong>第三篇提到的「生成 PRD 初稿」</strong></a>等複雜任務時，尤其有用。</p>
+                                <p>您可以把這個檔案，看作是一份要交給 AI 助理的「書面工作簡報 (Briefing)」。在裡面用標題、列表、粗體字，把背景資訊、任務要求、輸出格式等都寫清楚。</p>
+                                <p>寫完後，只要在對話框中簡單地說：</p>
+                                <pre><code>請根據我這份簡報 `@my_complex_idea.md` 的內容，完成指定的任務。</code></pre>
+                                <p><strong>這樣做的好處：</strong>
                                 <ul>
-                                    <li><strong>構思階段</strong>：PM 提出初步的產品想法，AI 協助提問、釐清，並將其結構化為具體的需求和功能點。</li>
-                                    <li><strong>驗證階段</strong>：AI 輔助生成 UI 概念或用戶故事，PM 快速驗證想法，收集早期回饋。</li>
-                                    <li><strong>迭代階段</strong>：PM 優化規格，AI 協助更新相關文件，確保產品持續演進。</li>
+                                    <li><strong>思路更清晰</strong>：書寫過程能幫助您整理思緒。</li>
+                                    <li><strong>修改更容易</strong>：在 VS Code 中編輯文件，遠比在終端機中修改指令輕鬆。</li>
+                                    <li><strong>指令可複用</strong>：這份「簡報」可以存檔，下次有類似任務，改一改就能重複使用。</li>
                                 </ul>
-                                <p>在這個過程中，PM 的角色從繁瑣的執行者轉變為策略的制定者和創意的引導者，確保產品開發的每個環節都高效且有價值。例如，在構思階段，PM 可以這樣與 AI 互動：</p>
-                                <pre><code>我有一個關於「提升用戶參與度」的產品想法，請你協助我將其拆解為 3 個核心功能點，並為每個功能點提供簡要的用戶故事。</code></pre>
-                                <p>Gemini CLI 模擬輸出：</p>
-                                <pre><code>**產品想法拆解：提升用戶參與度**
-
-**核心功能點一：個性化內容推薦**
-*   **用戶故事**：作為一名用戶，我希望 App 能根據我的興趣和歷史行為，推薦我可能喜歡的內容，這樣我能更快找到感興趣的資訊，並花更多時間在 App 上。
-
-**核心功能點二：互動式挑戰任務**
-*   **用戶故事**：作為一名用戶，我希望 App 能提供有趣的挑戰任務，完成後能獲得成就或獎勵，這樣我會更有動力持續使用 App 並與其他用戶互動。
-
-**核心功能點三：社群分享與討論**
-*   **用戶故事**：作為一名用戶，我希望能夠輕鬆地將 App 內的內容分享到社交媒體，並參與相關話題的討論，這樣我能與朋友互動，並從社群中獲得更多價值。</code></pre>
-                            </div>
-
-                            <div class="step">
-                                <h3 id="section-4"><i class="fas fa-user-tie step-icon"></i>要點四：人類角色的轉變：從執行者到決策者與創意者</h3>
-                                <p>AI 的導入，並非要取代 PM，而是要將 PM 從重複性高、耗時費力的工作中解放出來。PM 的核心價值將更加凸顯在以下方面：</p>
-                                <ul>
-                                    <li>策略思維：洞察市場趨勢，制定產品願景和發展藍圖。</li>
-                                    <li>用戶洞察：深入理解用戶需求，將抽象的痛點轉化為具體的產品機會。</li>
-                                    <li>跨職能協調：有效溝通，整合設計、開發、行銷等團隊資源。</li>
-                                    <li>決策與風險管理：在不確定性中做出明智決策，並管理產品開發過程中的風險。</li>
-                                </ul>
-                                <p>AI 成為 PM 的得力助手，協助處理資訊、生成初稿，讓 PM 有更多時間專注於這些不可取代的核心職能。</p>
-                            </div>
-
-                            <div class="step">
-                                <h3 id="section-5"><i class="fas fa-book-open step-icon"></i>要點五：「活文件」的實現：讓規格文件與產品實作保持同步</h3>
-                                <p>產品開發中常見的痛點是規格文件與實際產品脫節，導致文件成為「遺跡」。AI 可以幫助我們實現「活文件」的概念，讓規格文件始終與產品實作保持同步。</p>
-                                <p><strong>實現「活文件」的策略：</strong></p>
-                                <ul>
-                                    <li><strong>AI 輔助文件更新</strong>：當產品功能更新或調整時，PM 可以利用 AI Agent 掃描最新的產品狀態（例如，透過 Gemini CLI 引用相關文件或程式碼片段），並建議更新 PRD、用戶故事或測試案例。例如，當一個新功能開發完成後，PM 可以這樣詢問 Gemini CLI：</li>
-                                    <pre><code>根據最新的程式碼變更 @src/features/new_feature.js，請建議如何更新 PRD 中的「功能描述」和「驗收條件」章節。</code></pre>
-                                    <p>Gemini CLI 模擬輸出：</p>
-                                    <pre><code>**PRD 更新建議：新功能「即時通知」**
-
-**功能描述更新建議：**
-*   **原描述**：用戶可在 App 內接收到系統通知。
-*   **建議更新**：用戶現在可以透過 App 內通知中心和推播通知，即時接收到系統發送的各類訊息，包括訂單狀態更新、活動提醒、以及個人化推薦內容。通知支援文字和圖片展示，並可點擊跳轉至相關頁面。
-
-**驗收條件更新建議：**
-*   **新增驗收條件**：
-    *   用戶在 App 關閉狀態下，仍能收到推播通知。
-    *   通知中心能正確顯示所有歷史通知，並支援已讀未讀狀態標記。
-    *   點擊通知後，能正確導航至對應的 App 頁面。
-    *   後台管理系統能發送不同類型的推播通知，並追蹤發送狀態。</code></pre>
-                                    <li><strong>版本控制與追溯</strong>：將規格文件納入版本控制系統，並利用 AI 輔助生成每次變更的摘要或影響分析，確保所有團隊成員都能追溯文件的演進。</li>
-                                    <li><strong>自動化報告生成</strong>：AI 可以根據最新的規格和開發進度，自動生成專案報告或狀態更新，減少 PM 手動整理的時間。</li>
-                                </ul>
-                                <p>透過 AI 的協助，規格文件不再是開發完成後的附屬品，而是產品持續演進的動態指南，確保團隊始終在正確的方向上協作。</p>
+                                <p>這個簡單的習慣，會讓您與 AI 的協作變得更穩定、更專業，產出品質也會更高。</p>
                             </div>
                         </section>
                     </div>
 
                     <div class="tutorial-summary">
                         <h4>本章總結</h4>
-                        <p>在本篇文章中，我們深入探討了 AI 如何驅動敏捷開發，實現規格驅動開發 (SDD) 和活文件：</p>
+                        <p>在本篇文章中，我們介紹了提升 PM 工作效率的實用 AI 技巧：</p>
                         <ul>
-                            <li>認識到人類角色的轉變，從執行者到決策者與審核者，<strong>並且為 AI 產出負責任！</strong></li>
-                            <li>知曉並理解從「程式碼驅動」到「規格驅動開發 (SDD)」的典範轉移。</li>
-                            <li>學習建立你的 AI 協作團隊，並賦予 AI 不同角色。</li>
-                            <li>實踐 AI 輔助的產品開發生命週期，讓 AI 在構思發想、概念驗證、迭代優化階段發揮作用。</li>
-                            <li>利用 AI 實現「活文件」，讓規格文件與產品實作保持同步。</li>
+                            <li>利用 Gemini CLI 協作產生 Mermaid 流程圖，提升溝通效率。</li>
+                            <li>利用 Gemini CLI 聯網搜尋能力蒐集資料，為產品決策提供數據支持。</li>
+                            <li>建立 <code>todo.md</code> 任務清單，將複雜任務拆解，引導 AI 逐步完成。</li>
+                            <li>根據規格文件 (<code>spec.md</code>)，自動生成驗收測試案例，加速開發流程並確保品質。</li>
+                            <li>善用 Markdown 檔案預先管理複雜指令，提升溝通效率與穩定性。</li>
                         </ul>
-                        <p>AI 無法取代 PM(至少現在)，但懂用 AI 的 PM 將更具競爭力。我們必須為 AI 的產出負責，並持續學習，將時間花在刀口上，用省下來的時間去做更重要、更有價值的事。</p>
+                        <p>透過這些 AI 驅動的策略，PM 可以將更多精力投入到策略思考和創新決策中，從「忙碌的管理者」轉型為「產品賦能者」，帶領團隊高效達成產品目標。</p>
                     </div>
                 </article>
 
                 <div class="d-flex justify-content-between flex-wrap mt-5">
-                    <a href="gemini-cli-tutorial-3.html" class="btn btn-secondary btn-lg mb-2 mb-md-0"><i class="fas fa-arrow-left me-2"></i>上一篇：AI 賦能產品探索與需求釐清</a>
-                    <a href="../tutorials.html" class="btn btn-primary btn-lg">返回 教學列表 <i class="fas fa-list ms-2"></i></a>
+                    <a href="gemini-cli-tutorial-3.html" class="btn btn-secondary btn-lg mb-2 mb-md-0"><i class="fas fa-arrow-left me-2"></i>上一篇：AI 賦能產品探索與定義</a>
+                    <a href="../tutorials.html" class="btn btn-primary btn-lg mb-2 mb-md-0"><i class="fas fa-list me-2"></i>返回 教學列表</a>
+                    <a href="gemini-cli-tutorial-5.html" class="btn btn-secondary btn-lg">下一篇：AI 驅動敏捷開發與活文件實踐 <i class="fas fa-arrow-right ms-2"></i></a>
                 </div>
             </div>
         </div>

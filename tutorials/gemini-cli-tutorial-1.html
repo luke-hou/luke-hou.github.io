@@ -137,99 +137,132 @@
                     <div class="tutorial-content">
                         <section class="step-by-step">
                             <div class="step">
-                                <h3><i class="fas fa-code step-icon"></i>步驟一：安裝 Node.js</h3>
-                                <p>Gemini CLI 是一個基於 Node.js 的工具，因此在安裝 Gemini CLI 之前，您需要先安裝 Node.js。</p>
-                                <p>請參考 <a href="../n8n_tutorials/n8n-tutorial-1.html#步驟一：下載 Node.js" target="_blank">n8n 教學 (一)：本地安裝 Node.js 與 n8n 環境建置 - 步驟一：下載 Node.js</a> 的說明，完成 Node.js 的安裝。</p>
+                                <h3><i class="fas fa-code step-icon"></i>步驟一：安裝 Node.js (工具的「地基」)</h3>
+                                <p>您可以把 <strong>Node.js</strong> 想像成蓋房子前的「地基」或「作業系統」。就像您的電腦需要 Windows 或 macOS 才能執行 Word 或 Photoshop 一樣，許多好用的開發工具 (包含我們的主角 Gemini CLI) 都需要先安裝 Node.js 這個穩固的基礎，才能在上面順利運作。</p>
+                                <p>簡單來說，這是第一步，也是最重要的一步。請參考 <a href="../n8n_tutorials/n8n-tutorial-1.html#步驟一：下載 Node.js" target="_blank">n8n 教學 (一) 的步驟一</a>，完成 Node.js 的安裝。</p>
                             </div>
 
                             <div class="step">
-                                <h3><i class="fas fa-terminal step-icon"></i>步驟二：安裝 Gemini CLI</h3>
-                                <p>Node.js 安裝完成後，您可以使用 npm (Node.js 的套件管理器) 來安裝 Gemini CLI。請根據您的作業系統選擇對應的安裝指令。</p>
+                                <h3><i class="fas fa-terminal step-icon"></i>步驟二：安裝 Gemini CLI (真正的「AI助理」)</h3>
+                                <p>地基打好後，我們來安裝主角 Gemini CLI。安裝 Node.js 時，會附帶一個名為 <strong>npm</strong> 的小工具，您可以把它想像成「開發工具的 App Store」。我們就是透過這個 App Store 來安裝 Gemini CLI。</p>
+                                <p>接下來，我們要打開一個叫做「終端機」的程式。它可能看起來有點陌生，不像我們平常點擊圖示的操作介面。您可以把它想像成一個**直接跟電腦下指令的對話框**，我們用打字的方式命令電腦做事，非常直接且高效。</p>
+                                <div class="alert alert-info small py-2">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    <strong>小提示：</strong>在接下來的文章中，所有指稱「終端機」、「CMD」或「PowerShell」的地方，您都可以把它們想像成是您與 AI 助理進行文字對話的「小黑窗」或「對話視窗」。
+                                </div>
                                 <div class="platform-comparison">
                                     <div class="platform-column">
                                         <h4>Windows</h4>
-                                        <p>開啟命令提示字元 (CMD) 或 PowerShell，輸入以下指令：</p>
+                                        <p>打開「命令提示字元 (CMD)」或「PowerShell」，輸入以下指令後按下 Enter：</p>
                                         <pre><code>npm install -g @google/gemini-cli</code></pre>
+                                        <p class="mt-2"><small>💡 這裡的 <code>-g</code> 是個小技巧，代表「安裝在共用區」。這樣不論您在哪個資料夾工作，隨時都能呼叫 Gemini CLI 這個助理。</small></p>
                                     </div>
                                     <div class="platform-column">
                                         <h4>macOS</h4>
-                                        <p>開啟終端機 (Terminal)，輸入以下指令：</p>
+                                        <p>打開「終端機 (Terminal)」，輸入以下指令後按下 Enter：</p>
                                         <pre><code>npm install -g @google/gemini-cli</code></pre>
-                                        <p>如果遇到權限問題，您可能需要使用 <code>sudo</code>：</p>
+                                        <p class="mt-2"><small>💡 這裡的 <code>-g</code> 是個小技巧，代表「安裝在共用區」。這樣不論您在哪個資料夾工作，隨時都能呼叫 Gemini CLI 這個助理。</small></p>
+                                        <p>如果看到 "permission denied" (權限不足) 的錯誤，別擔心！這只是系統需要您給它管理員權限。請在指令最前面加上 <code>sudo</code> (就像是跟警衛說「我是管理員」)，然後再輸入一次密碼即可：</p>
                                         <pre><code>sudo npm install -g @google/gemini-cli</code></pre>
                                     </div>
                                 </div>
-                                <p class="mt-3">安裝完成後，您可以輸入以下指令來驗證 Gemini CLI 是否成功安裝：</p>
+                                <p class="mt-3">安裝完成後，可以輸入以下指令來「點名」，確認您的 AI 助理是否已成功報到：</p>
                                 <pre><code>gemini -v</code></pre>
-                                <p>如果成功安裝，您會看到類似 <code>1.0.0</code> 的版本號碼回傳。</p>
+                                <p>如果它回應一串版本號碼 (例如 <code>1.0.0</code>)，就代表安裝成功了！</p>
                             </div>
 
                             <div class="step">
-                                <h3><i class="fas fa-desktop step-icon"></i>步驟三：安裝 Visual Studio Code</h3>
-                                <p>Visual Studio Code (VS Code) 是一個輕量且功能強大的程式碼編輯器，我們將使用它來編輯和管理我們的專案檔案。</p>
+                                <h3><i class="fas fa-desktop step-icon"></i>步驟三：安裝 VS Code (我們的「工作室」)</h3>
+                                <p>Visual Studio Code (簡稱 VS Code) 是一個功能強大又好用的免費編輯器。您可以把它想像成我們的「數位工作室」，之後所有與 AI 協作的檔案、筆記和程式碼，都會在這裡進行編輯和管理。</p>
                                 <div class="platform-comparison">
                                     <div class="platform-column">
                                         <h4>Windows</h4>
-                                        <p>前往 <a href="https://code.visualstudio.com/download" target="_blank">VS Code 官方網站</a> 下載 Windows 版本的安裝程式，並按照指示完成安裝。</p>
+                                        <p>前往 <a href="https://code.visualstudio.com/download" target="_blank">VS Code 官方網站</a>，下載 Windows 安裝檔並完成安裝。</p>
                                     </div>
                                     <div class="platform-column">
                                         <h4>macOS</h4>
-                                        <p>前往 <a href="https://code.visualstudio.com/download" target="_blank">VS Code 官方網站</a> 下載 macOS 版本的安裝程式，並按照指示完成安裝。</p>
+                                        <p>前往 <a href="https://code.visualstudio.com/download" target="_blank">VS Code 官方網站</a>，下載 macOS 安裝檔並完成安裝。</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="step">
-                                <h3><i class="fas fa-folder-open step-icon"></i>步驟四：建立專案資料夾</h3>
-                                <p>首先，在您的電腦上建立一個新的資料夾，用來存放所有與 Gemini CLI 協作相關的資料和文件。建議命名為清晰的名稱如 <code>NHI-payment-guidelines</code> 之類有意義的名稱。</p>
+                                <h3><i class="fas fa-folder-open step-icon"></i>步驟四：建立專案資料夾 (專屬的「專案檔案櫃」)</h3>
+                                <p>在您的電腦上建立一個新的資料夾，作為存放所有 AI 協作專案的「檔案櫃」。建議取一個有意義的名稱，例如專案名稱 <code>NHI-payment-guidelines</code>，方便日後查找。</p>
+                                <p class="mt-2"><small>💡 您可以使用滑鼠右鍵新增資料夾，也可以在「終端機」中輸入以下指令來建立，體驗一下用指令操作的感覺！</small></p>
                                 <div class="platform-comparison">
                                     <div class="platform-column">
                                         <h4>Windows</h4>
-                                        <p>在您希望建立專案的位置，例如 <code>C:\Users\您的使用者名稱\Documents</code>，右鍵點擊空白處，選擇「新增」->「資料夾」，然後輸入資料夾名稱。</p>
-                                        <pre><code>mkdir C:\Users\您的使用者名稱\Documents\gemini-cli-projects</code></pre>
+                                        <p>在您常用的工作區 (例如「文件」)，用滑鼠右鍵新增資料夾。</p>
+                                        <pre><code>mkdir C:\Users\您的使用者名稱\Documents\gemini-projects</code></pre>
                                     </div>
                                     <div class="platform-column">
                                         <h4>macOS</h4>
-                                        <p>開啟 Finder，導航到您希望建立專案的位置，例如 <code>~/Documents</code>，然後右鍵點擊空白處，選擇「新增檔案夾」，然後輸入檔案夾名稱。</p>
-                                        <pre><code>mkdir ~/Documents/gemini-cli-projects</code></pre>
+                                        <p>在您常用的工作區 (例如「文件」)，用右鍵新增檔案夾。</p>
+                                        <pre><code>mkdir ~/Documents/gemini-projects</code></pre>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="step">
-                                <h3><i class="fas fa-file-code step-icon"></i>步驟五：使用 VS Code 開啟專案資料夾</h3>
-                                <p>開啟 Visual Studio Code，然後將您剛才建立的專案資料夾開啟。</p>
+                                <h3><i class="fas fa-file-code step-icon"></i>步驟五：在 VS Code 開啟專案 (進入「工作室」開始工作)</h3>
+                                <p>打開 VS Code，並將您剛剛建立的專案資料夾打開，這代表我們要正式進入工作室，準備開始專案了。</p>
                                 <div class="platform-comparison">
                                     <div class="platform-column">
                                         <h4>Windows</h4>
-                                        <p>點擊 VS Code 左上角的「檔案」->「開啟資料夾...」，然後選擇您剛才建立的 <code>gemini-cli-projects</code> 資料夾。</p>
-                                        <p>或者，您可以在命令提示字元或 PowerShell 中，導航到該資料夾，然後輸入 <code>code .</code>：</p>
-                                        <pre><code>cd C:\Users\您的使用者名稱\Documents\gemini-cli-projects
+                                        <p>點擊 VS Code 左上角的「檔案」->「開啟資料夾...」，然後選擇您剛才建立的資料夾。</p>
+                                        <p>或者，在終端機裡先切換到專案資料夾，然後輸入 <code>code .</code> (這個點代表「這裡」)，讓 VS Code 直接打開目前的資料夾：</p>
+                                        <pre><code>cd C:\Users\您的使用者名稱\Documents\gemini-projects
 code .</code></pre>
                                     </div>
                                     <div class="platform-column">
                                         <h4>macOS</h4>
-                                        <p>點擊 VS Code 左上角的「檔案」->「開啟...」，然後選擇您剛才建立的 <code>gemini-cli-projects</code> 檔案夾。</p>
-                                        <p>或者，您可以在終端機中，導航到該檔案夾，然後輸入 <code>code .</code>：</p>
-                                        <pre><code>cd ~/Documents/gemini-cli-projects
+                                        <p>點擊 VS Code 左上角的「檔案」->「開啟...」，然後選擇您剛才建立的檔案夾。</p>
+                                        <p>或者，在終端機裡先切換到專案檔案夾，然後輸入 <code>code .</code>：</p>
+                                        <pre><code>cd ~/Documents/gemini-projects
 code .</code></pre>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="step">
-                                <h3><i class="fas fa-puzzle-piece step-icon"></i>步驟六：安裝 Markdown 渲染外掛</h3>
-                                <p>為了更好地預覽和編輯 Markdown 文件 (Gemini CLI 經常會輸出 Markdown 格式的內容)，我們建議安裝一個 Markdown 渲染外掛。這裡以「Markdown Preview Enhanced」為例。</p>
+                                <h3><i class="fas fa-puzzle-piece step-icon"></i>步驟六：安裝 Markdown 美化外掛</h3>
+                                <p>Gemini CLI 很常以 <strong>Markdown</strong> 格式回覆我們，這是一種輕量的筆記語法。為了讓這種格式的內容在我們的「工作室」(VS Code) 中看起來更漂亮、更像一份正式文件，我們需要安裝一個美化用的外掛。</p>
                                 <ol>
-                                    <li>開啟 VS Code。</li>
-                                    <li>點擊左側活動欄的「擴充功能」圖示 (或按下 <code>Ctrl+Shift+X</code>)。</li>
+                                    <li>打開 VS Code。</li>
+                                    <li>點擊左邊像俄羅斯方塊一樣的「擴充功能」圖示 (快捷鍵 <code>Ctrl+Shift+X</code>)。</li>
                                     <li>在搜尋框中輸入 <code>Markdown Preview Enhanced</code>。</li>
-                                    <li>找到該擴充功能後，點擊「安裝」。</li>
+                                    <li>找到它之後，點擊「安裝」。</li>
                                 </ol>
-                                <p>安裝完成後，您可以在編輯 Markdown 文件時，點擊右上角的預覽按鈕，或右鍵點擊文件選擇「開啟預覽」，即可看到渲染後的 Markdown 內容。</p>
+                                <figure class="text-center my-4">
+                                    <img src="../images/gemini_cli_tutorial01.jpg" alt="VS Code extension marketplace showing Markdown Preview Enhanced" class="img-fluid rounded shadow">
+                                    <figcaption class="mt-2 text-muted">圖：在 VS Code 中安裝 Markdown 美化外掛。</figcaption>
+                                </figure>
+                                <p>安裝後，當您打開一個 `.md` 結尾的 Markdown 檔案時，就可以點擊右上角的「預覽」按鈕，看到它被美化排版後的樣子了。</p>
                             </div>
                         </section>
                     </div>
+
+                    <div class="alert alert-primary d-flex align-items-center" role="alert">
+                        <i class="fas fa-lightbulb fa-2x me-3"></i>
+                        <div>
+                            <h4 class="alert-heading">專家工作流：把「工作室」和「AI 助理」分開！</h4>
+                            <p>雖然 VS Code 裡面也可以開終端機，但我們強烈建議您**另外打開一個獨立的終端機視窗，和 VS Code 左右並排**，就像下圖那樣。</p>
+                            <p>為什麼要這麼麻煩？因為這樣做有三大好處：</p>
+                            <ul>
+                                <li><strong>角色分明不混亂</strong>：左邊是您的「工作室」(VS Code)，專心處理文件；右邊是您的「AI 助理」(終端機)，專心與 AI 對話。分工清楚，思路才不會打結。</li>
+                                <li><strong>保留完整對話紀錄</strong>：獨立的終端機可以儲存非常長的對話歷史，方便您隨時回頭查看「上次跟 AI 聊了什麼」。</li>
+                                <li><strong>避免視窗被蓋掉</strong>：不會因為在 VS Code 裡忙別的事情，而不小心把與 AI 的對話視窗給關掉或蓋住。</li>
+                            </ul>
+                            <hr>
+                            <p class="mb-0">一個好的桌面佈局，是高效工作的開始。把您的 AI 助理放在一個專屬的位置吧！</p>
+                        </div>
+                    </div>
+
+                    <figure class="text-center my-4">
+                        <img src="../images/gemini-cli-workflow-setup.jpg" alt="VS Code and Gemini CLI side-by-side workflow" class="img-fluid rounded shadow">
+                        <figcaption class="mt-2 text-muted">圖：建議的工作流佈局：左邊是 VS Code 工作室，右邊是獨立的 Gemini CLI 助理視窗。</figcaption>
+                    </figure>
 
                     <div class="tutorial-summary">
                         <h4>本章總結</h4>
