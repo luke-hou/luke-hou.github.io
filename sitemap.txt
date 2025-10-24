@@ -58,6 +58,8 @@
 
 此頁面隸屬於「部落格」。
 
+- **AI 驅動的 Web 自動化測試策略**
+  - `blog/ai_driven_web_testing.html`
 - **大甲八卦掌武學總會**
   - `blog/Dajia Martial Arts.html`
 - **Git 新手教學**
@@ -96,7 +98,7 @@
 
 ## Gemini CLI 教學系列 (Gemini CLI Tutorial Series)
 
-此頁面隸屬於「教學文章」。
+此頁面隸屬於「教學文」。
 
 - **第一章：環境設定與專案準備**
   - `tutorials/gemini-cli-tutorial-1.html`
@@ -106,6 +108,8 @@
   - `tutorials/gemini-cli-tutorial-3.html`
 - **第四章：AI 驅動敏捷開發與活文件實踐**
   - `tutorials/gemini-cli-tutorial-4.html`
+- **第五章：AI 驅動敏捷開發與活文件實踐**
+  - `tutorials/gemini-cli-tutorial-5.html`
 
 ---
 *注意：此地圖不包含 CSS、JavaScript、圖片、音檔或暫存文件等資源文件。*

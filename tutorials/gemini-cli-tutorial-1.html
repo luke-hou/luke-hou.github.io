@@ -107,7 +107,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學文章</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學文</a></li>
                         <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
                     </ul>
@@ -121,7 +121,15 @@
             <div class="col-lg-10 mx-auto">
                 <article class="blog-post">
                     <h1 class="mb-3 display-5 border-bottom pb-3">PM x Gemini CLI (一)：環境設定與專案準備</h1>
-                    <p class="text-muted mb-4">發布日期：2025年10月</p>
+                    <p class="text-muted mb-4">發布日期：2025年10月25日</p>
+
+                    <div class="alert alert-success mb-4" role="alert">
+                        <h4 class="alert-heading">🚀 為什麼 PM 要學 Gemini CLI + VS Code？</h4>
+                        <p>身為產品經理，每天都在跟無數的文件、需求、數據和會議奮戰。如果有一個方法，可以從繁瑣的庶務中解放出來，將精力專注在產品策略、使用者體驗和團隊溝通上，那該有多好？</p>
+                        <p>這就是本系列文章要帶給您的核心價值：學習如何透過 <strong>Gemini CLI</strong> 這個強大的 AI 命令列工具，結合 <strong>VS Code</strong> 這個專業的編輯器，打造一個專屬於 PM 的高效工作流。我們將不再只是「使用」AI，而是「指揮」AI，讓它成為您最得力的數位助理，幫您處理文件、分析資料、生成報告，甚至與工程師進行更順暢的技術溝通。</p>
+                        <hr>
+                        <p class="mb-0">忘掉那些複雜的設定和令人生畏的程式碼，本教學將用最淺顯易懂的方式，帶您一步步從零開始。準備好，讓您的工作效率翻十倍了嗎？</p>
+                    </div>
 
                     <div class="tutorial-intro">
                         <h4>本篇文章將引導您完成 Gemini CLI 的基礎環境建置，並準備好您的專案工作環境，為後續的深度協作打下堅實基礎。</h4>
@@ -188,7 +196,7 @@
 
                             <div class="step">
                                 <h3><i class="fas fa-folder-open step-icon"></i>步驟四：建立專案資料夾 (專屬的「專案檔案櫃」)</h3>
-                                <p>在您的電腦上建立一個新的資料夾，作為存放所有 AI 協作專案的「檔案櫃」。建議取一個有意義的名稱，例如專案名稱 <code>NHI-payment-guidelines</code>，方便日後查找。</p>
+                                <p>在您的電腦上建立一個新的資料夾，作為存放所有 AI 協作專案的「檔案櫃」。建議取一個有意義的名稱，例如專案名稱 <code>gemini-projects</code>，方便日後查找。</p>
                                 <p class="mt-2"><small>💡 您可以使用滑鼠右鍵新增資料夾，也可以在「終端機」中輸入以下指令來建立，體驗一下用指令操作的感覺！</small></p>
                                 <div class="platform-comparison">
                                     <div class="platform-column">
@@ -227,7 +235,7 @@ code .</code></pre>
 
                             <div class="step">
                                 <h3><i class="fas fa-puzzle-piece step-icon"></i>步驟六：安裝 Markdown 美化外掛</h3>
-                                <p>Gemini CLI 很常以 <strong>Markdown</strong> 格式回覆我們，這是一種輕量的筆記語法。為了讓這種格式的內容在我們的「工作室」(VS Code) 中看起來更漂亮、更像一份正式文件，我們需要安裝一個美化用的外掛。</p>
+                                <p>Gemini CLI 很常以 <strong>Markdown</strong> 格式回覆我們，這是一種輕量的筆記語法。除此之外，我們也會用這種格式來撰寫 Prompt 跟 AI 溝通，為了讓這種格式的內容在我們的「工作室」(VS Code) 中看起來更漂亮、更像一份正式文件，我們需要安裝一個美化用的外掛。</p>
                                 <ol>
                                     <li>打開 VS Code。</li>
                                     <li>點擊左邊像俄羅斯方塊一樣的「擴充功能」圖示 (快捷鍵 <code>Ctrl+Shift+X</code>)。</li>
@@ -238,7 +246,7 @@ code .</code></pre>
                                     <img src="../images/gemini_cli_tutorial01.jpg" alt="VS Code extension marketplace showing Markdown Preview Enhanced" class="img-fluid rounded shadow">
                                     <figcaption class="mt-2 text-muted">圖：在 VS Code 中安裝 Markdown 美化外掛。</figcaption>
                                 </figure>
-                                <p>安裝後，當您打開一個 `.md` 結尾的 Markdown 檔案時，就可以點擊右上角的「預覽」按鈕，看到它被美化排版後的樣子了。</p>
+                                <p>安裝後，當您打開一個 `.md` 結尾的 Markdown 檔案時，就可以點擊 VS Code 右上角的「預覽」按鈕(在縮小按鈕左側)，看到它被美化排版後的樣子了。</p>
                             </div>
                         </section>
                     </div>
@@ -261,7 +269,7 @@ code .</code></pre>
 
                     <figure class="text-center my-4">
                         <img src="../images/gemini-cli-workflow-setup.jpg" alt="VS Code and Gemini CLI side-by-side workflow" class="img-fluid rounded shadow">
-                        <figcaption class="mt-2 text-muted">圖：建議的工作流佈局：左邊是 VS Code 工作室，右邊是獨立的 Gemini CLI 助理視窗。</figcaption>
+                        <figcaption class="mt-2 text-muted">圖：建議的工作流佈局：一邊是 VS Code 工作室，另一邊是獨立的 Gemini CLI 助理視窗。</figcaption>
                     </figure>
 
                     <div class="tutorial-summary">

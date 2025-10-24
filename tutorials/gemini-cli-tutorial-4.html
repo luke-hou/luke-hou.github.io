@@ -121,7 +121,7 @@
             <div class="col-lg-10 mx-auto">
                 <article class="blog-post">
                     <h1 class="mb-3 display-5 border-bottom pb-3">PM x Gemini CLI (四)：AI 提升 PM 工作效率的進階實踐</h1>
-                    <p class="text-muted mb-4">發布日期：2025年10月</p>
+                    <p class="text-muted mb-4">發布日期：2025年10月25日</p>
 
                     <div class="tutorial-intro" id="table-of-contents">
                         <h4>本篇文章將介紹能貫穿整個產品開發流程的實用 AI 技巧，提升溝通與分析效率。</h4>
@@ -166,7 +166,10 @@ graph TD
     G -- 失敗 --> H[顯示錯誤訊息];
     H --> D;
 ```</code></pre>
-                                <p>您可以將這段純文字的代碼，貼到任何支援 Mermaid 的地方 (例如 Notion、HackMD、VS Code 外掛，甚至是公司的 Wiki)，它就會自動變成一張漂亮的流程圖。這代表您的流程圖可以被版本控制、可以被輕易地複製分享，徹底告別過去的截圖地獄。</p>
+                                <p>您可以將這段純文字的代碼，貼到任何支援 Mermaid 的地方 (例如 Mermaid.live、Notion、HackMD、VS Code 外掛等等)，它就會自動變成一張漂亮的流程圖。</p>
+                                <p>並且您可以即時的在這些地方修改完畢後，再貼回本地的檔案內，節省一些跟 AI 來回交戰的時間與費用成本。
+                                </p>
+                                <p>是的，這代表您的流程圖可以被輕鬆的修改、可以被輕易地複製分享，徹底告別過去的截圖地獄。</p>
 
                                 <figure>
                                     <img src="../images/gemini_cli_tutorial_mermaid.jpg" alt="更複雜的訂單處理流程圖範例">
@@ -176,7 +179,7 @@ graph TD
                             </div>
 
                             <div class="step">
-                                <h3 id="section-2"><i class="fas fa-globe step-icon"></i>要點二：讓 AI 當您的「24 小時情報蒐集員」</h3>
+                                <h3 id="section-2"><i class="fas fa-globe step-icon"></i>要點二：讓 AI 當您的「網路爬蟲」</h3>
                                 <p><strong>痛點場景：</strong> 明天就要報告新功能的市場分析，您還在 Google 上手動搜尋、一篇篇點開文章、複製重點到筆記中？</p>
                                 <p>Gemini CLI 內建了強大的聯網搜尋能力，能讓 AI 直接上網找資料，並根據您的要求進行即時的整理、分析、總結。它就是您最得力的情報官。</p>
 
@@ -211,6 +214,24 @@ GoogleSearch Searching the web for: "Asana vs Jira vs Trello Gantt chart feature
 
 **給您的建議：** 如果您的目標用戶包含大量非技術人員 (如 PM、行銷、設計)，**Asana** 的設計會是最好的參考起點。</code></pre>
                                 <p>過去需要一小時的資料搜集與整理，現在 AI 在幾分鐘內就能完成，讓您能把時間專注在更高層次的策略判斷上。</p>
+
+                                <p><strong>範例：根據特定網頁內容優化文章</strong></p>
+                                <p>除了讓 AI 自由搜尋資料，您也可以指定一個特定的網頁，要求 AI 根據該網頁的內容來執行任務。這在您需要參考某篇專業文章、競品頁面，或是公司內部文件來優化自己的內容時，特別有用。</p>
+                                <p>假設您想讓 AI 根據一篇關於「敏捷開發」的部落格文章，來優化您自己撰寫的產品文件，使其更符合該文章的風格或論點：</p>
+                                <pre><code>你現在是一位專業的內容編輯。請閱讀這篇關於敏捷開發的文章：`https://example.com/agile-development-best-practices`。
+
+然後，請根據這篇文章的風格、用詞和核心觀點，優化我提供的這份產品文件草稿 `@my_product_doc_draft.md`。
+
+優化重點：
+1.  確保術語使用一致。
+2.  讓語氣更專業、更具說服力。
+3.  如果文章中有任何可以借鑒的案例或論點，請適當融入。
+4.  不要被人發現我在偷抄。</code></pre>
+                                <p>Gemini CLI 會先讀取您提供的網頁內容，然後再結合您的文件草稿進行優化。這讓 AI 的輸出更具針對性，也更能符合您的預期。</p>
+                                <figure>
+                                    <img src="../images/gemini-cli-tutorial-4-01.jpg" alt="AI 根據網頁內容優化文章的示意圖">
+                                    <figcaption>圖：AI 根據特定網頁內容優化文章的示意圖 (佔位圖)</figcaption>
+                                </figure>
                             </div>
                             <div class="step">
                                 <h3 id="section-3"><i class="fas fa-tasks step-icon"></i>要點三：用 <code>todo.md</code> 管理你的「AI 開發團隊」</h3>
@@ -221,7 +242,7 @@ GoogleSearch Searching the web for: "Asana vs Jira vs Trello Gantt chart feature
                                     <li><strong>建立 <code>todo.md</code></strong>：在專案中建立一個任務清單檔案。</li>
                                     <li><strong>拆解任務</strong>：作為 PM，將您的最終目標拆解成一系列具體、可執行的小步驟。</li>
                                     <li><strong>逐一指派</strong>：一次只給 AI 一個指令，對應清單上的一個任務。</li>
-                                    <li><strong>更新進度</strong>：AI 完成後，回到 <code>todo.md</code> 將該項任務打勾 <code>[x]</code>，然後再進行下一步。</li>
+                                    <li><strong>更新進度</strong>：要求 AI 完成每個 sub task 後，回到 <code>todo.md</code> 將該項任務打勾 <code>[x]</code>，然後再進行下一步。</li>
                                 </ol>
                                 <p><strong>範例：請 AI 幫您重構一個網頁</strong></p>
                                 <p>您的 <code>todo.md</code> 可能長這樣：</p>
@@ -273,16 +294,44 @@ GoogleSearch Searching the web for: "Asana vs Jira vs Trello Gantt chart feature
                             <div class="step">
                                 <h3 id="section-5"><i class="fas fa-file-alt step-icon"></i>要點五：用 Markdown 檔案準備「給 AI 的書面簡報」</h3>
                                 <p><strong>痛點場景：</strong> 當您有一個複雜的想法或任務，想在小小的終端機對話框裡一次打完，是不是常常覺得很難編輯、很容易按錯送出、或是事後很難找回當初完整的指令？</p>
-                                <p>一個專業的工作習慣是：<strong>不要在對話框裡寫長篇大論</strong>。而是先把您的想法，有條理地寫在一個 Markdown (`.md`) 檔案裡。這對於處理我們在<a href="gemini-cli-tutorial-3.html#section-4"><strong>第三篇提到的「生成 PRD 初稿」</strong></a>等複雜任務時，尤其有用。</p>
+                                <p>一個專業的工作習慣是：<strong>不要在對話框裡寫長篇大論</strong>。而是先把您的想法，有條理地寫在一個 Markdown (`.md`) 檔案裡。這對於處理類似「生成 PRD 初稿」</strong></a>等複雜任務時，尤其有用。</p>
                                 <p>您可以把這個檔案，看作是一份要交給 AI 助理的「書面工作簡報 (Briefing)」。在裡面用標題、列表、粗體字，把背景資訊、任務要求、輸出格式等都寫清楚。</p>
                                 <p>寫完後，只要在對話框中簡單地說：</p>
                                 <pre><code>請根據我這份簡報 `@my_complex_idea.md` 的內容，完成指定的任務。</code></pre>
                                 <p><strong>這樣做的好處：</strong>
                                 <ul>
-                                    <li><strong>思路更清晰</strong>：書寫過程能幫助您整理思緒。</li>
-                                    <li><strong>修改更容易</strong>：在 VS Code 中編輯文件，遠比在終端機中修改指令輕鬆。</li>
+                                    <li><strong>思路更清晰</strong>：書寫過程能幫助您整理想法，釐清思緒，這是最最最重要的好處。</li>
+                                    <li><strong>修改更容易</strong>：在 VS Code 中編輯文件，遠比在終端機中修改指令輕鬆，並且可以直接看到 Markdown 渲染結果。</li>
                                     <li><strong>指令可複用</strong>：這份「簡報」可以存檔，下次有類似任務，改一改就能重複使用。</li>
                                 </ul>
+                                <p class="mt-4"><strong>文件範例：給 AI 的醫療資訊系統「Apache Score」表單規格書簡報 (`apache_score_spec.md`)</strong></p>
+                                <pre><code># 任務簡報：醫療資訊系統「Apache Score」表單規格書撰寫
+
+## 任務背景
+我們正在開發一套新的醫療資訊系統 (HIS)，其中需要實作「Apache Score」評分表單。此表單用於評估重症病患的生理狀況，並計算其預後分數。需要 AI 協助撰寫一份詳細的表單規格書，供前端開發與後端資料庫設計參考。
+
+## 參考資料
+*   **Apache Score 介紹**: (假設是) `https://zh.wikipedia.org/wiki/APACHE_II`
+*   **相關醫學文獻**: (假設是) `https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3078199/` (僅供參考，AI 無需實際讀取，主要理解其專業性)
+
+## 任務要求（請按照順序執行）
+1.  **理解 Apache Score 構成要素**：根據參考資料，列出 Apache Score 評分所需的所有生理參數、實驗室數據、年齡、慢性病史等構成要素。
+2.  **表單欄位設計**：為每個構成要素設計對應的表單輸入欄位，包含：
+    *   欄位名稱 (中文與英文代碼)
+    *   資料型態 (例如：數值、下拉選單、日期)
+    *   輸入限制 (例如：數值範圍、必填/非必填)
+    *   預設值 (若有)
+    *   單位 (若有)
+    *   簡要說明 (用於前端提示或後端註解)
+3.  **評分邏輯說明**：簡要說明 Apache Score 的計算邏輯，特別是各項參數如何轉換為分數。
+4.  **特殊情境考量**：考量在醫療場景中可能遇到的特殊情境，例如：
+    *   資料缺失時的處理方式。
+    *   數值超出正常範圍時的提示。
+    *   不同時間點數據的追蹤。
+
+## 輸出格式
+請以 Markdown 表格形式呈現表單欄位設計，並用清晰的標題和列表說明其他部分。</code></pre>
+                                <p class="mt-4">透過這樣詳細的「書面簡報」，AI 就能更精準地理解您的需求，產出高品質的成果。將這種協作方式融入您的日常工作流，將大大提升您的效率和產出。</p>
                                 <p>這個簡單的習慣，會讓您與 AI 的協作變得更穩定、更專業，產出品質也會更高。</p>
                             </div>
                         </section>
