@@ -117,4 +117,16 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Back to top button logic
+    const backToTopBtn = document.querySelector('.back-to-top-btn');
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
 });
