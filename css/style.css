@@ -719,3 +719,20 @@ footer {
     border-color: #444 #444 #1e1e1e;
     font-weight: bold;
 }
+
+#featured-content .card-title {
+    color: var(--bs-primary);
+}
+
+#featured-content .card-text {
+    color: var(--bs-secondary-color);
+}
+
+#featured-content .list-group-item {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.9rem;
+}
+
+#featured-content .list-group-item:hover {
+    background-color: rgba(var(--bs-primary-rgb), 0.1) !important;
+}
