@@ -725,6 +725,81 @@ footer {
     transform: scale(1.05);
 }
 
+/* Podcast Page Styles */
+.podcast-list .episode-card {
+    background-color: var(--bs-tertiary-bg);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.podcast-list .episode-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(var(--bs-primary-rgb), 0.15);
+    border-color: var(--bs-primary);
+}
+
+.episode-title {
+    color: var(--bs-primary);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.episode-description {
+    font-size: 0.95rem;
+    color: var(--bs-secondary-color);
+    margin-bottom: 1rem;
+}
+
+.episode-player audio {
+    border-radius: 5px;
+}
+
+
+/* Cyberpunk Podcast Page Styles - Warm/Apocalyptic Theme */
+.cyberpunk-podcast {
+    background-color: #2a2a22; /* Warm, dark grey/olive */
+    color: #c5c5b5;
+}
+
+.cyberpunk-podcast .display-5 {
+    color: #ff8c00; /* Warm Amber/Orange */
+    text-shadow: 0 0 8px rgba(255, 140, 0, 0.7), 0 0 12px rgba(255, 140, 0, 0.5);
+    font-weight: bold;
+}
+
+.cyberpunk-podcast .lead {
+    color: #a5a595;
+}
+
+.cyberpunk-podcast .episode-card {
+    background-color: rgba(40, 35, 30, 0.7);
+    border: 1px solid #a0522d; /* Sienna - a brownish-orange */
+    box-shadow: 0 0 8px rgba(160, 82, 45, 0.4);
+    backdrop-filter: blur(5px);
+}
+
+.cyberpunk-podcast .episode-card:hover {
+    box-shadow: 0 0 15px rgba(210, 105, 30, 0.6); /* Chocolate - for a warmer glow */
+    border-color: #d2691e;
+}
+
+.cyberpunk-podcast .episode-title {
+    color: #ffA500; /* Orange */
+    text-shadow: 0 0 5px rgba(255, 165, 0, 0.5);
+}
+
+.cyberpunk-podcast .episode-description {
+    color: #b5b5a5;
+}
+
+.cyberpunk-podcast audio {
+    filter: sepia(0.3) brightness(0.9) saturate(1.2);
+}
+
+
 [data-bs-theme="dark"] .nav-tabs .nav-link.active {
     background-color: #1e1e1e;
     color: #4dabf7;

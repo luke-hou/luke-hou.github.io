@@ -7,7 +7,8 @@
 - **首頁 (Home)**
   - `index.html`
 - **作品集 (Portfolio)**
-  - `portfolio.html`
+  - 'portfolio.html'
+  - 'podcast.html'
 - **部落格 (Blog)**
   - `blog.html`
 - **n8n 教學 (n8n Tutorials)**
