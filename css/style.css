@@ -59,6 +59,9 @@ h3 {
     h3 {
         font-size: 1.25rem;
     }
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 
