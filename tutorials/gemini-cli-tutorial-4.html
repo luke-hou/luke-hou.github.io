@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PM x Gemini CLI (四)：AI 提升 PM 工作效率的進階實踐 - Luke Hou 侯俊嘉的AI自動化與工作流指南</title>
-    <meta name="description" content="PM 與 Gemini CLI 協作系列第四篇，介紹能貫穿整個產品開發流程的實用 AI 技巧，如利用 Mermaid 語法產生流程圖、透過聯網搜尋高效蒐集資訊，提升溝通與分析效率。">
-    <meta name="keywords" content="Gemini CLI, Gemini CLI 教學, PM, 產品經理, AI 協作, Mermaid, 流程圖, 聯網搜尋, 競品分析, Luke Hou, 侯俊嘉">
+    <title>PM x Gemini CLI (四)：AI 驅動的規格撰寫與專案管理 - Luke Hou 侯俊嘉的AI自動化與工作流指南</title>
+    <meta name="description" content="PM 與 Gemini CLI 協作系列第四篇，聚焦於「打造藍圖」與「管理流程」。本篇教學將介紹如何從根本上轉變為「規格驅動開發」，並指導您如何撰寫專業的 AI 指令稿來產出 PRD、QA 驗收清單，最後展示如何建立並透過 todo.md 管理您的 AI 專家團隊。">
+    <meta name="keywords" content="Gemini CLI, Gemini CLI 教學, PM, 產品經理, AI 協作, 規格驅動開發, SDD, PRD, QA, todo.md, AI Agent, Luke Hou, 侯俊嘉">
     <link rel="icon" href="../images/favicon.jpg" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -120,221 +120,68 @@
         <div class="row">
             <div class="col-lg-10 mx-auto">
                 <article class="blog-post">
-                    <h1 class="mb-3 display-5 border-bottom pb-3">PM x Gemini CLI (四)：AI 提升 PM 工作效率的進階實踐</h1>
+                    <h1 class="mb-3 display-5 border-bottom pb-3">PM x Gemini CLI (四)：AI 驅動的規格撰寫與專案管理</h1>
                     <p class="text-muted mb-4">發布日期：2025年10月25日</p>
 
                     <div class="tutorial-intro" id="table-of-contents">
-                        <h4>本篇文章將介紹能貫穿整個產品開發流程的實用 AI 技巧，提升溝通與分析效率。</h4>
+                        <h4>本篇文章將聚焦於「打造藍圖」與「管理流程」。您將學會如何從根本上轉變為「規格驅動開發」，並指導您如何撰寫專業的 AI 指令稿來產出 PRD、QA 驗收清單，最後展示如何建立並透過 todo.md 管理您的 AI 專家團隊。</h4>
                         <p><strong>文章大綱：</strong></p>
                         <ul>
-                            <li><a href="#section-1">要點一：利用 Gemini CLI 協作產生 Mermaid 流程圖</a></li>
-                            <li><a href="#section-2">要點二：利用 Gemini CLI 聯網搜尋能力蒐集資料</a></li>
-                            <li><a href="#section-3">要點五：用 Markdown 檔案準備「給 AI 的書面簡報」</a></li>
-                            <li><a href="#section-4">要點三：用 `todo.md` 導航複雜的產品開發流程</a></li>
-                            <li><a href="#section-5">要點四：讓 AI 自動生成「QA 的驗收清單」</a></li>
+                            <li><a href="#section-1">要點一：典範轉移：從「程式碼驅動」到「規格驅動開發 (SDD)」</a></li>
+                            <li><a href="#section-2">要點二：從「簡報」到「PRD」：AI 輔助規格文件生成</a></li>
+                            <li><a href="#section-3">要點三：讓 AI 自動生成「QA 的驗收清單」</a></li>
+                            <li><a href="#section-4">要點四：建立並管理你的 AI 專家團隊 (`todo.md` 實踐)</a></li>
                         </ul>
                     </div>
 
                     <div class="tutorial-content">
                         <section class="step-by-step">
                             <div class="step">
-                                <h3 id="section-1"><i class="fas fa-project-diagram step-icon"></i>要點一：用「說」的畫流程圖 (Mermaid 語法)</h3>
-                                <p><strong>痛點場景：</strong> 為了跟工程師溝通一個複雜的用戶流程，您是否還在用 PowerPoint 或其他繪圖工具，辛苦地拉著線條、對齊著方塊？</p>
-                                <p>現在，您可以換個方式：<strong>用「說」的畫流程圖</strong>。您只需用簡單的文字描述流程，AI 就能為您生成一種叫做 「Mermaid」的標準化圖表代碼。</p>
+                                <h3 id="section-1"><i class="fas fa-exchange-alt step-icon"></i>要點一：典範轉移：從「程式碼驅動」到「規格驅動開發 (SDD)」</h3>
+                                <p><strong>傳統的痛點：</strong> 在許多開發團隊中，規格文件 (PRD) 常常在交付給工程師後，就與實際的開發過程脫節。幾次迭代後，規格文件的參考價值越來越低，最終，產品的「真相」只存在於程式碼中，文件反而成了誤導的來源。</p>
+                                <p>AI 協作讓我們有機會重新強調<strong>「規格優先」</strong>的價值。因為 AI 能理解我們寫的規格文件，並輔助後續的開發與測試，這使得「維護一份清晰、準確的規格」這件事，變得空前重要且有價值。</p>
                                 
-                                <p><strong>範例：請 AI 生成「用戶登入流程圖」</strong></p>
-                                <p>您只要像平常一樣，條列出您的邏輯步驟：</p>
-                                <pre><code>請幫我生成一個 App 用戶登入的 Mermaid 流程圖，步驟如下：
-1.  用戶打開 App
-2.  檢查是否已登入
-3.  如果已登入，就直接進主頁
-4.  如果未登入，就顯示登入頁
-5.  用戶輸入帳號密碼後點擊登入
-6.  系統驗證帳密
-7.  如果成功，進主頁
-8.  如果失敗，顯示錯誤訊息並留在登入頁</code></pre>
-                                <p>Gemini CLI 就會產出對應的 Mermaid 代碼：</p>
-                                <pre><code>```mermaid
-graph TD
-    A[用戶打開 App] --> B{檢查是否已登入?};
-    B -- 是 --> C[進入主頁];
-    B -- 否 --> D[顯示登入頁面];
-    D --> E[用戶輸入帳號密碼];
-    E --> F[點擊登入按鈕];
-    F --> G{驗證帳號密碼?};
-    G -- 成功 --> C;
-    G -- 失敗 --> H[顯示錯誤訊息];
-    H --> D;
-```</code></pre>
-                                <p>您可以將這段純文字的代碼，貼到任何支援 Mermaid 的地方 (例如 Mermaid.live、Notion、HackMD、VS Code 外掛等等)，它就會自動變成一張漂亮的流程圖。</p>
-                                <p>並且您可以即時的在這些地方修改完畢後，再貼回本地的檔案內，節省一些跟 AI 來回交戰的時間與費用成本。
-                                </p>
-                                <p>是的，這代表您的流程圖可以被輕鬆的修改、可以被輕易地複製分享，徹底告別過去的截圖地獄。</p>
-
-                                <figure>
-                                    <img src="../images/gemini_cli_tutorial_mermaid.jpg" alt="更複雜的訂單處理流程圖範例">
-                                    <figcaption>圖：將上述代碼貼到 mermaid.live 網站，即可生成流程圖</figcaption>
-                                </figure>
-                                <p>從此以後，當流程變動時，您再也不用重新拉線對齊，只需修改幾個字，就能產生新的流程圖，大幅提升溝通效率。</p>
+                                <p><strong>工作流程的轉變：</strong></p>
+                                <ul>
+                                    <li><strong>規格成為「可執行的藍圖」</strong>：一份寫得好的規格，不再只是給人看的說明書。您可以直接將它交給 AI，讓 AI 根據這份「藍圖」，自動生成使用者故事、測試案例、甚至初步的程式碼框架。這讓規格本身變得「有用」，而不只是「備查」。</li>
+                                    <li><strong>PM 的精力轉移</strong>：您的主要工作，從「追著工程師問現在做到哪」的事後追蹤，轉移到「如何在一開始就定義清楚需求」的事前準備。當規格定義得越清晰，與工程師的溝通誤差空間就越小。</li>
+                                </ul>
+                                <p>在這種模式下，追蹤規格的變更也變得至關重要。您可以利用 AI 快速比對文件版本，產出清楚的變更紀錄，方便與團隊同步。</p>
+                                <pre><code>你現在是我的專案助理，請比較 @PRD_v1.0.md 和 @PRD_v1.1.md 這兩個版本的差異，並生成一份簡潔的變更摘要，讓我能快速在會議上報告。</code></pre>
                             </div>
 
                             <div class="step">
-                                <h3 id="section-2"><i class="fas fa-globe step-icon"></i>要點二：讓 AI 當您的「網路爬蟲」</h3>
-                                <p><strong>痛點場景：</strong> 明天就要報告新功能的市場分析，您還在 Google 上手動搜尋、一篇篇點開文章、複製重點到筆記中？</p>
-                                <p>Gemini CLI 內建了強大的聯網搜尋能力，能讓 AI 直接上網找資料，並根據您的要求進行即時的整理、分析、總結。它就是您最得力的情報官。</p>
+                                <h3 id="section-2"><i class="fas fa-file-invoice step-icon"></i>要點二：從「簡報」到「PRD」：AI 輔助規格文件生成</h3>
+                                <p><strong>痛點場景：</strong> 當您有一個複雜的想法或任務，想在小小的終端機對話框裡一次打完，是不是常常覺得很難編輯？又要開始寫新的 PRD (產品需求文件) 了，面對空白的文件，不知從何下手？</p>
+                                <p>一個專業的工作習慣是：<strong>不要在對話框裡寫長篇大論</strong>。而是先把您的想法，有條理地寫在一個 Markdown (`.md`) 檔案裡。您可以把這個檔案，看作是一份要交給 AI 助理的「書面工作簡報 (Briefing)」。</p>
+                                
+                                <hr class="my-4">
 
-                                <p><strong>範例：10 分鐘完成競品功能分析</strong></p>
-                                <p>假設您想知道市場上的主流專案管理工具 (Asana, Jira, Trello) 是如何做「甘特圖」功能的，您可以這樣問：</p>
-                                <pre><code>你現在是一位資深的產品分析師。請幫我分析一下市面上三個主要專案管理工具 Asana, Jira, Trello 的「甘特圖」功能。
-
-請直接上網搜尋最新資料，並從以下三個角度比較它們的優缺點：
-1.  **易用性** (對非技術人員是否友善)
-2.  **功能深度** (是否支援複雜的專案管理需求)
-3.  **整合性** (與自身平台其他功能的結合程度)
-
-最後，請用一個總結表格呈現你的分析。</code></pre>
-                                <p>Gemini CLI 模擬輸出：</p>
-                                <pre><code>好的，正在為您進行競品分析... 
-GoogleSearch Searching the web for: "Asana vs Jira vs Trello Gantt chart features comparison 2025"
-
-分析報告如下：
-
-**主流專案管理工具甘特圖功能比較**
-
-| 工具 | 易用性 | 功能深度 | 整合性 |
-| :--- | :--- | :--- | :--- |
-| **Asana** | ⭐⭐⭐⭐⭐ (非常直觀) | ⭐⭐⭐⭐ (中大型專案適用) | ⭐⭐⭐⭐⭐ (與任務無縫整合) |
-| **Jira** | ⭐⭐ (較為複雜) | ⭐⭐⭐⭐⭐ (極度強大，適合開發) | ⭐⭐⭐⭐ (需透過插件整合) |
-| **Trello**| ⭐⭐⭐⭐ (簡單好上手) | ⭐⭐ (適合小型專案) | ⭐⭐⭐ (需透過 Power-Up 整合) |
-
-**總結觀察：**
-- **Asana** 在易用性和功能深度上取得了最佳平衡，適合大部分混合型團隊。
-- **Jira** 功能最專業、最深度，但學習曲線也最陡峭，是軟體開發團隊的首選。
-- **Trello** 最輕量、最簡單，但功能也最受限，適合個人或小型團隊的簡單任務管理。
-
-**給您的建議：** 如果您的目標用戶包含大量非技術人員 (如 PM、行銷、設計)，**Asana** 的設計會是最好的參考起點。</code></pre>
-                                <p>過去需要一小時的資料搜集與整理，現在 AI 在幾分鐘內就能完成，讓您能把時間專注在更高層次的策略判斷上。</p>
-
-                                <p><strong>範例：根據特定網頁內容優化文章</strong></p>
-                                <p>除了讓 AI 自由搜尋資料，您也可以指定一個網址，要求 AI 根據該網頁的內容來執行任務。這在您需要參考某篇專業文章、對標競品頁面，或是使用特定網頁來優化自己的內容時，特別有用。</p>
-                                <p>假設您想讓 AI 根據一篇關於「敏捷開發」的部落格文章，來優化您自己撰寫的產品文件，使其更符合該文章的風格或論點：</p>
-                                <pre><code>你現在是一位專業的內容編輯。請閱讀這篇關於敏捷開發的文章：`https://example.com/agile-development-best-practices`。
-
-然後，請根據這篇文章的風格、用詞和核心觀點，優化我提供的這份產品文件草稿 `@my_product_doc_draft.md`。
-
-優化重點：
-1.  確保術語使用一致。
-2.  讓語氣更專業、更具說服力。
-3.  如果文章中有任何可以借鑒的案例或論點，請適當融入。
-4.  不要被人發現我在偷抄。</code></pre>
-                                <p>Gemini CLI 會先讀取您提供的網頁內容，然後再結合您的文件草稿進行優化。這讓 AI 的輸出更具針對性，也更能符合您的預期。</p>
-                                <figure>
-                                    <img src="../images/gemini-cli-tutorial-4-01.jpg" alt="AI 根據網頁內容優化文章的示意圖">
-                                    <figcaption>圖：AI 根據特定網頁內容優化文章的示意圖</figcaption>
-                                </figure>
-                                <div class="alert alert-info mt-4" role="alert">
-                                    <h5 class="alert-heading"><i class="fas fa-info-circle me-2"></i>圖片說明：</h5>
-                                    <p>圖片中，"紅色文字"代表 AI 幫您「刪除」的內容，而"綠色文字"則代表 AI 幫您「新增」的內容。這種視覺化的方式，能讓您一目瞭然地看到 AI 對文章的修改建議，方便您快速審閱和決策。</p>
-                                </div>
-                            </div>
-                            <div class="step">
-                                <h3 id="section-3"><i class="fas fa-file-alt step-icon"></i>要點五：用 Markdown 檔案準備「給 AI 的書面簡報」</h3>
-                                <p><strong>痛點場景：</strong> 當您有一個複雜的想法或任務，想在小小的終端機對話框裡一次打完，是不是常常覺得很難編輯、很容易按錯送出、或是事後很難找回當初完整的指令？</p>
-                                <p>一個專業的工作習慣是：<strong>不要在對話框裡寫長篇大論</strong>。而是先把您的想法，有條理地寫在一個 Markdown (`.md`) 檔案裡。這對於處理類似「生成 PRD 初稿」</strong></a>等複雜任務時，尤其有用。</p>
-                                <p>您可以把這個檔案，看作是一份要交給 AI 助理的「書面工作簡報 (Briefing)」。在裡面用標題、列表、粗體字，把背景資訊、任務要求、輸出格式等都寫清楚。</p>
-                                <p>寫完後，只要在對話框中簡單地說：</p>
+                                <h4 class="text-success">Part 1: 用 Markdown 檔案準備「給 AI 的書面簡報」</h4>
+                                <p>在簡報中用標題、列表、粗體字，把背景資訊、任務要求、輸出格式等都寫清楚。寫完後，只要在對話框中簡單地說：</p>
                                 <pre><code>請根據我這份簡報 `@my_complex_idea.md` 的內容，完成指定的任務。</code></pre>
                                 <p><strong>這樣做的好處：</strong>
                                 <ul>
                                     <li><strong>思路更清晰</strong>：書寫過程能幫助您整理想法，釐清思緒，這是最最最重要的好處。</li>
-                                    <li><strong>修改更容易</strong>：在 VS Code 中編輯文件，遠比在終端機中修改指令輕鬆，並且可以直接看到 Markdown 渲染結果。</li>
+                                    <li><strong>修改更容易</strong>：在 VS Code 中編輯文件，遠比在終端機中修改指令輕鬆。</li>
                                     <li><strong>指令可複用</strong>：這份「簡報」可以存檔，下次有類似任務，改一改就能重複使用。</li>
                                 </ul>
-                                <p class="mt-4"><strong>文件範例：給 AI 的醫療資訊系統「Apache Score」表單規格書簡報 (`apache_score_spec.md`)</strong></p>
-                                <pre><code># 任務簡報：醫療資訊系統「Apache Score」表單規格書撰寫
+                                <p class="mt-4">這個簡單的習慣，會讓您與 AI 的協作變得更穩定、更專業，產出品質也會更高。</p>
 
-## 任務背景
-我們正在開發一套新的醫療資訊系統 (HIS)，其中需要實作「Apache Score」評分表單。此表單用於評估重症病患的生理狀況，並計算其預後分數。需要 AI 協助撰寫一份詳細的表單規格書，供前端開發與後端資料庫設計參考。
+                                <hr class="my-4">
 
-## 參考資料
-*   **Apache Score 介紹**: (假設是) `https://zh.wikipedia.org/wiki/APACHE_II`
-*   **相關醫學文獻**: (假設是) `https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3078199/` (僅供參考，AI 無需實際讀取，主要理解其專業性)
-
-## 任務要求（請按照順序執行）
-1.  **理解 Apache Score 構成要素**：根據參考資料，列出 Apache Score 評分所需的所有生理參數、實驗室數據、年齡、慢性病史等構成要素。
-2.  **表單欄位設計**：為每個構成要素設計對應的表單輸入欄位，包含：
-    *   欄位名稱 (中文與英文代碼)
-    *   資料型態 (例如：數值、下拉選單、日期)
-    *   輸入限制 (例如：數值範圍、必填/非必填)
-    *   預設值 (若有)
-    *   單位 (若有)
-    *   簡要說明 (用於前端提示或後端註解)
-3.  **評分邏輯說明**：簡要說明 Apache Score 的計算邏輯，特別是各項參數如何轉換為分數。
-4.  **特殊情境考量**：考量在醫療場景中可能遇到的特殊情境，例如：
-    *   資料缺失時的處理方式。
-    *   數值超出正常範圍時的提示。
-    *   不同時間點數據的追蹤。
-
-## 輸出格式
-請以 Markdown 表格形式呈現表單欄位設計，並用清晰的標題和列表說明其他部分。</code></pre>
-                                <p class="mt-4">透過這樣詳細的「書面簡報」，AI 就能更精準地理解您的需求，產出高品質的成果。將這種協作方式融入您的日常工作流，將大大提升您的效率和精準度。</p>
-                                <p>這個簡單的習慣，會讓您與 AI 的協作變得更穩定、更專業，產出品質也會更高。</p>
-                                <p>這邊我們先了解這個概念，緊接著下一個步驟，就會說明如何用 todo.md 指揮 AI 自動完成 PRD 初稿。</p>
-                            </div>
-                            <div class="step">
-                                <h3 id="section-4"><i class="fas fa-tasks step-icon"></i>要點三：用 `todo.md` 導航複雜的產品開發流程</h3>
-                                <p><strong>痛點場景：</strong> 作為 PM，撰寫一份新的產品規格書 (PRD) 往往是一個漫長而複雜的過程，涉及大量的資料收集、整理、撰寫與原型驗證。如何確保每個環節都能有條不紊地進行，並最終產出高品質的 PRD 和 UI Prototype？</p>
-                                <p>現在，您可以將 AI 視為您的專案助理，利用 `todo.md` 這個簡單而強大的概念，來導航整個 PRD 撰寫流程，確保每個步驟都清晰可控。</p>
-
-                                <p><strong>PM 撰寫 PRD 的 `todo.md` 工作流：</strong></p>
-                                <ol>
-                                    <li><strong>定義最終目標</strong>：PM 首先在 `todo.md` 中明確定義最終目標，例如「完成新功能 A 的 PRD 和 UI Prototype」。</li>
-                                    <li><strong>AI 協助拆解任務</strong>：PM 指示 AI 根據最終目標，將整個流程拆解為一系列具體、可執行的子任務，並列入 `todo.md`。</li>
-                                    <li><strong>PM 審核與指派</strong>：PM 審核 AI 拆解的任務清單，確認無誤後，逐一指派給不同的 AI Agent（例如：市場分析師、PM 分身、UI 設計師）或由 PM 親自執行。(這部分的操作會在<a href="gemini-cli-tutorial-5.html#section-2">之後的章節</a>詳細說明。)</li>
-                                    <li><strong>AI Agent 執行與自動更新進度</strong>：每個 AI Agent 根據被指派的任務進行工作，並在完成後自動更新 `todo.md` 中的任務狀態（例如：從 `[ ]` 變為 `[x]`），PM 則負責審核每個階段的產出。</li>
-                                </ol>
-
-                                <p><strong>範例：撰寫新功能 PRD 的 `todo.md`</strong></p>
-                                <p>假設您需要為一個「智慧家居 App 的新安全監控功能」撰寫 PRD，您的 `todo.md` 可能會長這樣：</p>
-                                <pre><code># 新功能 PRD 撰寫與 UI Prototype 任務清單：智慧家居安全監控
-
-## 階段一：資料收集與市場分析
-- [ ] **任務：** 進行競品分析，了解市場上主流安全監控 App 的功能與優勢。
-    *   **指派給：** @market_analyst.md
-    *   **驗收條件：** 產出競品分析報告 (`competitor_analysis.md`)。
-- [ ] **任務：** 收集用戶對居家安全監控的需求與痛點。
-    *   **指派給：** @user_researcher.md
-    *   **驗收條件：** 產出用戶需求報告 (`user_needs_report.md`)。
-
-## 階段二：PRD 初稿撰寫
-- [ ] **任務：** 根據資料收集結果，撰寫新安全監控功能的 PRD 初稿。
-    *   **指派給：** @pm_assistant.md
-    *   **驗收條件：** 產出 PRD 初稿 (`security_feature_prd_draft.md`)，包含功能描述、用戶故事、成功指標。
-
-## 階段三：UI Prototype 產出與驗證
-- [ ] **任務：** 根據 PRD 初稿，設計安全監控儀表板的 UI 概念。
-    *   **指派給：** @ui_designer.md
-    *   **驗收條件：** 產出 UI 概念草圖描述 (`security_dashboard_ui_concept.md`)。
-- [ ] **任務：** 根據 UI 概念，生成基於 Bootstrap 5 的 HTML UI Prototype。
-    *   **指派給：** @frontend_dev_agent.md
-    *   **驗收條件：** 產出可互動的 HTML UI Prototype (`security_dashboard_prototype.html`)。
-- [ ] **任務：** 收集內部團隊對 UI Prototype 的回饋。
-    *   **指派給：** PM (手動)
-    *   **驗收條件：** 收集並整理回饋 (`prototype_feedback.md`)。
-
-## 階段四：PRD 最終定稿
-- [ ] **任務：** 根據 UI Prototype 回饋，優化 PRD 內容。
-    *   **指派給：** @pm_assistant.md
-    *   **驗收條件：** 產出最終版 PRD (`security_feature_prd_final.md`)。
-</code></pre>
-                                <p>這種以 `todo.md` 為核心的協作模式，讓 PM 能夠像一位總指揮，將複雜的產品開發流程拆解、指派、追蹤，確保每個環節都能高效且精準地完成，最終產出高品質的產品規格書與原型。</p>
+                                <h4 class="text-success">Part 2: 從「一個想法」到「一份 PRD 初稿」</h4>
+                                <p>讓 AI 成為您的數位分身，幫您處理這些重複但必要的工作。當您準備好書面簡報後，就可以讓 AI 快速生成結構化的文件內容。</p>
+                                <p><strong>範例：快速生成「社群討論區」的 PRD 初稿與開發任務</strong></p>
+                                <p>給 AI 一個高層次的想法：</p>
+                                <pre><code>我需要為一個「線上學習平台」規劃新的「社群討論區」功能，請幫我生成一份包含「功能描述」、「使用者故事」、「成功指標」的 PRD 初稿。</code></pre>
+                                <p>AI 會快速產出結構化的文件內容。在這份初稿的基礎上，您可以進一步要求 AI 進行任務拆解：</p>
+                                <pre><code>非常好。現在，請根據這份 PRD，將核心功能拆解成給工程師看的「開發任務列表 (Task List)」，並為每個任務寫下簡要的「驗收條件 (Acceptance Criteria)」。</code></pre>
+                                <p>AI 甚至能產出帶有敏捷開發專案的慣用語 (如 Epic, Task, AC) 的任務列表。這份列表可以直接作為與開發團隊討論的基礎，快速估算工作量，讓專案從一開始就有一個清晰的藍圖。</p>
                             </div>
 
-
-
-                        </section>
                             <div class="step">
-                                <h3 id="section-5"><i class="fas fa-vial step-icon"></i>要點四：讓 AI 自動生成「功能驗收清單」</h3>
+                                <h3 id="section-3"><i class="fas fa-vial step-icon"></i>要點三：讓 AI 自動生成「功能驗收清單」</h3>
                                 <p><strong>痛點場景：</strong> 您辛苦寫完的 PRD，交給開發團隊後，他們寫出來的功能，可能常因為雙方對需求規格的理解有偏差，而漏掉一些您在意的細節或邊界條件？</p>
                                 <p>現在，您可以讓 AI 扮演 PM 和開發團隊之間的橋樑。在您寫完規格後，直接讓 AI 根據您的規格，產出第一版的「驗收測試案例 (Test Case)」。</p>
                                 
@@ -368,17 +215,80 @@ GoogleSearch Searching the web for: "Asana vs Jira vs Trello Gantt chart feature
 </code></pre>
                                 <p>這份由 AI 生成的測試案例，可以作為您和 QA 團隊討論的基礎，確保每個人對需求的理解都在同一個水平上，從源頭提升產品質量。</p>
                             </div>
+
+                            <div class="step">
+                                <h3 id="section-4"><i class="fas fa-users-cog step-icon"></i>要點四：建立並管理你的 AI 專家團隊 (`todo.md` 實踐)</h3>
+                                <p><strong>痛點場景：</strong> 作為 PM，撰寫一份新的產品規格書 (PRD) 往往是一個漫長而複雜的過程。如何確保每個環節都能有條不紊地進行，並最終產出高品質的 PRD 和 UI Prototype？</p>
+                                <p>一個成功的領導者，懂得如何組建團隊並管理進度。在與 AI 協作時，您可以透過「角色扮演」與 `todo.md`，建立一個各司其職的「AI 專家團隊」，並清晰地導航整個專案流程。</p>
+
+                                <hr class="my-4">
+
+                                <h4 class="text-success">Part 1: 建立您的「AI 專家團隊」，各司其職</h4>
+                                <p>您可以為每一位 AI 專家建立一個專屬的 Prompt 指令稿 (例如 <code>market_analyst.md</code>, <code>qa_expert.md</code>)，將您對這個角色的期望、工作流程、產出格式等都定義清楚。您可以把這些 `.md` 檔案看作是您為每位 AI 專家量身打造的「工作手冊」。</p>
+                                <p><strong>您的 AI 專家團隊可能包含：</strong></p>
+                                <ul>
+                                    <li><strong>市場分析師</strong>：專門負責上網研究、分析競品、產出報告。</li>
+                                    <li><strong>用戶研究員</strong>：專門負責閱讀使用者回饋、訪談稿，提煉洞見。</li>
+                                    <li><strong>產品設計師</strong>：專門負責發想 UI/UX 概念、繪製流程圖。</li>
+                                    <li><strong>QA 專家</strong>：專門負責將您的規格轉化為滴水不漏的測試案例。</li>
+                                </ul>
+                                <p>您的核心工作，不再是親自執行所有事，而是像一位總指揮，清晰地定義問題，並將任務指派給最適合的 AI 專家去處理。</p>
+
+                                <hr class="my-4">
+
+                                <h4 class="text-success">Part 2: 用 `todo.md` 導航複雜的產品開發流程</h4>
+                                <p>現在，您可以將 AI 視為您的專案助理，利用 `todo.md` 這個簡單而強大的概念，來導航整個 PRD 撰寫流程，確保每個步驟都清晰可控。</p>
+                                <p><strong>PM 撰寫 PRD 的 `todo.md` 工作流：</strong></p>
+                                <ol>
+                                    <li><strong>定義最終目標</strong>：PM 首先在 `todo.md` 中明確定義最終目標。</li>
+                                    <li><strong>AI 協助拆解任務</strong>：PM 指示 AI 根據最終目標，將整個流程拆解為一系列具體、可執行的子任務，並列入 `todo.md`。</li>
+                                    <li><strong>PM 審核與指派</strong>：PM 審核任務清單，逐一指派給不同的 AI Agent（例如：`@market_analyst.md`）或由 PM 親自執行。</li>
+                                    <li><strong>AI Agent 執行與自動更新進度</strong>：每個 AI Agent 根據被指派的任務進行工作，並在完成後自動更新 `todo.md` 中的任務狀態，PM 則負責審核每個階段的產出。</li>
+                                </ol>
+
+                                <p><strong>範例：撰寫新功能 PRD 的 `todo.md`</strong></p>
+                                <p>假設您需要為一個「智慧家居 App 的新安全監控功能」撰寫 PRD，您的 `todo.md` 可能會長這樣：</p>
+                                <pre><code># 新功能 PRD 撰寫與 UI Prototype 任務清單：智慧家居安全監控
+
+## 階段一：資料收集與市場分析
+- [ ] **任務：** 進行競品分析，了解市場上主流安全監控 App 的功能與優勢。
+    *   **指派給：** @market_analyst.md
+    *   **驗收條件：** 產出競品分析報告 (`competitor_analysis.md`)。
+- [ ] **任務：** 收集用戶對居家安全監控的需求與痛點。
+    *   **指派給：** @user_researcher.md
+    *   **驗收條件：** 產出用戶需求報告 (`user_needs_report.md`)。
+
+## 階段二：PRD 初稿撰寫
+- [ ] **任務：** 根據資料收集結果，撰寫新安全監控功能的 PRD 初稿。
+    *   **指派給：** @pm_assistant.md
+    *   **驗收條件：** 產出 PRD 初稿 (`security_feature_prd_draft.md`)，包含功能描述、用戶故事、成功指標。
+
+## 階段三：UI Prototype 產出與驗證
+- [ ] **任務：** 根據 PRD 初稿，設計安全監控儀表板的 UI 概念。
+    *   **指派給：** @ui_designer.md
+    *   **驗收條件：** 產出 UI 概念草圖描述 (`security_dashboard_ui_concept.md`)。
+- [ ] **任務：** 根據 UI 概念，生成基於 Bootstrap 5 的 HTML UI Prototype。
+    *   **指派給：** @frontend_dev_agent.md
+    *   **驗收條件：** 產出可互動的 HTML UI Prototype (`security_dashboard_prototype.html`)。
+
+## 階段四：PRD 最終定稿
+- [ ] **任務：** 根據 UI Prototype 回饋，優化 PRD 內容。
+    *   **指派給：** @pm_assistant.md
+    *   **驗收條件：** 產出最終版 PRD (`security_feature_prd_final.md`)。
+</code></pre>
+                                <p>這種以 `todo.md` 為核心的協作模式，讓 PM 能夠像一位總指揮，將複雜的產品開發流程拆解、指派、追蹤，確保每個環節都能高效且精準地完成。</p>
+                            </div>
+                        </section>
                     </div>
 
                     <div class="tutorial-summary">
                         <h4>本章總結</h4>
-                        <p>在本篇文章中，我們介紹了提升 PM 工作效率的實用 AI 技巧：</p>
+                        <p>在本篇文章中，我們聚焦於如何打造開發藍圖與管理執行流程：</p>
                         <ul>
-                            <li>利用 Gemini CLI 協作產生 Mermaid 流程圖，提升溝通效率。</li>
-                            <li>利用 Gemini CLI 聯網搜尋能力蒐集資料，並根據特定網頁內容優化文章，為產品決策與內容創作提供數據支持。</li>
-                            <li>善用 Markdown 檔案準備「給 AI 的書面簡報」，有條理地管理複雜指令，提升溝通效率與穩定性。</li>
-                            <li>利用 `todo.md` 導航複雜的產品開發流程，從資料收集到 PRD 撰寫與原型產出，確保每個環節高效精準。</li>
-                            <li>讓 AI 自動生成「功能驗收清單」，加速開發流程並確保品質。</li>
+                            <li>介紹「規格驅動開發 (SDD)」的核心理念，強調清晰規格的價值。</li>
+                            <li>展示如何透過「書面簡報」搭配 AI，高效產出結構化的 PRD 初稿。</li>
+                            <li>教學如何利用 AI 將規格文件自動轉換為詳盡的 QA 驗收清單，確保交付品質。</li>
+                            <li>整合「AI 專家團隊」與 `todo.md` 的概念，建立一套清晰、可追蹤的 AI 協作專案管理流程。</li>
                         </ul>
                         <p>透過這些 AI 驅動的策略，PM 可以將更多精力投入到策略思考和創新決策中，從「忙碌的管理者」轉型為「產品賦能者」，帶領團隊高效達成產品目標。</p>
                     </div>
@@ -387,7 +297,7 @@ GoogleSearch Searching the web for: "Asana vs Jira vs Trello Gantt chart feature
                 <div class="d-flex justify-content-between flex-wrap mt-5">
                     <a href="gemini-cli-tutorial-3.html" class="btn btn-secondary btn-lg mb-2 mb-md-0"><i class="fas fa-arrow-left me-2"></i>上一篇：AI 賦能產品探索與定義</a>
                     <a href="../tutorials.html" class="btn btn-primary btn-lg mb-2 mb-md-0"><i class="fas fa-list me-2"></i>返回 教學列表</a>
-                    <a href="gemini-cli-tutorial-5.html" class="btn btn-secondary btn-lg">下一篇：AI 驅動敏捷開發與活文件實踐 <i class="fas fa-arrow-right ms-2"></i></a>
+                    <a href="gemini-cli-tutorial-5.html" class="btn btn-secondary btn-lg">下一篇：AI 時代的敏捷實踐與 PM 新角色 <i class="fas fa-arrow-right ms-2"></i></a>
                 </div>
             </div>
         </div>

@@ -104,11 +104,11 @@
   - `tutorials/gemini-cli-tutorial-1.html`
 - **第二章：Gemini CLI 基本指令與認證**
   - `tutorials/gemini-cli-tutorial-2.html`
-- **第三章：AI 賦能產品探索與需求釐清**
+- **第三章：AI 賦能產品探索與定義**
   - `tutorials/gemini-cli-tutorial-3.html`
-- **第四章：AI 驅動敏捷開發與活文件實踐**
+- **第四章：AI 驅動的規格撰寫與專案管理**
   - `tutorials/gemini-cli-tutorial-4.html`
-- **第五章：AI 驅動敏捷開發與活文件實踐**
+- **第五章：AI 時代的敏捷實踐與 PM 新角色**
   - `tutorials/gemini-cli-tutorial-5.html`
 
 ---
