@@ -713,6 +713,18 @@ footer {
     color: #ffffff;
 }
 
+.podcast-badge {
+    font-size: 0.7rem;
+    vertical-align: middle;
+    padding: 0.4em 0.6em;
+    background-color: #9b59b6 !important; /* A distinct purple color */
+    transition: transform 0.2s ease;
+}
+
+.podcast-badge:hover {
+    transform: scale(1.05);
+}
+
 [data-bs-theme="dark"] .nav-tabs .nav-link.active {
     background-color: #1e1e1e;
     color: #4dabf7;
