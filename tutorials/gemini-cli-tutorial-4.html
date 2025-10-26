@@ -122,7 +122,7 @@
             <div class="col-lg-10 mx-auto">
                 <article class="blog-post">
                     <h1 class="mb-3 display-5 border-bottom pb-3">PM x Gemini CLI (四)：AI 驅動的規格撰寫與專案管理</h1>
-                    <p class="text-muted mb-4">發布日期：2025年10月28日</p>
+                    <p class="text-muted mb-4">發布日期：2025年10月25日</p>
 
                     <div class="podcast-player mb-4">
                         <h5><i class="fas fa-headphones-alt me-2"></i>本集 Podcast</h5>
@@ -173,18 +173,43 @@
                             <div class="step">
                                 <h3 id="section-2"><i class="fas fa-file-invoice step-icon"></i>要點二：從「簡報」到「PRD」：AI 輔助規格文件生成</h3>
                                 <p><strong>痛點場景：</strong> 當您有一個複雜的想法或任務，想在小小的終端機對話框裡一次打完，是不是常常覺得很難編輯？又要開始寫新的 PRD (產品需求文件) 了，面對空白的文件，不知從何下手？</p>
-                                <p>一個專業的工作習慣是：<strong>不要在對話框裡寫長篇大論</strong>。而是先把您的想法，有條理地寫在一個 Markdown (`.md`) 檔案裡。您可以把這個檔案，看作是一份要交給 AI 助理的「書面工作簡報 (Briefing)」。</p>
+                                <p>一個良好的工作習慣是：<strong>不要在對話框裡寫長篇大論</strong>。而是先把您的想法，有條理地寫在一個 Markdown (`.md`) 檔案裡。您可以把這個檔案，看作是一份要交給 AI 助理的「書面工作簡報 (Briefing)」。</p>
                                 
                                 <hr class="my-4">
 
                                 <h4 class="text-success">Part 1: 用 Markdown 檔案準備「給 AI 的書面簡報」</h4>
                                 <p>在簡報中用標題、列表、粗體字，把背景資訊、任務要求、輸出格式等都寫清楚。寫完後，只要在對話框中簡單地說：</p>
                                 <pre><code>請根據我這份簡報 `@my_complex_idea.md` 的內容，完成指定的任務。</code></pre>
-                                <p><strong>這樣做的好處：</strong>
+                                <p class="mt-4"><strong>`my_complex_idea.md` 範例內容：</strong></p>
+                                <pre><code># 書面簡報：為「線上學習平台」規劃「社群討論區」功能
+
+## 1. 背景與目標 (Background & Goal)
+
+我們的線上學習平台目前缺乏一個讓學員互動、提問、分享心得的地方。這導致學員黏著度不高，學習氛圍也比較孤單。
+
+**目標：** 打造一個簡單易用的「社群討論區」，提升學員的互動與歸屬感，並讓知識可以沉澱與共享。
+
+## 2. 核心任務 (Core Task)
+
+請你扮演一位資深的產品經理，根據這份簡報，為我生成一份專業的「產品需求文件 (PRD)」初稿。
+
+## 3. PRD 需包含的章節
+
+請確保 PRD 至少包含以下三個主要章節：
+
+*   **功能描述 (Feature Description):** 宏觀介紹這個功能是什麼，解決了什麼問題。
+*   **使用者故事 (User Stories):** 從不同使用者角度，描述他們想完成的任務。至少包含「一般學員」和「課程講師」兩種角色。
+*   **成功指標 (Success Metrics):** 我們該如何衡量這個功能上線後是否成功？請提供 2-3 個量化指標。
+
+## 4. 輸出格式
+
+PRD 內容請直接以 Markdown 格式，產出獨立的 .md 檔案，方便我修改跟複製貼上。
+</code></pre>
+                                <p class="mt-4"><strong>這樣做的好處：</strong>
                                 <ul>
                                     <li><strong>思路更清晰</strong>：書寫過程能幫助您整理想法，釐清思緒，這是最最最重要的好處。</li>
                                     <li><strong>修改更容易</strong>：在 VS Code 中編輯文件，遠比在終端機中修改指令輕鬆。</li>
-                                    <li><strong>指令可複用</strong>：這份「簡報」可以存檔，下次有類似任務，改一改就能重複使用。</li>
+                                    <li><strong>指令可複用</strong>：這份「簡報」可以留存，下次有類似任務，改一改就能重複使用。</li>
                                 </ul>
                                 <p class="mt-4">這個簡單的習慣，會讓您與 AI 的協作變得更穩定、更專業，產出品質也會更高。</p>
 
@@ -195,8 +220,59 @@
                                 <p><strong>範例：快速生成「社群討論區」的 PRD 初稿與開發任務</strong></p>
                                 <p>給 AI 一個高層次的想法：</p>
                                 <pre><code>我需要為一個「線上學習平台」規劃新的「社群討論區」功能，請幫我生成一份包含「功能描述」、「使用者故事」、「成功指標」的 PRD 初稿。</code></pre>
+                                <div class="p-3 my-4 bg-light border rounded">
+                                    <p>好的，這是一份為「社群討論區」功能所撰寫的 PRD 初稿：</p>
+                                    <hr>
+                                    <h3><strong>產品需求文件 (PRD): 社群討論區</strong></h3>
+                                    <h4><strong>1. 功能描述 (Feature Description)</strong></h4>
+                                    <p>「社群討論區」是一個內建於線上學習平台的互動空間。它旨在讓付費學員可以針對課程內容進行提問、分享學習心得、並與其他學員及講師進行交流。此功能將解決目前平台缺乏互動性的問題，透過建立學習社群來提升用戶黏著度與歸屬感。</p>
+                                    
+                                    <h4><strong>2. 使用者故事 (User Stories)</strong></h4>
+                                    <ul>
+                                        <li><strong>作為一名學員，我想要</strong> 一個地方可以提出我在課程中遇到的問題，<strong>以便</strong> 我能得到同學或講師的解答。</li>
+                                        <li><strong>作為一名學員，我想要</strong> 瀏覽其他人發布的內容，<strong>以便</strong> 我能從他們的經驗中學習。</li>
+                                        <li><strong>作為一名講師，我想要</strong> 看到學員們正在討論的話題，<strong>以便</strong> 我能了解他們普遍遇到的困難，並優化我的教學內容。</li>
+                                    </ul>
+
+                                    <h4><strong>3. 成功指標 (Success Metrics)</strong></h4>
+                                    <ul>
+                                        <li><strong>用戶活躍度 (User Activity):</strong> 每週不重複發文/回文的用戶數 (WAU) 達到總付費學員數的 15%。</li>
+                                        <li><strong>內容貢獻量 (Content Contribution):</strong> 每週新產生的貼文與留言總數超過 100 則。</li>
+                                        <li><strong>問題解決率 (Problem Resolution Rate):</strong> 80% 的提問貼文在 48 小時內至少獲得一則回覆。</li>
+                                    </ul>
+                                </div>
                                 <p>AI 會快速產出結構化的文件內容。在這份初稿的基礎上，您可以進一步要求 AI 進行任務拆解：</p>
                                 <pre><code>非常好。現在，請根據這份 PRD，將核心功能拆解成給工程師看的「開發任務列表 (Task List)」，並為每個任務寫下簡要的「驗收條件 (Acceptance Criteria)」。</code></pre>
+                                <div class="p-3 my-4 bg-light border rounded">
+                                    <p>當然，這是在敏捷開發 (Agile) 中常見的做法。這是一份根據 PRD 生成的開發任務列表，可直接用於團隊的待辦清單 (Backlog)：</p>
+                                    <hr>
+                                    <h4><strong>Epic: 社群討論區基礎功能</strong></h4>
+                                    <ul>
+                                        <li>
+                                            <strong>Task 1: 建立貼文發布功能</strong>
+                                            <ul>
+                                                <li><strong>AC 1.1:</strong> 使用者必須登入才能發布貼文。</li>
+                                                <li><strong>AC 1.2:</strong> 貼文包含標題與內容欄位，兩者皆為必填。</li>
+                                                <li><strong>AC 1.3:</strong> 成功發布後，頁面應自動導向到該篇新貼文的獨立頁面。</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <strong>Task 2: 開發列表頁，展示所有貼文</strong>
+                                            <ul>
+                                                <li><strong>AC 2.1:</strong> 所有貼文應按「最新發布時間」由新到舊排序。</li>
+                                                <li><strong>AC 2.2:</strong> 每則貼文應顯示標題、作者名稱、發布時間。</li>
+                                                <li><strong>AC 2.3:</strong> 點擊任一貼文標題，可進入該貼文的獨立頁面。</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <strong>Task 3: 開發貼文獨立頁面</strong>
+                                            <ul>
+                                                <li><strong>AC 3.1:</strong> 頁面需完整顯示貼文的標題與所有內容。</li>
+                                                <li><strong>AC 3.2:</strong> 頁面下方需有留言功能區塊 (留言功能將在下個 Epic 實作)。</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
                                 <p>AI 甚至能產出帶有敏捷開發專案的慣用語 (如 Epic, Task, AC) 的任務列表。這份列表可以直接作為與開發團隊討論的基礎，快速估算工作量，讓專案從一開始就有一個清晰的藍圖。</p>
                             </div>
 
@@ -252,6 +328,79 @@
                                     <li><strong>產品設計師</strong>：專門負責發想 UI/UX 概念、繪製流程圖。</li>
                                     <li><strong>QA 專家</strong>：專門負責將您的規格轉化為滴水不漏的測試案例。</li>
                                 </ul>
+
+                                <h5 class="mt-4 text-primary">打造高品質「AI 專家」的進階技巧：</h5>
+                                <p>要讓您的 AI 專家不僅僅是個空殼，而是能真正產出高品質內容的得力助手，您可以在您的 <code>.md</code> 指令稿中，融入以下幾種進階的提示 (Prompting) 技巧：</p>
+                                <ul>
+                                    <li class="mt-3">
+                                        <strong>專家角色扮演模式 (Expert Persona)</strong><br>
+                                        不只是給予「你是一位產品經理」這種簡單角色，而是設定更精細、更具體的「專家人格」。例如：「你是一位對使用者體驗極度挑剔的設計總監，請用你的視角審視這份 PRD」、「你是一位只在乎商業變現的 CEO，請評估這個功能的潛在營收模式」。讓 AI 從不同利害關係人的視角提供回饋，能讓您的思考更全面。
+                                    </li>
+                                    <li class="mt-3">
+                                        <strong>思維鏈 (Chain of Thought) 技巧</strong><br>
+                                        在指令中明確要求 AI「先思考，再回答」。例如，在處理複雜的分析任務時，您可以加上這樣的指令：「請一步一步思考。首先，分析問題的背景。接著，列出可能的解決方案。最後，評估每個方案的優劣並給出建議。」這種方式能引導 AI 進行更嚴謹的邏輯推理，大幅提升回答的品質與準確性。
+                                    </li>
+                                    <li class="mt-3">
+                                        <strong>少樣本提示法 (Few-shot Prompting)</strong><br>
+                                        在指令中直接給予 AI 1-2 個您想要的輸出範例。這就像是給它一個「樣板」，讓它能精準地模仿您想要的格式、風格或語氣來完成任務。例如，如果您希望 AI 產出特定格式的使用者故事，可以直接在指令中寫下範例，AI 的後續產出就會完全遵照您的格式。
+                                    </li>
+                                </ul>
+
+                                <hr class="my-4">
+                                <p><strong>範例一：結合「思維鏈」與「少樣本」的 QA 專家 (<code>qa_expert.md</code>)</strong></p>
+                                <pre><code># Persona: QA Expert
+
+你是一位頂尖的軟體品質保證 (QA) 專家，擁有十年以上經驗。你極度注重細節、邏輯嚴謹，並且擅長找出各種極端的邊界案例。
+
+你的任務是根據我提供的產品規格 (PRD)，為指定的功能撰寫詳盡的驗收測試案例。
+
+## 工作流程 (Chain of Thought)
+
+當你接到任務時，請嚴格遵循以下思考步驟：
+1.  **分析需求**：仔細閱讀規格，拆解出所有功能點和業務規則。
+2.  **設計正面案例**：設計涵蓋所有正常操作流程的測試案例。
+3.  **設計負面案例**：思考所有可能的錯誤操作、非法輸入，設計對應的測試案例。
+4.  **設計邊界案例**：針對所有數值、字數限制等條件，設計剛好符合、超過、或低於限制的極端測試案例。
+5.  **格式化輸出**：將所有案例整理成清晰的表格。
+
+## 輸出範例 (Few-shot Example)
+
+請嚴格遵照以下 Markdown 表格格式輸出，這是一個範例：
+
+| 案例 ID | 測試類型 | 測試項目 | 步驟 | 預期結果 |
+| :--- | :--- | :--- | :--- | :--- |
+| TC-LOGIN-001 | 正面 | 成功登入 | 1. 輸入正確的帳號&lt;br&gt;2. 輸入正確的密碼&lt;br&gt;3. 點擊「登入」 | 1. 登入成功&lt;br&gt;2. 頁面跳轉到會員首頁 |
+| TC-LOGIN-002 | 負面 | 密碼錯誤 | 1. 輸入正確的帳號&lt;br&gt;2. 輸入錯誤的密碼&lt;br&gt;3. 點擊「登入」 | 1. 提示「帳號或密碼錯誤」&lt;br&gt;2. 停在登入頁面 |
+
+---
+現在，請等待我提供產品規格文件。
+</code></pre>
+
+                                <p class="mt-4"><strong>範例二：強調「專家人格」的 CEO (<code>ceo_persona.md</code>)</strong></p>
+                                <pre><code># Persona: Business-Focused CEO
+
+你是一家上市公司的 CEO，你極度關注商業變現、市場競爭力與投資回報率 (ROI)。你沒有時間聽取技術細節或不切實際的用戶體驗幻想。
+
+你的任務是審閱我提出的新功能想法或 PRD，並從一個純粹商業的角度，提出尖銳、直接的質疑。
+
+## 你的口頭禪與思維模式
+
+*   "這個功能能為我們帶來多少營收？"
+*   "我們的競爭對手做這個了嗎？我們為什麼要做？"
+*   "開發這個要花多少錢？多久能看到回報？"
+*   "不要告訴我這個功能『很酷』，告訴我它如何幫助我們『賺錢』或『省錢』。"
+*   "市場會為這個買單嗎？你有數據支持嗎？"
+
+## 任務指令
+
+當我提供一份文件給你審閱時，請用以上述角色的口吻，直接提出 3-5 個最關鍵的商業質疑。你的回覆應該簡潔、有力、直指核心。
+
+---
+準備好了，把文件給我。
+</code></pre>
+
+                                <p class="mt-4">將這些技巧應用在您的 <code>ceo_persona.md</code> 或 <code>qa_expert.md</code> 等檔案中，就能將它們從簡單的指令稿，升級為真正專業、可靠的自動化工具。</p>
+
                                 <p>您的核心工作，不再是親自執行所有事，而是像一位總指揮，清晰地定義問題，並將任務指派給最適合的 AI 專家去處理。</p>
 
                                 <hr class="my-4">
@@ -262,7 +411,7 @@
                                 <ol>
                                     <li><strong>定義最終目標</strong>：PM 首先在 `todo.md` 中明確定義最終目標。</li>
                                     <li><strong>AI 協助拆解任務</strong>：PM 指示 AI 根據最終目標，將整個流程拆解為一系列具體、可執行的子任務，並列入 `todo.md`。</li>
-                                    <li><strong>PM 審核與指派</strong>：PM 審核任務清單，逐一指派給不同的 AI Agent（例如：`@market_analyst.md`）或由 PM 親自執行。</li>
+                                    <li><strong>PM 審核與指派</strong>：PM 審核任務清單，逐一指派給不同的 AI Agent（例如：`@qa_expert.md`）或由 PM 親自指派。</li>
                                     <li><strong>AI Agent 執行與自動更新進度</strong>：每個 AI Agent 根據被指派的任務進行工作，並在完成後自動更新 `todo.md` 中的任務狀態，PM 則負責審核每個階段的產出。</li>
                                 </ol>
 
@@ -296,6 +445,14 @@
     *   **指派給：** @pm_assistant.md
     *   **驗收條件：** 產出最終版 PRD (`security_feature_prd_final.md`)。
 </code></pre>
+                                <p class="mt-4">當您準備好這份 `todo.md` 後，就可以開始執行您的專案了。您可以對 Gemini CLI 下達一個更精確的啟動指令，引導它如何扮演「總監」並調度其他「AI 專家」：</p>
+                                <pre><code>你現在是我的專案總監。你的任務是閱讀 `@todo.md`，並依序執行其中的任務。
+
+當你遇到一個任務時，請注意「指派給」欄位：
+- 如果任務指派給一個 .md 檔案 (例如 `@market_analyst.md`)，這代表你需要載入那個檔案的內容作為你的新指令 (Persona)，並以該專家的身份完成任務。
+- 完成後，你需切換回「專案總監」的角色，向我報告，並準備進行下一個任務。
+
+現在，請從 `@todo.md` 的第一個未完成的任務開始執行。完成後向我報告，等待我的下一步指示。</code></pre>
                                 <p>這種以 `todo.md` 為核心的協作模式，讓 PM 能夠像一位總指揮，將複雜的產品開發流程拆解、指派、追蹤，確保每個環節都能高效且精準地完成。</p>
                             </div>
                         </section>
