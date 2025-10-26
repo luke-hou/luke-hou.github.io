@@ -174,6 +174,31 @@
                                 <h3 id="section-2"><i class="fas fa-file-invoice step-icon"></i>要點二：從「簡報」到「PRD」：AI 輔助規格文件生成</h3>
                                 <p><strong>痛點場景：</strong> 當您有一個複雜的想法或任務，想在小小的終端機對話框裡一次打完，是不是常常覺得很難編輯？又要開始寫新的 PRD (產品需求文件) 了，面對空白的文件，不知從何下手？</p>
                                 <p>一個良好的工作習慣是：<strong>不要在對話框裡寫長篇大論</strong>。而是先把您的想法，有條理地寫在一個 Markdown (`.md`) 檔案裡。您可以把這個檔案，看作是一份要交給 AI 助理的「書面工作簡報 (Briefing)」。</p>
+
+                                <div class="p-3 my-4 bg-light border rounded">
+                                    <h5><i class="fas fa-pencil-alt me-2"></i>小提示：什麼是 Markdown？</h5>
+                                    <p>Markdown 是一種輕量級的標記式語言，讓您可以用簡單的純文字語法，來設定文件的格式。因為語法簡單、通用性高，非常適合用來撰寫給 AI 的指令稿或草稿文件。</p>
+                                    <p class="mb-2"><strong>例如，一段這樣的 Markdown 文字：</strong></p>
+                                    <pre class="bg-white text-dark"><code># 專案目標
+
+## 核心功能
+- [x] 使用者登入
+- [ ] **個人資料**頁面
+
+*請優先完成個人資料頁面*</code></pre>
+                                    <p class="mt-3 mb-2"><strong>將會被渲染成類似這樣的效果：</strong></p>
+                                    <div class="border p-3 rounded" style="background-color: #fff;">
+                                        <h1 style="font-size: 1.7rem; border-bottom: 1px solid #eee; padding-bottom: .5rem;">專案目標</h1>
+                                        <h2 style="font-size: 1.4rem;">核心功能</h2>
+                                        <ul style="list-style-type: none; padding-left: 0;">
+                                            <li><input type="checkbox" checked disabled> 使用者登入</li>
+                                            <li><input type="checkbox" disabled> <strong>個人資料</strong>頁面</li>
+                                        </ul>
+                                        <p><em>請優先完成個人資料頁面</em></p>
+                                    </div>
+                                    <p class="mt-3">若想學習更多完整的 Markdown 語法，可以參考<a href="https://markdown.tw/" target="_blank">這份台灣的中文教學文件</a>。</p>
+                                    <p class="mt-2 mb-0">當您需要結構化地向 AI 傳達複雜指令時，用 Markdown 來組織您的想法會非常有效。</p>
+                                </div>
                                 
                                 <hr class="my-4">
 
