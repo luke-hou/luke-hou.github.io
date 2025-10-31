@@ -18,6 +18,9 @@
 
 此頁面隸屬於「作品集」。每個專案都提供「商業視角說明」與「技術視角說明」兩種版本。
 
+- **Line 對話紀錄 AI 自動摘要**
+  - 技術視角說明: `projects/line-chat-record-ai-summary.html`
+  - 商業視角說明: `projects/line-chat-record-ai-summary-business.html`
 - **Go-Live 利器：Sheet to Jira 自動化**
   - 技術視角說明: `projects/golive-jira-automation.html`
   - 商業視角說明: `projects/golive-jira-automation-business.html`
@@ -78,7 +81,7 @@
 
 此頁面隸屬於「n8n 教學」。
 
-- **第一章：本地安裝 node js 與 n8n**
+- **第一章：本地安裝 Node.js 與 npm 全域安裝 n8n**
   - `n8n_tutorials/n8n-tutorial-1.html`
 - **第二章：Supabase 申請及建立向量資料庫**
   - `n8n_tutorials/n8n-tutorial-2.html`
@@ -111,6 +114,8 @@
   - `tutorials/gemini-cli-tutorial-4.html`
 - **第五章：AI 時代的敏捷實踐與 PM 新角色**
   - `tutorials/gemini-cli-tutorial-5.html`
+- **番外篇：PM 的 AI 協作護城河—無痛導入 Git 版控**
+  - `tutorials/gemini-cli-special-git-for-pm.html`
 
 ---
 *注意：此地圖不包含 CSS、JavaScript、圖片、音檔或暫存文件等資源文件。*
