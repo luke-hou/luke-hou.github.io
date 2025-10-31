@@ -62,6 +62,8 @@
 
 此頁面隸屬於「部落格」。
 
+- **系統上線生存指南：第一線人員的戰術手冊**
+  - `blog/Golive_Survival_Guide.html`
 - **AI 驅動的 Web 自動化測試策略**
   - `blog/ai_driven_web_testing.html`
 - **大甲八卦掌武學總會**
