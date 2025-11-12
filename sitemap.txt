@@ -18,6 +18,9 @@
 
 此頁面隸屬於「作品集」。每個專案都提供「商業視角說明」與「技術視角說明」兩種版本。
 
+- **從一句話到完整 PRD：多代理 AI 自動化生成系統**
+  - 技術視角說明: `projects/prd-ai-generation.html`
+  - 商業視角說明: `projects/prd-ai-generation-business.html`
 - **Line 對話紀錄 AI 自動摘要**
   - 技術視角說明: `projects/line-chat-record-ai-summary.html`
   - 商業視角說明: `projects/line-chat-record-ai-summary-business.html`
