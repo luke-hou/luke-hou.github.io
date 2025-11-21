@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini CLI 教學【番外篇】：PM 的 AI 協作護城河—無痛導入 Git 版控</title>
+    <meta name="description"
+        content="本章專為非技術背景的產品經理（PM）與設計師設計，將引導您如何使用 Git 與 Visual Studio Code，為您的產品需求文件（PRD）建立版本控制，打造一個堅實的 AI 協作安全網。">
+    <meta name="keywords"
+        content="Gemini CLI, Git, GitHub, Product Manager, PM, 版本控制, PRD, AI 協作, Visual Studio Code, 教學, 番外篇">
+    <link rel="icon" href="../images/favicon.jpg" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .tutorial-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.5rem auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #eee;
+        }
+
+        .tutorial-content figure {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .step {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            background-color: #f8f9fa;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .step:hover {
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+        }
+
+        .step h3 {
+            font-size: 1.5rem;
+            color: #198754;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+        }
+
+        .step h3 .step-icon {
+            margin-right: 0.8rem;
+            font-size: 1.4rem;
+            background-color: #e8f5e9;
+            padding: 10px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        code {
+            background-color: #e9ecef;
+            padding: .2rem .4rem;
+            border-radius: .2rem;
+            font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: .875em;
+            color: #d63384;
+        }
+
+        pre {
+            background-color: #212529;
+            color: #f8f9fa;
+            padding: 1rem;
+            border-radius: .3rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin-top: 1rem;
+        }
+
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+        }
+
+        .tutorial-intro {
+            background-color: #eef8f3;
+            border-left: 5px solid #198754;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .alert-heading {
+            font-weight: 700;
+        }
+
+        .img-placeholder-text {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-0V2L1DQVPY');
+    </script>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學文</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../podcast.html">🎙️ Podcast</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <article class="blog-post">
+                    <h1 class="mb-3 display-5 border-bottom pb-3">Gemini CLI 教學【番外篇】：PM 的 AI 協作護城河—無痛導入 Git 版控</h1>
+                    <p class="text-muted mb-4">發布日期：2025年10月27日</p>
+
+                    <div class="tutorial-intro">
+                        <p class="fs-5 mb-4">在與 AI 協作的過程中，您是否曾遇過這些崩潰時刻？</p>
+                        <ul class="mb-4">
+                            <li>「AI 剛剛改得太興奮，把原本寫好的登入流程覆蓋掉了，但我忘記原本寫什麼了...」</li>
+                            <li>「老闆說 V3 版本最好，但我現在已經改到 V10 了，舊檔案早就沒存檔了...」</li>
+                            <li>「這段需求是誰改的？為什麼要這樣改？完全想不起來...」</li>
+                        </ul>
+                        <p>別擔心，這不是您的錯，是工具的問題。這篇教學將帶您建立一套<strong>「文件時光機」</strong>。我們將使用工程師每天都在用的神器—<strong>Git</strong>，但我們<strong>不寫程式碼，也不背複雜指令</strong>。我們只學最核心的「存檔」技巧，讓您能隨時穿越時空，找回任何一個版本的檔案。
+                        </p>
+                    </div>
+
+                    <div class="tutorial-content">
+                        <section class="step-by-step">
+                            <h2 class="fw-bolder mb-4 mt-5">第一階段：打造時光機 (安裝與設定)</h2>
+                            <p>工欲善其事，必先利其器。我們需要先安裝兩個軟體：<strong>Git</strong> (時光機引擎) 和 <strong>Visual Studio
+                                    Code</strong> (時光機的操作面板)。</p>
+
+                            <div class="step">
+                                <h3><i class="fas fa-download step-icon"></i>步驟一：安裝 Git</h3>
+                                <p>Git 是負責在背景默默記錄所有變更的核心引擎。</p>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card h-100">
+                                            <div class="card-body">
+                                                <h5 class="card-title"><i class="fab fa-windows me-2"></i>Windows 使用者
+                                                </h5>
+                                                <ol>
+                                                    <li>前往 <a href="https://git-scm.com/download/win"
+                                                            target="_blank">Git 官網下載頁面</a>。</li>
+                                                    <li>點擊 <strong>"Click here to download"</strong> 下載安裝檔。</li>
+                                                    <li>執行安裝檔，<strong>請一路點擊 "Next" 到底</strong>，所有預設選項都已經足夠完美，不需要修改任何設定。
+                                                    </li>
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card h-100">
+                                            <div class="card-body">
+                                                <h5 class="card-title"><i class="fab fa-apple me-2"></i>macOS 使用者</h5>
+                                                <ol>
+                                                    <li>打開您的「終端機 (Terminal)」App (按 Cmd+Space 搜尋 Terminal)。</li>
+                                                    <li>輸入 <code>git --version</code> 並按 Enter。</li>
+                                                    <li>如果您看到版本號，代表已經安裝好了。</li>
+                                                    <li>如果系統跳出視窗問您是否要安裝「Command Line Developer
+                                                        Tools」，請點擊<strong>「安裝」</strong>並依照指示完成。</li>
+                                                </ol>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-desktop step-icon"></i>步驟二：安裝 Visual Studio Code (VS Code)</h3>
+                                <p>這是我們編輯文件和操作 Git 的介面。它比 Word 更輕量，比記事本更強大。</p>
+                                <ol>
+                                    <li>前往 <a href="https://code.visualstudio.com/" target="_blank">VS Code 官網</a>
+                                        下載並安裝。</li>
+                                    <li>安裝完成後打開 VS Code。</li>
+                                </ol>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-signature step-icon"></i>步驟三：設定您的「簽名」</h3>
+                                <p>在時光機運作前，它需要知道「你是誰」，這樣未來的您才知道這些變更是誰做的。</p>
+                                <ol>
+                                    <li>打開 VS Code。</li>
+                                    <li>點擊上方選單的 <strong>"Terminal" (終端機)</strong> > <strong>"New Terminal"
+                                            (新增終端機)</strong>。</li>
+                                    <li>下方會出現一個黑色或深藍色的視窗，請依序複製貼上以下兩行指令 (記得將引號內的內容改成您自己的)：</li>
+                                </ol>
+                                <pre><code class="language-bash">git config --global user.name "您的英文名字"
+git config --global user.email "您的Email"</code></pre>
+                                <p class="mt-3">例如：</p>
+                                <pre><code class="language-bash">git config --global user.name "Luke Hou"
+git config --global user.email "luke@example.com"</code></pre>
+                                <img src="../images/gemini-cli-tutorial-6/01-git-config.jpg"
+                                    alt="在 VS Code 終端機輸入 git config 指令的截圖">
+                                <p class="img-placeholder-text">圖說：在終端機輸入這兩行指令，按下 Enter 後不會有特別的顯示，這是正常的。</p>
+                            </div>
+                        </section>
+
+                        <section class="step-by-step">
+                            <h2 class="fw-bolder mb-4 mt-5">第二階段：建立雲端保險庫 (GitHub)</h2>
+                            <p>為了避免電腦壞掉導致資料遺失，我們要把時光機的紀錄同步到雲端。GitHub 就是目前全世界最大的程式碼/文件託管平台。</p>
+
+                            <div class="step">
+                                <h3><i class="fab fa-github step-icon"></i>步驟一：註冊與建立專案</h3>
+                                <ol>
+                                    <li>前往 <a href="https://github.com/" target="_blank">GitHub</a> 註冊一個免費帳號。</li>
+                                    <li>登入後，點擊右上角的 <strong>"+"</strong> 號，選擇 <strong>"New repository"</strong> (新增專案)。
+                                    </li>
+                                    <li><strong>Repository name</strong>：填寫專案名稱 (例如：<code>My-PRD-Project</code>)。</li>
+                                    <li><strong>Private</strong>：<span class="text-danger fw-bold">重要！</span>請務必勾選
+                                        <strong>Private (私有)</strong>，這樣只有您自己看得到這些文件。
+                                    </li>
+                                    <li>點擊最下方的 <strong>"Create repository"</strong> 按鈕。</li>
+                                </ol>
+                                <img src="../images/gemini-cli-tutorial-6/02-create-repo.jpg"
+                                    alt="GitHub 建立新專案的畫面，強調勾選 Private 選項">
+                                <p class="img-placeholder-text">圖說：請務必選擇 Private，保護您的商業機密。</p>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-link step-icon"></i>步驟二：取得保險庫地址</h3>
+                                <p>建立完成後，您會看到一個充滿程式碼的頁面。請找到 <strong>"HTTPS"</strong> 的網址欄位，點擊旁邊的複製按鈕。</p>
+                                <img src="../images/gemini-cli-tutorial-6/03-copy-url.jpg"
+                                    alt="複製 GitHub Repository HTTPS 網址的截圖">
+                                <p class="img-placeholder-text">圖說：點擊這個小按鈕複製網址。</p>
+                            </div>
+                        </section>
+
+                        <section class="step-by-step">
+                            <h2 class="fw-bolder mb-4 mt-5">第三階段：啟動連結 (Clone 與 首次驗證)</h2>
+                            <p>這是最關鍵的一步，我們要把雲端的保險庫「複製 (Clone)」一份到您的電腦上，並完成第一次的身分驗證。</p>
+
+                            <div class="step">
+                                <h3><i class="fas fa-cloud-download-alt step-icon"></i>步驟一：Clone 專案到電腦</h3>
+                                <ol>
+                                    <li>回到 VS Code 主頁 (起始畫面)。</li>
+                                    <li>點擊：<code>Clone Git Repostory</code>。</li>
+                                    <li>在上方跳出的搜尋框<strong>貼上</strong>剛剛從 GitHub 複製的網址，按下 Enter。</li>
+                                    <li>選擇一個您想存放這個專案的資料夾，例如 <code>C:\GitSrc</code>。(請注意，不必手動再建立下一層資料夾，因為我們 Clone
+                                        後就會在地端自動建立那個資料夾。)</li>
+                                </ol>
+                                <img src="../images/gemini-cli-tutorial-6/04-vscode-clone.jpg"
+                                    alt="VS Code 命令面板輸入 Git: Clone 的截圖">
+                                <img src="../images/gemini-cli-tutorial-6/04-vscode-clone-2.jpg"
+                                    alt="VS Code 命令面板輸入 Git: Clone 的截圖">
+                                <img src="../images/gemini-cli-tutorial-6/04-vscode-clone-3.jpg"
+                                    alt="VS Code 命令面板輸入 Git: Clone 的截圖">
+                            </div>
+
+                            <div class="step border-warning" style="border-width: 2px;">
+                                <h3><i class="fas fa-key step-icon text-warning"></i>步驟二：首次驗證 (撞牆期請注意！)</h3>
+                                <p>當您第一次嘗試連結 GitHub 時，VS Code 會跳出一個請求授權的視窗。這是一次性的，請不要驚慌。</p>
+                                <ol>
+                                    <li>VS Code 會跳出提示：<strong>"The extension 'GitHub' wants to sign in using
+                                            GitHub."</strong> (GitHub 擴充套件想要登入)。</li>
+                                    <li>請點擊 <strong>"Allow" (允許)</strong>。</li>
+                                    <li>瀏覽器會自動打開 GitHub 的授權頁面，請點擊綠色的 <strong>"Authorize Visual-Studio-Code"</strong> 按鈕。
+                                    </li>
+                                    <li>瀏覽器可能會問您是否要打開 VS Code，請點擊 <strong>"開啟"</strong>。</li>
+                                </ol>
+                                <div class="alert alert-info mt-3">
+                                    <strong><i class="fas fa-check-circle"></i> 成功訊號：</strong>
+                                    當驗證完成後，VS Code 右下角會跳出通知問您：<strong>"Would you like to open the cloned
+                                        repository?"</strong> (您要打開複製下來的專案嗎？)
+                                    <br>請務必點擊 <strong>"Open" (開啟)</strong>。
+                                    <br><small class="text-muted">錯過了沒關係，您可以點擊左上角的 "File" > "Open Folder"
+                                        手動開啟剛剛下載的資料夾。</small>
+                                </div>
+
+                                <div class="alert alert-secondary mt-3">
+                                    <strong><i class="fas fa-folder-open me-2"></i> 手邊已經有檔案了？</strong>
+                                    <p class="mb-0">如果您原本就有一堆寫好的 PRD 放在電腦某處，現在只需要做一件事：<strong>把那些檔案全部「複製貼上」到這個新 Clone
+                                            下來的資料夾中</strong>，然後就可以接續後面的步驟進行打包了。</p>
+                                    <p>(後續等您上手了，再回頭把這些原始檔案刪掉，保留 Git 資料夾裡面的版本即可。</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="step-by-step">
+                            <h2 class="fw-bolder mb-4 mt-5">第四階段：設定安全圍籬 (忽略清單)</h2>
+                            <div class="alert alert-warning">
+                                <h4 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>極度重要：開始前的安全檢查
+                                </h4>
+                                <p>在您開始打包檔案之前，有一個至關重要的步驟：<strong>定義哪些東西「不」該被打包</strong>。這能避免兩種災難：</p>
+                                <ul>
+                                    <li><strong>隱私外洩</strong>：不小心把包含密碼或個資的檔案上傳到雲端。</li>
+                                    <li><strong>專案臃腫</strong>：把幾百 MB 的錄音檔或影片檔上傳，導致時光機跑不動。</li>
+                                </ul>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-file-code step-icon"></i>建立 .gitignore 檔案</h3>
+                                <p>這是一個特殊的檔案，它的名字就叫做 <code>.gitignore</code> (注意開頭有一個點)。任何被寫在這個檔案裡的名稱，Git 都會假裝沒看到。(在 VS
+                                    Code 視窗中，這個檔案會是灰色的，很好識別)</p>
+                                <ol>
+                                    <li>在 VS Code 左側檔案總管的空白處點擊右鍵，選擇 <strong>"New File" (新增檔案)</strong>。</li>
+                                    <li>輸入檔名 <code>.gitignore</code> 並按下 Enter。</li>
+                                    <li>將下方的範本內容複製貼上到這個檔案中，並存檔 (Ctrl+S / Cmd+S)。</li>
+                                </ol>
+                                <pre><code># --- 系統檔案 (不需要備份) ---
+.DS_Store
+Thumbs.db
+
+# --- 敏感資訊 (絕對不能上傳！) ---
+.env
+secrets.txt
+
+# --- 大型檔案或過程產物 (建議自己留著就好) ---
+*.mp4
+*.mov
+*.mp3
+*.wav
+*.zip
+temp/
+</code></pre>
+                                <p class="mt-3"><strong>語法小教學：</strong></p>
+                                <ul>
+                                    <li><code>*.mp4</code>：星號 <code>*</code> 代表「所有」，所以這行意思是「忽略所有副檔名是 mp4 的檔案」。</li>
+                                    <li><code>.env</code>：這是存放 API Key 等機密資訊的檔案，雖然您現在可能還沒用到，但先把它加進來是個好習慣，務必將不能上雲的機敏資訊放在
+                                        .env。</li>
+                                    <li><code>Record/</code>：這代表專案資料夾裡面的，名稱叫做 Record 子資料夾裡面的東西，都不會上 Git
+                                        版控，您可以把大檔案如訪談錄音、不上雲的資料夾都加入到 .gitignore 類似 LegacyPRD 這個資料夾這樣。</li>
+                                </ul>
+                                <img src="../images/gemini-cli-tutorial-6/06-gitignore.jpg"
+                                    alt="在 VS Code 中建立 .gitignore 檔案並貼上內容的截圖">
+                                <p class="img-placeholder-text">圖說：建立好這個檔案，您的版控生涯會少掉一半的麻煩。</p>
+                            </div>
+                        </section>
+
+                        <section class="step-by-step">
+                            <h2 class="fw-bolder mb-4 mt-5">第五階段：PM 的日常版控三部曲</h2>
+                            <p>恭喜！最困難的設定都結束了。現在，您已經在您的專案資料夾裡了。以後每天的工作，只需要重複這三個動作：<strong>打包、標記、寄送</strong>。</p>
+
+                            <div class="alert alert-secondary">
+                                <strong>情境模擬：</strong> 假設您現在在這個資料夾裡新增了一個 <code>PRD_v1.md</code> 檔案，並且寫好了一些內容存檔了。
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-box step-icon"></i>動作一：打包 (Stage)</h3>
+                                <p>告訴 Git 哪些檔案的變更要被記錄。</p>
+                                <ol>
+                                    <li>點擊左側選單的 <strong>"Source Control" (原始檔控制)</strong> 圖示 (看起來像樹枝分岔的圖案)。</li>
+                                    <li>您會看到 <code>PRD_v1.md</code> 出現在 "Changes" (變更) 清單中。</li>
+                                    <li>將滑鼠移到檔案名稱旁，點擊 <strong>"+" (Stage Changes)</strong> 號。</li>
+                                    <li>檔案會移動到 "Staged Changes" (暫存的變更) 區域。這表示「行李打包好了」。</li>
+                                    <li>接下來依序將您剛剛複製進來的工作檔案一個一個 <strong>"+" (Stage Changes)</strong>即可。(剛開始先不使用 Stage
+                                        all，我們手動逐一暫存比較放心。)</li>
+                                </ol>
+                                <img src="../images/gemini-cli-tutorial-6/07-stage.jpg"
+                                    alt="在 VS Code 中點擊 + 號將檔案加入暫存區的截圖">
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-tag step-icon"></i>動作二：標記 (Commit)</h3>
+                                <p>為這包行李貼上說明標籤，方便以後查找。</p>
+                                <ol>
+                                    <li>在上方輸入框輸入這次變更的說明。例如：「完成會員註冊流程草稿」。</li>
+                                    <li>點擊 <strong>"Commit" (提交)</strong> 按鈕。</li>
+                                </ol>
+                                <img src="../images/gemini-cli-tutorial-6/08-commit.jpg" alt="輸入 Commit 訊息並點擊提交按鈕的截圖">
+                                <p class="img-placeholder-text">圖說：寫給未來的自己看，越清楚越好。</p>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-paper-plane step-icon"></i>動作三：Push (推送)</h3>
+                                <p>將紀錄推送到雲端保險庫。</p>
+                                <ol>
+                                    <li>點擊視窗左下角的雲朵圖案 <strong>"Publish Branch"</strong> 按鈕。</li>
+                                    <li>如果是第一次，它可能會跳出確認視窗，點擊 "OK" 即可。</li>
+                                </ol>
+                                <img src="../images/gemini-cli-tutorial-6/09-push.jpg"
+                                    alt="點擊 Sync Changes 按鈕同步到 GitHub 的截圖">
+                            </div>
+                        </section>
+
+
+                        <section class="step-by-step">
+                            <h2 class="fw-bolder mb-4 mt-5">終極大招：使用時光機 (Timeline)</h2>
+                            <p>這就是為什麼我們要這麼麻煩裝 Git 的原因。一般的「復原 (Ctrl+Z)」只要檔案一關掉就沒救了，但 Git
+                                的時光機是<strong>永久的</strong>，就算電腦重開機、過了一年，它都還在。</p>
+
+                            <div class="step">
+                                <h3><i class="fas fa-search step-icon"></i>步驟一：召喚時光機面板</h3>
+                                <p>VS Code 把這個強大的功能藏在檔案總管的最下面。</p>
+                                <ol>
+                                    <li>在左側欄中，<strong>點擊一下</strong> "Source Control" (原始檔控制) 圖示 (看起來像樹枝分岔的圖案)。。
+                                    </li>
+                                    <li>將視線移到左側欄位的<strong>中下方區域</strong>，您會看到一個叫做 <strong>"GRAPH" </strong> 的區塊。
+                                    </li>
+                                    <li>如果它是收合的 (只看到標題)，請點擊箭頭把它展開。</li>
+                                    <li>您會看到一串清單，上面寫著 "Uncommitted Changes" (尚未提交的變更) 以及您之前寫過的 Commit 紀錄
+                                        (例如「完成會員註冊流程草稿」)。</li>
+                                </ol>
+                                <img src="../images/gemini-cli-tutorial-6/10-graph-panel.jpg"
+                                    alt="VS Code 左下角 Timeline 面板展開的樣子">
+                                <p class="img-placeholder-text">圖說：這就是通往過去的入口。</p>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-columns step-icon"></i>步驟二：穿越時空 (比對差異)</h3>
+                                <p>假設您發現：「糟糕！我昨天寫的那段『使用者故事』被爆走的 AI 不小心刪掉了！」別擔心，我們來找回來。</p>
+                                <ol>
+                                    <li>在 GRAPH 清單中，試著點擊昨天的某個紀錄點。</li>
+                                    <li>畫面會瞬間變成<strong>「左右分割」</strong>的狀態：
+                                        <ul>
+                                            <li><strong class="text-muted">左邊視窗 (The
+                                                    Past)</strong>：這是<strong>過去</strong>那個時間點的檔案內容。</li>
+                                            <li><strong class="text-primary">右邊視窗 (The
+                                                    Present)</strong>：這是<strong>現在</strong>您正在編輯的檔案內容。</li>
+                                        </ul>
+                                    </li>
+                                    <li>VS Code 會很貼心地用顏色標示差異：紅色代表被刪除的，綠色代表新增加的。</li>
+                                </ol>
+                                <img src="../images/gemini-cli-tutorial-6/10-timeline-diff.jpg"
+                                    alt="VS Code Timeline 左右分割視窗，展示新舊版本差異">
+                                <p class="img-placeholder-text">圖說：左邊是過去，右邊是現在，差異一目了然。</p>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-magic step-icon"></i>步驟三：取回遺失的寶物</h3>
+                                <p>Git 有很多進階指令可以「倒帶」，但對於剛入門的您，我建議用最直覺、最安全的方法：<strong>複製貼上</strong>。</p>
+                                <ol>
+                                    <li>在<strong>左邊視窗 (過去)</strong> 找到您誤刪的那段文字。</li>
+                                    <li>像平常一樣選取它，按 <code>Ctrl+C</code> (複製)。</li>
+                                    <li>點擊<strong>右邊視窗 (現在)</strong>，將游標移到您想插入的位置。</li>
+                                    <li>按 <code>Ctrl+V</code> (貼上)。</li>
+                                    <li>按下 <code>Ctrl+S</code> 存檔。</li>
+                                </ol>
+                                <div class="alert alert-success mt-3">
+                                    <strong><i class="fas fa-check"></i> 搞定！</strong>
+                                    您已經成功從過去把資料救回來了，而且不需要輸入任何可怕的指令。這就是 Git 給您的安全感。
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="step-by-step">
+                            <h2 class="fw-bolder mb-4 mt-5">驗收成果：在 GitHub 雲端看見您的足跡</h2>
+                            <p>除了在 VS Code 裡面看，您也可以在 GitHub 網頁上看到剛剛推送上去的成果。這也是您與團隊成員協作時最常看到的畫面。</p>
+
+                            <div class="step">
+                                <h3><i class="fas fa-globe step-icon"></i>步驟一：重新整理 GitHub 頁面</h3>
+                                <ol>
+                                    <li>回到您的瀏覽器，打開剛剛那個 GitHub 專案的頁面。</li>
+                                    <li>按一下重新整理 (F5 或 Cmd+R)。</li>
+                                    <li>您會發現原本空蕩蕩的列表，現在已經出現了您剛剛推送的檔案 (例如 <code>PRD_v1.md</code>)。</li>
+                                </ol>
+                                <img src="../images/gemini-cli-tutorial-6/11-github-file-list.jpg"
+                                    alt="GitHub 專案首頁檔案列表的截圖">
+                                <p class="img-placeholder-text">圖說：檔案已經安全地躺在雲端保險庫了。</p>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-code-branch step-icon"></i>步驟二：查看雲端歷史紀錄</h3>
+                                <p>GitHub 上也有一份完整的歷史紀錄，而且介面非常漂亮。</p>
+                                <ol>
+                                    <li>在檔案列表的右上方，找到一個時鐘圖示，旁邊寫著 <strong>"X commits"</strong> (X 代表提交次數)。</li>
+                                    <li>點擊進去，您會看到每一次 Commit 的清單，包含您寫的標題、時間、以及是誰提交的。</li>
+                                    <li>點擊任一個 Commit 的標題 (例如「完成會員註冊流程草稿」)，就可以看到那次變更具體改了什麼內容 (綠色是新增，紅色是刪除)。</li>
+                                </ol>
+                                <img src="../images/gemini-cli-tutorial-6/12-github-commits.jpg"
+                                    alt="GitHub Commits 歷史紀錄列表的截圖">
+                                <p class="img-placeholder-text">圖說：這裡清楚記錄了專案的演進史。</p>
+                            </div>
+                        </section>
+
+
+                        <div class="tutorial-summary">
+                            <h4><i class="fas fa-graduation-cap me-2"></i>結語：您已經成為超越自我的 PM</h4>
+                            <p>學會 Git 版控，是 PM 職涯中的一個重要里程碑。這不僅是為了備份，更是為了讓您在面對需求變更、AI
+                                協作時，擁有無比的自信與底氣。您不再需要擔心「改壞了怎麼辦」，因為您擁有一台隨時待命的時光機。</p>
+                            <p>現在，放手去與 AI 激盪火花吧！</p>
+                        </div>
+
+                        <div class="tutorial-intro mt-5" style="background-color: #fff3cd; border-left-color: #ffc107;">
+                            <h4 class="alert-heading"><i class="fas fa-lightbulb me-2"></i>番外篇：為什麼我們不教「分支 (Branch)」？
+                            </h4>
+                            <p>如果您問身邊的工程師，他們可能會驚訝：「什麼？你沒學 Branch？」請告訴他：<strong>「對，因為我不需要。」</strong></p>
+                            <p><strong>什麼是 Branch (分支)？</strong><br>
+                                想像漫威電影裡的「多重宇宙」。工程師喜歡開一個「平行時空」去寫新功能，寫壞了也不會影響原本的世界 (Main Branch)。等寫好了，再把兩個宇宙「融合
+                                (Merge)」在一起。</p>
+                            <p><strong>為什麼 PM 不需要？</strong><br>
+                                程式碼邏輯嚴謹，融合時電腦可以幫忙判斷。但<strong>「人類語言」</strong>寫成的文件，電腦看不懂。當您試圖把兩個版本的 PRD
+                                融合時，會發生可怕的<strong>「衝突 (Conflict)」</strong>—Git 會要求您一行一行決定要留哪一句話。這對非技術人員來說簡直是地獄。</p>
+                            <p><strong>我們的建議：</strong><br>
+                                保持簡單，就用一條時間線 (Master/Main) 走到底。如果您真的想嘗試大幅度的修改，又怕改壞，最簡單的方法就是：<strong>「複製一份檔案」</strong>
+                                (例如：<code>PRD_v2_draft.md</code>)。這比開分支安全且直覺多了。</p>
+                        </div>
+                    </div>
+                </article>
+
+                <div class="text-center mt-5">
+                    <a href="../tutorials.html" class="btn btn-primary btn-lg">返回 教學列表 <i
+                            class="fas fa-list ms-2"></i></a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+
+</html>
