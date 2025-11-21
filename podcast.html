@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" data-bs-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,279 +10,229 @@
     <link rel="icon" href="/images/favicon.jpg" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .navbar {
-            border-bottom: 1px solid #dee2e6;
-        }
-        .podcast-hero {
-            background-color: #ffffff;
-            border-radius: .75rem;
-            padding: 3rem;
-            margin-bottom: 3rem;
-            border: 1px solid #dee2e6;
-        }
-        .podcast-cover-placeholder {
-            background-color: #e9ecef;
-            border-radius: .5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6c757d;
-            font-size: 3rem;
-            width: 100%;
-            max-width: 250px; /* 限制最大寬度 */
-            margin: auto;
-            aspect-ratio: 1 / 1;
-        }
-        .subscribe-buttons .btn {
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .episode-card {
-            background-color: #ffffff;
-            border-radius: .5rem;
-            margin-bottom: 1.5rem;
-            padding: 2rem;
-            border: 1px solid #dee2e6;
-            transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
-        }
-        .episode-card:hover {
-            box-shadow: 0 .5rem 1.5rem rgba(0,0,0,.1);
-            transform: translateY(-3px);
-        }
-        .episode-cover-placeholder-small {
-            background-color: #e9ecef;
-            border-radius: .5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #adb5bd;
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            font-size: 2rem;
-        }
-        .episode-date {
-            font-size: 0.9rem;
-            color: #6c757d;
-            font-weight: 500;
-        }
-        .episode-title {
-            font-weight: 600;
-            color: #212529;
-        }
-        .episode-description {
-            color: #495057;
-        }
-        .episode-player {
-            margin-top: 1rem;
-        }
-        footer {
-            background-color: #ffffff;
-            border-top: 1px solid #dee2e6;
-        }
-    </style>
+    <link rel="stylesheet" href="css/modern-style.css">
 </head>
+
 <body>
+    <!-- Abstract Background Blobs -->
+    <div class="abstract-blob blob-1"></div>
+    <div class="abstract-blob blob-2"></div>
+    <div class="abstract-blob blob-3"></div>
+
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <nav class="navbar navbar-expand-lg fixed-top">
             <div class="container">
-                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="index.html">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="tutorials.html">教學文</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="podcast.html">Podcast</a></li>
-                        <li class="nav-item"><a class="nav-link" href="portfolio.html">作品集</a></li>
-                        <li class="nav-item"><a class="nav-link" href="blog.html">分享</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html">♾️ 首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="tutorials.html">⚡教學文</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="podcast.html">🎙️ Podcast</a></li>
+                        <li class="nav-item"><a class="nav-link" href="portfolio.html">📚作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="blog.html">✈️分享</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main class="container my-5">
-        
+    <main class="container" style="margin-top: 100px;">
+
         <!-- Hero Section -->
-        <section class="podcast-hero">
-            <div class="row align-items-center">
-                <div class="col-md-4 text-center">
-                    <!-- 請將此處替換為您的 Podcast 封面圖片 -->
-                    <div class="podcast-cover-placeholder">
+        <section class="hero-section text-center mb-5" style="background: none; padding: 4rem 0;">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <div class="podcast-cover-glow mx-auto" style="max-width: 300px;">
                         <i class="fas fa-microphone-alt"></i>
                     </div>
                 </div>
-                <div class="col-md-8">
-                    <h1 class="display-5 fw-bold mt-4 mt-md-0">下課！十分鐘的AI</h1>
-                    <p class="lead text-muted">一個專為產品經理、專案經理，以及任何想在 AI 時代提升工作效率的你，所設計的 AI 協作技巧 Podcast。每集十分鐘，為你的工作流超級充電。</p>
-                    <h5 class="mt-4">收聽與訂閱</h5>
-                    <div class="subscribe-buttons">
-                        <a href="#" class="btn btn-dark"><i class="fab fa-apple me-2"></i>Apple Podcasts</a>
-                        <a href="#" class="btn btn-dark"><i class="fab fa-spotify me-2"></i>Spotify</a>
-                        <a href="#" class="btn btn-dark"><i class="fab fa-google me-2"></i>Google Podcasts</a>
+                <div class="col-md-8 text-md-start">
+                    <h1 class="display-4 fw-bold mb-3"
+                        style="background: linear-gradient(to right, #fff, #cbd5e1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        下課！十分鐘的AI</h1>
+                    <p class="lead text-gray mb-4">一個專為產品經理、專案經理，以及任何想在 AI 時代提升工作效率的你，所設計的 AI 協作技巧
+                        Podcast。<br>每集十分鐘，為你的工作流超級充電。</p>
+                    <h5 class="mb-3 text-light">收聽與訂閱 (假的，我並沒有頻道喔)</h5>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="#" class="btn btn-outline-modern"><i class="fab fa-apple me-2"></i>Apple Podcasts</a>
+                        <a href="#" class="btn btn-outline-modern"><i class="fab fa-spotify me-2"></i>Spotify</a>
+                        <a href="#" class="btn btn-outline-modern"><i class="fab fa-google me-2"></i>Google Podcasts</a>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Episodes List -->
-        <section class="episode-list mt-5">
+        <section class="episode-list mb-5">
+            <h2 class="section-title-modern">最新集數</h2>
             <div class="col-lg-10 mx-auto">
 
                 <!-- EP0 -->
-                <div class="episode-card">
+                <div class="glass-card episode-card mb-4">
+                    <span class="episode-number">00</span>
                     <div class="row g-4 align-items-center">
-                        <div class="col-md-3 text-center">
-                            <div class="episode-cover-placeholder-small"><span>EP 0</span></div>
-                        </div>
                         <div class="col-md-9">
-                            <h4 class="episode-title">前言</h4>
-                            <p class="episode-description">介紹本系列 Podcast 的核心目標、風格，以及我們將如何一步步帶你打造專屬於自己的 AI 工作流，成為一名高效的「人馬 PM」。</p>
+                            <h4 class="text-white fw-bold mb-2">前言</h4>
+                            <p class="text-gray mb-3">介紹本系列 Podcast 的核心目標、風格，以及我們將如何一步步帶你打造專屬於自己的 AI 工作流，成為一名高效的「人馬 PM」。
+                            </p>
                             <div class="episode-player">
-                                <audio controls class="w-100" src="Podcast/EP-0-Introduction.m4a" preload="none"></audio>
+                                <audio controls class="audio-player-custom" src="Podcast/EP-0-Introduction.m4a"
+                                    preload="none"></audio>
                             </div>
-                            <a href="tutorials.html#gemini-pm-series" class="btn btn-outline-success btn-sm mt-3">查看網頁版文章 <i class="fas fa-arrow-right ms-1"></i></a>
+                            <a href="tutorials.html#gemini-pm-series"
+                                class="btn btn-sm btn-link text-info text-decoration-none mt-2 p-0">查看網頁版文章 <i
+                                    class="fas fa-arrow-right ms-1"></i></a>
                         </div>
                     </div>
                 </div>
 
                 <!-- EP1 -->
-                <div class="episode-card">
+                <div class="glass-card episode-card mb-4">
+                    <span class="episode-number">01</span>
                     <div class="row g-4 align-items-center">
-                        <div class="col-md-3 text-center">
-                            <div class="episode-cover-placeholder-small"><span>EP 1</span></div>
-                        </div>
                         <div class="col-md-9">
-                            <h4 class="episode-title">AI 老司機的 Gemini CLI 工作流</h4>
-                            <p class="episode-description">探討為何 PM 應該學習使用 Gemini CLI，並介紹一個專業、高效的 AI 協作工作流，將 VS Code 與終端機完美結合。</p>
+                            <h4 class="text-white fw-bold mb-2">AI 老司機的 Gemini CLI 工作流</h4>
+                            <p class="text-gray mb-3">探討為何 PM 應該學習使用 Gemini CLI，並介紹一個專業、高效的 AI 協作工作流，將 VS Code 與終端機完美結合。
+                            </p>
                             <div class="episode-player">
-                                <audio controls class="w-100" src="Podcast/EP-1-AI_Veteran.m4a" preload="none"></audio>
+                                <audio controls class="audio-player-custom" src="Podcast/EP-1-AI_Veteran.m4a"
+                                    preload="none"></audio>
                             </div>
-                            <a href="tutorials/gemini-cli-tutorial-1.html" class="btn btn-outline-success btn-sm mt-3">查看網頁版文章 <i class="fas fa-arrow-right ms-1"></i></a>
+                            <a href="tutorials/gemini-cli-tutorial-1.html"
+                                class="btn btn-sm btn-link text-info text-decoration-none mt-2 p-0">查看網頁版文章 <i
+                                    class="fas fa-arrow-right ms-1"></i></a>
                         </div>
                     </div>
                 </div>
 
                 <!-- EP2 -->
-                <div class="episode-card">
+                <div class="glass-card episode-card mb-4">
+                    <span class="episode-number">02</span>
                     <div class="row g-4 align-items-center">
-                        <div class="col-md-3 text-center">
-                            <div class="episode-cover-placeholder-small"><span>EP 2</span></div>
-                        </div>
                         <div class="col-md-9">
-                            <h4 class="episode-title">發動引擎！第一次與 AI 對話</h4>
-                            <p class="episode-description">從零開始，帶你完成 Gemini CLI 的安裝、認證，並掌握 `/init` 和 `/clear` 等核心指令，踏出與 AI 協作的第一步。</p>
+                            <h4 class="text-white fw-bold mb-2">發動引擎！第一次與 AI 對話</h4>
+                            <p class="text-gray mb-3">從零開始，帶你完成 Gemini CLI 的安裝、認證，並掌握 `/init` 和 `/clear` 等核心指令，踏出與 AI
+                                協作的第一步。</p>
                             <div class="episode-player">
-                                <audio controls class="w-100" src="Podcast/EP-2-Start Your Engines! (First Contact).m4a" preload="none"></audio>
+                                <audio controls class="audio-player-custom"
+                                    src="Podcast/EP-2-Start Your Engines! (First Contact).m4a" preload="none"></audio>
                             </div>
-                            <a href="tutorials/gemini-cli-tutorial-2.html" class="btn btn-outline-success btn-sm mt-3">查看網頁版文章 <i class="fas fa-arrow-right ms-1"></i></a>
+                            <a href="tutorials/gemini-cli-tutorial-2.html"
+                                class="btn btn-sm btn-link text-info text-decoration-none mt-2 p-0">查看網頁版文章 <i
+                                    class="fas fa-arrow-right ms-1"></i></a>
                         </div>
                     </div>
                 </div>
 
                 <!-- EP3 -->
-                <div class="episode-card">
+                <div class="glass-card episode-card mb-4">
+                    <span class="episode-number">03</span>
                     <div class="row g-4 align-items-center">
-                        <div class="col-md-3 text-center">
-                            <div class="episode-cover-placeholder-small"><span>EP 3</span></div>
-                        </div>
                         <div class="col-md-9">
-                            <h4 class="episode-title">點子枯竭？讓 AI 當你的靈感發電機！</h4>
-                            <p class="episode-description">示範如何利用 AI 進行市場研究、競品分析，並透過 SCAMPER 和角色扮演等技巧，讓 AI 成為你源源不絕的靈感來源。</p>
+                            <h4 class="text-white fw-bold mb-2">點子枯竭？讓 AI 當你的靈感發電機！</h4>
+                            <p class="text-gray mb-3">示範如何利用 AI 進行市場研究、競品分析，並透過 SCAMPER 和角色扮演等技巧，讓 AI 成為你源源不絕的靈感來源。</p>
                             <div class="episode-player">
-                                <audio controls class="w-100" src="Podcast/EP-3.m4a" preload="none"></audio>
+                                <audio controls class="audio-player-custom" src="Podcast/EP-3.m4a"
+                                    preload="none"></audio>
                             </div>
-                            <a href="tutorials/gemini-cli-tutorial-3.html" class="btn btn-outline-success btn-sm mt-3">查看網頁版文章 <i class="fas fa-arrow-right ms-1"></i></a>
+                            <a href="tutorials/gemini-cli-tutorial-3.html"
+                                class="btn btn-sm btn-link text-info text-decoration-none mt-2 p-0">查看網頁版文章 <i
+                                    class="fas fa-arrow-right ms-1"></i></a>
                         </div>
                     </div>
                 </div>
 
                 <!-- EP4 -->
-                <div class="episode-card">
+                <div class="glass-card episode-card mb-4">
+                    <span class="episode-number">04</span>
                     <div class="row g-4 align-items-center">
-                        <div class="col-md-3 text-center">
-                            <div class="episode-cover-placeholder-small"><span>EP 4</span></div>
-                        </div>
                         <div class="col-md-9">
-                            <h4 class="episode-title">把空氣畫成設計圖</h4>
-                            <p class="episode-description">學習如何只用「文字描述」，就讓 AI 幫你產出看得到的 UI 網頁原型，以及標準、清晰的 Mermaid 流程圖。</p>
+                            <h4 class="text-white fw-bold mb-2">把空氣畫成設計圖</h4>
+                            <p class="text-gray mb-3">學習如何只用「文字描述」，就讓 AI 幫你產出看得到的 UI 網頁原型，以及標準、清晰的 Mermaid 流程圖。</p>
                             <div class="episode-player">
-                                <audio controls class="w-100" src="Podcast/EP-4.m4a" preload="none"></audio>
+                                <audio controls class="audio-player-custom" src="Podcast/EP-4.m4a"
+                                    preload="none"></audio>
                             </div>
-                            <a href="tutorials/gemini-cli-tutorial-3.html" class="btn btn-outline-success btn-sm mt-3">查看網頁版文章 <i class="fas fa-arrow-right ms-1"></i></a>
+                            <a href="tutorials/gemini-cli-tutorial-3.html"
+                                class="btn btn-sm btn-link text-info text-decoration-none mt-2 p-0">查看網頁版文章 <i
+                                    class="fas fa-arrow-right ms-1"></i></a>
                         </div>
                     </div>
                 </div>
 
                 <!-- EP5 -->
-                <div class="episode-card">
+                <div class="glass-card episode-card mb-4">
+                    <span class="episode-number">05</span>
                     <div class="row g-4 align-items-center">
-                        <div class="col-md-3 text-center">
-                            <div class="episode-cover-placeholder-small"><span>EP 5</span></div>
-                        </div>
                         <div class="col-md-9">
-                            <h4 class="episode-title">告別空白文件！AI 幫你寫 PRD</h4>
-                            <p class="episode-description">介紹「規格驅動開發」的核心概念，並示範如何讓 AI 為你產出 80% 完成度的 PRD 初稿。</p>
+                            <h4 class="text-white fw-bold mb-2">告別空白文件！AI 幫你寫 PRD</h4>
+                            <p class="text-gray mb-3">介紹「規格驅動開發」的核心概念，並示範如何讓 AI 為你產出 80% 完成度的 PRD 初稿。</p>
                             <div class="episode-player">
-                                <audio controls class="w-100" src="Podcast/EP-5.m4a" preload="none"></audio>
+                                <audio controls class="audio-player-custom" src="Podcast/EP-5.m4a"
+                                    preload="none"></audio>
                             </div>
-                            <a href="tutorials/gemini-cli-tutorial-4.html" class="btn btn-outline-success btn-sm mt-3">查看網頁版文章 <i class="fas fa-arrow-right ms-1"></i></a>
+                            <a href="tutorials/gemini-cli-tutorial-4.html"
+                                class="btn btn-sm btn-link text-info text-decoration-none mt-2 p-0">查看網頁版文章 <i
+                                    class="fas fa-arrow-right ms-1"></i></a>
                         </div>
                     </div>
                 </div>
 
                 <!-- EP6 -->
-                <div class="episode-card">
+                <div class="glass-card episode-card mb-4">
+                    <span class="episode-number">06</span>
                     <div class="row g-4 align-items-center">
-                        <div class="col-md-3 text-center">
-                            <div class="episode-cover-placeholder-small"><span>EP 6</span></div>
-                        </div>
                         <div class="col-md-9">
-                            <h4 class="episode-title">AI 品保員上線！自動生成測試案例</h4>
-                            <p class="episode-description">召喚「AI 品保員」，將 PRD 文件餵給 AI，讓它自動生成涵蓋功能、UI 與各種極端情況的測試案例。</p>
+                            <h4 class="text-white fw-bold mb-2">AI 品保員上線！自動生成測試案例</h4>
+                            <p class="text-gray mb-3">召喚「AI 品保員」，將 PRD 文件餵給 AI，讓它自動生成涵蓋功能、UI 與各種極端情況的測試案例。</p>
                             <div class="episode-player">
-                                <audio controls class="w-100" src="Podcast/EP-6.m4a" preload="none"></audio>
+                                <audio controls class="audio-player-custom" src="Podcast/EP-6.m4a"
+                                    preload="none"></audio>
                             </div>
-                            <a href="tutorials/gemini-cli-tutorial-4.html" class="btn btn-outline-success btn-sm mt-3">查看網頁版文章 <i class="fas fa-arrow-right ms-1"></i></a>
+                            <a href="tutorials/gemini-cli-tutorial-4.html"
+                                class="btn btn-sm btn-link text-info text-decoration-none mt-2 p-0">查看網頁版文章 <i
+                                    class="fas fa-arrow-right ms-1"></i></a>
                         </div>
                     </div>
                 </div>
 
                 <!-- EP7 -->
-                <div class="episode-card">
+                <div class="glass-card episode-card mb-4">
+                    <span class="episode-number">07</span>
                     <div class="row g-4 align-items-center">
-                        <div class="col-md-3 text-center">
-                            <div class="episode-cover-placeholder-small"><span>EP 7</span></div>
-                        </div>
                         <div class="col-md-9">
-                            <h4 class="episode-title">打造你的 AI 夢幻團隊</h4>
-                            <p class="episode-description">介紹 `todo.md` 專案管理法，學習如何將 AI 視為一個「專家團隊」，並作為「指揮官」去拆解、分配、管理與 AI 的協作任務。</p>
+                            <h4 class="text-white fw-bold mb-2">打造你的 AI 夢幻團隊</h4>
+                            <p class="text-gray mb-3">介紹 `todo.md` 專案管理法，學習如何將 AI 視為一個「專家團隊」，並作為「指揮官」去拆解、分配、管理與 AI
+                                的協作任務。</p>
                             <div class="episode-player">
-                                <audio controls class="w-100" src="Podcast/EP-7.m4a" preload="none"></audio>
+                                <audio controls class="audio-player-custom" src="Podcast/EP-7.m4a"
+                                    preload="none"></audio>
                             </div>
-                            <a href="tutorials/gemini-cli-tutorial-4.html" class="btn btn-outline-success btn-sm mt-3">查看網頁版文章 <i class="fas fa-arrow-right ms-1"></i></a>
+                            <a href="tutorials/gemini-cli-tutorial-4.html"
+                                class="btn btn-sm btn-link text-info text-decoration-none mt-2 p-0">查看網頁版文章 <i
+                                    class="fas fa-arrow-right ms-1"></i></a>
                         </div>
                     </div>
                 </div>
 
                 <!-- EP8 -->
-                <div class="episode-card">
+                <div class="glass-card episode-card mb-4">
+                    <span class="episode-number">08</span>
                     <div class="row g-4 align-items-center">
-                        <div class="col-md-3 text-center">
-                            <div class="episode-cover-placeholder-small"><span>EP 8</span></div>
-                        </div>
                         <div class="col-md-9">
-                            <h4 class="episode-title">當 PM 不再寫文件，我們還能做什麼？</h4>
-                            <p class="episode-description">探討在 AI 時代，PM 的核心價值如何從「文件寫手」進化為「策略家」、「溝通橋樑」與「AI 工作流設計師」。</p>
+                            <h4 class="text-white fw-bold mb-2">當 PM 不再寫文件，我們還能做什麼？</h4>
+                            <p class="text-gray mb-3">探討在 AI 時代，PM 的核心價值如何從「文件寫手」進化為「策略家」、「溝通橋樑」與「AI 工作流設計師」。</p>
                             <div class="episode-player">
-                                <audio controls class="w-100" src="Podcast/EP-8.m4a" preload="none"></audio>
+                                <audio controls class="audio-player-custom" src="Podcast/EP-8.m4a"
+                                    preload="none"></audio>
                             </div>
-                            <a href="tutorials/gemini-cli-tutorial-5.html" class="btn btn-outline-success btn-sm mt-3">查看網頁版文章 <i class="fas fa-arrow-right ms-1"></i></a>
+                            <a href="tutorials/gemini-cli-tutorial-5.html"
+                                class="btn btn-sm btn-link text-info text-decoration-none mt-2 p-0">查看網頁版文章 <i
+                                    class="fas fa-arrow-right ms-1"></i></a>
                         </div>
                     </div>
                 </div>
@@ -290,14 +241,20 @@
         </section>
     </main>
 
-    <footer class="py-4 mt-5">
+    <footer class="bg-dark mt-5 py-5 border-top border-secondary-subtle position-relative">
         <div class="container text-center">
+            <div class="mb-4">
+                <a href="https://www.linkedin.com/in/junjia-hou/" class="text-secondary me-3 fs-4 hover-white"><i
+                        class="fab fa-linkedin"></i></a>
+                <a href="mailto:your-email@example.com" class="text-secondary fs-4 hover-white"><i
+                        class="fas fa-envelope"></i></a>
+            </div>
             <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js
-"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
 </body>
+
 </html>
