@@ -123,6 +123,32 @@ body {
     object-fit: cover; /* Crop images to fit, maintaining aspect ratio */
 }
 
+/* Portfolio Card Tags */
+.portfolio-tags {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem; /* Add some space before the buttons */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center; /* Center the tags */
+}
+
+.tech-tag {
+    background-color: rgba(255, 255, 255, 0.1); /* Lighter than #333 for better glass effect */
+    color: var(--text-light); /* Use theme variable */
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px; /* Pill shape like the buttons */
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: 1px solid var(--glass-border);
+    transition: all 0.3s ease;
+}
+
+.tech-tag:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
 .section-title-modern {
     font-size: 2.5rem;
     font-weight: 700;
@@ -307,4 +333,94 @@ body {
 .glass-card.episode-card {
     position: relative;
     overflow: hidden;
+}
+
+/* Tutorial Series Sections (Adapted for Dark Theme) */
+.tutorial-series {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: var(--glass-bg); /* Use glass background */
+    border-radius: 16px; /* Match glass-card radius */
+    border: 1px solid var(--glass-border);
+}
+.tutorial-series h2 {
+    font-size: 2.25rem;
+    color: var(--text-light); /* Light text for dark background */
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid; /* Will be set by specific series */
+    display: flex;
+    align-items: center;
+}
+.tutorial-series h2 .series-icon {
+    margin-right: 1rem;
+    background: var(--primary-gradient); /* Use gradient for icon color */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+/* Specific series colors - adjust to dark theme */
+.tutorial-series-advanced {
+    /* Use a subtle color or slight variation of glass-bg for distinction */
+    background: rgba(30, 41, 59, 0.8); /* Slightly darker glass */
+    border-color: rgba(255, 229, 143, 0.2); /* Faded yellow border */
+}
+.tutorial-series-advanced h2 {
+    color: #ffd700; /* Gold */
+    border-bottom-color: #ffd700;
+}
+.tutorial-series-advanced h2 .series-icon {
+    color: #ffd700;
+    -webkit-text-fill-color: #ffd700; /* Override transparent for specific color */
+}
+
+.tutorial-series-pm {
+    /* Use a subtle color or slight variation of glass-bg for distinction */
+    background: rgba(30, 41, 59, 0.6); /* Slightly lighter glass */
+    border-color: rgba(166, 217, 193, 0.2); /* Faded green border */
+}
+.tutorial-series-pm h2 {
+    color: #32cd32; /* Lime green */
+    border-bottom-color: #32cd32;
+}
+.tutorial-series-pm h2 .series-icon {
+    color: #32cd32;
+    -webkit-text-fill-color: #32cd32; /* Override transparent for specific color */
+}
+/* Quick links section adaptation */
+.quick-links {
+    background: var(--glass-bg) !important; /* Force glass background */
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.quick-links h3 {
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.quick-links .btn-outline-primary {
+    border-color: rgba(99, 102, 241, 0.5);
+    color: var(--text-light);
+}
+.quick-links .btn-outline-primary:hover {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: #6366f1;
+}
+.quick-links .btn-outline-success {
+    border-color: rgba(50, 205, 50, 0.5); /* LimeGreen */
+    color: var(--text-light);
+}
+.quick-links .btn-outline-success:hover {
+    background: rgba(50, 205, 50, 0.1);
+    border-color: #32cd32;
+}
+.quick-links .btn-outline-warning {
+    border-color: rgba(255, 215, 0, 0.5); /* Gold */
+    color: var(--text-light);
+}
+.quick-links .btn-outline-warning:hover {
+    background: rgba(255, 215, 0, 0.1);
+    border-color: #ffd700;
 }

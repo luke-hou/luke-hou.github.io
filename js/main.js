@@ -17,6 +17,36 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // --- Portfolio Filtering Logic ---
+    const filtersContainer = document.querySelector('#portfolio-filters');
+    if (filtersContainer) {
+        const filterButtons = filtersContainer.querySelectorAll('button');
+        const portfolioItems = document.querySelectorAll('#portfolio-grid .portfolio-item');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const filter = this.getAttribute('data-filter');
+
+                // Update active state on buttons
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('btn-primary-modern');
+                    btn.classList.add('btn-outline-modern');
+                });
+                this.classList.remove('btn-outline-modern');
+                this.classList.add('btn-primary-modern');
+
+                // Filter portfolio items
+                portfolioItems.forEach(item => {
+                    const categories = item.getAttribute('data-categories');
+                    if (filter === 'all' || (categories && categories.includes(filter))) {
+                        item.classList.remove('d-none');
+                    } else {
+                        item.classList.add('d-none');
+                    }
+                });
+            });
+        });
+    }
 
     // 作品集模態框邏輯
     const portfolioModal = document.getElementById('portfolioModal'); // 確保這裡的ID與HTML中的模態框ID一致

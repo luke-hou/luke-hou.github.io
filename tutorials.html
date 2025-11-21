@@ -10,79 +10,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modern-style.css">
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-0V2L1DQVPY');
-    </script>
-    <style>
-        .tutorial-series {
-            margin-bottom: 3rem;
-            padding: 2rem;
-            background-color: #f8f9fa;
-            border-radius: .5rem;
-            border: 1px solid #dee2e6;
-        }
-        .tutorial-series h2 {
-            font-size: 2.25rem;
-            color: #212529;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #0d6efd;
-            display: flex;
-            align-items: center;
-        }
-        .tutorial-series h2 .series-icon {
-            margin-right: 1rem;
-            color: #0d6efd;
-        }
-        .tutorial-series-advanced {
-            background-color: #fffbe6;
-            border-color: #ffe58f;
-        }
-        .tutorial-series-advanced h2 {
-            color: #c39300;
-            border-bottom-color: #c39300;
-        }
-        .tutorial-series-advanced h2 .series-icon {
-            color: #c39300;
-        }
-        .tutorial-series-advanced .btn-primary {
-            background-color: #c39300;
-            border-color: #c39300;
-        }
-        .tutorial-series-advanced .btn-primary:hover {
-            background-color: #a07900;
-            border-color: #a07900;
-        }
-        .tutorial-series-pm {
-            background-color: #eef8f3;
-            border-color: #a6d9c1;
-        }
-        .tutorial-series-pm h2 {
-            color: #198754;
-            border-bottom-color: #198754;
-        }
-        .tutorial-series-pm h2 .series-icon {
-            color: #198754;
-        }
-        .tutorial-series-pm .btn-primary {
-            background-color: #198754;
-            border-color: #198754;
-        }
-        .tutorial-series-pm .btn-primary:hover {
-            background-color: #146c43;
-            border-color: #13653f;
-        }
-    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -146,48 +79,84 @@
                     <div class="text-center mb-4"> <!-- Added this div for centering -->
                         <a href="podcast.html" class="btn btn-primary btn-lg"><i class="fas fa-podcast me-2"></i>前往系列文章 Podcast 首頁</a>
                     </div>
-                    <div class="portfolio-grid">
+                    <div class="row g-4">
                         <!-- 教學項目 1 -->
-                        <div class="portfolio-item">
-                            <h3>PM x Gemini CLI (一)：環境設定與專案準備 <span class="badge bg-primary podcast-badge"><i class="fas fa-headphones-alt me-1"></i>Podcast</span></h3>
-                            <img src="images/gemini_cli_tutorial01.jpg" alt="PM x Gemini CLI (一)：環境設定與專案準備" class="img-fluid">
-                            <p>從零開始，詳細介紹 Gemini CLI 的安裝、設定，以及 VS Code 環境的準備，為後續的協作流程打下堅實基礎。</p>
-                            <a href="tutorials/gemini-cli-tutorial-1.html" class="btn btn-primary">查看詳情</a>
+                        <div class="col-md-6">
+                            <div class="glass-card h-100 d-flex flex-column">
+                                <img src="images/gemini_cli_tutorial01.jpg" alt="PM x Gemini CLI (一)：環境設定與專案準備" class="card-img-top">
+                                <div class="p-4 d-flex flex-column flex-grow-1">
+                                    <h5 class="mb-3">PM x Gemini CLI (一)：環境設定與專案準備 <span class="badge bg-primary podcast-badge"><i class="fas fa-headphones-alt me-1"></i>Podcast</span></h5>
+                                    <p class="text-gray small flex-grow-1">從零開始，詳細介紹 Gemini CLI 的安裝、設定，以及 VS Code 環境的準備，為後續的協作流程打下堅實基礎。</p>
+                                    <div class="mt-auto text-center">
+                                        <a href="tutorials/gemini-cli-tutorial-1.html" class="btn btn-primary-modern btn-sm">查看詳情</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- 教學項目 2 -->
-                        <div class="portfolio-item">
-                            <h3>PM x Gemini CLI (二)：Gemini CLI 基本指令與認證 <span class="badge bg-primary podcast-badge"><i class="fas fa-headphones-alt me-1"></i>Podcast</span></h3>
-                            <img src="images/gemini_cli_tutorial02.jpg" alt="PM x Gemini CLI (二)：Gemini CLI 基本指令與認證" class="img-fluid">
-                            <p>在專案資料夾中啟動 Gemini CLI，進行 Google 帳號認證，並說明 /init 和 /clear 指令的使用時機與功能。</p>
-                            <a href="tutorials/gemini-cli-tutorial-2.html" class="btn btn-primary">查看詳情</a>
+                        <div class="col-md-6">
+                            <div class="glass-card h-100 d-flex flex-column">
+                                <img src="images/gemini_cli_tutorial02.jpg" alt="PM x Gemini CLI (二)：Gemini CLI 基本指令與認證" class="card-img-top">
+                                <div class="p-4 d-flex flex-column flex-grow-1">
+                                    <h5 class="mb-3">PM x Gemini CLI (二)：Gemini CLI 基本指令與認證 <span class="badge bg-primary podcast-badge"><i class="fas fa-headphones-alt me-1"></i>Podcast</span></h5>
+                                    <p class="text-gray small flex-grow-1">在專案資料夾中啟動 Gemini CLI，進行 Google 帳號認證，並說明 /init 和 /clear 指令的使用時機與功能。</p>
+                                    <div class="mt-auto text-center">
+                                        <a href="tutorials/gemini-cli-tutorial-2.html" class="btn btn-primary-modern btn-sm">查看詳情</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- 教學項目 3 -->
-                        <div class="portfolio-item">
-                            <h3>PM x Gemini CLI (三)：AI 賦能產品探索與定義 <span class="badge bg-primary podcast-badge"><i class="fas fa-headphones-alt me-1"></i>Podcast</span></h3>
-                            <img src="images/gemini_cli_tutorial03.jpg" alt="PM x Gemini CLI (三)：AI 賦能產品探索與定義" class="img-fluid">
-                            <p>聚焦產品開發的「前期探索」階段。教學如何利用 AI 進行市場研究、創意發想、使用者回饋分析，並將模糊概念轉化為可互動的 UI 原型與清晰的流程圖。</p>
-                            <a href="tutorials/gemini-cli-tutorial-3.html" class="btn btn-primary">查看詳情</a>
+                        <div class="col-md-6">
+                            <div class="glass-card h-100 d-flex flex-column">
+                                <img src="images/gemini_cli_tutorial03.jpg" alt="PM x Gemini CLI (三)：AI 賦能產品探索與定義" class="card-img-top">
+                                <div class="p-4 d-flex flex-column flex-grow-1">
+                                    <h5 class="mb-3">PM x Gemini CLI (三)：AI 賦能產品探索與定義 <span class="badge bg-primary podcast-badge"><i class="fas fa-headphones-alt me-1"></i>Podcast</span></h5>
+                                    <p class="text-gray small flex-grow-1">聚焦產品開發的「前期探索」階段。教學如何利用 AI 進行市場研究、創意發想、使用者回饋分析，並將模糊概念轉化為可互動的 UI 原型與清晰的流程圖。</p>
+                                    <div class="mt-auto text-center">
+                                        <a href="tutorials/gemini-cli-tutorial-3.html" class="btn btn-primary-modern btn-sm">查看詳情</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- 教學項目 4 -->
-                        <div class="portfolio-item">
-                            <h3>PM x Gemini CLI (四)：AI 驅動的規格撰寫與專案管理 <span class="badge bg-primary podcast-badge"><i class="fas fa-headphones-alt me-1"></i>Podcast</span></h3>
-                            <img src="images/gemini_cli_tutorial04.jpg" alt="PM x Gemini CLI (四)：AI 驅動的規格撰寫與專案管理" class="img-fluid">
-                            <p>聚焦於「打造藍圖」與「管理流程」。教學如何轉變為「規格驅動開發」，並撰寫專業 AI 指令稿來產出 PRD 與 QA 清單，最後展示如何建立並管理 AI 專家團隊。</p>
-                            <a href="tutorials/gemini-cli-tutorial-4.html" class="btn btn-primary">查看詳情</a>
+                        <div class="col-md-6">
+                            <div class="glass-card h-100 d-flex flex-column">
+                                <img src="images/gemini_cli_tutorial04.jpg" alt="PM x Gemini CLI (四)：AI 驅動的規格撰寫與專案管理" class="card-img-top">
+                                <div class="p-4 d-flex flex-column flex-grow-1">
+                                    <h5 class="mb-3">PM x Gemini CLI (四)：AI 驅動的規格撰寫與專案管理 <span class="badge bg-primary podcast-badge"><i class="fas fa-headphones-alt me-1"></i>Podcast</span></h5>
+                                    <p class="text-gray small flex-grow-1">聚焦於「打造藍圖」與「管理流程」。教學如何轉變為「規格驅動開發」，並撰寫專業 AI 指令稿來產出 PRD 與 QA 清單，最後展示如何建立並管理 AI 專家團隊。</p>
+                                    <div class="mt-auto text-center">
+                                        <a href="tutorials/gemini-cli-tutorial-4.html" class="btn btn-primary-modern btn-sm">查看詳情</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- 教學項目 5 -->
-                        <div class="portfolio-item">
-                            <h3>PM x Gemini CLI (五)：AI 時代的敏捷實踐與 PM 新角色 <span class="badge bg-primary podcast-badge"><i class="fas fa-headphones-alt me-1"></i>Podcast</span></h3>
-                            <img src="images/gemini_cli_tutorial_mermaid2.jpg" alt="PM x Gemini CLI (五)：AI 時代的敏捷實踐與 PM 新角色" class="img-fluid">
-                            <p>探討 AI 如何重塑敏捷開發流程、實現「活文件」的理想。同時反思在 AI 時代下，產品經理的核心價值如何轉變，從執行者進化為產品領袖。</p>
-                            <a href="tutorials/gemini-cli-tutorial-5.html" class="btn btn-primary">查看詳情</a>
+                        <div class="col-md-6">
+                            <div class="glass-card h-100 d-flex flex-column">
+                                <img src="images/gemini_cli_tutorial_mermaid2.jpg" alt="PM x Gemini CLI (五)：AI 時代的敏捷實踐與 PM 新角色" class="card-img-top">
+                                <div class="p-4 d-flex flex-column flex-grow-1">
+                                    <h5 class="mb-3">PM x Gemini CLI (五)：AI 時代的敏捷實踐與 PM 新角色 <span class="badge bg-primary podcast-badge"><i class="fas fa-headphones-alt me-1"></i>Podcast</span></h5>
+                                    <p class="text-gray small flex-grow-1">探討 AI 如何重塑敏捷開發流程、實現「活文件」的理想。同時反思在 AI 時代下，產品經理的核心價值如何轉變，從執行者進化為產品領袖。</p>
+                                    <div class="mt-auto text-center">
+                                        <a href="tutorials/gemini-cli-tutorial-5.html" class="btn btn-primary-modern btn-sm">查看詳情</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- 教學項目：番外篇 -->
-                        <div class="portfolio-item">
-                            <h3>PM x Gemini CLI【番外篇】：AI 協作護城河—無痛導入 Git 版控 <span class="badge bg-success">Special</span></h3>
-                            <img src="images/gemini_cli_tutorial_git.jpg" alt="PM x Gemini CLI【番外篇】：AI 協作護城河—無痛導入 Git 版控" class="img-fluid">
-                            <p>本篇專為非技術背景的產品經理（PM）設計，將引導您如何使用 Git 與 Visual Studio Code，為您的產品需求文件（PRD）建立版本控制，打造一個堅實的 AI 協作安全網。</p>
-                            <a href="tutorials/gemini-cli-special-git-for-pm.html" class="btn btn-primary">查看詳情</a>
+                        <div class="col-md-6">
+                            <div class="glass-card h-100 d-flex flex-column">
+                                <img src="images/gemini_cli_tutorial_git.jpg" alt="PM x Gemini CLI【番外篇】：AI 協作護城河—無痛導入 Git 版控" class="card-img-top">
+                                <div class="p-4 d-flex flex-column flex-grow-1">
+                                    <h5 class="mb-3">PM x Gemini CLI【番外篇】：AI 協作護城河—無痛導入 Git 版控 <span class="badge bg-success">Special</span></h5>
+                                    <p class="text-gray small flex-grow-1">本篇專為非技術背景的產品經理（PM）設計，將引導您如何使用 Git 與 Visual Studio Code，為您的產品需求文件（PRD）建立版本控制，打造一個堅實的 AI 協作安全網。</p>
+                                    <div class="mt-auto text-center">
+                                        <a href="tutorials/gemini-cli-special-git-for-pm.html" class="btn btn-primary-modern btn-sm">查看詳情</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -199,45 +168,75 @@
                     </div>
                     <h2><i class="fas fa-cogs series-icon"></i>n8n 系列：基礎 (Supabase 雲端整合)</h2>
                     <p class="series-intro">本系列將帶您從零開始，學習 n8n 的基本操作，並整合 Supabase 雲端向量資料庫與 Gemini AI。完成後，您將擁有一個能透過雲端知識庫回答問題的基礎 RAG (檢索增強生成) 應用。</p>
-                    <div class="portfolio-grid">
+                    <div class="row g-4">
                         <!-- 教學項目1 -->
-                        <div class="portfolio-item">
-                            <h3>n8n 教學 (一)：本地安裝 node.js 與 n8n</h3>
-                            <img src="n8n_tutorials/1/image.png" alt="n8n教學一：本地安裝Node.js與n8n" class="img-fluid">
-                            <p>本篇教學將帶領您從零開始，完成 Node.js 與 n8n 的本地環境建置，為後續的自動化工作流打下基礎。</p>
-                            <a href="n8n_tutorials/n8n-tutorial-1.html" class="btn btn-primary">查看詳情</a>
+                        <div class="col-md-6">
+                            <div class="glass-card h-100 d-flex flex-column">
+                                <img src="n8n_tutorials/1/image.png" alt="n8n教學一：本地安裝Node.js與n8n" class="card-img-top">
+                                <div class="p-4 d-flex flex-column flex-grow-1">
+                                    <h5 class="mb-3">n8n 教學 (一)：本地安裝 node.js 與 n8n</h5>
+                                    <p class="text-gray small flex-grow-1">本篇教學將帶領您從零開始，完成 Node.js 與 n8n 的本地環境建置，為後續的自動化工作流打下基礎。</p>
+                                    <div class="mt-auto text-center">
+                                        <a href="n8n_tutorials/n8n-tutorial-1.html" class="btn btn-primary-modern btn-sm">查看詳情</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- 教學項目2 -->
-                        <div class="portfolio-item">
-                            <h3>n8n 教學 (二)：Supabase 申請及建立向量資料庫</h3>
-                            <img src="n8n_tutorials/2/image.png" alt="n8n教學二：Supabase申請及建立向量資料庫" class="img-fluid">
-                            <p>本篇教學將引導您申請 Supabase 帳號，並建立向量資料庫，為 AI 應用提供資料儲存基礎。</p>
-                            <a href="n8n_tutorials/n8n-tutorial-2.html" class="btn btn-primary">查看詳情</a>
+                        <div class="col-md-6">
+                            <div class="glass-card h-100 d-flex flex-column">
+                                <img src="n8n_tutorials/2/image.png" alt="n8n教學二：Supabase申請及建立向量資料庫" class="card-img-top">
+                                <div class="p-4 d-flex flex-column flex-grow-1">
+                                    <h5 class="mb-3">n8n 教學 (二)：Supabase 申請及建立向量資料庫</h5>
+                                    <p class="text-gray small flex-grow-1">本篇教學將引導您申請 Supabase 帳號，並建立向量資料庫，為 AI 應用提供資料儲存基礎。</p>
+                                    <div class="mt-auto text-center">
+                                        <a href="n8n_tutorials/n8n-tutorial-2.html" class="btn btn-primary-modern btn-sm">查看詳情</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- 教學項目3 -->
-                        <div class="portfolio-item">
-                            <h3>n8n 教學 (三)：申請 Gemini API key</h3>
-                            <img src="n8n_tutorials/3/image.png" alt="n8n教學三：申請Gemini API key" class="img-fluid">
-                            <p>本篇教學將指導您如何申請 Google Gemini API Key，這是啟用 AI 相關功能的重要步驟。</p>
-                            <a href="n8n_tutorials/n8n-tutorial-3.html" class="btn btn-primary">查看詳情</a>
+                        <div class="col-md-6">
+                            <div class="glass-card h-100 d-flex flex-column">
+                                <img src="n8n_tutorials/3/image.png" alt="n8n教學三：申請Gemini API key" class="card-img-top">
+                                <div class="p-4 d-flex flex-column flex-grow-1">
+                                    <h5 class="mb-3">n8n 教學 (三)：申請 Gemini API key</h5>
+                                    <p class="text-gray small flex-grow-1">本篇教學將指導您如何申請 Google Gemini API Key，這是啟用 AI 相關功能的重要步驟。</p>
+                                    <div class="mt-auto text-center">
+                                        <a href="n8n_tutorials/n8n-tutorial-3.html" class="btn btn-primary-modern btn-sm">查看詳情</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- 教學項目4 -->
-                        <div class="portfolio-item">
-                            <h3>n8n 教學 (四)：建立 n8n 工作流塞爆向量資料庫</h3>
-                            <img src="n8n_tutorials/4/image.png" alt="n8n教學四：建立n8n工作流塞爆向量資料庫" class="img-fluid">
-                            <p>本篇教學將教您如何建立 n8n 工作流，將大量資料高效地匯入向量資料庫，並處理重複資料。</p>
-                            <a href="n8n_tutorials/n8n-tutorial-4.html" class="btn btn-primary">查看詳情</a>
+                        <div class="col-md-6">
+                            <div class="glass-card h-100 d-flex flex-column">
+                                <img src="n8n_tutorials/4/image.png" alt="n8n教學四：建立n8n工作流塞爆向量資料庫" class="card-img-top">
+                                <div class="p-4 d-flex flex-column flex-grow-1">
+                                    <h5 class="mb-3">n8n 教學 (四)：建立 n8n 工作流塞爆向量資料庫</h5>
+                                    <p class="text-gray small flex-grow-1">本篇教學將教您如何建立 n8n 工作流，將大量資料高效地匯入向量資料庫，並處理重複資料。</p>
+                                    <div class="mt-auto text-center">
+                                        <a href="n8n_tutorials/n8n-tutorial-4.html" class="btn btn-primary-modern btn-sm">查看詳情</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- 教學項目5 -->
-                        <div class="portfolio-item">
-                            <h3>n8n 教學 (五)：讓AI參考向量資料庫回答</h3>
-                            <img src="n8n_tutorials/5/image.png" alt="n8n教學五：讓AI參考向量資料庫回答" class="img-fluid">
-                            <p>本篇教學將展示如何配置 n8n，讓 AI 能夠參考向量資料庫中的資訊來生成更精確、更符合語境的回答。</p>
-                            <a href="n8n_tutorials/n8n-tutorial-5.html" class="btn btn-primary">查看詳情</a>
+                        <div class="col-md-6">
+                            <div class="glass-card h-100 d-flex flex-column">
+                                <img src="n8n_tutorials/5/image.png" alt="n8n教學五：讓AI參考向量資料庫回答" class="card-img-top">
+                                <div class="p-4 d-flex flex-column flex-grow-1">
+                                    <h5 class="mb-3">n8n 教學 (五)：讓AI參考向量資料庫回答</h5>
+                                    <p class="text-gray small flex-grow-1">本篇教學將展示如何配置 n8n，讓 AI 能夠參考向量資料庫中的資訊來生成更精確、更符合語境的回答。</p>
+                                    <div class="mt-auto text-center">
+                                        <a href="n8n_tutorials/n8n-tutorial-5.html" class="btn btn-primary-modern btn-sm">查看詳情</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -249,45 +248,75 @@
                     </div>
                     <h2><i class="fas fa-server series-icon"></i>n8n 系列：進階 (在地化部署 Qdrant)</h2>
                     <p class="series-intro">本系列專為重視資料隱私與自主性的使用者設計。我們將學習如何在本地環境安裝並設定 Qdrant 向量資料庫，並將先前的工作流無縫對接到這個私有化知識庫，實現一個完全由您掌控的 RAG 應用。</p>
-                    <div class="portfolio-grid">
+                    <div class="row g-4">
                         <!-- 教學項目6 -->
-                        <div class="portfolio-item">
-                            <h3>n8n 教學 (六)：安裝與設定 Qdrant</h3>
-                            <img src="n8n_tutorials/6/image.png" alt="n8n教學六：安裝與設定 Qdrant" class="img-fluid">
-                            <p>本篇將介紹如何在本地環境安裝 Qdrant 向量資料庫，實現資料的完全私有化，確保您的資料安全。</p>
-                            <a href="n8n_tutorials/n8n-tutorial-6.html" class="btn btn-primary">查看詳情</a>
+                        <div class="col-md-6">
+                            <div class="glass-card h-100 d-flex flex-column">
+                                <img src="n8n_tutorials/6/image.png" alt="n8n教學六：安裝與設定 Qdrant" class="card-img-top">
+                                <div class="p-4 d-flex flex-column flex-grow-1">
+                                    <h5 class="mb-3">n8n 教學 (六)：安裝與設定 Qdrant</h5>
+                                    <p class="text-gray small flex-grow-1">本篇將介紹如何在本地環境安裝 Qdrant 向量資料庫，實現資料的完全私有化，確保您的資料安全。</p>
+                                    <div class="mt-auto text-center">
+                                        <a href="n8n_tutorials/n8n-tutorial-6.html" class="btn btn-primary-modern btn-sm">查看詳情</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- 教學項目7 -->
-                        <div class="portfolio-item">
-                            <h3>n8n 教學 (七)：在 Qdrant 中建立您的第一個向量資料庫</h3>
-                            <img src="n8n_tutorials/7/image.png" alt="n8n教學七：在 Qdrant 中建立您的第一個向量資料庫" class="img-fluid">
-                            <p>本篇將帶您實際操作 Qdrant Web UI，建立一個 Collection 並設定向量維度，完成您的第一個在地向量資料庫。</p>
-                            <a href="n8n_tutorials/n8n-tutorial-7.html" class="btn btn-primary">查看詳情</a>
+                        <div class="col-md-6">
+                            <div class="glass-card h-100 d-flex flex-column">
+                                <img src="n8n_tutorials/7/image.png" alt="n8n教學七：在 Qdrant 中建立您的第一個向量資料庫" class="card-img-top">
+                                <div class="p-4 d-flex flex-column flex-grow-1">
+                                    <h5 class="mb-3">n8n 教學 (七)：在 Qdrant 中建立您的第一個向量資料庫</h5>
+                                    <p class="text-gray small flex-grow-1">本篇將帶您實際操作 Qdrant Web UI，建立一個 Collection 並設定向量維度，完成您的第一個在地向量資料庫。</p>
+                                    <div class="mt-auto text-center">
+                                        <a href="n8n_tutorials/n8n-tutorial-7.html" class="btn btn-primary-modern btn-sm">查看詳情</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- 教學項目8 -->
-                        <div class="portfolio-item">
-                            <h3>n8n 教學 (八)：整合 n8n 與 Qdrant</h3>
-                            <img src="n8n_tutorials/8/image.png" alt="n8n教學八：整合 n8n 與 Qdrant" class="img-fluid">
-                            <p>本篇將教您如何改造先前為 Supabase 設計的工作流，將其無縫對接到 Qdrant 在地向量資料庫，建立一個完整的私有化流程。</p>
-                            <a href="n8n_tutorials/n8n-tutorial-8.html" class="btn btn-primary">查看詳情</a>
+                        <div class="col-md-6">
+                            <div class="glass-card h-100 d-flex flex-column">
+                                <img src="n8n_tutorials/8/image.png" alt="n8n教學八：整合 n8n 與 Qdrant" class="card-img-top">
+                                <div class="p-4 d-flex flex-column flex-grow-1">
+                                    <h5 class="mb-3">n8n 教學 (八)：整合 n8n 與 Qdrant</h5>
+                                    <p class="text-gray small flex-grow-1">本篇將教您如何改造先前為 Supabase 設計的工作流，將其無縫對接到 Qdrant 在地向量資料庫，建立一個完整的私有化流程。</p>
+                                    <div class="mt-auto text-center">
+                                        <a href="n8n_tutorials/n8n-tutorial-8.html" class="btn btn-primary-modern btn-sm">查看詳情</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- 教學項目9 -->
-                        <div class="portfolio-item">
-                            <h3>n8n 教學 (九)：改造 Chat 工作流</h3>
-                            <img src="n8n_tutorials/9/image.png" alt="n8n教學九：改造 Chat 工作流" class="img-fluid">
-                            <p>本篇將引導您改造聊天工作流，整合 Qdrant 向量資料庫，讓您的 AI 助理能根據私有知識庫進行回覆。</p>
-                            <a href="n8n_tutorials/n8n-tutorial-9.html" class="btn btn-primary">查看詳情</a>
+                        <div class="col-md-6">
+                            <div class="glass-card h-100 d-flex flex-column">
+                                <img src="n8n_tutorials/9/image.png" alt="n8n教學九：改造 Chat 工作流" class="card-img-top">
+                                <div class="p-4 d-flex flex-column flex-grow-1">
+                                    <h5 class="mb-3">n8n 教學 (九)：改造 Chat 工作流</h5>
+                                    <p class="text-gray small flex-grow-1">本篇將引導您改造聊天工作流，整合 Qdrant 向量資料庫，讓您的 AI 助理能根據私有知識庫進行回覆。</p>
+                                    <div class="mt-auto text-center">
+                                        <a href="n8n_tutorials/n8n-tutorial-9.html" class="btn btn-primary-modern btn-sm">查看詳情</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- 教學項目10 -->
-                        <div class="portfolio-item">
-                            <h3>n8n 教學 (十)：從快照還原 Qdrant 資料庫</h3>
-                            <img src="n8n_tutorials/10/image 7.png" alt="n8n教學十：從快照還原 Qdrant 資料庫" class="img-fluid">
-                            <p>本篇將指導您如何利用 Qdrant 的快照功能，快速匯入或還原整個向量資料庫，對於備份、遷移與協作至關重要。</p>
-                            <a href="n8n_tutorials/n8n-tutorial-10.html" class="btn btn-primary">查看詳情</a>
+                        <div class="col-md-6">
+                            <div class="glass-card h-100 d-flex flex-column">
+                                <img src="n8n_tutorials/10/image 7.png" alt="n8n教學十：從快照還原 Qdrant 資料庫" class="card-img-top">
+                                <div class="p-4 d-flex flex-column flex-grow-1">
+                                    <h5 class="mb-3">n8n 教學 (十)：從快照還原 Qdrant 資料庫</h5>
+                                    <p class="text-gray small flex-grow-1">本篇將指導您如何利用 Qdrant 的快照功能，快速匯入或還原整個向量資料庫，對於備份、遷移與協作至關重要。</p>
+                                    <div class="mt-auto text-center">
+                                        <a href="n8n_tutorials/n8n-tutorial-10.html" class="btn btn-primary-modern btn-sm">查看詳情</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -295,7 +324,7 @@
         </div>
     </main>
 
-    <footer class="bg-light mt-5 py-3">
+    <footer class="bg-dark mt-5 py-3">
         <div class="container text-center">
             <p>&copy; 2025 Luke Hou. All rights reserved.</p>
         </div>
