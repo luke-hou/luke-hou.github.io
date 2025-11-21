@@ -1,0 +1,189 @@
+/* Modern Style Overrides */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+:root {
+    --bg-dark: #0f172a;
+    --text-light: #f8fafc;
+    --text-gray: #94a3b8;
+    --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+    --glass-bg: rgba(30, 41, 59, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --card-hover-transform: translateY(-5px);
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    overflow-x: hidden;
+}
+
+/* Navbar Overrides */
+.navbar {
+    background: rgba(15, 23, 42, 0.8) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.navbar-brand {
+    font-weight: 800;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Hero Section */
+.hero-section {
+    position: relative;
+    padding: 8rem 0 10rem;
+    background: radial-gradient(circle at top right, rgba(168, 85, 247, 0.2), transparent 40%),
+        radial-gradient(circle at bottom left, rgba(99, 102, 241, 0.2), transparent 40%);
+    overflow: hidden;
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(to right, #fff, #cbd5e1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--text-gray);
+    font-weight: 300;
+}
+
+.profile-img-glow {
+    border-radius: 50%;
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.profile-img-glow:hover {
+    transform: scale(1.05) rotate(2deg);
+}
+
+/* Wave Divider */
+.custom-shape-divider-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-bottom svg {
+    position: relative;
+    display: block;
+    width: calc(136% + 1.3px);
+    height: 120px;
+    transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom .shape-fill {
+    fill: var(--bg-dark);
+    opacity: 0.5;
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.glass-card:hover {
+    transform: var(--card-hover-transform);
+    border-color: rgba(168, 85, 247, 0.5);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.section-title-modern {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    text-align: center;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.section-title-modern::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--primary-gradient);
+    border-radius: 2px;
+}
+
+/* Icon Styling */
+.icon-box {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+/* List Group Overrides */
+.list-group-item {
+    border-color: var(--glass-border) !important;
+    color: var(--text-light) !important;
+    transition: background 0.2s;
+}
+
+.list-group-item:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Buttons */
+.btn-primary-modern {
+    background: var(--primary-gradient);
+    border: none;
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: opacity 0.3s;
+}
+
+.btn-primary-modern:hover {
+    opacity: 0.9;
+    color: white;
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+}
+
+.btn-outline-modern {
+    background: transparent;
+    border: 2px solid rgba(168, 85, 247, 0.5);
+    color: white;
+    border-radius: 50px;
+    padding: 0.5rem 1.5rem;
+    transition: all 0.3s;
+}
+
+.btn-outline-modern:hover {
+    background: rgba(168, 85, 247, 0.1);
+    border-color: #a855f7;
+    color: white;
+}

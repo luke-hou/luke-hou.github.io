@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html lang="zh-TW" data-bs-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Luke Hou 侯俊嘉 - 個人網站</title>
     <meta name="description" content="Luke Hou 侯俊嘉的個人網站，分享個人專案、作品集、n8n自動化教學，以及提升工作效率的工具。">
-    <meta name="keywords" content="Luke Hou, 侯俊嘉, 個人網站, 作品集, n8n教學, 自動化, 效率工具, 個人專案, 部落格, n8n, Vibe Coding, AI, HIS, BA">
+    <meta name="keywords"
+        content="Luke Hou, 侯俊嘉, 個人網站, 作品集, n8n教學, 自動化, 效率工具, 個人專案, 部落格, n8n, Vibe Coding, AI, HIS, BA">
     <link rel="icon" href="/images/favicon.jpg" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/resume.css">
+    <link rel="stylesheet" href="css/modern-style.css">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-    gtag('config', 'G-0V2L1DQVPY');
+        gtag('config', 'G-0V2L1DQVPY');
     </script>
 </head>
+
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg fixed-top">
             <div class="container">
-                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
@@ -42,141 +46,200 @@
         </nav>
     </header>
 
-    <main class="container mt-5">
-        <div class="row">
-            <div class="col-lg-10 mx-auto">
-
-                <!-- Profile Section -->
-                <section class="text-center mb-5">
-                    <img src="images/index.jpg" class="profile-img mb-4" alt="Luke Hou">
-                    <h1 class="display-5 fw-bold">Luke Hou 侯俊嘉</h1>
-                    <p class="lead">資深醫療資訊系統分析師 | 開發與SQA</p>
-                    <p>我是 Luke Hou 侯俊嘉，一位在醫療資訊領域擁有超過 15 年經驗的資深個人貢獻者(Individual Contributor)。<br>我致力於將複雜的醫療流程轉化為穩定、高效且安全的技術解決方案，並對提升開發與測試效率抱有極大熱情。</p>
-                    <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank" class="btn btn-primary">前往 LinkedIn</a>
-                </section>
-
-                <!-- Core Competencies -->
-                <section class="mb-5">
-                    <h2 class="section-title-dark">核心專業能力</h2>
-                    <div class="row">
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100 text-center bg-body-tertiary p-4">
-                                <i class="fas fa-exchange-alt fa-3x text-danger mb-3"></i>
-                                <h5>HIS系統轉置經驗</h5>
-                                <p class="small">參與醫學中心級HIS轉置，從UAT到維運，確保核心業務無縫轉移。</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100 text-center bg-body-tertiary p-4">
-                                <i class="fas fa-laptop-medical fa-3x text-primary mb-3"></i>
-                                <h5>醫療系統開發與維運</h5>
-                                <p class="small">具備HIS開發、優化與維運能力，擁有豐富的跨部門協作與系統整合經驗。</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100 text-center bg-body-tertiary p-4">
-                                <i class="fas fa-shield-alt fa-3x text-success mb-3"></i>
-                                <h5>嚴謹的品質保證 (SQA)</h5>
-                                <p class="small">從功能、效能到安全，建立全面測試策略，確保系統品質。</p>
-                            </div>
-                        </div>
+    <!-- Hero Section -->
+    <section class="hero-section text-center">
+        <div class="container">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-lg-8">
+                    <img src="images/index.jpg" class="profile-img-glow mb-4" alt="Luke Hou" width="180">
+                    <h1 class="hero-title">Luke Hou</h1>
+                    <p class="hero-subtitle mb-4">資深醫療資訊系統分析師 | 開發與 SQA | AI 自動化愛好者</p>
+                    <p class="lead text-light opacity-75 mb-5">
+                        致力於將複雜的醫療流程轉化為穩定、高效且安全的技術解決方案。<br>
+                        善於運用 AI 與自動化工具，釋放團隊潛能。
+                    </p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank"
+                            class="btn btn-primary-modern">
+                            <i class="fab fa-linkedin me-2"></i>Connect on LinkedIn
+                        </a>
+                        <a href="#featured-content" class="btn btn-outline-modern">
+                            探索專案 <i class="fas fa-arrow-down ms-2"></i>
+                        </a>
                     </div>
-                </section>
-
-                <!-- Productivity & Tech Highlights -->
-                <section class="mb-5">
-                    <h2 class="section-title-dark">生產力與技術亮點</h2>
-                    <div class="list-group">
-                        <div class="list-group-item d-flex gap-3 bg-transparent border-secondary-subtle">
-                            <i class="fas fa-robot text-info fa-2x mt-1"></i>
-                            <div>
-                                <h5 class="mb-1">n8n AI 自動化工作流</h5>
-                                <p class="mb-0 small">導入 n8n 建立 AI 驅動的自動化流程，串聯開發、測試與監控環節，大幅減少重複性工作，將團隊資源專注於核心創新。</p>
-                            </div>
-                        </div>
-                        <div class="list-group-item d-flex gap-3 bg-transparent border-secondary-subtle">
-                            <i class="fas fa-bolt text-warning fa-2x mt-1"></i>
-                            <div>
-                                <h5 class="mb-1">醫療資訊系統背景</h5>
-                                <p class="mb-0 small">擁有十數年醫療資訊經驗，涵蓋系統分析、系統開發與維運、品保測試 (QA)，服務過各級醫療機構。</p>
-                            </div>
-                        </div>
-                        <div class="list-group-item d-flex gap-3 bg-transparent border-secondary-subtle">
-                            <i class="fas fa-sitemap text-success fa-2x mt-1"></i>
-                            <div>
-                                <h5 class="mb-1">全方位專案能力</h5>
-                                <p class="mb-0 small">具備從商業分析 (BA)、使用者訪談到參與院方跨部門會議的完整能力。以系統負責人的視角貫穿專案全局，確保需求精準實現。</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Professional Philosophy -->
-                <section class="mb-5">
-                    <div class="card bg-body-tertiary border-0">
-                        <div class="card-body p-4">
-                            <h4 class="card-title text-center mb-4"><i class="fas fa-compass me-2"></i>我的專業理念</h4>
-                            <blockquote class="blockquote text-center">
-                                <p>"最卓越的品質保證 (QA) 源自於深厚的開發與系統維運經驗。如同資深船長方能擔任「引水人」，指引船隻安全入港；我將多年積累的技術洞察力應用於 QA 工作，從源頭預防風險、規劃最佳路徑，確保每一個專案都能精準、高效地達成目標。"</p>
-                            </blockquote>
-                            <hr class="w-50 mx-auto my-4">
-                            <p class="text-center fw-bold">
-                                憑藉在醫療資訊領域開發、品保與系統整合的多年實戰經驗，我能提供的不僅是技術執行力，更是一份確保專案成功落地的穩定力量。
-                            </p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Featured Content -->
-                <section id="featured-content" class="mb-5">
-                    <h2 class="section-title-dark">精選內容</h2>
-                    <div class="row">
-                        <!-- Featured Tutorials -->
-                        <div class="col-lg-6 mb-4">
-                            <div class="card h-100 bg-body-tertiary">
-                                <div class="card-body">
-                                    <h5 class="card-title"><i class="fas fa-graduation-cap me-2"></i>精選教學</h5>
-                                    <p class="card-text small">從 AI 協作到自動化工作流，這裡有我的實戰教學精華。</p>
-                                    <div class="list-group list-group-flush">
-                                        <a href="tutorials.html#gemini-pm-series" class="list-group-item list-group-item-action bg-transparent border-secondary-subtle">PM x Gemini CLI 協作術</a>
-                                        <a href="tutorials.html#basic-series" class="list-group-item list-group-item-action bg-transparent border-secondary-subtle">n8n 系列：基礎 (Supabase 雲端整合)</a>
-                                        <a href="tutorials.html#advanced-series" class="list-group-item list-group-item-action bg-transparent border-secondary-subtle">n8n 系列：進階 (在地化部署 Qdrant)</a>
-                                    </div>
-                                    <a href="tutorials.html" class="btn btn-outline-primary btn-sm mt-3">查看所有教學</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Featured Projects -->
-                        <div class="col-lg-6 mb-4">
-                            <div class="card h-100 bg-body-tertiary">
-                                <div class="card-body">
-                                    <h5 class="card-title"><i class="fas fa-rocket me-2"></i>代表專案</h5>
-                                    <p class="card-text small">將想法化為現實，這裡展示了我的部分精選 Side Project。</p>
-                                    <div class="list-group list-group-flush">
-                                        <a href="projects/golive-jira-automation.html" class="list-group-item list-group-item-action bg-transparent border-secondary-subtle">Go-Live 利器：Sheet to Jira 自動化</a>
-                                        <a href="projects/vibe-coding-task-management.html" class="list-group-item list-group-item-action bg-transparent border-secondary-subtle">vibeTask: AI 驅動的賽博龐克任務管理系統</a>
-                                        <a href="projects/n8n-line-business-card-automation.html" class="list-group-item list-group-item-action bg-transparent border-secondary-subtle">用 LINE + AI 打造你的個人 CRM：n8n 名片王</a>
-                                        <a href="projects/prd-ai-test-case-generation.html" class="list-group-item list-group-item-action bg-transparent border-secondary-subtle">n8n 從 Confluence PRD 到 Jira：導入 AI 多智能體</a>
-                                    </div>
-                                    <a href="portfolio.html" class="btn btn-outline-primary btn-sm mt-3">查看所有專案</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
+                </div>
             </div>
         </div>
+
+        <!-- Wave Divider -->
+        <div class="custom-shape-divider-bottom">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none">
+                <path
+                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                    class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <main class="container" style="margin-top: -50px; position: relative; z-index: 2;">
+
+        <!-- Core Competencies -->
+        <section class="mb-5">
+            <h2 class="section-title-modern">核心專業能力</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="glass-card text-center">
+                        <div class="icon-box mx-auto text-danger">
+                            <i class="fas fa-exchange-alt fa-2x"></i>
+                        </div>
+                        <h5>HIS 系統轉置</h5>
+                        <p class="text-gray small">參與醫學中心級 HIS 轉置，從 UAT 到維運，確保核心業務無縫轉移。</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="glass-card text-center">
+                        <div class="icon-box mx-auto text-primary">
+                            <i class="fas fa-laptop-medical fa-2x"></i>
+                        </div>
+                        <h5>系統開發與維運</h5>
+                        <p class="text-gray small">具備 HIS 開發、優化與維運能力，豐富的跨部門協作與系統整合經驗。</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="glass-card text-center">
+                        <div class="icon-box mx-auto text-success">
+                            <i class="fas fa-shield-alt fa-2x"></i>
+                        </div>
+                        <h5>品質保證 (SQA)</h5>
+                        <p class="text-gray small">建立全面測試策略，從功能、效能到安全，嚴格把關系統品質。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Productivity & Tech Highlights -->
+        <section class="mb-5">
+            <div class="glass-card p-5">
+                <div class="row align-items-center">
+                    <div class="col-lg-5 mb-4 mb-lg-0">
+                        <h2 class="fw-bold mb-4"
+                            style="background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
+                            生產力與<br>技術亮點
+                        </h2>
+                        <p class="text-gray">不只是寫程式，更注重如何用科技解決真實問題。從自動化工作流到大型醫療系統，我追求極致的效率與品質。</p>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item d-flex gap-3 bg-transparent">
+                                <i class="fas fa-robot text-info fa-2x mt-1"></i>
+                                <div>
+                                    <h5 class="mb-1">n8n AI 自動化工作流</h5>
+                                    <p class="mb-0 text-gray small">導入 n8n 建立 AI 驅動的自動化流程，串聯開發、測試與監控環節。</p>
+                                </div>
+                            </div>
+                            <div class="list-group-item d-flex gap-3 bg-transparent">
+                                <i class="fas fa-bolt text-warning fa-2x mt-1"></i>
+                                <div>
+                                    <h5 class="mb-1">醫療資訊系統背景</h5>
+                                    <p class="mb-0 text-gray small">十數年經驗，涵蓋系統分析、開發、維運與品保測試 (QA)。</p>
+                                </div>
+                            </div>
+                            <div class="list-group-item d-flex gap-3 bg-transparent">
+                                <i class="fas fa-sitemap text-success fa-2x mt-1"></i>
+                                <div>
+                                    <h5 class="mb-1">全方位專案能力</h5>
+                                    <p class="mb-0 text-gray small">從 BA 到 PM，以系統負責人視角貫穿全局，確保需求精準實現。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Professional Philosophy -->
+        <section class="mb-5">
+            <div class="glass-card text-center position-relative overflow-hidden">
+                <div
+                    style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: var(--primary-gradient); filter: blur(80px); opacity: 0.3;">
+                </div>
+                <h4 class="mb-4"><i class="fas fa-compass me-2 text-info"></i>我的專業理念</h4>
+                <blockquote class="blockquote">
+                    <p class="fs-5 fst-italic text-light">"最卓越的品質保證 (QA) 源自於深厚的開發與系統維運經驗。如同資深船長方能擔任「引水人」，指引船隻安全入港。"</p>
+                </blockquote>
+                <hr class="w-25 mx-auto my-4 border-secondary">
+                <p class="text-gray">
+                    我將多年積累的技術洞察力應用於 QA 工作，從源頭預防風險、規劃最佳路徑，確保每一個專案都能精準、高效地達成目標。
+                </p>
+            </div>
+        </section>
+
+        <!-- Featured Content -->
+        <section id="featured-content" class="mb-5">
+            <h2 class="section-title-modern">精選內容</h2>
+            <div class="row g-4">
+                <!-- Featured Tutorials -->
+                <div class="col-lg-6">
+                    <div class="glass-card h-100 d-flex flex-column">
+                        <h5 class="card-title mb-4"><i class="fas fa-graduation-cap me-2 text-warning"></i>精選教學</h5>
+                        <div class="list-group list-group-flush flex-grow-1">
+                            <a href="tutorials.html#gemini-pm-series"
+                                class="list-group-item list-group-item-action bg-transparent border-0 ps-0">
+                                <i class="fas fa-angle-right me-2 text-secondary"></i>PM x Gemini CLI 協作術
+                            </a>
+                            <a href="tutorials.html#basic-series"
+                                class="list-group-item list-group-item-action bg-transparent border-0 ps-0">
+                                <i class="fas fa-angle-right me-2 text-secondary"></i>n8n 系列：基礎 (Supabase 雲端整合)
+                            </a>
+                            <a href="tutorials.html#advanced-series"
+                                class="list-group-item list-group-item-action bg-transparent border-0 ps-0">
+                                <i class="fas fa-angle-right me-2 text-secondary"></i>n8n 系列：進階 (在地化部署 Qdrant)
+                            </a>
+                        </div>
+                        <a href="tutorials.html" class="btn btn-outline-modern btn-sm mt-3 align-self-start">查看所有教學</a>
+                    </div>
+                </div>
+                <!-- Featured Projects -->
+                <div class="col-lg-6">
+                    <div class="glass-card h-100 d-flex flex-column">
+                        <h5 class="card-title mb-4"><i class="fas fa-rocket me-2 text-danger"></i>代表專案</h5>
+                        <div class="list-group list-group-flush flex-grow-1">
+                            <a href="projects/golive-jira-automation.html"
+                                class="list-group-item list-group-item-action bg-transparent border-0 ps-0">
+                                <i class="fas fa-angle-right me-2 text-secondary"></i>Go-Live 利器：Sheet to Jira 自動化
+                            </a>
+                            <a href="projects/vibe-coding-task-management.html"
+                                class="list-group-item list-group-item-action bg-transparent border-0 ps-0">
+                                <i class="fas fa-angle-right me-2 text-secondary"></i>vibeTask: AI 驅動的賽博龐克任務管理系統
+                            </a>
+                            <a href="projects/n8n-line-business-card-automation.html"
+                                class="list-group-item list-group-item-action bg-transparent border-0 ps-0">
+                                <i class="fas fa-angle-right me-2 text-secondary"></i>用 LINE + AI 打造你的個人 CRM
+                            </a>
+                        </div>
+                        <a href="portfolio.html" class="btn btn-outline-modern btn-sm mt-3 align-self-start">查看所有專案</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <footer class="bg-dark mt-5 py-4 border-top border-secondary-subtle">
+    <footer class="bg-dark mt-5 py-5 border-top border-secondary-subtle position-relative">
         <div class="container text-center">
+            <div class="mb-4">
+                <a href="https://www.linkedin.com/in/junjia-hou/" class="text-secondary me-3 fs-4 hover-white"><i
+                        class="fab fa-linkedin"></i></a>
+                <a href="mailto:your-email@example.com" class="text-secondary fs-4 hover-white"><i
+                        class="fas fa-envelope"></i></a>
+            </div>
             <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/resume.js"></script>
 </body>
+
 </html>
