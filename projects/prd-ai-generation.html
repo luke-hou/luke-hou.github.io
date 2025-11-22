@@ -110,19 +110,6 @@
 </ul>
 <p>為了解決這些痛點，我設計了這個基於 n8n 的多代理（Multi-Agent）AI 自動化系統，目標是將「一句話需求」轉化為符合內部風格及規範的「PRD初稿」，幫助 PM 在 60 分的基礎上繼續前行。</p>
 
-<div class="alert alert-info mt-4" role="alert">
-    <h4 class="alert-heading"><i class="bi bi-shield-lock-fill me-2"></i>企業級資安架構：本地知識庫與私有 LLM 的結合</h4>
-    <p>此系統在設計上將企業級的資訊安全視為最高優先。我們透過以下三項關鍵技術及服務，確保公司最敏感的智慧資產（法規知識、產品規格、測試案例）與使用者輸入的需求，都在一個絕對安全的閉環中處理：</p>
-    <ol>
-        <li><strong>本地自動化工作流 (Local n8n):</strong> 部署在內部機器上的 n8n 服務，提供了一連串本地化的自動化工作流。</li>
-        <li><strong>本地向量資料庫 (Local Qdrant):</strong> 儲存了團隊核心智慧財產的向量資料庫，是部署在內部的機器上。這代表所有 RAG 的檢索過程，都在內部完成，杜絕了知識庫經由外部服務外洩的風險。</li>
-        <li><strong>私有大型語言模型 (Azure OpenAI):</strong> 此工作流串接的並非公開的 OpenAI API，而是公司內部部署、透過 Azure 提供的 OpenAI 服務節點。所有的提示（Prompt）與生成內容都在企業私有的雲端環境中進行，符合資料治理與隱私規範。</li>
-    </ol>
-    <hr>
-    <p class="mb-0">這個「本地 AI 自動化工作流 + 本地檢索 + 私有雲生成」的混合式架構，讓我們在享受大型語言模型強大能力的同時，也能完全掌控資料的流向，是此解決方案能真正應用於企業核心業務的關鍵。
-</p>
-</div>
-
 <div class="alert alert-success mt-4" role="alert">
     <h4 class="alert-heading"><i class="bi bi-shield-check me-2"></i>混合式 RAG：讓 AI 擁有「專家大腦」</h4>
     <p>此系統的核心是「混合式檢索增強生成」（Hybrid RAG）。我們不只使用單一的知識庫，而是建立了三個獨立的 Qdrant 向量資料庫，分別儲存：</p>
@@ -156,6 +143,19 @@
 </ol>
 
 <hr class="my-4">
+
+<div class="alert alert-info mt-4" role="alert">
+    <h4 class="alert-heading"><i class="bi bi-shield-lock-fill me-2"></i>企業級資安架構：本地知識庫與私有 LLM 的結合</h4>
+    <p>此系統在設計上將企業級的資訊安全視為最高優先。我們透過以下三項關鍵技術及服務，確保公司最敏感的智慧資產（法規知識、產品規格、測試案例）與使用者輸入的需求，都在一個絕對安全的閉環中處理：</p>
+    <ol>
+        <li><strong>本地自動化工作流 (Local n8n):</strong> 部署在內部機器上的 n8n 服務，提供了一連串本地化的自動化工作流。</li>
+        <li><strong>本地向量資料庫 (Local Qdrant):</strong> 儲存了團隊核心智慧財產的向量資料庫，是部署在內部的機器上。這代表所有 RAG 的檢索過程，都在內部完成，杜絕了知識庫經由外部服務外洩的風險。</li>
+        <li><strong>私有大型語言模型 (Azure OpenAI):</strong> 此工作流串接的並非公開的 OpenAI API，而是公司內部部署、透過 Azure 提供的 OpenAI 服務節點。所有的提示（Prompt）與生成內容都在企業私有的雲端環境中進行，符合資料治理與隱私規範。</li>
+    </ol>
+    <hr>
+    <p class="mb-0">這個「本地 AI 自動化工作流 + 本地檢索 + 私有雲生成」的混合式架構，讓我們在享受大型語言模型強大能力的同時，也能完全掌控資料的流向，是此解決方案能真正應用於企業核心業務的關鍵。
+</p>
+</div>
 
 <h2 class="h3 mb-3"><i class="bi bi-kanban me-2"></i>工作流展示</h2>
 <p class="text-muted">點擊下方頁籤，查看此工作流的實際運行示意：</p>
