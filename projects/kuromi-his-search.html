@@ -1,0 +1,258 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>專案: Kuromi HIS 快速搜尋 - Luke的作品集</title>
+    <meta name="description" content="不寫一行 Code，只給 AI 一個檔，立刻換來絲滑流暢的 HIS 系統選單搜尋神器。">
+    <meta name="keywords" content="Google AI Studio, App Builder, GenAI, NoCode, HIS, 醫療資訊, 搜尋, Kuromi, Luke Hou, 侯俊嘉">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-0V2L1DQVPY');
+    </script>
+    <style>
+        .project-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=2940&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+            padding: 4rem 0;
+            color: white;
+        }
+
+        .project-hero h1 {
+            font-weight: 700;
+        }
+
+        .summary-card {
+            position: sticky;
+            top: 80px;
+        }
+
+        .tech-badge {
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .floating-toggle-btn {
+            position: fixed;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            z-index: 1050;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            padding: 1rem 0.5rem;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .kuromi-wiggle {
+            display: inline-block;
+            animation: wiggle 0.5s infinite;
+        }
+
+        @keyframes wiggle {
+
+            0%,
+            100% {
+                transform: rotate(-3deg);
+            }
+
+            50% {
+                transform: rotate(3deg);
+            }
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: #bd93f9;
+            /* A purple shade */
+        }
+    </style>
+</head>
+
+<body>
+    <a href="kuromi-his-search-business.html" class="btn btn-primary floating-toggle-btn" title="切換至商業視角說明">
+        <i class="bi bi-briefcase-fill"></i> 商業視角
+    </a>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html"><i
+                                    class="fas fa-home me-1"></i>首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學文</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../podcast.html">🎙️ Podcast</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html"><i
+                                    class="fas fa-book-open me-1"></i>作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html"><i
+                                    class="fas fa-feather-alt me-1"></i>技術分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="project-hero text-center">
+            <div class="container">
+                <h1 class="display-4">半小時從 0 到上線：Google AI Studio 打造 HIS 搜尋神器 <span class="kuromi-wiggle">😈</span></h1>
+                <p class="lead">不寫一行 Code，只給 AI 一個檔，立刻換來絲滑流暢的 HIS 系統選單搜尋神器。</p>
+            </div>
+        </section>
+
+        <section class="container mt-5">
+            <div class="row">
+                <!-- Main Content -->
+                <div class="col-lg-8">
+                    <div class="card bg-transparent border-0">
+                        <div class="card-body px-0">
+
+                            <h2 class="card-title h3 mb-3"><i class="bi bi-compass-fill me-2 text-danger"></i>專案緣起：迷航在
+                                HIS 的數位迷宮</h2>
+                            <p>在醫療現場，HIS（醫療資訊系統）的選單結構往往複雜得像迷宮。新人找不到功能、資深員工憑記憶盲點，大家都在「找路徑」這件事上浪費了太多生命，痛苦太多而收穫太少。</p>
+                            <p>傳統上，開發一個專屬的搜尋工具，流程繁瑣，動輒數週。但這次，我利用 <strong>Google AI Studio Builder</strong>，在 <strong>不到
+                                    30 分鐘</strong> 內，從無到有打造了這款「山寨庫洛米 HIS Search」，實現了一次對傳統開發模式的降維打擊。</p>
+
+                            <div class="alert alert-info mt-4" role="alert">
+                                <h4 class="alert-heading"><i class="bi bi-magic me-2"></i>Google AI Studio Builder
+                                    的魔法：從想法到部署</h4>
+                                <p>這不是科幻電影，這是現在進行式。我所做的，僅僅是把人工盤點好的 JSON 選單丟給 AI，然後就像跟同事聊天一樣提出需求：</p>
+                                <blockquote class="blockquote">
+                                    <p class="mb-0">"幫我做一個搜尋 APP，要有層級導航，還要庫洛米 (Kuromi) 風格！"</p>
+                                </blockquote>
+                                <hr>
+                                <p class="mb-0">AI 瞬間理解了複雜的巢狀資料結構，並自動化生成了搜尋演算法、麵包屑導航 (Breadcrumbs)、本地儲存 (Local Storage)
+                                    等功能，最後直接部署上線，過程極致絲滑。</p>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <h2 class="h3 mb-3"><i class="bi bi-joystick me-2"></i>解決真實痛點的「四大絲滑體驗」</h2>
+                            <p>這不只是一個 Vibe Coding 玩具，這是一個真正能用的生產力工具，提供了四個核心功能：</p>
+                            <img src="../images/kuromi-his-search-business.jpg" alt="Kuromi HIS Search 實際使用圖"
+                                class="img-fluid rounded gallery-img img-bordered my-4">
+
+                            <div class="row text-center mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <div class="p-3">
+                                        <i class="bi bi-search feature-icon mb-2"></i>
+                                        <h5 class="fw-bold">1. 極致快搜，路徑視覺化</h5>
+                                        <p class="text-muted">告別在幾百個選單中翻找的痛苦。輸入關鍵字，AI 寫好的演算法瞬間列出結果，並用高對比標籤清楚標示路徑（如：護理站管理
+                                            > 報表作業）。</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="p-3">
+                                        <i class="bi bi-folder2-open feature-icon mb-2"></i>
+                                        <h5 class="fw-bold">2. 層級瀏覽，如逛網拍</h5>
+                                        <p class="text-muted">實作了互動式資料夾與動態麵包屑，你可以一層層點進去，隨時跳回上一層，操作體驗比原本的 HIS 系統流暢一百倍。
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="p-3">
+                                        <i class="bi bi-heart-fill feature-icon mb-2"></i>
+                                        <h5 class="fw-bold">3. 個人化收藏與歷史紀錄</h5>
+                                        <p class="text-muted">內建「我的最愛」和「最近搜尋」功能，常用的功能直接釘選。紀錄存在瀏覽器裡，關掉重開還在！</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="p-3">
+                                        <i class="bi bi-palette-fill feature-icon mb-2"></i>
+                                        <h5 class="fw-bold">4. 庫洛米風格視覺爆擊 <span class="kuromi-wiggle">😈</span></h5>
+                                        <p class="text-muted">動態的 Wiggle 動畫、酷黑粉紫的鑽石紋背景、跟隨滑鼠互動的彩蛋...全由 AI 理解風格後自動生成。</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <h2 class="h3 mb-3"><i class="bi bi-lightbulb-fill me-2"></i>專案啟示</h2>
+                            <p>這款 APP 的誕生證明了一件事：<strong>技術的門檻正在消失，解決問題的能力才是核心。</strong></p>
+                            <p>透過 Google AI Studio，我們不再受限於開發資源或時間成本。只要你有痛點、有想法，AI
+                                就能成為你的雙手，用不到半小時的時間，將原本枯燥的行政作業，轉化為一場高效又絲滑的數位體驗。</p>
+                            <p class="fw-bold">現在，就把繁雜留給 AI，把時間留給更重要的照護工作吧！</p>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <div class="card shadow-sm summary-card bg-body-tertiary">
+                        <div class="card-body">
+                            <h3 class="card-title h5 border-bottom pb-2 mb-3"><i class="bi bi-trophy-fill me-2"></i>核心價值
+                            </h3>
+                            <ul class="list-unstyled mt-3">
+                                <li class="mb-3 d-flex">
+                                    <i class="bi bi-speedometer2 h4 text-success me-3"></i>
+                                    <div>
+                                        <strong class="d-block">極速開發</strong>
+                                        <small class="text-muted">從概念到上線不到 30 分鐘，驗證了 GenAI 在敏捷開發中的巨大潛力。</small>
+                                    </div>
+                                </li>
+                                <li class="mb-3 d-flex">
+                                    <i class="bi bi-person-check-fill h4 text-primary me-3"></i>
+                                    <div>
+                                        <strong class="d-block">提升使用者體驗</strong>
+                                        <small class="text-muted">將複雜、過時的 HIS 介面，轉化為現代、直觀的搜尋體驗，直接解決一線人員痛點。</small>
+                                    </div>
+                                </li>
+                                <li class="mb-3 d-flex">
+                                    <i class="bi bi-cpu-fill h4 text-info me-3"></i>
+                                    <div>
+                                        <strong class="d-block">AI 賦能</strong>
+                                        <small class="text-muted">展示了 AI 如何自動理解資料結構、生成程式碼、甚至應用美學風格，降低開發門檻。</small>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <h3 class="h5 mt-2"><i class="bi bi-tools me-2"></i>使用的技術</h3>
+                            <div>
+                                <span class="badge text-bg-primary tech-badge">Google AI Studio</span>
+                                <span class="badge text-bg-secondary tech-badge">App Builder</span>
+                                <span class="badge text-bg-success tech-badge">Generative AI</span>
+                                <span class="badge text-bg-warning tech-badge">No-Code</span>
+                                <span class="badge text-bg-info tech-badge">JSON</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-grid mt-3">
+                        <a href="../portfolio.html" class="btn btn-outline-primary"><i
+                                class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark mt-5 py-4 border-top border-secondary-subtle">
+        <div class="container text-center">
+            <a href="../portfolio.html" class="btn btn-outline-light mb-3"><i
+                    class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+            <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+
+</html>
