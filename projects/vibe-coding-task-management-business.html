@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>案例研究：vibeTask - 當AI成為你的個人生產力教練 - Luke Hou 作品集</title>
+    <title>案例研究：vibeTask - 當AI成為你的個人生產力教練 - Luke Hou 作品</title>
     <meta name="description" content="了解我如何打造一個整合AI的任務管理系統，將傳統的「完成任務」提升為「創造價值」，自動生成報告、提供決策建議，並發掘個人工作模式的潛在洞察。">
     <meta name="keywords" content="生產力工具, AI, 任務管理, 決策輔助, 自動化報告, Python, Luke Hou, 侯俊嘉">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -13,18 +14,50 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-0V2L1DQVPY');
     </script>
     <style>
-        .hero-section { background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/vibe-task-ai/2025-09-07_14-40-21.jpg') no-repeat center center; background-size: cover; padding: 5rem 0; color: white; }
-        .hero-section h1 { font-weight: 700; }
-        .impact-card { background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: .5rem; padding: 1.5rem; margin-bottom: 1.5rem; }
-        .impact-card .icon { font-size: 2.5rem; color: #0d6efd; }
-        .feature-card { text-align: center; padding: 2rem; }
-        .feature-card .icon { font-size: 3rem; margin-bottom: 1rem; color: #0d6efd; }
-        body { background-color: #fdf5e6; }
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/vibe-task-ai/2025-09-07_14-40-21.jpg') no-repeat center center;
+            background-size: cover;
+            padding: 5rem 0;
+            color: white;
+        }
+
+        .hero-section h1 {
+            font-weight: 700;
+        }
+
+        .impact-card {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .impact-card .icon {
+            font-size: 2.5rem;
+            color: #0d6efd;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .feature-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0d6efd;
+        }
+
+        body {
+            background-color: #fdf5e6;
+        }
+
         .floating-toggle-btn {
             position: fixed;
             top: 50%;
@@ -36,10 +69,11 @@
             padding: 1rem 0.5rem;
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
-            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+            box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
+
 <body>
     <a href="vibe-coding-task-management.html" class="btn btn-dark floating-toggle-btn" title="切換至技術視角說明">
         <i class="bi bi-code-slash"></i> 技術視角說明
@@ -48,12 +82,13 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span
+                        class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">♾️ 首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學文</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">✈️分享</a></li>
                     </ul>
                 </div>
@@ -65,7 +100,8 @@
         <section class="hero-section text-center">
             <div class="container">
                 <h1 class="display-4">你需要的不是待辦清單，而是一個智慧策略夥伴</h1>
-                <p class="lead col-lg-8 mx-auto">我如何打造一個整合AI的任務管理系統，將傳統的「完成任務」提升為「創造價值」，自動生成報告、提供決策建議，並發掘個人工作模式的潛在洞察。</p>
+                <p class="lead col-lg-8 mx-auto">我如何打造一個整合AI的任務管理系統，將傳統的「完成任務」提升為「創造價值」，自動生成報告、提供決策建議，並發掘個人工作模式的潛在洞察。
+                </p>
             </div>
         </section>
 
@@ -75,7 +111,8 @@
 
                     <div class="text-center mb-5">
                         <h2 class="h1 mb-3"><i class="bi bi-list-task text-danger me-2"></i>The Challenge: 待辦清單的詛咒</h2>
-                        <p class="lead text-muted">傳統的待辦清單 (To-do List) 只是被動地記錄任務，卻無法幫助我們解決更深層次的問題：下一步該做什麼？如何向上匯報成果？我的時間都花在哪了？</p>
+                        <p class="lead text-muted">傳統的待辦清單 (To-do List)
+                            只是被動地記錄任務，卻無法幫助我們解決更深層次的問題：下一步該做什麼？如何向上匯報成果？我的時間都花在哪了？</p>
                     </div>
                     <div class="row text-center mb-5">
                         <div class="col-md-4">
@@ -95,17 +132,19 @@
                     <hr class="my-5">
 
                     <div class="text-center mb-5">
-                        <h2 class="h1 mb-3"><i class="bi bi-person-arms-up text-primary me-2"></i>The Solution: 你的 AI 生產力教練</h2>
+                        <h2 class="h1 mb-3"><i class="bi bi-person-arms-up text-primary me-2"></i>The Solution: 你的 AI
+                            生產力教練</h2>
                         <p class="lead text-muted">`vibeTask` 不只是一個工具，它是一個內建 AI 的生產力教練，能主動為你分析、建議、總結，讓你專注於真正重要的事。</p>
                     </div>
-                    
+
                     <div class="row g-4 mb-5">
                         <div class="col-lg-6">
                             <div class="feature-card h-100">
                                 <div class="icon"><i class="bi bi-stars"></i></div>
                                 <h4>AI 智慧策略師</h4>
                                 <p>AI 分析所有任務的價值與急迫性，為你提供每日最佳工作排程建議，讓你永遠先做最重要的事。</p>
-                                <img src="../images/vibe-task-ai/image 6.png" alt="AI 智慧排程建議" class="img-fluid rounded shadow">
+                                <img src="../images/vibe-task-ai/image 6.png" alt="AI 智慧排程建議"
+                                    class="img-fluid rounded shadow">
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -113,7 +152,8 @@
                                 <div class="icon"><i class="bi bi-robot"></i></div>
                                 <h4>AI 自動報告產生器</h4>
                                 <p>告別手動撰寫報告。AI 自動抓取已完成任務，一鍵生成結構完整的工作日報或週報。</p>
-                                <img src="../images/vibe-task-ai/image 7.png" alt="AI 自動產生報告" class="img-fluid rounded shadow">
+                                <img src="../images/vibe-task-ai/image 7.png" alt="AI 自動產生報告"
+                                    class="img-fluid rounded shadow">
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -121,7 +161,8 @@
                                 <div class="icon"><i class="bi bi-diagram-3"></i></div>
                                 <h4>AI 思維視覺化工具</h4>
                                 <p>一鍵將複雜的任務清單轉換為清晰的心智圖，幫助你梳理思路，看清任務間的關聯。</p>
-                                <img src="../images/vibe-task-ai/2025-09-07_14-40-21.jpg" alt="AI 產生任務心智圖" class="img-fluid rounded shadow">
+                                <img src="../images/vibe-task-ai/2025-09-07_14-40-21.jpg" alt="AI 產生任務心智圖"
+                                    class="img-fluid rounded shadow">
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -129,7 +170,8 @@
                                 <div class="icon"><i class="bi bi-pie-chart-fill"></i></div>
                                 <h4>個人化數據分析師</h4>
                                 <p>透過儀表板和番茄鐘記錄，將你的工時分佈視覺化，讓你清楚了解時間去向，找到優化空間。</p>
-                                <img src="../images/vibe-task-ai/image 8.png" alt="數據儀表板" class="img-fluid rounded shadow">
+                                <img src="../images/vibe-task-ai/image 8.png" alt="數據儀表板"
+                                    class="img-fluid rounded shadow">
                             </div>
                         </div>
                     </div>
@@ -171,16 +213,24 @@
 
                     <div class="accordion" id="tech-deep-dive">
                         <div class="accordion-item">
-                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-tech"><strong>對技術實現細節感興趣？點此展開</strong></button></h2>
-                            <div id="collapse-tech" class="accordion-collapse collapse" data-bs-parent="#tech-deep-dive">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapse-tech"><strong>對技術實現細節感興趣？點此展開</strong></button></h2>
+                            <div id="collapse-tech" class="accordion-collapse collapse"
+                                data-bs-parent="#tech-deep-dive">
                                 <div class="accordion-body">
                                     <h4 class="h5">核心做法</h4>
-                                    <p>`vibeTask` (pyVibeTask) 是一個基於 Python 的命令列工具 (CLI)，其核心亮點是與 Google Gemini AI 的深度整合，並透過 FastAPI 和 HTMX 提供了一個輕量級的網頁儀表板。</p>
+                                    <p>`vibeTask` (pyVibeTask) 是一個基於 Python 的命令列工具 (CLI)，其核心亮點是與 Google Gemini AI
+                                        的深度整合，並透過 FastAPI 和 HTMX 提供了一個輕量級的網頁儀表板。</p>
                                     <ol>
-                                        <li><strong>AI 智慧排程:</strong> 分析當前所有任務的優先級、價值與依賴性，利用 Gemini AI 的邏輯推理能力，產生一份科學的每日工作排程建議，解決「不知從何下手」的困境。</li>
-                                        <li><strong>AI 自動化工作報告:</strong> 使用者選定時間範圍後，工具會抓取所有已完成的任務，並將這些數據傳送給 Gemini AI，由 AI 自動生成結構完整、重點清晰的工作報告（日報/週報）。使用者還可以自訂 Prompt 以符合個人或團隊的報告風格。</li>
-                                        <li><strong>AI 任務心智圖:</strong> 一鍵將當前的任務清單轉換為 PlantUML 格式的心智圖 (Mind Map) 原始碼，使用者可貼到對應工具生成視覺化圖表，幫助更好地組織思緒、梳理任務關聯性。</li>
-                                        <li><strong>整合番茄鐘 & 儀表板:</strong> 內建番茄鐘 (Pomodoro) 功能，可無縫追蹤每個任務的專注時間。這些數據會被記錄下來，並透過網頁儀表板進行多維度視覺化分析，深入洞察個人生產力。</li>
+                                        <li><strong>AI 智慧排程:</strong> 分析當前所有任務的優先級、價值與依賴性，利用 Gemini AI
+                                            的邏輯推理能力，產生一份科學的每日工作排程建議，解決「不知從何下手」的困境。</li>
+                                        <li><strong>AI 自動化工作報告:</strong> 使用者選定時間範圍後，工具會抓取所有已完成的任務，並將這些數據傳送給 Gemini AI，由
+                                            AI 自動生成結構完整、重點清晰的工作報告（日報/週報）。使用者還可以自訂 Prompt 以符合個人或團隊的報告風格。</li>
+                                        <li><strong>AI 任務心智圖:</strong> 一鍵將當前的任務清單轉換為 PlantUML 格式的心智圖 (Mind Map)
+                                            原始碼，使用者可貼到對應工具生成視覺化圖表，幫助更好地組織思緒、梳理任務關聯性。</li>
+                                        <li><strong>整合番茄鐘 & 儀表板:</strong> 內建番茄鐘 (Pomodoro)
+                                            功能，可無縫追蹤每個任務的專注時間。這些數據會被記錄下來，並透過網頁儀表板進行多維度視覺化分析，深入洞察個人生產力。</li>
                                     </ol>
                                 </div>
                             </div>
@@ -194,11 +244,13 @@
 
     <footer class="bg-white mt-5 py-4 border-top">
         <div class="container text-center">
-            <a href="../portfolio.html" class="btn btn-outline-primary mb-3"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+            <a href="../portfolio.html" class="btn btn-outline-primary mb-3"><i
+                    class="bi bi-arrow-left-circle me-2"></i>返回作品</a>
             <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

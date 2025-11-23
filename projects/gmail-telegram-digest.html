@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-TW" data-bs-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>專案: Gmail 重要郵件自動彙報 - Luke的作品集</title>
+    <title>專案: Gmail 重要郵件自動彙報 - Luke的作品</title>
     <meta name="description" content="此 n8n 工作流會每日定時掃描 Gmail，篩選出帳單、收據等重要郵件，整理成一份摘要報告後，透過 Telegram 推播通知。">
     <meta name="keywords" content="n8n, Gmail, Telegram, 自動化, API, 資訊過濾, 帳單提醒, Luke Hou, 侯俊嘉">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -13,7 +14,7 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-0V2L1DQVPY');
     </script>
@@ -24,30 +25,37 @@
             padding: 4rem 0;
             color: white;
         }
+
         .project-hero h1 {
             font-weight: 700;
         }
+
         .summary-card {
             position: sticky;
             top: 20px;
         }
+
         .tech-badge {
             font-size: 0.9rem;
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
         }
+
         .gallery-img {
             cursor: pointer;
             transition: transform 0.2s;
         }
+
         .gallery-img:hover {
             transform: scale(1.05);
         }
+
         .img-bordered {
             border: 1px solid var(--bs-border-color);
             padding: 5px;
             border-radius: 0.375rem;
         }
+
         .floating-toggle-btn {
             position: fixed;
             top: 50%;
@@ -59,10 +67,11 @@
             padding: 1rem 0.5rem;
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
-            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+            box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
+
 <body>
     <a href="gmail-telegram-digest-business.html" class="btn btn-primary floating-toggle-btn" title="切換至商業視角說明">
         <i class="bi bi-briefcase-fill"></i> 商業視角說明
@@ -71,14 +80,15 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">♾️ 首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學文</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">✈️分享</a></li>
                     </ul>
                 </div>
@@ -100,58 +110,68 @@
                 <div class="col-lg-8">
                     <div class="card bg-transparent border-0">
                         <div class="card-body px-0">
-                            
-<h2 class="card-title h3 mb-3"><i class="bi bi-card-text me-2"></i>緣起：過期的帳單與錯愕的我</h2>
-<p>每天打開 Gmail，總是數十封未讀郵件等著我。在大量的廣告、社群通知和電子報中，時常夾雜著幾封真正重要的信件，例如：</p>
-<ul>
-    <li>雲端服務 (DigitalOcean, GCP) 的每月收據或費用警示。</li>
-    <li>保費續費通知。</li>
-    <li>信用卡電子帳單與繳費提醒。</li>
-    <li>電話費帳單。</li>
-</ul>
-<p>手動在信海中篩選出這些關鍵資訊，不僅耗時，更可怕的是，一不小心就可能錯過，導致服務中斷或產生額外費用。因此讓我決定花一點點時間，必須建立一個自動化的「郵件秘書」。</p>
 
-<hr class="my-4">
+                            <h2 class="card-title h3 mb-3"><i class="bi bi-card-text me-2"></i>緣起：過期的帳單與錯愕的我</h2>
+                            <p>每天打開 Gmail，總是數十封未讀郵件等著我。在大量的廣告、社群通知和電子報中，時常夾雜著幾封真正重要的信件，例如：</p>
+                            <ul>
+                                <li>雲端服務 (DigitalOcean, GCP) 的每月收據或費用警示。</li>
+                                <li>保費續費通知。</li>
+                                <li>信用卡電子帳單與繳費提醒。</li>
+                                <li>電話費帳單。</li>
+                            </ul>
+                            <p>手動在信海中篩選出這些關鍵資訊，不僅耗時，更可怕的是，一不小心就可能錯過，導致服務中斷或產生額外費用。因此讓我決定花一點點時間，必須建立一個自動化的「郵件秘書」。</p>
 
-<h2 class="h3 mb-3"><i class="bi bi-lightbulb-fill me-2"></i>技術核心：打造個人化的郵件過濾網</h2>
-<p>這個 n8n 工作流的目標，就是扮演一個忠實的秘書，每天在我指定的時間，幫我完成郵件的篩選與彙報工作。</p>
-<p>它的運作流程如下：</p>
-<ol>
-    <li><b>定時觸發 (Schedule Trigger)</b>: 每天晚上 9 點，工作流會自動啟動，開始一天一次的郵件檢查任務。</li>
-    <li><b>讀取未讀郵件 (Gmail Node)</b>: 首先，它會登入我的 Gmail，並且只抓取「未讀」的郵件，避免重複處理已經看過的信件。</li>
-    <li><b>關鍵字過濾 (Filter Node)</b>: 這是整個流程的大腦。我設定了多組關鍵字，例如「收據」、「帳單」、「重要」、「Apple Developer」等。只有郵件主旨符合這些關鍵字的信件，才能進入下一個階段。這就像一個高度客製化的過濾網。</li>
-    <li><b>格式化報告 (Code Node)</b>: 使用 AI 寫了一個 Code 節點，將所有篩選出來的郵件，整理成一份乾淨、易讀的 HTML 格式通知，還加上了 Emoji 分類，例如 🍎 代表 Apple、📢 代表重要通知，讓其一目了然。</li>
-    <li><b>即時推播 (Telegram Node)</b>: 最後，這份精美的摘要報告會透過 Telegram Bot，準時推送到我的手機。我只需要花幾秒鐘掃一眼，就能掌握所有重要資訊，無需再親自到信箱裡大海撈針。</li>
-</ol>
+                            <hr class="my-4">
 
-<hr class="my-4">
+                            <h2 class="h3 mb-3"><i class="bi bi-lightbulb-fill me-2"></i>技術核心：打造個人化的郵件過濾網</h2>
+                            <p>這個 n8n 工作流的目標，就是扮演一個忠實的秘書，每天在我指定的時間，幫我完成郵件的篩選與彙報工作。</p>
+                            <p>它的運作流程如下：</p>
+                            <ol>
+                                <li><b>定時觸發 (Schedule Trigger)</b>: 每天晚上 9 點，工作流會自動啟動，開始一天一次的郵件檢查任務。</li>
+                                <li><b>讀取未讀郵件 (Gmail Node)</b>: 首先，它會登入我的 Gmail，並且只抓取「未讀」的郵件，避免重複處理已經看過的信件。</li>
+                                <li><b>關鍵字過濾 (Filter Node)</b>: 這是整個流程的大腦。我設定了多組關鍵字，例如「收據」、「帳單」、「重要」、「Apple
+                                    Developer」等。只有郵件主旨符合這些關鍵字的信件，才能進入下一個階段。這就像一個高度客製化的過濾網。</li>
+                                <li><b>格式化報告 (Code Node)</b>: 使用 AI 寫了一個 Code 節點，將所有篩選出來的郵件，整理成一份乾淨、易讀的 HTML 格式通知，還加上了
+                                    Emoji 分類，例如 🍎 代表 Apple、📢 代表重要通知，讓其一目了然。</li>
+                                <li><b>即時推播 (Telegram Node)</b>: 最後，這份精美的摘要報告會透過 Telegram
+                                    Bot，準時推送到我的手機。我只需要花幾秒鐘掃一眼，就能掌握所有重要資訊，無需再親自到信箱裡大海撈針。</li>
+                            </ol>
 
-<h2 class="h3 mb-3"><i class="bi bi-kanban me-2"></i>成果展示</h2>
-<p class="text-muted">這個工作流最終會產出一份像這樣的每日重要郵件摘要，直接發送到我的 Telegram：</p>
+                            <hr class="my-4">
 
-<!-- Nav tabs -->
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="workflow-tab" data-bs-toggle="tab" data-bs-target="#workflow" type="button" role="tab" aria-controls="workflow" aria-selected="true">整體工作流</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="output-tab" data-bs-toggle="tab" data-bs-target="#output" type="button" role="tab" aria-controls="output" aria-selected="false">Telegram 成果</button>
-  </li>
-</ul>
+                            <h2 class="h3 mb-3"><i class="bi bi-kanban me-2"></i>成果展示</h2>
+                            <p class="text-muted">這個工作流最終會產出一份像這樣的每日重要郵件摘要，直接發送到我的 Telegram：</p>
 
-<!-- Tab panes -->
-<div class="tab-content border border-top-0 p-3 rounded-bottom mb-4">
-  <div class="tab-pane active" id="workflow" role="tabpanel" aria-labelledby="workflow-tab">
-    <h5 class="mt-2">n8n 整體工作流</h5>
-    <p>整個自動化流程的鳥瞰圖，展示了從定時讀取 Gmail、過濾關鍵信件、到最終發送 Telegram 通知前的完整步驟。</p>
-    <img src="../images/gmail-digest/workflow.jpg" alt="n8n 整體工作流" class="img-fluid rounded gallery-img img-bordered">
-  </div>
-  <div class="tab-pane" id="output" role="tabpanel" aria-labelledby="output-tab">
-    <h5 class="mt-2">產出成果：每日 Telegram 摘要報告</h5>
-    <p>工作流執行完畢後，整理好的重要郵件摘要會以美觀的格式，每日定時發送到指定的 Telegram 頻道中。</p>
-    <img src="../images/gmail-digest/output.jpg" alt="Telegram 摘要報告" class="img-fluid rounded gallery-img img-bordered" style="max-width: 400px;">
-  </div>
-</div>
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="workflow-tab" data-bs-toggle="tab"
+                                        data-bs-target="#workflow" type="button" role="tab" aria-controls="workflow"
+                                        aria-selected="true">整體工作流</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="output-tab" data-bs-toggle="tab"
+                                        data-bs-target="#output" type="button" role="tab" aria-controls="output"
+                                        aria-selected="false">Telegram 成果</button>
+                                </li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content border border-top-0 p-3 rounded-bottom mb-4">
+                                <div class="tab-pane active" id="workflow" role="tabpanel"
+                                    aria-labelledby="workflow-tab">
+                                    <h5 class="mt-2">n8n 整體工作流</h5>
+                                    <p>整個自動化流程的鳥瞰圖，展示了從定時讀取 Gmail、過濾關鍵信件、到最終發送 Telegram 通知前的完整步驟。</p>
+                                    <img src="../images/gmail-digest/workflow.jpg" alt="n8n 整體工作流"
+                                        class="img-fluid rounded gallery-img img-bordered">
+                                </div>
+                                <div class="tab-pane" id="output" role="tabpanel" aria-labelledby="output-tab">
+                                    <h5 class="mt-2">產出成果：每日 Telegram 摘要報告</h5>
+                                    <p>工作流執行完畢後，整理好的重要郵件摘要會以美觀的格式，每日定時發送到指定的 Telegram 頻道中。</p>
+                                    <img src="../images/gmail-digest/output.jpg" alt="Telegram 摘要報告"
+                                        class="img-fluid rounded gallery-img img-bordered" style="max-width: 400px;">
+                                </div>
+                            </div>
 
                         </div>
                     </div>
@@ -159,47 +179,50 @@
 
                 <!-- Sidebar -->
                 <div class="col-lg-4">
-                    
-<div class="card shadow-sm summary-card bg-body-tertiary">
-    <div class="card-body">
-        <h3 class="card-title h5 border-bottom pb-2 mb-3"><i class="bi bi-trophy-fill me-2"></i>這個專案的價值</h3>
-        <ul class="list-unstyled mt-3">
-            <li class="mb-3 d-flex">
-                <i class="bi bi-shield-check h4 text-primary me-3"></i>
-                <div>
-                    <strong class="d-block">消除錯過恐懼</strong>
-                    <small class="text-muted">確保所有重要的帳單、收據和服務通知都能被即時捕捉，再也不用擔心遺漏關鍵訊息。</small>
-                </div>
-            </li>
-            <li class="mb-3 d-flex">
-                <i class="bi bi-lightning-charge-fill h4 text-primary me-3"></i>
-                <div>
-                    <strong class="d-block">奪回專注力</strong>
-                    <small class="text-muted">將每日例行的「刷信箱」任務完全自動化，把寶貴的專注力留給更需要創造力的工作。</small>
-                </div>
-            </li>
-            <li class="mb-3 d-flex">
-                <i class="bi bi-filter-circle-fill h4 text-primary me-3"></i>
-                <div>
-                    <strong class="d-block">建立資訊儀表板</strong>
-                    <small class="text-muted">將 Telegram 變成一個個人的「重要資訊儀表板」，所有關鍵訊息一目了然，無需在多個 App 之間切換。</small>
-                </div>
-            </li>
-        </ul>
-    </div>
-    <div class="card-footer">
-        <h3 class="h5 mt-2"><i class="bi bi-gear-fill me-2"></i>使用的技術</h3>
-        <div>
-            <span class="badge text-bg-primary tech-badge">n8n</span>
-            <span class="badge text-bg-danger tech-badge">Gmail API</span>
-            <span class="badge text-bg-info tech-badge">Telegram Bot</span>
-            <span class="badge text-bg-success tech-badge">Automation</span>
-        </div>
-    </div>
-</div>
-<div class="d-grid mt-3">
-    <a href="../portfolio.html" class="btn btn-outline-primary"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
-</div>
+
+                    <div class="card shadow-sm summary-card bg-body-tertiary">
+                        <div class="card-body">
+                            <h3 class="card-title h5 border-bottom pb-2 mb-3"><i
+                                    class="bi bi-trophy-fill me-2"></i>這個專案的價值</h3>
+                            <ul class="list-unstyled mt-3">
+                                <li class="mb-3 d-flex">
+                                    <i class="bi bi-shield-check h4 text-primary me-3"></i>
+                                    <div>
+                                        <strong class="d-block">消除錯過恐懼</strong>
+                                        <small class="text-muted">確保所有重要的帳單、收據和服務通知都能被即時捕捉，再也不用擔心遺漏關鍵訊息。</small>
+                                    </div>
+                                </li>
+                                <li class="mb-3 d-flex">
+                                    <i class="bi bi-lightning-charge-fill h4 text-primary me-3"></i>
+                                    <div>
+                                        <strong class="d-block">奪回專注力</strong>
+                                        <small class="text-muted">將每日例行的「刷信箱」任務完全自動化，把寶貴的專注力留給更需要創造力的工作。</small>
+                                    </div>
+                                </li>
+                                <li class="mb-3 d-flex">
+                                    <i class="bi bi-filter-circle-fill h4 text-primary me-3"></i>
+                                    <div>
+                                        <strong class="d-block">建立資訊儀表板</strong>
+                                        <small class="text-muted">將 Telegram 變成一個個人的「重要資訊儀表板」，所有關鍵訊息一目了然，無需在多個 App
+                                            之間切換。</small>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <h3 class="h5 mt-2"><i class="bi bi-gear-fill me-2"></i>使用的技術</h3>
+                            <div>
+                                <span class="badge text-bg-primary tech-badge">n8n</span>
+                                <span class="badge text-bg-danger tech-badge">Gmail API</span>
+                                <span class="badge text-bg-info tech-badge">Telegram Bot</span>
+                                <span class="badge text-bg-success tech-badge">Automation</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-grid mt-3">
+                        <a href="../portfolio.html" class="btn btn-outline-primary"><i
+                                class="bi bi-arrow-left-circle me-2"></i>返回作品</a>
+                    </div>
 
                 </div>
             </div>
@@ -231,7 +254,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
             const modalImage = document.getElementById('modalImage');
-            
+
             document.querySelectorAll('.gallery-img').forEach(img => {
                 img.addEventListener('click', function () {
                     modalImage.src = this.src;
@@ -241,4 +264,5 @@
         });
     </script>
 </body>
+
 </html>

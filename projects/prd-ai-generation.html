@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-TW" data-bs-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>專案: PRD AI 生成自動化 - Luke的作品集</title>
-    <meta name="description" content="此 n8n 工作流利用多 AI 代理與混合式 RAG 系統，將一句自然語言需求，自動生成符合規範的 PRD、使用者故事與測試案例，並發布至 Confluence。">
+    <title>專案: PRD AI 生成自動化 - Luke的作品</title>
+    <meta name="description"
+        content="此 n8n 工作流利用多 AI 代理與混合式 RAG 系統，將一句自然語言需求，自動生成符合規範的 PRD、使用者故事與測試案例，並發布至 Confluence。">
     <meta name="keywords" content="n8n, AI, Agent, RAG, PRD, Confluence, 自動化, LangChain, Qdrant, Luke Hou, 侯俊嘉">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -13,7 +15,7 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-0V2L1DQVPY');
     </script>
@@ -24,30 +26,37 @@
             padding: 4rem 0;
             color: white;
         }
+
         .project-hero h1 {
             font-weight: 700;
         }
+
         .summary-card {
             position: sticky;
             top: 20px;
         }
+
         .tech-badge {
             font-size: 0.9rem;
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
         }
+
         .gallery-img {
             cursor: pointer;
             transition: transform 0.2s;
         }
+
         .gallery-img:hover {
             transform: scale(1.05);
         }
+
         .img-bordered {
             border: 1px solid var(--bs-border-color);
             padding: 5px;
             border-radius: 0.375rem;
         }
+
         .floating-toggle-btn {
             position: fixed;
             top: 50%;
@@ -59,10 +68,11 @@
             padding: 1rem 0.5rem;
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
-            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+            box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
+
 <body>
     <a href="prd-ai-generation-business.html" class="btn btn-primary floating-toggle-btn" title="切換至商業視角說明">
         <i class="bi bi-briefcase-fill"></i> 商業視角說明
@@ -71,14 +81,15 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">♾️ 首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學文</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">✈️分享</a></li>
                     </ul>
                 </div>
@@ -100,102 +111,139 @@
                 <div class="col-lg-8">
                     <div class="card bg-transparent border-0">
                         <div class="card-body px-0">
-                            
-<h2 class="card-title h3 mb-3"><i class="bi bi-exclamation-triangle-fill me-2"></i>專案緣起：PRD 撰寫的「三重挑戰」</h2>
-<p>在醫療資訊（HealthTech）領域，撰寫一份高品質的產品需求文件（PRD）極具挑戰性，通常面臨三大難題：</p>
-<ul>
-    <li><b>法規遵循的複雜性：</b> 功能必須符合健保署（NHI）的繁瑣規範以及醫療法規(例如管制藥)，任何遺漏都可能造成申報問題或病人安全風險。</li>
-    <li><b>內部知識的壁壘：</b> 新功能需與現有龐大的 HIS 系統無縫接軌，PM 需要深入理解歷史 PRD，確保規格一致性，但這往往耗費大量時間。</li>
-    <li><b>人力與時間的瓶頸：</b> 從需求分析、規格撰寫、使用者故事拆解到測試案例設計，整個流程高度依賴人工，不僅耗費資源，且產出品質因人而異。</li>
-</ul>
-<p>為了解決這些痛點，我設計了這個基於 n8n 的多代理（Multi-Agent）AI 自動化系統，目標是將「一句話需求」轉化為符合內部風格及規範的「PRD初稿」，幫助 PM 在 60 分的基礎上繼續前行。</p>
 
-<div class="alert alert-success mt-4" role="alert">
-    <h4 class="alert-heading"><i class="bi bi-shield-check me-2"></i>混合式 RAG：讓 AI 擁有「專家大腦」</h4>
-    <p>此系統的核心是「混合式檢索增強生成」（Hybrid RAG）。我們不只使用單一的知識庫，而是建立了三個獨立的 Qdrant 向量資料庫，分別儲存：</p>
-    <ol>
-        <li><b>健保法規知識庫：</b> 包含所有健保署的大量公開條文與作業指南。</li>
-        <li><b>內部 PRD 知識庫：</b> 涵蓋部門歷史專案中，特意挑選出的產品需求文件。</li>
-        <li><b>測試案例知識庫：</b> 累積了 QA 團隊精心撰寫的所有 E2E 測試案例。</li>
-    </ol>
-    <hr>
-    <p class="mb-0">透過讓不同的 AI 代理查詢指定的「專家大腦」，我們確保 AI 在撰寫文件的每一個環節，都能基於最相關、最權威的上下文，產出既符合法規又遵循內部標準的內容。</p>
-</div>
+                            <h2 class="card-title h3 mb-3"><i class="bi bi-exclamation-triangle-fill me-2"></i>專案緣起：PRD
+                                撰寫的「三重挑戰」</h2>
+                            <p>在醫療資訊（HealthTech）領域，撰寫一份高品質的產品需求文件（PRD）極具挑戰性，通常面臨三大難題：</p>
+                            <ul>
+                                <li><b>法規遵循的複雜性：</b> 功能必須符合健保署（NHI）的繁瑣規範以及醫療法規(例如管制藥)，任何遺漏都可能造成申報問題或病人安全風險。</li>
+                                <li><b>內部知識的壁壘：</b> 新功能需與現有龐大的 HIS 系統無縫接軌，PM 需要深入理解歷史 PRD，確保規格一致性，但這往往耗費大量時間。</li>
+                                <li><b>人力與時間的瓶頸：</b> 從需求分析、規格撰寫、使用者故事拆解到測試案例設計，整個流程高度依賴人工，不僅耗費資源，且產出品質因人而異。</li>
+                            </ul>
+                            <p>為了解決這些痛點，我設計了這個基於 n8n 的多代理（Multi-Agent）AI 自動化系統，目標是將「一句話需求」轉化為符合內部風格及規範的「PRD初稿」，幫助 PM 在
+                                60 分的基礎上繼續前行。</p>
 
-<hr class="my-4">
+                            <div class="alert alert-success mt-4" role="alert">
+                                <h4 class="alert-heading"><i class="bi bi-shield-check me-2"></i>混合式 RAG：讓 AI 擁有「專家大腦」
+                                </h4>
+                                <p>此系統的核心是「混合式檢索增強生成」（Hybrid RAG）。我們不只使用單一的知識庫，而是建立了三個獨立的 Qdrant 向量資料庫，分別儲存：</p>
+                                <ol>
+                                    <li><b>健保法規知識庫：</b> 包含所有健保署的大量公開條文與作業指南。</li>
+                                    <li><b>內部 PRD 知識庫：</b> 涵蓋部門歷史專案中，特意挑選出的產品需求文件。</li>
+                                    <li><b>測試案例知識庫：</b> 累積了 QA 團隊精心撰寫的所有 E2E 測試案例。</li>
+                                </ol>
+                                <hr>
+                                <p class="mb-0">透過讓不同的 AI 代理查詢指定的「專家大腦」，我們確保 AI
+                                    在撰寫文件的每一個環節，都能基於最相關、最權威的上下文，產出既符合法規又遵循內部標準的內容。</p>
+                            </div>
 
-<h2 class="h3 mb-3"><i class="bi bi-arrows-fullscreen me-2"></i>理念核心：AI 代理的「數位化分工」</h2> 
-<p>此工作流模擬一個高效的產品開發團隊，由四個各司其職的 AI 代理接力完成任務，實現從需求到文件的端到端自動化。</p>
+                            <hr class="my-4">
 
-<ol>
-    <li><b>AI 商業分析師 (多智能體AI):</b> 它接收使用者的原始需求（例如：「門診口服抗生素最多開 14 天」），並指派任務給兩個專家代理，分別查詢「健保法規」和「內部 PRD」知識庫，最後將三方資訊整合成一份「優化後的需求文件」。</li>
-    <li><b>AI 規格書架構師 (PRD Architect):</b> 接收「優化後的需求」，並大量查詢「內部 PRD 知識庫」學習寫作風格跟架構。它的任務是產出 PRD 的核心章節，包括業務流程圖（Mermaid 語法及渲染圖）、UI/UX 設計草圖 (HTML/CSS) 和 API 規格表，並識別出所有需要開發的「使用者故事標題」。</li>
-    <li><b>AI 使用情境專家 (User Story Specialist):</b> 接收 PRD 主體和「使用者故事標題」列表。它會逐一將標題擴寫成包含前置條件、規格和驗收標準的完整使用者故事表格。</li>
-    <li><b>AI 品保工程師 (QA Engineer):</b> 接收前面產出的所有文件，並查詢「測試案例知識庫」。它的任務是撰寫詳盡的 E2E 測試案例，涵蓋流程情境、正向、負向及邊界測試場景。</li>
-    <li><b>文件發布 (Confluence Integration):</b> 最後，工作流將所有 AI 生成的 HTML 內容組合起來，自動在 Confluence 上建立一個格式完美的新頁面，完成整個自動化流程。</li>
-    <li><b>模型分級與成本效益策略 (Tiered Model & Cost-Benefit Strategy):</b> 為了在產出品質與 API 成本之間取得最佳平衡，此工作流根據每個 AI 代理的任務特性，採用了差異化的 LLM 選型策略：
-        <ul>
-            <li><b>深度推理層 (GPT O3):</b> 負責核心邏輯與分析的 <b>AI 協調員</b>與 <b>AI 架構師</b>，採用了專為複雜思考設計的 <b>GPT O3</b> 模型。此模型擅長多步驟的邏輯推理鏈，能更好地分析使用者需求的模糊地帶、解讀法規、並從多個知識來源中進行綜合規劃。雖然速度較慢，但其在深度分析上的優勢確保了 PRD 核心架構的正確性與嚴謹性。</li>
-            <li><b>快速生成層 (GPT 4.1):</b> 負責結構化內容生成的 <b>AI 故事專家</b>與 <b>AI 品保工程師</b>，則採用了速度更快、更擅長遵循指令的 <b>GPT 4.1</b> 模型。這兩個代理的任務是將上游的規格擴寫成格式固定的表格（使用者故事、測試案例），這正是 GPT 4.1 的優勢所在：高效、流暢地產出長篇的結構化文本，同時能有效控制輸出格式。</li>
-        </ul>
-        這種分層式的模型應用，讓我們能將最昂貴的運算資源（GPT O3）集中投入在最關鍵的規劃與分析環節，而在擴寫與格式化的環節則使用成本效益更高的模型（GPT 4.1），從而在技術上實現了成本與效能的最佳化。
-    </li>
-</ol>
+                            <h2 class="h3 mb-3"><i class="bi bi-arrows-fullscreen me-2"></i>理念核心：AI 代理的「數位化分工」</h2>
+                            <p>此工作流模擬一個高效的產品開發團隊，由四個各司其職的 AI 代理接力完成任務，實現從需求到文件的端到端自動化。</p>
 
-<hr class="my-4">
+                            <ol>
+                                <li><b>AI 商業分析師 (多智能體AI):</b> 它接收使用者的原始需求（例如：「門診口服抗生素最多開 14
+                                    天」），並指派任務給兩個專家代理，分別查詢「健保法規」和「內部 PRD」知識庫，最後將三方資訊整合成一份「優化後的需求文件」。</li>
+                                <li><b>AI 規格書架構師 (PRD Architect):</b> 接收「優化後的需求」，並大量查詢「內部 PRD 知識庫」學習寫作風格跟架構。它的任務是產出 PRD
+                                    的核心章節，包括業務流程圖（Mermaid 語法及渲染圖）、UI/UX 設計草圖 (HTML/CSS) 和 API 規格表，並識別出所有需要開發的「使用者故事標題」。
+                                </li>
+                                <li><b>AI 使用情境專家 (User Story Specialist):</b> 接收 PRD
+                                    主體和「使用者故事標題」列表。它會逐一將標題擴寫成包含前置條件、規格和驗收標準的完整使用者故事表格。</li>
+                                <li><b>AI 品保工程師 (QA Engineer):</b> 接收前面產出的所有文件，並查詢「測試案例知識庫」。它的任務是撰寫詳盡的 E2E
+                                    測試案例，涵蓋流程情境、正向、負向及邊界測試場景。</li>
+                                <li><b>文件發布 (Confluence Integration):</b> 最後，工作流將所有 AI 生成的 HTML 內容組合起來，自動在 Confluence
+                                    上建立一個格式完美的新頁面，完成整個自動化流程。</li>
+                                <li><b>模型分級與成本效益策略 (Tiered Model & Cost-Benefit Strategy):</b> 為了在產出品質與 API
+                                    成本之間取得最佳平衡，此工作流根據每個 AI 代理的任務特性，採用了差異化的 LLM 選型策略：
+                                    <ul>
+                                        <li><b>深度推理層 (GPT O3):</b> 負責核心邏輯與分析的 <b>AI 協調員</b>與 <b>AI 架構師</b>，採用了專為複雜思考設計的
+                                            <b>GPT O3</b>
+                                            模型。此模型擅長多步驟的邏輯推理鏈，能更好地分析使用者需求的模糊地帶、解讀法規、並從多個知識來源中進行綜合規劃。雖然速度較慢，但其在深度分析上的優勢確保了
+                                            PRD 核心架構的正確性與嚴謹性。
+                                        </li>
+                                        <li><b>快速生成層 (GPT 4.1):</b> 負責結構化內容生成的 <b>AI 故事專家</b>與 <b>AI
+                                                品保工程師</b>，則採用了速度更快、更擅長遵循指令的 <b>GPT 4.1</b>
+                                            模型。這兩個代理的任務是將上游的規格擴寫成格式固定的表格（使用者故事、測試案例），這正是 GPT 4.1
+                                            的優勢所在：高效、流暢地產出長篇的結構化文本，同時能有效控制輸出格式。</li>
+                                    </ul>
+                                    這種分層式的模型應用，讓我們能將最昂貴的運算資源（GPT O3）集中投入在最關鍵的規劃與分析環節，而在擴寫與格式化的環節則使用成本效益更高的模型（GPT
+                                    4.1），從而在技術上實現了成本與效能的最佳化。
+                                </li>
+                            </ol>
 
-<div class="alert alert-info mt-4" role="alert">
-    <h4 class="alert-heading"><i class="bi bi-shield-lock-fill me-2"></i>企業級資安架構：本地知識庫與私有 LLM 的結合</h4>
-    <p>此系統在設計上將企業級的資訊安全視為最高優先。我們透過以下三項關鍵技術及服務，確保公司最敏感的智慧資產（法規知識、產品規格、測試案例）與使用者輸入的需求，都在一個絕對安全的閉環中處理：</p>
-    <ol>
-        <li><strong>本地自動化工作流 (Local n8n):</strong> 部署在內部機器上的 n8n 服務，提供了一連串本地化的自動化工作流。</li>
-        <li><strong>本地向量資料庫 (Local Qdrant):</strong> 儲存了團隊核心智慧財產的向量資料庫，是部署在內部的機器上。這代表所有 RAG 的檢索過程，都在內部完成，杜絕了知識庫經由外部服務外洩的風險。</li>
-        <li><strong>私有大型語言模型 (Azure OpenAI):</strong> 此工作流串接的並非公開的 OpenAI API，而是公司內部部署、透過 Azure 提供的 OpenAI 服務節點。所有的提示（Prompt）與生成內容都在企業私有的雲端環境中進行，符合資料治理與隱私規範。</li>
-    </ol>
-    <hr>
-    <p class="mb-0">這個「本地 AI 自動化工作流 + 本地檢索 + 私有雲生成」的混合式架構，讓我們在享受大型語言模型強大能力的同時，也能完全掌控資料的流向，是此解決方案能真正應用於企業核心業務的關鍵。
-</p>
-</div>
+                            <hr class="my-4">
 
-<h2 class="h3 mb-3"><i class="bi bi-kanban me-2"></i>工作流展示</h2>
-<p class="text-muted">點擊下方頁籤，查看此工作流的實際運行示意：</p>
+                            <div class="alert alert-info mt-4" role="alert">
+                                <h4 class="alert-heading"><i class="bi bi-shield-lock-fill me-2"></i>企業級資安架構：本地知識庫與私有
+                                    LLM 的結合</h4>
+                                <p>此系統在設計上將企業級的資訊安全視為最高優先。我們透過以下三項關鍵技術及服務，確保公司最敏感的智慧資產（法規知識、產品規格、測試案例）與使用者輸入的需求，都在一個絕對安全的閉環中處理：
+                                </p>
+                                <ol>
+                                    <li><strong>本地自動化工作流 (Local n8n):</strong> 部署在內部機器上的 n8n 服務，提供了一連串本地化的自動化工作流。</li>
+                                    <li><strong>本地向量資料庫 (Local Qdrant):</strong> 儲存了團隊核心智慧財產的向量資料庫，是部署在內部的機器上。這代表所有 RAG
+                                        的檢索過程，都在內部完成，杜絕了知識庫經由外部服務外洩的風險。</li>
+                                    <li><strong>私有大型語言模型 (Azure OpenAI):</strong> 此工作流串接的並非公開的 OpenAI API，而是公司內部部署、透過
+                                        Azure 提供的 OpenAI 服務節點。所有的提示（Prompt）與生成內容都在企業私有的雲端環境中進行，符合資料治理與隱私規範。</li>
+                                </ol>
+                                <hr>
+                                <p class="mb-0">這個「本地 AI 自動化工作流 + 本地檢索 +
+                                    私有雲生成」的混合式架構，讓我們在享受大型語言模型強大能力的同時，也能完全掌控資料的流向，是此解決方案能真正應用於企業核心業務的關鍵。
+                                </p>
+                            </div>
 
-<!-- Nav tabs -->
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="workflow-tab" data-bs-toggle="tab" data-bs-target="#workflow" type="button" role="tab" aria-controls="workflow" aria-selected="true">n8n 工作流</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="output-tab" data-bs-toggle="tab" data-bs-target="#output" type="button" role="tab" aria-controls="output" aria-selected="false">輸出 (Confluence 頁面)</button>
-  </li>
-</ul>
+                            <h2 class="h3 mb-3"><i class="bi bi-kanban me-2"></i>工作流展示</h2>
+                            <p class="text-muted">點擊下方頁籤，查看此工作流的實際運行示意：</p>
 
-<!-- Tab panes -->
-<div class="tab-content border border-top-0 p-3 rounded-bottom mb-4">
-  <div class="tab-pane active" id="workflow" role="tabpanel" aria-labelledby="workflow-tab">
-    <h5 class="mt-2">n8n 整體工作流</h5>
-    <p>從一個簡單的聊天視窗觸發，串連起四個 AI Agent，每個 Agent 都有獨立的 Prompt 和指定的工具（向量資料庫），最終透過 HTTP Request 節點將結果寫入 Confluence。</p>
-    <img src="../images/prd-ai-test-case-generation-flow-5.jpg" alt="PRD AI 生成 n8n 工作流" class="img-fluid rounded gallery-img img-bordered">
-  </div>
-  <div class="tab-pane" id="output" role="tabpanel" aria-labelledby="output-tab">
-    <h5 class="mt-2">產出成果：結構化的 Confluence 文件</h5>
-    <p>AI 自動將單一需求擴寫成一份包含多個章節的專業 PRD 文件，格式工整，內容詳盡。(點擊放大查看)</p>
-    <div class="row">
-        <div class="col-md-6 mb-3">
-                <p class="text-center small"><strong>Part 1: 目錄</strong></p>
-                <img src="../images/prd-ai-test-case-generation-flow-1.jpg" alt="AI 生成的 PRD 內容 - Part 1" class="img-fluid rounded gallery-img img-bordered">
-            </div>
-            <div class="col-md-6 mb-3">
-                <p class="text-center small"><strong>Part 2: 流程圖及UI需求</strong></p>
-                <img src="../images/prd-ai-test-case-generation-flow-2.jpg" alt="AI 生成的 PRD 內容 - Part 2" class="img-fluid rounded gallery-img img-bordered">
-            </div>
-            <div class="col-md-12">
-                <p class="text-center small"><strong>Part 3: E2E 測試案例</strong></p>
-                <img src="../images/prd-ai-test-case-generation-flow-4.jpg" alt="AI 生成的 PRD 內容 - Part 3" class="img-fluid rounded gallery-img img-bordered">
-        </div>
-    </div>
-  </div>
-</div>
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="workflow-tab" data-bs-toggle="tab"
+                                        data-bs-target="#workflow" type="button" role="tab" aria-controls="workflow"
+                                        aria-selected="true">n8n 工作流</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="output-tab" data-bs-toggle="tab"
+                                        data-bs-target="#output" type="button" role="tab" aria-controls="output"
+                                        aria-selected="false">輸出 (Confluence 頁面)</button>
+                                </li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content border border-top-0 p-3 rounded-bottom mb-4">
+                                <div class="tab-pane active" id="workflow" role="tabpanel"
+                                    aria-labelledby="workflow-tab">
+                                    <h5 class="mt-2">n8n 整體工作流</h5>
+                                    <p>從一個簡單的聊天視窗觸發，串連起四個 AI Agent，每個 Agent 都有獨立的 Prompt 和指定的工具（向量資料庫），最終透過 HTTP Request
+                                        節點將結果寫入 Confluence。</p>
+                                    <img src="../images/prd-ai-test-case-generation-flow-5.jpg" alt="PRD AI 生成 n8n 工作流"
+                                        class="img-fluid rounded gallery-img img-bordered">
+                                </div>
+                                <div class="tab-pane" id="output" role="tabpanel" aria-labelledby="output-tab">
+                                    <h5 class="mt-2">產出成果：結構化的 Confluence 文件</h5>
+                                    <p>AI 自動將單一需求擴寫成一份包含多個章節的專業 PRD 文件，格式工整，內容詳盡。(點擊放大查看)</p>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <p class="text-center small"><strong>Part 1: 目錄</strong></p>
+                                            <img src="../images/prd-ai-test-case-generation-flow-1.jpg"
+                                                alt="AI 生成的 PRD 內容 - Part 1"
+                                                class="img-fluid rounded gallery-img img-bordered">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <p class="text-center small"><strong>Part 2: 流程圖及UI需求</strong></p>
+                                            <img src="../images/prd-ai-test-case-generation-flow-2.jpg"
+                                                alt="AI 生成的 PRD 內容 - Part 2"
+                                                class="img-fluid rounded gallery-img img-bordered">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <p class="text-center small"><strong>Part 3: E2E 測試案例</strong></p>
+                                            <img src="../images/prd-ai-test-case-generation-flow-4.jpg"
+                                                alt="AI 生成的 PRD 內容 - Part 3"
+                                                class="img-fluid rounded gallery-img img-bordered">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
@@ -203,56 +251,63 @@
 
                 <!-- Sidebar -->
                 <div class="col-lg-4">
-                    
-<div class="card shadow-sm summary-card bg-body-tertiary">
-    <div class="card-body">
-        <h3 class="card-title h5 border-bottom pb-2 mb-3"><i class="bi bi-trophy-fill me-2"></i>成果與反思：知識工作的「自動化新範式」</h3>
-        <p class="text-muted small fst-italic">這個專案展示了如何透過 AI Agent 的協作，將複雜的知識型工作流轉化為高效、可靠的自動化系統。</p>
-        <ul class="list-unstyled mt-3">
-            <li class="mb-3 d-flex">
-                <i class="bi bi-graph-up-arrow h4 text-success me-3"></i>
-                <div>
-                    <strong class="d-block">指數級的效率提升</strong>
-                    <small class="text-muted">將原本需要數天甚至一週的 PRD 撰寫、審查、修改流程，縮短至幾分鐘內完成初稿，大幅加速開發週期。</small>
-                </div>
-            </li>
-            <li class="mb-3 d-flex">
-                <i class="bi bi-gem h4 text-primary me-3"></i>
-                <div>
-                    <strong class="d-block">確保產出品質與一致性</strong>
-                    <small class="text-muted">AI 透過學習大量內部文件，確保每一份產出的 PRD 都符合公司內部的最佳實踐與格式規範，消除了人為的風格差異。</small>
-                </div>
-            </li>
-            <li class="mb-3 d-flex">
-                <i class="bi bi-archive-fill h4 text-primary me-3"></i>
-                <div>
-                    <strong class="d-block">知識的傳承與活化</strong>
-                    <small class="text-muted">將靜態的文件（法規、舊 PRD）轉化為動態的、可供 AI 隨時查詢的知識庫，實現了組織知識的真正活化與傳承。</small>
-                </div>
-            </li>
-            <li class="mb-3 d-flex">
-                <i class="bi bi-person-bounding-box h4 text-primary me-3"></i>
-                <div>
-                    <strong class="d-block">重新定義 PM 與 QA 的角色</strong>
-                    <small class="text-muted">將團隊成員從繁瑣的「文件撰寫者」轉變為「策略制定者」與「品質把關者」，專注於更高價值的創造性工作。</small>
-                </div>
-            </li>
-        </ul>
-    </div>
-    <div class="card-footer">
-        <h3 class="h5 mt-2"><i class="bi bi-gear-fill me-2"></i>使用的技術</h3>
-        <div>
-            <span class="badge text-bg-info tech-badge">n8n</span>
-            <span class="badge text-bg-warning tech-badge">Multi-Agent</span>
-            <span class="badge text-bg-success tech-badge">Qdrant</span>
-            <span class="badge text-bg-primary tech-badge">Azure OpenAI</span>
-            <span class="badge text-bg-secondary tech-badge">Confluence API</span>
-        </div>
-    </div>
-</div>
-<div class="d-grid mt-3">
-    <a href="../portfolio.html" class="btn btn-outline-primary"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
-</div>
+
+                    <div class="card shadow-sm summary-card bg-body-tertiary">
+                        <div class="card-body">
+                            <h3 class="card-title h5 border-bottom pb-2 mb-3"><i
+                                    class="bi bi-trophy-fill me-2"></i>成果與反思：知識工作的「自動化新範式」</h3>
+                            <p class="text-muted small fst-italic">這個專案展示了如何透過 AI Agent 的協作，將複雜的知識型工作流轉化為高效、可靠的自動化系統。
+                            </p>
+                            <ul class="list-unstyled mt-3">
+                                <li class="mb-3 d-flex">
+                                    <i class="bi bi-graph-up-arrow h4 text-success me-3"></i>
+                                    <div>
+                                        <strong class="d-block">指數級的效率提升</strong>
+                                        <small class="text-muted">將原本需要數天甚至一週的 PRD
+                                            撰寫、審查、修改流程，縮短至幾分鐘內完成初稿，大幅加速開發週期。</small>
+                                    </div>
+                                </li>
+                                <li class="mb-3 d-flex">
+                                    <i class="bi bi-gem h4 text-primary me-3"></i>
+                                    <div>
+                                        <strong class="d-block">確保產出品質與一致性</strong>
+                                        <small class="text-muted">AI 透過學習大量內部文件，確保每一份產出的 PRD
+                                            都符合公司內部的最佳實踐與格式規範，消除了人為的風格差異。</small>
+                                    </div>
+                                </li>
+                                <li class="mb-3 d-flex">
+                                    <i class="bi bi-archive-fill h4 text-primary me-3"></i>
+                                    <div>
+                                        <strong class="d-block">知識的傳承與活化</strong>
+                                        <small class="text-muted">將靜態的文件（法規、舊 PRD）轉化為動態的、可供 AI
+                                            隨時查詢的知識庫，實現了組織知識的真正活化與傳承。</small>
+                                    </div>
+                                </li>
+                                <li class="mb-3 d-flex">
+                                    <i class="bi bi-person-bounding-box h4 text-primary me-3"></i>
+                                    <div>
+                                        <strong class="d-block">重新定義 PM 與 QA 的角色</strong>
+                                        <small
+                                            class="text-muted">將團隊成員從繁瑣的「文件撰寫者」轉變為「策略制定者」與「品質把關者」，專注於更高價值的創造性工作。</small>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <h3 class="h5 mt-2"><i class="bi bi-gear-fill me-2"></i>使用的技術</h3>
+                            <div>
+                                <span class="badge text-bg-info tech-badge">n8n</span>
+                                <span class="badge text-bg-warning tech-badge">Multi-Agent</span>
+                                <span class="badge text-bg-success tech-badge">Qdrant</span>
+                                <span class="badge text-bg-primary tech-badge">Azure OpenAI</span>
+                                <span class="badge text-bg-secondary tech-badge">Confluence API</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-grid mt-3">
+                        <a href="../portfolio.html" class="btn btn-outline-primary"><i
+                                class="bi bi-arrow-left-circle me-2"></i>返回作品</a>
+                    </div>
 
                 </div>
             </div>
@@ -261,7 +316,8 @@
 
     <footer class="bg-dark mt-5 py-4 border-top border-secondary-subtle">
         <div class="container text-center">
-            <a href="../portfolio.html" class="btn btn-outline-light mb-3"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+            <a href="../portfolio.html" class="btn btn-outline-light mb-3"><i
+                    class="bi bi-arrow-left-circle me-2"></i>返回作品</a>
             <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
         </div>
     </footer>
@@ -285,7 +341,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
             const modalImage = document.getElementById('modalImage');
-            
+
             document.querySelectorAll('.gallery-img').forEach(img => {
                 img.addEventListener('click', function () {
                     modalImage.src = this.src;
@@ -295,4 +351,5 @@
         });
     </script>
 </body>
+
 </html>

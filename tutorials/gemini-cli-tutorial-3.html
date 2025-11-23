@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PM x Gemini CLI (三)：AI 賦能產品探索與定義 - Luke Hou 侯俊嘉的AI自動化與工作流指南</title>
-    <meta name="description" content="PM 與 Gemini CLI 協作系列第三篇，聚焦產品開發的「前期探索」階段。本篇將教學如何利用 AI 進行市場研究、創意發想、使用者回饋分析，並將模糊概念轉化為可互動的 UI 原型與清晰的流程圖，為產品定義打下堅實基礎。">
-    <meta name="keywords" content="Gemini CLI, Gemini CLI 教學, PM, 產品經理, AI 協作, 產品探索, 市場研究, UI 原型, Mermaid, Luke Hou, 侯俊嘉">
+    <meta name="description"
+        content="PM 與 Gemini CLI 協作系列第三篇，聚焦產品開發的「前期探索」階段。本篇將教學如何利用 AI 進行市場研究、創意發想、使用者回饋分析，並將模糊概念轉化為可互動的 UI 原型與清晰的流程圖，為產品定義打下堅實基礎。">
+    <meta name="keywords"
+        content="Gemini CLI, Gemini CLI 教學, PM, 產品經理, AI 協作, 產品探索, 市場研究, UI 原型, Mermaid, Luke Hou, 侯俊嘉">
     <link rel="icon" href="../images/favicon.jpg" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -17,15 +20,18 @@
             display: block;
             margin: 1.5rem auto;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .tutorial-content figure {
             margin: 1.5rem 0;
             text-align: center;
         }
+
         .tutorial-content figure img {
             margin: 0 auto;
         }
+
         .step {
             margin-bottom: 2.5rem;
             padding: 2rem;
@@ -34,9 +40,11 @@
             background-color: #f8f9fa;
             transition: box-shadow 0.3s ease-in-out;
         }
+
         .step:hover {
-            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
         }
+
         .step h3 {
             font-size: 1.75rem;
             color: #198754;
@@ -44,10 +52,12 @@
             display: flex;
             align-items: center;
         }
+
         .step h3 .step-icon {
             margin-right: 1rem;
             font-size: 1.5rem;
         }
+
         code {
             background-color: #e9ecef;
             padding: .2rem .4rem;
@@ -55,6 +65,7 @@
             font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             font-size: .875em;
         }
+
         pre {
             background-color: #212529;
             color: #f8f9fa;
@@ -63,49 +74,65 @@
             white-space: pre-wrap;
             word-wrap: break-word;
         }
+
         pre code {
             background-color: transparent;
             padding: 0;
             color: inherit;
             font-size: 1em;
         }
-        .tutorial-intro, .tutorial-summary {
+
+        .tutorial-intro,
+        .tutorial-summary {
             background-color: #eef8f3;
             border-left: 5px solid #198754;
             padding: 1.5rem;
             margin: 2rem 0;
         }
+
         .alert-info-custom {
             background-color: #f8f9fa;
             border: 1px solid #dee2e6;
-            border-left: 6px solid #0d6efd; /* Blue accent */
+            border-left: 6px solid #0d6efd;
+            /* Blue accent */
             padding: 2rem;
             margin: 2.5rem 0;
             border-radius: .5rem;
-            box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+            box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
         }
+
         .alert-info-custom h4 {
             color: #0d6efd;
             font-weight: bold;
             margin-bottom: 1rem;
         }
-        .alert-info-custom p, .alert-info-custom ul {
+
+        .alert-info-custom p,
+        .alert-info-custom ul {
             color: #212529;
-            font-size: 1.05rem; /* Slightly larger font for readability */
+            font-size: 1.05rem;
+            /* Slightly larger font for readability */
         }
+
         .alert-info-custom ul {
             padding-left: 1.5rem;
         }
+
         .alert-info-custom ul li {
             margin-bottom: 0.75rem;
         }
+
         .back-to-top-float {
             position: fixed;
-            top: 50%; /* Vertically center */
-            transform: translateY(-50%); /* Adjust for element's own height */
+            top: 50%;
+            /* Vertically center */
+            transform: translateY(-50%);
+            /* Adjust for element's own height */
             right: 20px;
-            z-index: 1000; /* Ensure it's above other content */
+            z-index: 1000;
+            /* Ensure it's above other content */
         }
+
         .back-to-top-float .btn {
             width: 50px;
             height: 50px;
@@ -116,20 +143,22 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學文</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
                         <li class="nav-item"><a class="nav-link" href="../podcast.html">🎙️ Podcast</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
                     </ul>
                 </div>
@@ -163,7 +192,8 @@
                     </div>
 
                     <div class="tutorial-intro" id="table-of-contents">
-                        <h4>本篇文章將聚焦產品開發的「前期探索」階段。教學如何利用 AI 進行市場研究、創意發想、使用者回饋分析，並將模糊概念轉化為可互動的 UI 原型與清晰的流程圖，為產品定義打下堅實基礎。</h4>
+                        <h4>本篇文章將聚焦產品開發的「前期探索」階段。教學如何利用 AI 進行市場研究、創意發想、使用者回饋分析，並將模糊概念轉化為可互動的 UI 原型與清晰的流程圖，為產品定義打下堅實基礎。
+                        </h4>
                         <p><strong>文章大綱：</strong></p>
                         <ul>
                             <li><a href="#section-1">要點一：精準提問，駕馭 AI 的關鍵</a></li>
@@ -178,9 +208,12 @@
                         <p>您可能會想，我已經有網頁版的 ChatGPT 或 Gemini 了，為什麼還要多學一個看起來很「工程師」的 CLI 工具？</p>
                         <p>答案是：<strong>因為 CLI 能讓 AI 成為您專案中「真正的手跟腳」，可以伸出去操作本機檔案，而不只是一個聊天對象。</strong></p>
                         <ul>
-                            <li><strong>告別無止盡的複製貼上</strong>：AI 能直接讀取您專案裡的檔案、修改內容、甚至建立新文件 (例如 PRD、使用者故事)。您再也不需要在網頁和本地文件之間來回搬運文字了。</li>
-                            <li><strong>即時預覽，即時修改</strong>：AI 產出的任何內容 (無論是文字還是 UI 網頁)，您都可以在 VS Code 工作室裡立刻看到結果，並直接上手修改，無縫接軌。</li>
-                            <li><strong>專案級的記憶力</strong>：AI 知道您正在處理哪個專案，能解讀您的檔案跟資料夾內容。它的建議會更貼近您的真實需求，而不是空泛的建議。這就像一個已經熟悉您專案的同事。</li>
+                            <li><strong>告別無止盡的複製貼上</strong>：AI 能直接讀取您專案裡的檔案、修改內容、甚至建立新文件 (例如
+                                PRD、使用者故事)。您再也不需要在網頁和本地文件之間來回搬運文字了。</li>
+                            <li><strong>即時預覽，即時修改</strong>：AI 產出的任何內容 (無論是文字還是 UI 網頁)，您都可以在 VS Code
+                                工作室裡立刻看到結果，並直接上手修改，無縫接軌。</li>
+                            <li><strong>專案級的記憶力</strong>：AI
+                                知道您正在處理哪個專案，能解讀您的檔案跟資料夾內容。它的建議會更貼近您的真實需求，而不是空泛的建議。這就像一個已經熟悉您專案的同事。</li>
                             <li><strong>建立您的「AI 專家團隊」</strong>：您可以為不同任務建立專屬的 AI 助理 (Agent)，例如：
                                 <ul>
                                     <li><strong>UI/UX 專家</strong>：專門跟您討論介面流程、提供設計建議。</li>
@@ -190,27 +223,40 @@
                             </li>
                         </ul>
                         <p>簡單來說，<strong>CLI 讓 AI 從一個「顧問」，升級成一個能動手的「執行者」</strong>。這將徹底改變您的工作流，讓您專注在高價值的策略思考上。</p>
-                        <p>當然，如果您的 AI 問詢不需要與本地端的專案資料深度連結（舉例：從您的多篇個人筆記中提取要點供專案使用），那麼使用網頁版的 AI 服務會是您節省 Token 的好方法。例如，早期的發想可以使用 <a href="https://ai.google.dev/" target="_blank">ai.google.dev</a>；大量原始資料的收集與整理可以使用 <a href="https://notebooklm.google/" target="_blank">NotebookLM</a>；找尋網路上的綜合資訊則可使用 <a href="https://www.perplexity.ai/" target="_blank">Perplexity</a>。</p>
-                    </div>                    
+                        <p>當然，如果您的 AI 問詢不需要與本地端的專案資料深度連結（舉例：從您的多篇個人筆記中提取要點供專案使用），那麼使用網頁版的 AI 服務會是您節省 Token
+                            的好方法。例如，早期的發想可以使用 <a href="https://ai.google.dev/"
+                                target="_blank">ai.google.dev</a>；大量原始資料的收集與整理可以使用 <a href="https://notebooklm.google/"
+                                target="_blank">NotebookLM</a>；找尋網路上的綜合資訊則可使用 <a href="https://www.perplexity.ai/"
+                                target="_blank">Perplexity</a>。</p>
+                    </div>
 
                     <div class="tutorial-content">
                         <section class="step-by-step">
                             <div class="step">
-                                <h3 id="section-1"><i class="fas fa-question-circle step-icon"></i>要點一：精準提問，駕馭 AI 的關鍵</h3>
+                                <h3 id="section-1"><i class="fas fa-question-circle step-icon"></i>要點一：精準提問，駕馭 AI 的關鍵
+                                </h3>
                                 <p><strong>痛點場景：</strong> 您是否曾覺得 AI 的回答不夠精準，甚至文不對題？問題可能不在 AI，而在於我們提問的方式。</p>
-                                <p><strong>AI 就像一位「全知賢者」</strong>：它擁有全世界的知識(甚至全宇宙?)，但正因為它懂的太多，所以我們必須像引導一位初次接觸專案的頂尖顧問一樣，給予它明確、具體的指示，它才能從浩瀚的知識庫中，精準地篩選出您真正需要的答案。</p>
-                                <p class="mt-4">在這邊不得不提一篇由 Eric S. 撰寫，在 IT 界非常經典的文章：<a href="https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way" target="_blank">How-To-Ask-Questions-The-Smart-Way (提問的智慧)</a>。</p>
+                                <p><strong>AI
+                                        就像一位「全知賢者」</strong>：它擁有全世界的知識(甚至全宇宙?)，但正因為它懂的太多，所以我們必須像引導一位初次接觸專案的頂尖顧問一樣，給予它明確、具體的指示，它才能從浩瀚的知識庫中，精準地篩選出您真正需要的答案。
+                                </p>
+                                <p class="mt-4">在這邊不得不提一篇由 Eric S. 撰寫，在 IT 界非常經典的文章：<a
+                                        href="https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way"
+                                        target="_blank">How-To-Ask-Questions-The-Smart-Way (提問的智慧)</a>。</p>
                                 <p class="mt-4">總結《提問的智慧》一文的精髓，當我們向 AI 提問時，應秉持以下幾個原則：</p>
                                 <ul>
-                                    <li><strong>先做功課</strong>：在提問 AI 之前，先嘗試自行思考或研究。這能幫助您釐清問題，並讓 AI 知道您的需求方向，進而給出更有針對性的回應。</li>
-                                    <li><strong>精確描述問題與目標</strong>：明確告訴 AI 您的任務、背景、期望的輸出格式，以及解決這個問題的最終目標是什麼。避免模糊的詞語，這對 AI 或對人類溝通都一樣。</li>
-                                    <li><strong>提供所有相關資訊</strong>：這包括您的專案類型、目標用戶、目前遇到的情境、或您已經嘗試過的方法。資訊越完整，AI 越能理解上下文，回應品質也越好。</li>
+                                    <li><strong>先做功課</strong>：在提問 AI 之前，先嘗試自行思考或研究。這能幫助您釐清問題，並讓 AI
+                                        知道您的需求方向，進而給出更有針對性的回應。</li>
+                                    <li><strong>精確描述問題與目標</strong>：明確告訴 AI 您的任務、背景、期望的輸出格式，以及解決這個問題的最終目標是什麼。避免模糊的詞語，這對
+                                        AI 或對人類溝通都一樣。</li>
+                                    <li><strong>提供所有相關資訊</strong>：這包括您的專案類型、目標用戶、目前遇到的情境、或您已經嘗試過的方法。資訊越完整，AI
+                                        越能理解上下文，回應品質也越好。</li>
                                     <li><strong>說明限制與偏好</strong>：如果您有特定的限制（例如嚴格遵照台灣健保規範產生稽核規格），或者對美術風格有偏好，請務必告知 AI。</li>
                                 </ul>
                                 <p class="mt-4">以下透過範例，說明「聰明地提問」與「隨意提問」的差異：</p>
                                 <p><strong>錯誤範例：</strong></p>
                                 <pre><code>幫我寫一個給鸚鵡相親用的 App 功能規格書。</code></pre>
-                                <p><strong>AI 的困境</strong>：App 有百百種，鸚鵡更是品種萬千。AI 不知道您要什麼類型的 App，也不知道您想解決什麼問題，自然無法給出有價值的建議。</p>
+                                <p><strong>AI 的困境</strong>：App 有百百種，鸚鵡更是品種萬千。AI 不知道您要什麼類型的
+                                    App，也不知道您想解決什麼問題，自然無法給出有價值的建議。</p>
                                 <p><strong>正確範例：</strong></p>
                                 <pre><code>你現在是一位專為「新創公司」服務的「產品顧問」。
 我們正在開發一款針對「獨居長者」的「智慧居家安全 App」。
@@ -220,17 +266,21 @@
 1.  每個功能需說明其「用戶痛點」與「解決方案」。
 2.  請考量「長者」的特殊需求，例如操作簡便性、緊急應變機制。
 3.  請提供每個功能的「預期用戶價值」。</code></pre>
-                                <p><strong>AI 的優勢</strong>：透過明確的角色設定、目標用戶、產品類型、具體任務和限制條件，AI 就能像一位經驗豐富的產品顧問一樣，給出高度相關且有深度的建議。</p>
-                                <p><strong>總結：</strong> 有時候，真的不是 AI 太笨，而是我們太「傻」（指提問不夠精準）。學會如何「提問」，是駕馭 AI 這項新工具的關鍵能力。將 AI 視為一個需要引導的聰明夥伴，而非一個簡單的搜尋引擎，您將會發現它的潛力遠超想像。</p>
+                                <p><strong>AI 的優勢</strong>：透過明確的角色設定、目標用戶、產品類型、具體任務和限制條件，AI
+                                    就能像一位經驗豐富的產品顧問一樣，給出高度相關且有深度的建議。</p>
+                                <p><strong>總結：</strong> 有時候，真的不是 AI 太笨，而是我們太「傻」（指提問不夠精準）。學會如何「提問」，是駕馭 AI 這項新工具的關鍵能力。將 AI
+                                    視為一個需要引導的聰明夥伴，而非一個簡單的搜尋引擎，您將會發現它的潛力遠超想像。</p>
                             </div>
 
                             <div class="step">
-                                <h3 id="section-2"><i class="fas fa-search-plus step-icon"></i>要點二：AI 助力產品探索、競品分析與使用者回饋洞察</h3>
-                                <p><strong>痛點場景：</strong> 新產品的腦力激盪會議，大家圍在白板前，卻想不出有新意的點子？明天就要報告新功能的市場分析，您還在 Google 上一篇篇點開文章？從使用者訪談、App Store 評論收集了上百條回饋，光是讀完、分類就要花掉一整個下午？</p>
+                                <h3 id="section-2"><i class="fas fa-search-plus step-icon"></i>要點二：AI
+                                    助力產品探索、競品分析與使用者回饋洞察</h3>
+                                <p><strong>痛點場景：</strong> 新產品的腦力激盪會議，大家圍在白板前，卻想不出有新意的點子？明天就要報告新功能的市場分析，您還在 Google
+                                    上一篇篇點開文章？從使用者訪談、App Store 評論收集了上百條回饋，光是讀完、分類就要花掉一整個下午？</p>
                                 <p>產品開發的前期探索與研究，是決定產品方向的關鍵，卻也最耗費心力。現在，您可以將這些繁瑣的「資料搜集」與「分析整理」工作，全部交給您的 AI 專家團隊。</p>
-                                
+
                                 <hr class="my-4">
-                                
+
                                 <h4 class="text-success">Part 1: 用 AI 當你的「無限靈感產生器」</h4>
                                 <p>這正是 AI 最擅長的時刻。它讀過網路上無數的資料，是您最淵博的市場分析師與創意夥伴。</p>
                                 <p><strong>範例：為「智慧家居 App」發想新功能</strong></p>
@@ -276,8 +326,10 @@
                             </div>
 
                             <div class="step">
-                                <h3 id="section-3"><i class="fas fa-paint-brush step-icon"></i>要點三：從「一句話」到「可互動的 UI 原型」</h3>
-                                <p><strong>痛點場景：</strong>您花了很多時間寫文件、畫線框圖 (Wireframe) 來描述一個新介面，結果在會議上，工程師和設計師的理解還是跟您有落差？</p>
+                                <h3 id="section-3"><i class="fas fa-paint-brush step-icon"></i>要點三：從「一句話」到「可互動的 UI 原型」
+                                </h3>
+                                <p><strong>痛點場景：</strong>您花了很多時間寫文件、畫線框圖 (Wireframe) 來描述一個新介面，結果在會議上，工程師和設計師的理解還是跟您有落差？
+                                </p>
                                 <p>與其用千言萬語描述，不如直接做出一個可以互動的「原型 (Prototype)」。這在過去是 UI/UX 設計師的專業，但現在，您可以讓 AI 幫您完成第一版原型。</p>
                                 <p><strong>範例：快速生成「智慧門窗感應」的 App 介面</strong></p>
                                 <p>首先，用文字描述您想要的介面長什麼樣子：</p>
@@ -291,15 +343,19 @@
                                 <pre><code>很好，請直接用 Bootstrap 5 幫我生成這個介面的 HTML 檔案。</code></pre>
                                 <p><strong>Gemini CLI 模擬輸出 HTML (您完全不需要看懂程式碼):</strong></p>
                                 <pre><code>&lt;!-- AI 會生成一長串程式碼... --&gt;</code></pre>
-                                <p class="mt-4"><strong>您可以直接點兩下 AI 產生的 HTML 檔案，就可以由瀏覽器查看。</strong>下方就是由 AI 生成的 HTML 直接渲染出的 UI 畫面示意圖:</p>
-                                <div style="border: 1px solid #dee2e6; border-radius: 8px; padding: 1.5rem; background-color: #ffffff; box-shadow: 0 4px 8px rgba(0,0,0,0.05); margin-top: 1rem; margin-bottom: 1rem;">
-                                    <div class="card mx-auto" style="width: 100%; max-width: 400px; font-family: sans-serif; border: none; box-shadow: none;">
+                                <p class="mt-4"><strong>您可以直接點兩下 AI 產生的 HTML 檔案，就可以由瀏覽器查看。</strong>下方就是由 AI 生成的 HTML
+                                    直接渲染出的 UI 畫面示意圖:</p>
+                                <div
+                                    style="border: 1px solid #dee2e6; border-radius: 8px; padding: 1.5rem; background-color: #ffffff; box-shadow: 0 4px 8px rgba(0,0,0,0.05); margin-top: 1rem; margin-bottom: 1rem;">
+                                    <div class="card mx-auto"
+                                        style="width: 100%; max-width: 400px; font-family: sans-serif; border: none; box-shadow: none;">
                                         <div class="card-header text-center fw-bold">
                                             居家安全
                                         </div>
                                         <div class="card-body" style="background-color: #f8f9fa;">
                                             <div class="card mb-3">
-                                                <div class="card-body d-flex justify-content-between align-items-center">
+                                                <div
+                                                    class="card-body d-flex justify-content-between align-items-center">
                                                     <div>
                                                         <i class="fas fa-door-closed me-2"></i>
                                                         <span>主臥窗戶</span>
@@ -308,7 +364,8 @@
                                                 </div>
                                             </div>
                                             <div class="card mb-3 border-danger border-2">
-                                                <div class="card-body d-flex justify-content-between align-items-center">
+                                                <div
+                                                    class="card-body d-flex justify-content-between align-items-center">
                                                     <div>
                                                         <i class="fas fa-door-open me-2 text-danger"></i>
                                                         <span class="fw-bold text-danger">客廳陽台門</span>
@@ -317,7 +374,8 @@
                                                 </div>
                                             </div>
                                             <div class="card mb-3">
-                                                <div class="card-body d-flex justify-content-between align-items-center">
+                                                <div
+                                                    class="card-body d-flex justify-content-between align-items-center">
                                                     <div>
                                                         <i class="fas fa-door-closed me-2"></i>
                                                         <span>廚房後門</span>
@@ -338,10 +396,12 @@
                             </div>
 
                             <div class="step">
-                                <h3 id="section-4"><i class="fas fa-project-diagram step-icon"></i>要點四：利用 Mermaid 流程圖視覺化使用者流程</h3>
+                                <h3 id="section-4"><i class="fas fa-project-diagram step-icon"></i>要點四：利用 Mermaid
+                                    流程圖視覺化使用者流程</h3>
                                 <p><strong>痛點場景：</strong> 為了跟工程師溝通一個複雜的用戶流程，您是否還在用 PowerPoint 或其他繪圖工具，辛苦地拉著線條、對齊著方塊？</p>
-                                <p>現在，您可以換個方式：<strong>用「說」的畫流程圖</strong>。您只需用簡單的文字描述流程，AI 就能為您生成一種叫做 「Mermaid」的標準化圖表代碼。</p>
-                                
+                                <p>現在，您可以換個方式：<strong>用「說」的畫流程圖</strong>。您只需用簡單的文字描述流程，AI 就能為您生成一種叫做 「Mermaid」的標準化圖表代碼。
+                                </p>
+
                                 <p><strong>範例：請 AI 生成「用戶登入流程圖」</strong></p>
                                 <p>您只要像平常一樣，條列出您的邏輯步驟：</p>
                                 <pre><code>請幫我生成一個 App 用戶登入的 Mermaid 流程圖，步驟如下：
@@ -366,7 +426,8 @@ graph TD
     G -- 失敗 --> H[顯示錯誤訊息];
     H --> D;
 ```</code></pre>
-                                <p>您可以將這段純文字的代碼，貼到任何支援 Mermaid 的地方 (例如 Mermaid.live、Notion、HackMD、VS Code 外掛等等)，它就會自動變成一張漂亮的流程圖。</p>
+                                <p>您可以將這段純文字的代碼，貼到任何支援 Mermaid 的地方 (例如 Mermaid.live、Notion、HackMD、VS Code
+                                    外掛等等)，它就會自動變成一張漂亮的流程圖。</p>
                                 <p>並且您可以即時的在這些地方修改完畢後，再貼回本地的檔案內，節省一些跟 AI 來回交戰的時間與費用成本。
                                 </p>
                                 <p>是的，這代表您的流程圖可以被輕鬆的修改、可以被輕易地複製分享，徹底告別過去的截圖地獄。</p>
@@ -388,16 +449,21 @@ graph TD
                             <li>整合 AI 進行創意發想、市場競品分析與使用者回饋洞察，快速完成探索研究。</li>
                             <li>透過 AI 將文字概念轉化為可互動的 UI 原型，加速內部溝通與驗證。</li>
                         </ul>
-                        <p class="mt-4">如果您有想交流討論的地方，歡迎到我的 <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank">LinkedIn</a> 找我！</p>
-                        <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank" class="btn btn-primary mt-2">前往 LinkedIn</a>
+                        <p class="mt-4">如果您有想交流討論的地方，歡迎到我的 <a href="https://www.linkedin.com/in/junjia-hou/"
+                                target="_blank">LinkedIn</a> 找我！</p>
+                        <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank"
+                            class="btn btn-primary mt-2">前往 LinkedIn</a>
                         <p>透過這些 AI 驅動的策略，PM 可以將更多精力投入到策略思考和創新決策中，為產品的成功奠定堅實的基礎。</p>
                     </div>
                 </article>
 
                 <div class="d-flex justify-content-between flex-wrap mt-5">
-                    <a href="gemini-cli-tutorial-2.html" class="btn btn-secondary btn-lg mb-2 mb-md-0"><i class="fas fa-arrow-left me-2"></i>上一篇：Gemini CLI 基本指令與認證</a>
-                    <a href="../tutorials.html" class="btn btn-primary btn-lg mb-2 mb-md-0"><i class="fas fa-list me-2"></i>返回 教學列表</a>
-                    <a href="gemini-cli-tutorial-4.html" class="btn btn-secondary btn-lg">下一篇：AI 驅動的規格撰寫與專案管理 <i class="fas fa-arrow-right ms-2"></i></a>
+                    <a href="gemini-cli-tutorial-2.html" class="btn btn-secondary btn-lg mb-2 mb-md-0"><i
+                            class="fas fa-arrow-left me-2"></i>上一篇：Gemini CLI 基本指令與認證</a>
+                    <a href="../tutorials.html" class="btn btn-primary btn-lg mb-2 mb-md-0"><i
+                            class="fas fa-list me-2"></i>返回 教學列表</a>
+                    <a href="gemini-cli-tutorial-4.html" class="btn btn-secondary btn-lg">下一篇：AI 驅動的規格撰寫與專案管理 <i
+                            class="fas fa-arrow-right ms-2"></i></a>
                 </div>
             </div>
         </div>
@@ -421,4 +487,5 @@ graph TD
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>
 </body>
+
 </html>

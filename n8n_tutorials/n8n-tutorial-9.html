@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>n8n 教學 (九)：改造 Chat 工作流，實現本地知識庫問答</title>
-    <meta name="description" content="n8n 教學系列最終篇！本章將指導您如何改造聊天機器人工作流，整合 Qdrant 在地向量資料庫，讓您的 AI 助理能夠根據私有的本地知識庫進行精準問答，完成整個 RAG 應用的最後一哩路。">
+    <meta name="description"
+        content="n8n 教學系列最終篇！本章將指導您如何改造聊天機器人工作流，整合 Qdrant 在地向量資料庫，讓您的 AI 助理能夠根據私有的本地知識庫進行精準問答，完成整個 RAG 應用的最後一哩路。">
     <meta name="keywords" content="n8n教學, Qdrant, Chatbot, RAG, 工作流改造, 聊天機器人, 本地知識庫, AI應用, 私有化">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -16,15 +18,18 @@
             display: block;
             margin: 1.5rem auto;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .tutorial-content figure {
             margin: 1.5rem 0;
             text-align: center;
         }
+
         .tutorial-content figure img {
             margin: 0 auto;
         }
+
         .step {
             margin-bottom: 2.5rem;
             padding: 2rem;
@@ -33,9 +38,11 @@
             background-color: #f8f9fa;
             transition: box-shadow 0.3s ease-in-out;
         }
+
         .step:hover {
-            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
         }
+
         .step h3 {
             font-size: 1.75rem;
             color: #0d6efd;
@@ -43,11 +50,14 @@
             display: flex;
             align-items: center;
         }
+
         .step h3 .step-icon {
             margin-right: 1rem;
             font-size: 1.5rem;
         }
-        .tutorial-intro, .tutorial-summary {
+
+        .tutorial-intro,
+        .tutorial-summary {
             background-color: #e9f7ff;
             border-left: 5px solid #0d6efd;
             padding: 1.5rem;
@@ -55,19 +65,21 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學文</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
                     </ul>
                 </div>
@@ -84,11 +96,15 @@
 
                     <div class="tutorial-intro">
                         <h4>前言：最後一哩路，讓 AI 開口說「你的」話</h4>
-                        <p>恭喜您來到本系列教學的最終章！我們已經成功將知識庫儲存在本地的 Qdrant 資料庫中。現在，我們將完成最後一塊拼圖：改造聊天工作流，讓 AI 能夠從這個私有知識庫中檢索資訊，並根據這些資訊來回答您的問題。本章將引導您<a href="#qdrant-settings">設定 Qdrant 檢索節點</a>，結束後，您將擁有一個完全在您掌控之下的、具備私有知識庫的問答機器人。</p>
+                        <p>恭喜您來到本系列教學的最終章！我們已經成功將知識庫儲存在本地的 Qdrant 資料庫中。現在，我們將完成最後一塊拼圖：改造聊天工作流，讓 AI
+                            能夠從這個私有知識庫中檢索資訊，並根據這些資訊來回答您的問題。本章將引導您<a href="#qdrant-settings">設定 Qdrant
+                                檢索節點</a>，結束後，您將擁有一個完全在您掌控之下的、具備私有知識庫的問答機器人。</p>
                     </div>
 
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 Gemini API key 綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案，或使用地端 LLM，亦或是公司提供的 API。
+                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 Gemini API key
+                        綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案，或使用地端
+                        LLM，亦或是公司提供的 API。
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 
@@ -103,12 +119,15 @@
                                     <li>在右下角的 "Tools" 面板中，點擊加號，搜尋並加入 "Qdrant Vector Store" 節點。</li>
                                 </ol>
                                 <figure>
-                                    <a href="9/image.png" target="_blank"><img src="9/image.png" alt="刪除 Supabase 節點" class="img-fluid"></a>
+                                    <a href="9/image.png" target="_blank"><img src="9/image.png" alt="刪除 Supabase 節點"
+                                            class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 1: 從聊天工作流中移除 Supabase 節點。</figcaption>
                                 </figure>
                                 <figure>
-                                    <a href="9/image 1.png" target="_blank"><img src="9/image 1.png" alt="新增 Qdrant 節點" class="img-fluid"></a>
-                                    <figcaption class="text-muted mt-2">圖 2: 加入 Qdrant Vector Store 作為新的檢索工具。</figcaption>
+                                    <a href="9/image 1.png" target="_blank"><img src="9/image 1.png" alt="新增 Qdrant 節點"
+                                            class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 2: 加入 Qdrant Vector Store 作為新的檢索工具。
+                                    </figcaption>
                                 </figure>
                             </div>
 
@@ -119,11 +138,14 @@
                                     <li>點擊開啟 "Qdrant Vector Store" 節點。</li>
                                     <li><strong>Credential:</strong> 選擇您在上一章建立的 Qdrant Credential。</li>
                                     <li><strong>Operation:</strong> 確認操作為 "Search for documents"。</li>
-                                    <li><strong>Collection Name:</strong> 輸入我們使用的 Collection 名稱 <code>nhi_text-embedding-004_768</code>。</li>
+                                    <li><strong>Collection Name:</strong> 輸入我們使用的 Collection 名稱
+                                        <code>nhi_text-embedding-004_768</code>。
+                                    </li>
                                     <li><strong>Limit:</strong> 保持預設值即可，這代表每次檢索回傳的資料筆數。</li>
                                 </ol>
                                 <figure>
-                                    <a href="9/image 2.png" target="_blank"><img src="9/image 2.png" alt="設定 Qdrant 節點" class="img-fluid" style="max-width: 450px;"></a>
+                                    <a href="9/image 2.png" target="_blank"><img src="9/image 2.png" alt="設定 Qdrant 節點"
+                                            class="img-fluid" style="max-width: 450px;"></a>
                                     <figcaption class="text-muted mt-2">圖 3: 仔細設定 Qdrant 節點的各項參數。</figcaption>
                                 </figure>
                             </div>
@@ -133,10 +155,12 @@
                                 <p>設定完成後，需要將 Qdrant 節點正確地整合到現有的工作流中。</p>
                                 <ol>
                                     <li>關閉節點設定視窗。</li>
-                                    <li>將 "Qdrant Vector Store" 節點左下角的 "Tool" 接口，連接到 "Google Gemini Chat Model" 節點的圓球上。這一步是告訴 AI 模型，Qdrant 是它可以使用的外部工具之一。</li>
+                                    <li>將 "Qdrant Vector Store" 節點左下角的 "Tool" 接口，連接到 "Google Gemini Chat Model"
+                                        節點的圓球上。這一步是告訴 AI 模型，Qdrant 是它可以使用的外部工具之一。</li>
                                 </ol>
                                 <figure>
-                                    <a href="9/image 3.png" target="_blank"><img src="9/image 3.png" alt="連接節點" class="img-fluid"></a>
+                                    <a href="9/image 3.png" target="_blank"><img src="9/image 3.png" alt="連接節點"
+                                            class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 4: 將 Qdrant 節點作為工具連接到 Gemini 模型。</figcaption>
                                 </figure>
                             </div>
@@ -150,11 +174,13 @@
                                     <li>觀察 AI 的回覆。如果一切設定正確，它應該會根據文件內容給出精確的答案。</li>
                                 </ol>
                                 <figure>
-                                    <a href="9/image 4.png" target="_blank"><img src="9/image 4.png" alt="啟動聊天測試" class="img-fluid" style="max-width: 600px;"></a>
+                                    <a href="9/image 4.png" target="_blank"><img src="9/image 4.png" alt="啟動聊天測試"
+                                            class="img-fluid" style="max-width: 600px;"></a>
                                     <figcaption class="text-muted mt-2">圖 5: 透過聊天介面進行提問。</figcaption>
                                 </figure>
                                 <figure>
-                                    <a href="9/image 5.png" target="_blank"><img src="9/image 5.png" alt="驗證 AI 回覆" class="img-fluid"></a>
+                                    <a href="9/image 5.png" target="_blank"><img src="9/image 5.png" alt="驗證 AI 回覆"
+                                            class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 6: AI 成功地根據本地文件內容提供了正確答案。</figcaption>
                                 </figure>
                             </div>
@@ -162,7 +188,9 @@
                     </div>
 
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 Gemini API key 綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案，或使用地端 LLM，亦或是公司提供的 API。
+                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 Gemini API key
+                        綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案，或使用地端
+                        LLM，亦或是公司提供的 API。
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 
@@ -181,7 +209,8 @@
                 </article>
 
                 <div class="mt-5 text-center">
-                    <a href="../tutorials.html#advanced-series" class="btn btn-primary btn-lg"><i class="fas fa-list me-2"></i>返回 教學列表</a>
+                    <a href="../tutorials.html#advanced-series" class="btn btn-primary btn-lg"><i
+                            class="fas fa-list me-2"></i>返回 教學列表</a>
                 </div>
             </div>
         </div>
@@ -195,4 +224,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>
 </body>
+
 </html>

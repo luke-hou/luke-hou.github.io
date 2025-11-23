@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // 作品集模態框邏輯
+    // 作品模態框邏輯
     const portfolioModal = document.getElementById('portfolioModal'); // 確保這裡的ID與HTML中的模態框ID一致
     if (portfolioModal) {
         portfolioModal.addEventListener('show.bs.modal', function (event) {
@@ -77,10 +77,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // 實際項目中，這些數據可能來自後端或一個JSON文件
         const projects = {
             '1': {
-                title: '個人作品集網站',
+                title: '個人作品網站',
                 image: 'images/portfolio-placeholder.jpg',
                 tech: 'HTML, CSS, JavaScript, Bootstrap',
-                description: '這是一個展示我技能和項目的個人作品集網站。它採用響應式設計，確保在各種設備上都有良好的瀏覽體驗。',
+                description: '這是一個展示我技能和項目的個人作品網站。它採用響應式設計，確保在各種設備上都有良好的瀏覽體驗。',
                 link: '#'
             },
             '2': {

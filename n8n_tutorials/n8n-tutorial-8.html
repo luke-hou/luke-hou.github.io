@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>n8n 教學 (八)：整合 n8n 與 Qdrant，打造在地化 RAG 工作流</title>
-    <meta name="description" content="n8n 教學系列第八篇，本篇將教您如何改造先前為 Supabase 設計的工作流，將其無縫對接到 Qdrant 在地向量資料庫，建立一個從資料上傳到向量化儲存的完整私有化流程。">
+    <meta name="description"
+        content="n8n 教學系列第八篇，本篇將教您如何改造先前為 Supabase 設計的工作流，將其無縫對接到 Qdrant 在地向量資料庫，建立一個從資料上傳到向量化儲存的完整私有化流程。">
     <meta name="keywords" content="n8n教學, Qdrant, Supabase, 向量資料庫, 在地部署, Self-hosted, AI, RAG, 工作流改造, 私有化">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -16,15 +18,18 @@
             display: block;
             margin: 1.5rem auto;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .tutorial-content figure {
             margin: 1.5rem 0;
             text-align: center;
         }
+
         .tutorial-content figure img {
             margin: 0 auto;
         }
+
         .step {
             margin-bottom: 2.5rem;
             padding: 2rem;
@@ -33,9 +38,11 @@
             background-color: #f8f9fa;
             transition: box-shadow 0.3s ease-in-out;
         }
+
         .step:hover {
-            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
         }
+
         .step h3 {
             font-size: 1.75rem;
             color: #0d6efd;
@@ -43,16 +50,20 @@
             display: flex;
             align-items: center;
         }
+
         .step h3 .step-icon {
             margin-right: 1rem;
             font-size: 1.5rem;
         }
-        .tutorial-intro, .tutorial-summary {
+
+        .tutorial-intro,
+        .tutorial-summary {
             background-color: #e9f7ff;
             border-left: 5px solid #0d6efd;
             padding: 1.5rem;
             margin: 2rem 0;
         }
+
         .code-block {
             background-color: #212529;
             color: #f8f9fa;
@@ -63,19 +74,21 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學文</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
                     </ul>
                 </div>
@@ -92,11 +105,15 @@
 
                     <div class="tutorial-intro">
                         <h4>前言：無縫接軌，從雲端到地端</h4>
-                        <p>我們已經分別學會了如何使用 Supabase (雲端) 和 Qdrant (地端) 作為向量資料庫。本章的目標是將先前為 Supabase 建立的資料上傳工作流，改造成適用於 Qdrant 的版本。透過這個過程，您將學會如何靈活地切換不同的向量資料庫節點，並了解它們在 n8n 中的具體設定差異，包括<a href="#delete-node">刪除節點</a>與<a href="#upsert-node">寫入節點</a>，最終實現一個完全在地化的資料處理流程。</p>
+                        <p>我們已經分別學會了如何使用 Supabase (雲端) 和 Qdrant (地端) 作為向量資料庫。本章的目標是將先前為 Supabase 建立的資料上傳工作流，改造成適用於
+                            Qdrant 的版本。透過這個過程，您將學會如何靈活地切換不同的向量資料庫節點，並了解它們在 n8n 中的具體設定差異，包括<a
+                                href="#delete-node">刪除節點</a>與<a href="#upsert-node">寫入節點</a>，最終實現一個完全在地化的資料處理流程。</p>
                     </div>
 
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 Gemini API key 綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案，或使用地端 LLM，亦或是公司提供的 API。
+                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 Gemini API key
+                        綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案，或使用地端
+                        LLM，亦或是公司提供的 API。
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 
@@ -112,11 +129,13 @@
                                     <li>在新開啟的分頁中，選取並刪除 "Supabase" 和 "Supabase Vector Store" 兩個節點。</li>
                                 </ol>
                                 <figure>
-                                    <a href="8/image.png" target="_blank"><img src="8/image.png" alt="複製工作流" class="img-fluid"></a>
+                                    <a href="8/image.png" target="_blank"><img src="8/image.png" alt="複製工作流"
+                                            class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 1: 複製現有的 Supabase 工作流。</figcaption>
                                 </figure>
                                 <figure>
-                                    <a href="8/image%202.png" target="_blank"><img src="8/image%202.png" alt="刪除 Supabase 節點" class="img-fluid"></a>
+                                    <a href="8/image%202.png" target="_blank"><img src="8/image%202.png"
+                                            alt="刪除 Supabase 節點" class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 2: 刪除與 Supabase 相關的節點。</figcaption>
                                 </figure>
                             </div>
@@ -136,7 +155,8 @@
                                     </li>
                                     <li><strong>設定刪除條件:</strong>
                                         <ul>
-                                            <li>"Collection Name" 輸入我們之前建立的 <code>nhi_text-embedding-004_768</code>。</li>
+                                            <li>"Collection Name" 輸入我們之前建立的 <code>nhi_text-embedding-004_768</code>。
+                                            </li>
                                             <li>點擊 "Add Option" -> "Filter"。</li>
                                             <li>啟用 "Expression" 並貼上以下 JSON 內容，用於比對檔案名稱：</li>
                                         </ul>
@@ -155,8 +175,10 @@
 }</code></pre>
                                 </div>
                                 <figure>
-                                    <a href="8/image%209.png" target="_blank"><img src="8/image%209.png" alt="設定 Qdrant 刪除節點" class="img-fluid"></a>
-                                    <figcaption class="text-muted mt-2">圖 3: 設定刪除節點的 Collection Name 與 Filter。</figcaption>
+                                    <a href="8/image%209.png" target="_blank"><img src="8/image%209.png"
+                                            alt="設定 Qdrant 刪除節點" class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 3: 設定刪除節點的 Collection Name 與 Filter。
+                                    </figcaption>
                                 </figure>
                             </div>
 
@@ -180,12 +202,15 @@
                                     </li>
                                 </ol>
                                 <figure>
-                                    <a href="8/image%2012.png" target="_blank"><img src="8/image%2012.png" alt="設定 Qdrant 寫入節點" class="img-fluid"></a>
+                                    <a href="8/image%2012.png" target="_blank"><img src="8/image%2012.png"
+                                            alt="設定 Qdrant 寫入節點" class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 4: 設定寫入節點的 Collection Name。</figcaption>
                                 </figure>
                                 <figure>
-                                    <a href="8/image%2015.png" target="_blank"><img src="8/image%2015.png" alt="連接節點" class="img-fluid"></a>
-                                    <figcaption class="text-muted mt-2">圖 5: 將 Embedding 和 Data Loader 連接到對應的子節點。</figcaption>
+                                    <a href="8/image%2015.png" target="_blank"><img src="8/image%2015.png" alt="連接節點"
+                                            class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 5: 將 Embedding 和 Data Loader 連接到對應的子節點。
+                                    </figcaption>
                                 </figure>
                             </div>
 
@@ -196,19 +221,23 @@
                                     <li>點擊 "Execute workflow"，並上傳一份 PDF 檔案。</li>
                                     <li>工作流執行完畢後，回到 Qdrant Web UI。</li>
                                     <li>您應該會看到對應的 Collection 中 "Points" 的數量增加了。</li>
-                                    <li>點擊數字，可以進一步查看寫入的資料點 (Points)，確認 <code>payload</code> 中包含了文字內容 (content) 與元資料 (metadata)。</li>
+                                    <li>點擊數字，可以進一步查看寫入的資料點 (Points)，確認 <code>payload</code> 中包含了文字內容 (content) 與元資料
+                                        (metadata)。</li>
                                     <li>再次上傳同一個檔案，確認 Points 數量不變，代表刪除邏輯正常運作。</li>
                                 </ol>
                                 <figure>
-                                    <a href="8/image%2018.png" target="_blank"><img src="8/image%2018.png" alt="執行成功畫面" class="img-fluid"></a>
+                                    <a href="8/image%2018.png" target="_blank"><img src="8/image%2018.png" alt="執行成功畫面"
+                                            class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 6: n8n 顯示工作流執行成功。</figcaption>
                                 </figure>
                                 <figure>
-                                    <a href="8/image%2019.png" target="_blank"><img src="8/image%2019.png" alt="驗證 Qdrant 資料" class="img-fluid"></a>
+                                    <a href="8/image%2019.png" target="_blank"><img src="8/image%2019.png"
+                                            alt="驗證 Qdrant 資料" class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 7: 在 Qdrant 儀表板確認資料點已成功寫入。</figcaption>
                                 </figure>
                                 <figure>
-                                    <a href="8/image%2020.png" target="_blank"><img src="8/image%2020.png" alt="查看資料點詳情" class="img-fluid"></a>
+                                    <a href="8/image%2020.png" target="_blank"><img src="8/image%2020.png" alt="查看資料點詳情"
+                                            class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 8: 檢視單一資料點的詳細內容。</figcaption>
                                 </figure>
                             </div>
@@ -216,7 +245,9 @@
                     </div>
 
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 Gemini API key 綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案，或使用地端 LLM，亦或是公司提供的 API。
+                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 Gemini API key
+                        綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案，或使用地端
+                        LLM，亦或是公司提供的 API。
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 
@@ -229,15 +260,18 @@
                             <li>理解了如何設定 Filter 來實現「先刪除後新增」的資料更新邏輯。</li>
                             <li>成功將 n8n 與本地的 Qdrant 資料庫串接，並完成資料寫入。</li>
                         </ul>
-                        <p>現在，您已經擁有一個強大的在地化資料管道。在最後一篇教學中，我們將改造問答機器人，讓它從本地的 Qdrant 資料庫中檢索資訊來回答問題，完成整個私有化 RAG 應用的最後一塊拼圖。</p>
+                        <p>現在，您已經擁有一個強大的在地化資料管道。在最後一篇教學中，我們將改造問答機器人，讓它從本地的 Qdrant 資料庫中檢索資訊來回答問題，完成整個私有化 RAG 應用的最後一塊拼圖。
+                        </p>
                         <div class="text-center mt-4">
-                            <a href="n8n-tutorial-9.html" class="btn btn-success btn-lg">前往最終章：改造 Chat 工作流 <i class="fas fa-arrow-right ms-2"></i></a>
+                            <a href="n8n-tutorial-9.html" class="btn btn-success btn-lg">前往最終章：改造 Chat 工作流 <i
+                                    class="fas fa-arrow-right ms-2"></i></a>
                         </div>
                     </div>
                 </article>
 
                 <div class="mt-5 text-center">
-                    <a href="../tutorials.html#advanced-series" class="btn btn-primary btn-lg"><i class="fas fa-list me-2"></i>返回 教學列表</a>
+                    <a href="../tutorials.html#advanced-series" class="btn btn-primary btn-lg"><i
+                            class="fas fa-list me-2"></i>返回 教學列表</a>
                 </div>
             </div>
         </div>
@@ -251,4 +285,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>
 </body>
+
 </html>

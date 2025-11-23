@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PM x Gemini CLI (五)：AI 時代的敏捷實踐與 PM 新角色 - Luke Hou 侯俊嘉的AI自動化與工作流指南</title>
-    <meta name="description" content="PM 與 Gemini CLI 協作系列最終篇，將探討 AI 如何重塑敏捷開發流程，並實現「活文件」的理想。同時，我們將反思在 AI 時代下，產品經理的核心價值如何轉變，從執行者進化為真正的決策者與產品領袖。">
-    <meta name="keywords" content="Gemini CLI, Gemini CLI 教學, PM, 產品經理, AI 協作, 敏捷開發, 活文件, AI Agent, 產品領袖, Luke Hou, 侯俊嘉">
+    <meta name="description"
+        content="PM 與 Gemini CLI 協作系列最終篇，將探討 AI 如何重塑敏捷開發流程，並實現「活文件」的理想。同時，我們將反思在 AI 時代下，產品經理的核心價值如何轉變，從執行者進化為真正的決策者與產品領袖。">
+    <meta name="keywords"
+        content="Gemini CLI, Gemini CLI 教學, PM, 產品經理, AI 協作, 敏捷開發, 活文件, AI Agent, 產品領袖, Luke Hou, 侯俊嘉">
     <link rel="icon" href="../images/favicon.jpg" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -17,15 +20,18 @@
             display: block;
             margin: 1.5rem auto;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .tutorial-content figure {
-            margin: 1.5rem 0; 
+            margin: 1.5rem 0;
             text-align: center;
         }
+
         .tutorial-content figure img {
             margin: 0 auto;
         }
+
         .step {
             margin-bottom: 2.5rem;
             padding: 2rem;
@@ -34,9 +40,11 @@
             background-color: #f8f9fa;
             transition: box-shadow 0.3s ease-in-out;
         }
+
         .step:hover {
-            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
         }
+
         .step h3 {
             font-size: 1.75rem;
             color: #198754;
@@ -44,10 +52,12 @@
             display: flex;
             align-items: center;
         }
+
         .step h3 .step-icon {
             margin-right: 1rem;
             font-size: 1.5rem;
         }
+
         code {
             background-color: #e9ecef;
             padding: .2rem .4rem;
@@ -55,6 +65,7 @@
             font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             font-size: .875em;
         }
+
         pre {
             background-color: #212529;
             color: #f8f9fa;
@@ -63,30 +74,39 @@
             white-space: pre-wrap;
             word-wrap: break-word;
         }
+
         pre code {
             background-color: transparent;
             padding: 0;
             color: inherit;
             font-size: 1em;
         }
-        .tutorial-intro, .tutorial-summary {
+
+        .tutorial-intro,
+        .tutorial-summary {
             background-color: #eef8f3;
             border-left: 5px solid #198754;
             padding: 1.5rem;
             margin: 2rem 0;
         }
+
         .alert-info-custom {
             background-color: #eef8f3;
             border-color: #a6d9c1;
             color: #198754;
         }
+
         .back-to-top-float {
             position: fixed;
-            top: 50%; /* Vertically center */
-            transform: translateY(-50%); /* Adjust for element's own height */
+            top: 50%;
+            /* Vertically center */
+            transform: translateY(-50%);
+            /* Adjust for element's own height */
             right: 20px;
-            z-index: 1000; /* Ensure it's above other content */
+            z-index: 1000;
+            /* Ensure it's above other content */
         }
+
         .back-to-top-float .btn {
             width: 50px;
             height: 50px;
@@ -97,20 +117,22 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學文</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
                         <li class="nav-item"><a class="nav-link" href="../podcast.html">🎙️ Podcast</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
                     </ul>
                 </div>
@@ -153,28 +175,29 @@
                             <div class="step">
                                 <h3 id="section-1"><i class="fas fa-recycle step-icon"></i>要點一：AI 驅動的敏捷開發新流程</h3>
                                 <p>當 AI 成為您團隊的一員後，整個敏捷開發的樣貌將會從瀑布式的線性流程，轉變為一個快速反應的「概念-驗證-迭代」閉環。我們可以將這個新流程視覺化如下：</p>
-                                
+
                                 <div class="mermaid">
-graph LR
-    subgraph "AI 賦能的敏捷迴圈"
-        A(PM 提出想法) --> B[第一階段：構思<br>AI 協助腦力激盪];
-        B --> C(PM 產出規格 v1);
-        C --> D[第二階段：驗證<br>AI 生成原型/使用者故事];
-        D --> E(PM 收集內外部回饋);
-        E --> F[第三階段：迭代<br>PM 優化規格 v2];
-        F --> D;
-    end
+                                    graph LR
+                                    subgraph "AI 賦能的敏捷迴圈"
+                                    A(PM 提出想法) --> B[第一階段：構思<br>AI 協助腦力激盪];
+                                    B --> C(PM 產出規格 v1);
+                                    C --> D[第二階段：驗證<br>AI 生成原型/使用者故事];
+                                    D --> E(PM 收集內外部回饋);
+                                    E --> F[第三階段：迭代<br>PM 優化規格 v2];
+                                    F --> D;
+                                    end
 
-    C --> G((開發團隊<br>開始實作));
-    F --> G;
+                                    C --> G((開發團隊<br>開始實作));
+                                    F --> G;
 
-    style B fill:#eef8f3,stroke:#198754,stroke-width:2px
-    style D fill:#eef8f3,stroke:#198754,stroke-width:2px
-    style F fill:#eef8f3,stroke:#198754,stroke-width:2px
+                                    style B fill:#eef8f3,stroke:#198754,stroke-width:2px
+                                    style D fill:#eef8f3,stroke:#198754,stroke-width:2px
+                                    style F fill:#eef8f3,stroke:#198754,stroke-width:2px
                                 </div>
 
-                                <p>這個流程的核心在於，AI 大幅縮短了每個環節所需的時間，讓 PM 能在極短的時間內，完成從「抽象想法」到「具體規格」的轉化，並快速驗證市場反應。以下是更詳細的說明：</p>
-    
+                                <p>這個流程的核心在於，AI 大幅縮短了每個環節所需的時間，讓 PM 能在極短的時間內，完成從「抽象想法」到「具體規格」的轉化，並快速驗證市場反應。以下是更詳細的說明：
+                                </p>
+
                                 <h4 class="mt-4">第一階段：構思 (Conception)</h4>
                                 <p>這是旅程的起點。PM 腦中有一個模糊的想法或觀察到一個用戶痛點。此時，AI 的角色是您的「策略夥伴」與「市場分析師」。</p>
                                 <ul>
@@ -189,7 +212,8 @@ graph LR
                                 <h4 class="mt-4">第二階段：驗證 (Validation)</h4>
                                 <p>在投入昂貴的開發資源前，必須先驗證這個想法是否真的有價值。AI 在此階段是您的「原型設計師」與「研究助理」。</p>
                                 <ul>
-                                    <li><strong>生成視覺概念與流程圖</strong>：雖然 AI 目前還無法直接取代 Figma，但它可以快速生成流程圖或低擬真線框圖 (Wireframe) 的描述，幫助您與設計師溝通。</li>
+                                    <li><strong>生成視覺概念與流程圖</strong>：雖然 AI 目前還無法直接取代 Figma，但它可以快速生成流程圖或低擬真線框圖 (Wireframe)
+                                        的描述，幫助您與設計師溝通。</li>
                                     <pre><code>我想設計一個新用戶引導流程，讓他們能快速上手「智慧助理」功能。請用 Mermaid 語法，生成一個流程圖，包含以下步驟：1. 用戶首次登入 2. 彈出歡迎視窗 3. 詢問用戶想完成什麼任務 4. 根據選項提供教學 5. 完成引導。</code></pre>
                                     <li><strong>產出訪談大綱與問卷</strong>：為了收集用戶回饋，您需要好的問題。</li>
                                     <pre><code>你是一位資深的使用者研究員。為了驗證「智慧助理」這個功能的價值，請幫我設計一份 8 個問題的訪談大綱，目標是了解用戶目前遇到的困難，以及他們對智慧助理的期待與疑慮。</code></pre>
@@ -208,12 +232,17 @@ graph LR
 
                             <div class="step">
                                 <h3 id="section-2"><i class="fas fa-sync-alt step-icon"></i>要點二：「活文件」的實現：讓規格與實作同步</h3>
-                                <p>產品開發中最常見的麻煩之一，就是規格文件在幾次迭代後就失去參考價值，因為沒人有時間去手動更新它，導致文件與程式碼產生脫鉤 (out of sync)。這不僅造成溝通誤解，更會在未來累積為巨大的「技術債」與「溝通債」。</p>
+                                <p>產品開發中最常見的麻煩之一，就是規格文件在幾次迭代後就失去參考價值，因為沒人有時間去手動更新它，導致文件與程式碼產生脫鉤 (out of
+                                    sync)。這不僅造成溝通誤解，更會在未來累積為巨大的「技術債」與「溝通債」。</p>
                                 <p>AI 工具提供了一個革命性的可能性：透過「半自動化」的工作流，大幅降低維持文件同步的時間成本，讓「活文件」不再只是個理想口號。</p>
-                                
+
                                 <p class="mt-4"><strong>核心作法一：以「API 測試報告」為依據，校準技術規格</strong></p>
-                                <p>在敏捷開發的實務中，要求 PM 直接解讀 QA 團隊瑣碎的測試記錄，或甚至深入程式碼來更新規格，往往不切實際。一個更為高效且可靠的作法，是利用開發流程中自動化產出的「API 測試報告」。</p>
-                                <p>在規格書完成後，可能會因為一些考量，在實作過程中有來回修改規格，這些紀錄可能存在好幾張 Jira Ticket 中；也可能在與工程師的口頭討論迭代過好幾次。當後端工程師完成開發後，CI/CD 流程會自動運行 API 測試（例如使用 Postman/Newman），並產出一份結構化的報告 (通常是 JSON 格式)。這份報告就是 API 行為最客觀、最即時的「真相」。PM 可以利用這份報告，來確保規格文件中的技術細節與實際情況一致。</p>
+                                <p>在敏捷開發的實務中，要求 PM 直接解讀 QA
+                                    團隊瑣碎的測試記錄，或甚至深入程式碼來更新規格，往往不切實際。一個更為高效且可靠的作法，是利用開發流程中自動化產出的「API 測試報告」。</p>
+                                <p>在規格書完成後，可能會因為一些考量，在實作過程中有來回修改規格，這些紀錄可能存在好幾張 Jira Ticket
+                                    中；也可能在與工程師的口頭討論迭代過好幾次。當後端工程師完成開發後，CI/CD 流程會自動運行 API 測試（例如使用
+                                    Postman/Newman），並產出一份結構化的報告 (通常是 JSON 格式)。這份報告就是 API 行為最客觀、最即時的「真相」。PM
+                                    可以利用這份報告，來確保規格文件中的技術細節與實際情況一致。</p>
                                 <pre><code>你現在是我的技術文件同步助理。
 
 這是 CI/CD 流程剛產出的 API 測試報告 @api_test_report.json。
@@ -225,7 +254,8 @@ graph LR
                                 <p>這種作法不僅更貼近 PM 的工作流，也讓「規格校準」這件事，建立在一個客觀、自動化產出的數據基礎之上，大幅提升了準確性與效率。</p>
 
                                 <p class="mt-4"><strong>核心作法二：從「源頭」擴散，以「規格變更」產生摘要</strong></p>
-                                <p>當您身為 PM，主動更新了規格文件後，下一個挑戰是如何快速告知所有利害關係人（工程師、設計師、測試人員）到底改了什麼。這時，您可以讓 AI 幫您做「版本比對」，並為不同對象客製化摘要。</p>
+                                <p>當您身為 PM，主動更新了規格文件後，下一個挑戰是如何快速告知所有利害關係人（工程師、設計師、測試人員）到底改了什麼。這時，您可以讓 AI
+                                    幫您做「版本比對」，並為不同對象客製化摘要。</p>
                                 <pre><code>你現在是我的專案助理。
 
 請比較 @PRD_v1.1.md 和 @PRD_v1.2.md 這兩個版本的差異，並生成兩份「版本變更摘要」：
@@ -245,17 +275,22 @@ graph LR
 - 功能簡介
 - 請求參數 (Parameters) 及其型別
 - 成功與失敗的回應範例 (Response Examples)</code></pre>
-                                <p class="mt-4">透過上述三種 AI 協作手法，團隊可以建立一個「文件同步」的飛輪效應：無論變更是從規格、實作還是測試結果開始，都能快速地將變動同步到其他環節，大幅降低溝通成本，讓文件在整個產品生命週期中，持續保持其參考價值，真正成為團隊溝通的有效依據。</p>
+                                <p class="mt-4">透過上述三種 AI
+                                    協作手法，團隊可以建立一個「文件同步」的飛輪效應：無論變更是從規格、實作還是測試結果開始，都能快速地將變動同步到其他環節，大幅降低溝通成本，讓文件在整個產品生命週期中，持續保持其參考價值，真正成為團隊溝通的有效依據。
+                                </p>
                             </div>
 
                             <div class="step">
-                                <h3 id="section-3"><i class="fas fa-user-tie step-icon"></i>要點三：人類角色的轉變：從「執行者」到「決策者」</h3>
+                                <h3 id="section-3"><i class="fas fa-user-tie step-icon"></i>要點三：人類角色的轉變：從「執行者」到「決策者」
+                                </h3>
                                 <div class="alert alert-info-custom" role="alert">
                                     <h4 class="alert-heading"><i class="fas fa-water me-2"></i>乘風破浪，而非被浪席捲</h4>
                                     <p>AI 浪潮不僅僅是效率工具的更新，它是一場對「專業價值」的重新定義。不管我們願不願意，接不接受，在 AI 浪潮的席捲下，團隊人力越來越精簡逐漸成為事實。</p>
                                     <p>過去，許多資深專業人士的核心價值，建立在「資訊的處理」與「流程的執行」上——例如，整理報告、追蹤進度、撰寫規格。然而，這正是 AI 最擅長取代的領域。</p>
                                     <p>如果我們選擇停留在原地，繼續用同樣的方式工作，本質上就是在與一個不知疲倦、成本極低的對手比拼效率。這是一場註定會輸的競賽。這就是所謂的「被浪席捲」。</p>
-                                    <p>而「乘風破浪」的真正意義，是主動擁抱變化：將所有可被自動化的「執行性工作」，都當作可以交給 AI 助理的任務。這能將我們從繁瑣的<strong>「方法論 (How)」</strong>中解放出來，讓我們能將 100% 的精力，投入到更具價值的<strong>「世界觀 (What & Why)」</strong>層面——定義願景、洞察人性、做出艱難的權衡取舍、並領導團隊。</p>
+                                    <p>而「乘風破浪」的真正意義，是主動擁抱變化：將所有可被自動化的「執行性工作」，都當作可以交給 AI 助理的任務。這能將我們從繁瑣的<strong>「方法論
+                                            (How)」</strong>中解放出來，讓我們能將 100% 的精力，投入到更具價值的<strong>「世界觀 (What &
+                                            Why)」</strong>層面——定義願景、洞察人性、做出艱難的權衡取舍、並領導團隊。</p>
                                     <p class="fw-bold mb-0">您的價值，不再是「把事情做對」，而是「做對的事情」。前者 AI 可以代勞，後者才是人類領袖無可取代的智慧。</p>
                                 </div>
                                 <p class="mt-4">AI 的崛起，並非要取代 PM，而是要「解放」PM，或者說，是「昇華」PM 的角色。</p>
@@ -272,7 +307,8 @@ graph LR
                                 <div class="alert alert-warning mt-4" role="alert">
                                     <h5 class="alert-heading"><i class="fas fa-brain me-2"></i>給每個人的提醒：如何避免「AI 腦萎縮」</h5>
                                     <p>在享受 AI 帶來效率的同時，我們必須警惕一個陷阱：過度依賴導致自身能力下降。因此，請將 AI 的每一次產出，都當成一次「學習」與「校準」的機會。</p>
-                                    <p class="mb-0">仔細閱讀 AI 生成的內容，不僅是為了對產出負責、把關品質，更是為了持續鍛鍊您自己的判斷力。AI 越強大，您自身的獨立思考和批判性思維就越珍貴。您是最終的決策者，這個角色，AI 無法取代。</p>
+                                    <p class="mb-0">仔細閱讀 AI 生成的內容，不僅是為了對產出負責、把關品質，更是為了持續鍛鍊您自己的判斷力。AI
+                                        越強大，您自身的獨立思考和批判性思維就越珍貴。您是最終的決策者，這個角色，AI 無法取代。</p>
                                 </div>
                             </div>
                         </section>
@@ -284,27 +320,34 @@ graph LR
                         <p>回顧這趟旅程，您學到的不僅僅是幾個指令，而是一套全新的工作哲學，讓您能從繁瑣的「方法論」中解放，專注於高價值的「世界觀」：</p>
                         <ul>
                             <li><strong>重新定位 AI</strong>：您學會了將 AI 從聊天對象，轉變為可以動手、交付成果的<strong>「執行者」</strong>。</li>
-                            <li><strong>晉升為總指揮</strong>：您學會了像管理團隊一樣，拆解任務、指派角色，並利用 <code>todo.md</code> 來指揮您的<strong>「AI 專家團隊」</strong>，高效完成複雜專案。</li>
-                            <li><strong>掌握價值核心</strong>：您理解到，真正的價值在於將精力從「把事情做對 (Doing things right)」轉移到<strong>「做對的事情 (Doing the right thing)」</strong>，專注於願景、策略與決策。</li>
+                            <li><strong>晉升為總指揮</strong>：您學會了像管理團隊一樣，拆解任務、指派角色，並利用 <code>todo.md</code> 來指揮您的<strong>「AI
+                                    專家團隊」</strong>，高效完成複雜專案。</li>
+                            <li><strong>掌握價值核心</strong>：您理解到，真正的價值在於將精力從「把事情做對 (Doing things right)」轉移到<strong>「做對的事情
+                                    (Doing the right thing)」</strong>，專注於願景、策略與決策。</li>
                         </ul>
-                        <p class="mt-4">如果您有想交流討論的地方，歡迎到我的 <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank">LinkedIn</a> 找我！</p>
-                        <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank" class="btn btn-primary mt-2">前往 LinkedIn</a>
+                        <p class="mt-4">如果您有想交流討論的地方，歡迎到我的 <a href="https://www.linkedin.com/in/junjia-hou/"
+                                target="_blank">LinkedIn</a> 找我！</p>
+                        <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank"
+                            class="btn btn-primary mt-2">前往 LinkedIn</a>
                         <p>AI 無法取代您的願景、您的同理心、您的決策力。但它能為您掃除一切通往偉大產品之路上的繁瑣障礙。</p>
                         <p class="fw-bold">現在，去運用您的新超能力，打造出令人驚豔的產品吧！</p>
 
                         <div class="alert alert-info mt-4" role="alert">
                             <h5 class="alert-heading"><i class="fas fa-crown me-2"></i>給管理者的最後一段話</h5>
-                                    <p>最後，給身為管理者的您一個誠懇的建議：<strong>撥出「一小段時間」親自探索 AI 的可能性。</strong></p>
-                                    <p>這並非要求您成為 AI 專家，而是透過<strong>小幅度的實際操作</strong>，例如嘗試幾個指令、體驗 AI 的輸出，以便<strong>對 AI 的能力與侷限有更直觀的理解。</strong></p>
-                                    <p>唯有親身實踐，您才能真正理解 AI 的現階段能力，避免因錯誤的期待，而對團隊產生「虛假的生產力幻覺」。</p>
-                                    <p>當管理者與執行者對工具的理解出現巨大落差時，信任的裂痕也將隨之而來。共同學習、共同成長，才是通往真正 AI 賦能團隊的唯一路徑。</p>
+                            <p>最後，給身為管理者的您一個誠懇的建議：<strong>撥出「一小段時間」親自探索 AI 的可能性。</strong></p>
+                            <p>這並非要求您成為 AI 專家，而是透過<strong>小幅度的實際操作</strong>，例如嘗試幾個指令、體驗 AI 的輸出，以便<strong>對 AI
+                                    的能力與侷限有更直觀的理解。</strong></p>
+                            <p>唯有親身實踐，您才能真正理解 AI 的現階段能力，避免因錯誤的期待，而對團隊產生「虛假的生產力幻覺」。</p>
+                            <p>當管理者與執行者對工具的理解出現巨大落差時，信任的裂痕也將隨之而來。共同學習、共同成長，才是通往真正 AI 賦能團隊的唯一路徑。</p>
                         </div>
                     </div>
                 </article>
 
                 <div class="d-flex justify-content-between flex-wrap mt-5">
-                    <a href="gemini-cli-tutorial-4.html" class="btn btn-secondary btn-lg mb-2 mb-md-0"><i class="fas fa-arrow-left me-2"></i>上一篇：AI 驅動的規格撰寫與專案管理</a>
-                    <a href="../tutorials.html" class="btn btn-primary btn-lg">返回 教學列表 <i class="fas fa-list ms-2"></i></a>
+                    <a href="gemini-cli-tutorial-4.html" class="btn btn-secondary btn-lg mb-2 mb-md-0"><i
+                            class="fas fa-arrow-left me-2"></i>上一篇：AI 驅動的規格撰寫與專案管理</a>
+                    <a href="../tutorials.html" class="btn btn-primary btn-lg">返回 教學列表 <i
+                            class="fas fa-list ms-2"></i></a>
                 </div>
             </div>
         </div>
@@ -328,6 +371,7 @@ graph LR
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-    <script>mermaid.initialize({startOnLoad:true});</script>
+    <script>mermaid.initialize({ startOnLoad: true });</script>
 </body>
+
 </html>

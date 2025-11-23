@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,15 +17,18 @@
             display: block;
             margin: 1.5rem auto;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .tutorial-content figure {
             margin: 1.5rem 0;
             text-align: center;
         }
+
         .tutorial-content figure img {
             margin: 0 auto;
         }
+
         .step {
             margin-bottom: 2.5rem;
             padding: 2rem;
@@ -33,9 +37,11 @@
             background-color: #f8f9fa;
             transition: box-shadow 0.3s ease-in-out;
         }
+
         .step:hover {
-            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
         }
+
         .step h3 {
             font-size: 1.75rem;
             color: #0d6efd;
@@ -43,16 +49,20 @@
             display: flex;
             align-items: center;
         }
+
         .step h3 .step-icon {
             margin-right: 1rem;
             font-size: 1.5rem;
         }
-        .tutorial-intro, .tutorial-summary {
+
+        .tutorial-intro,
+        .tutorial-summary {
             background-color: #e9f7ff;
             border-left: 5px solid #0d6efd;
             padding: 1.5rem;
             margin: 2rem 0;
         }
+
         .alert-gemini {
             background-color: #fff3cd;
             border-color: #ffeeba;
@@ -60,19 +70,21 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學文</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
                     </ul>
                 </div>
@@ -89,11 +101,14 @@
 
                     <div class="tutorial-intro">
                         <h4>前言</h4>
-                        <p>理論準備完畢，現在是動手實作的時刻！本章節是系列教學的核心，我們將整合前幾章的成果，從無到有建立一個完整的 n8n 工作流。這個工作流會自動讀取指定的資料，透過 Gemini API 將其轉換為向量 (Embeddings)，最後存入我們在 Supabase 中建立的向量資料庫。讓我們開始吧！</p>
+                        <p>理論準備完畢，現在是動手實作的時刻！本章節是系列教學的核心，我們將整合前幾章的成果，從無到有建立一個完整的 n8n 工作流。這個工作流會自動讀取指定的資料，透過 Gemini API
+                            將其轉換為向量 (Embeddings)，最後存入我們在 Supabase 中建立的向量資料庫。讓我們開始吧！</p>
                     </div>
 
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 API key 綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 經手的資料就有可能被作為訓練用，如有機敏資訊，並且一定要使用 Gemini 的話，請務必升級至付費方案，或使用地端 LLM，亦或是公司提供的 API。
+                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 API key 綁定在免費方案
+                        (free tier) 且未啟用帳單，則 Gemini 經手的資料就有可能被作為訓練用，如有機敏資訊，並且一定要使用 Gemini 的話，請務必升級至付費方案，或使用地端
+                        LLM，亦或是公司提供的 API。
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 
@@ -108,15 +123,18 @@
                                     <li>將 "Time Zone" 改為 "Asia/Taipei" 後儲存。</li>
                                 </ol>
                                 <figure>
-                                    <a href="4/image.png" target="_blank"><img src="4/image.png" alt="建立新工作流" class="img-fluid"></a>
+                                    <a href="4/image.png" target="_blank"><img src="4/image.png" alt="建立新工作流"
+                                            class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 1: 建立新工作流</figcaption>
                                 </figure>
                                 <figure>
-                                    <a href="4/image%202.png" target="_blank"><img src="4/image%202.png" alt="重新命名工作流" class="img-fluid"></a>
+                                    <a href="4/image%202.png" target="_blank"><img src="4/image%202.png" alt="重新命名工作流"
+                                            class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 2: 重新命名工作流</figcaption>
                                 </figure>
                                 <figure>
-                                    <a href="4/image%204.png" target="_blank"><img src="4/image%204.png" alt="設定時區" class="img-fluid"></a>
+                                    <a href="4/image%204.png" target="_blank"><img src="4/image%204.png" alt="設定時區"
+                                            class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 3: 設定時區為 Asia/Taipei</figcaption>
                                 </figure>
                             </div>
@@ -137,11 +155,13 @@
                                     </li>
                                 </ol>
                                 <figure>
-                                    <a href="4/image%207.png" target="_blank"><img src="4/image%207.png" alt="選擇 n8n Form" class="img-fluid"></a>
+                                    <a href="4/image%207.png" target="_blank"><img src="4/image%207.png"
+                                            alt="選擇 n8n Form" class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 4: 選擇 n8n Form 作為觸發器</figcaption>
                                 </figure>
                                 <figure>
-                                    <a href="4/image%2011.png" target="_blank"><img src="4/image%2011.png" alt="設定表單元件" class="img-fluid"></a>
+                                    <a href="4/image%2011.png" target="_blank"><img src="4/image%2011.png" alt="設定表單元件"
+                                            class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 5: 設定檔案上傳元件</figcaption>
                                 </figure>
                             </div>
@@ -151,15 +171,21 @@
                                 <p>上傳檔案後，我們需要從中提取純文字內容。</p>
                                 <ol>
                                     <li>在表單節點後新增節點，搜尋 "extract" 並選擇 "Extract from File"，事件為 "Extract from PDF"。</li>
-                                    <li>在 "Input Binary Field" 欄位，將其從預設的 <code>data</code> 改為 <code>inputFiles</code>，對應我們在表單中設定的欄位名稱。</li>
+                                    <li>在 "Input Binary Field" 欄位，將其從預設的 <code>data</code> 改為
+                                        <code>inputFiles</code>，對應我們在表單中設定的欄位名稱。
+                                    </li>
                                 </ol>
                                 <figure>
-                                    <a href="4/image%2013.png" target="_blank"><img src="4/image%2013.png" alt="選擇 Extract from File" class="img-fluid"></a>
+                                    <a href="4/image%2013.png" target="_blank"><img src="4/image%2013.png"
+                                            alt="選擇 Extract from File" class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 6: 新增 Extract from File 節點</figcaption>
                                 </figure>
                                 <figure>
-                                    <a href="4/image%2015.png" target="_blank"><img src="4/image%2015.png" alt="設定輸入欄位" class="img-fluid"></a>
-                                    <figcaption class="text-muted mt-2">圖 7: 將 Input Binary Field 指向 <code>inputFiles</code></figcaption>
+                                    <a href="4/image%2015.png" target="_blank"><img src="4/image%2015.png" alt="設定輸入欄位"
+                                            class="img-fluid"></a>
+                                    <figcaption class="text-muted mt-2">圖 7: 將 Input Binary Field 指向
+                                        <code>inputFiles</code>
+                                    </figcaption>
                                 </figure>
                             </div>
 
@@ -175,11 +201,13 @@
                                     </li>
                                 </ol>
                                 <figure>
-                                    <a href="4/image%2047.png" target="_blank"><img src="4/image%2047.png" alt="新增刪除節點" class="img-fluid"></a>
+                                    <a href="4/image%2047.png" target="_blank"><img src="4/image%2047.png" alt="新增刪除節點"
+                                            class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 8: 新增 Supabase Delete 節點</figcaption>
                                 </figure>
                                 <figure>
-                                    <a href="4/image%2050.png" target="_blank"><img src="4/image%2050.png" alt="設定刪除過濾器" class="img-fluid"></a>
+                                    <a href="4/image%2050.png" target="_blank"><img src="4/image%2050.png" alt="設定刪除過濾器"
+                                            class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 9: 設定刪除條件，比對檔案名稱</figcaption>
                                 </figure>
                             </div>
@@ -188,9 +216,12 @@
                                 <h3><i class="fas fa-database step-icon"></i>步驟五：寫入 Supabase Vector Store</h3>
                                 <p>這是最關鍵的一步，我們會將文字轉換為向量並存入資料庫。</p>
                                 <ol>
-                                    <li>在 "Delete a row" 節點後 (如果有的話，否則在 "Extract from File" 後) 新增 "Supabase Vector Store" 節點，操作選擇 "Add documents to vector store"。</li>
+                                    <li>在 "Delete a row" 節點後 (如果有的話，否則在 "Extract from File" 後) 新增 "Supabase Vector
+                                        Store" 節點，操作選擇 "Add documents to vector store"。</li>
                                     <li>選擇或建立您的 Supabase 憑證。</li>
-                                    <li>"Table Name" 選擇 <code>nhi_drug_768</code>，"Query Name" 改為 <code>match_nhi_drug_768</code>。</li>
+                                    <li>"Table Name" 選擇 <code>nhi_drug_768</code>，"Query Name" 改為
+                                        <code>match_nhi_drug_768</code>。
+                                    </li>
                                     <li><strong>設定 Embedding Model:</strong>
                                         <ul>
                                             <li>點擊節點左下的 "鬚鬚"，選擇 "Embeddings Google Gemini"。</li>
@@ -202,10 +233,12 @@
                                         <ul>
                                             <li>點擊節點右下角的 "鬚鬚"，選擇 "Default Data Loader"。</li>
                                             <li>點擊 "Add Option" -> "Metadata"。</li>
-                                            <li>點擊 "Add property"，Name 輸入 <code>fileName</code>，Value 貼上表達式 <code>{{ $('On form submission').item.json.inputFile.filename }}</code>。</li>
+                                            <li>點擊 "Add property"，Name 輸入 <code>fileName</code>，Value 貼上表達式
+                                                <code>{{ $('On form submission').item.json.inputFile.filename }}</code>。
+                                            </li>
                                         </ul>
                                     </li>
-                                     <li><strong>設定 Text Splitter:</strong>
+                                    <li><strong>設定 Text Splitter:</strong>
                                         <ul>
                                             <li>點擊右下角鬚鬚的 "+"，選擇 "Recursive Character Text Splitter"。</li>
                                             <li>將 "Chunk Size" 改為 <code>200</code>。</li>
@@ -213,19 +246,23 @@
                                     </li>
                                 </ol>
                                 <figure>
-                                    <a href="4/image%2021.png" target="_blank"><img src="4/image%2021.png" alt="設定 Supabase Vector Store" class="img-fluid"></a>
+                                    <a href="4/image%2021.png" target="_blank"><img src="4/image%2021.png"
+                                            alt="設定 Supabase Vector Store" class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 10: 設定 Supabase Vector Store 節點</figcaption>
                                 </figure>
                                 <figure>
-                                    <a href="4/image%2026.png" target="_blank"><img src="4/image%2026.png" alt="設定 Embedding Model" class="img-fluid"></a>
+                                    <a href="4/image%2026.png" target="_blank"><img src="4/image%2026.png"
+                                            alt="設定 Embedding Model" class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 11: 選擇並設定 Gemini Embedding</figcaption>
                                 </figure>
-                                 <figure>
-                                    <a href="4/image%2036.png" target="_blank"><img src="4/image%2036.png" alt="設定 Metadata" class="img-fluid"></a>
+                                <figure>
+                                    <a href="4/image%2036.png" target="_blank"><img src="4/image%2036.png"
+                                            alt="設定 Metadata" class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 12: 設定 Metadata，將檔名存入</figcaption>
                                 </figure>
                                 <figure>
-                                    <a href="4/image%2039.png" target="_blank"><img src="4/image%2039.png" alt="設定 Text Splitter" class="img-fluid"></a>
+                                    <a href="4/image%2039.png" target="_blank"><img src="4/image%2039.png"
+                                            alt="設定 Text Splitter" class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 13: 設定文字切割器</figcaption>
                                 </figure>
                             </div>
@@ -236,17 +273,20 @@
                                 <ol>
                                     <li>點擊右上角的 "Execute workflow"。</li>
                                     <li>在彈出的表單中，選擇一個 PDF 檔案並點擊 "Submit"。
-                                        (示範檔案可至 <a href="https://www.nhi.gov.tw/ch/cp-13108-67ddf-2508-1.html" target="_blank">健保署網站</a>下載)
+                                        (示範檔案可至 <a href="https://www.nhi.gov.tw/ch/cp-13108-67ddf-2508-1.html"
+                                            target="_blank">健保署網站</a>下載)
                                     </li>
                                     <li>工作流會自動執行。執行完畢後，回到您的 Supabase 專案。</li>
                                     <li>打開 "Table Editor"，查看 <code>nhi_drug_768</code> 資料表，您應該能看到剛剛上傳檔案的內容已經被切割並寫入。</li>
                                 </ol>
                                 <figure>
-                                    <a href="4/image%2055.png" target="_blank"><img src="4/image%2055.png" alt="最終工作流" class="img-fluid"></a>
+                                    <a href="4/image%2055.png" target="_blank"><img src="4/image%2055.png" alt="最終工作流"
+                                            class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 14: 最終完成的工作流</figcaption>
                                 </figure>
                                 <figure>
-                                    <a href="4/image%2044.png" target="_blank"><img src="4/image%2044.png" alt="驗證 Supabase 資料" class="img-fluid"></a>
+                                    <a href="4/image%2044.png" target="_blank"><img src="4/image%2044.png"
+                                            alt="驗證 Supabase 資料" class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 15: 在 Supabase 中確認資料已成功寫入</figcaption>
                                 </figure>
                             </div>
@@ -263,12 +303,14 @@
                             <li>設定 Supabase Vector Store，包含 Embedding、Metadata 與 Text Splitter。</li>
                             <li>將整個流程串聯起來，並成功將檔案內容寫入向量資料庫。</li>
                         </ul>
-                        <p>現在您已經掌握了將資料 "存入" 向量資料庫的技巧。在最後一篇教學中，我們將探討如何 "取出" 這些資料，<a href="n8n-tutorial-5.html">讓 AI 參考向量資料庫的內容來回答問題</a>，完成一個簡易的 RAG (Retrieval-Augmented Generation) 應用。</p>
+                        <p>現在您已經掌握了將資料 "存入" 向量資料庫的技巧。在最後一篇教學中，我們將探討如何 "取出" 這些資料，<a href="n8n-tutorial-5.html">讓 AI
+                                參考向量資料庫的內容來回答問題</a>，完成一個簡易的 RAG (Retrieval-Augmented Generation) 應用。</p>
                     </div>
                 </article>
 
                 <div class="mt-5 text-center">
-                    <a href="../tutorials.html#basic-series" class="btn btn-primary btn-lg"><i class="fas fa-list me-2"></i>返回 教學列表</a>
+                    <a href="../tutorials.html#basic-series" class="btn btn-primary btn-lg"><i
+                            class="fas fa-list me-2"></i>返回 教學列表</a>
                 </div>
             </div>
         </div>
@@ -282,4 +324,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>
 </body>
+
 </html>

@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PM x Gemini CLI (四)：AI 驅動的規格撰寫與專案管理 - Luke Hou 侯俊嘉的AI自動化與工作流指南</title>
-    <meta name="description" content="PM 與 Gemini CLI 協作系列第四篇，聚焦於「打造藍圖」與「管理流程」。本篇教學將介紹如何從根本上轉變為「規格驅動開發」，並指導您如何撰寫專業的 AI 指令稿來產出 PRD、QA 驗收清單，最後展示如何建立並透過 todo.md 管理您的 AI 專家團隊。">
-    <meta name="keywords" content="Gemini CLI, Gemini CLI 教學, PM, 產品經理, AI 協作, 規格驅動開發, SDD, PRD, QA, todo.md, AI Agent, Luke Hou, 侯俊嘉">
+    <meta name="description"
+        content="PM 與 Gemini CLI 協作系列第四篇，聚焦於「打造藍圖」與「管理流程」。本篇教學將介紹如何從根本上轉變為「規格驅動開發」，並指導您如何撰寫專業的 AI 指令稿來產出 PRD、QA 驗收清單，最後展示如何建立並透過 todo.md 管理您的 AI 專家團隊。">
+    <meta name="keywords"
+        content="Gemini CLI, Gemini CLI 教學, PM, 產品經理, AI 協作, 規格驅動開發, SDD, PRD, QA, todo.md, AI Agent, Luke Hou, 侯俊嘉">
     <link rel="icon" href="../images/favicon.jpg" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -17,15 +20,18 @@
             display: block;
             margin: 1.5rem auto;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .tutorial-content figure {
             margin: 1.5rem 0;
             text-align: center;
         }
+
         .tutorial-content figure img {
             margin: 0 auto;
         }
+
         .step {
             margin-bottom: 2.5rem;
             padding: 2rem;
@@ -34,9 +40,11 @@
             background-color: #f8f9fa;
             transition: box-shadow 0.3s ease-in-out;
         }
+
         .step:hover {
-            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
         }
+
         .step h3 {
             font-size: 1.75rem;
             color: #198754;
@@ -44,10 +52,12 @@
             display: flex;
             align-items: center;
         }
+
         .step h3 .step-icon {
             margin-right: 1rem;
             font-size: 1.5rem;
         }
+
         code {
             background-color: #e9ecef;
             padding: .2rem .4rem;
@@ -55,6 +65,7 @@
             font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             font-size: .875em;
         }
+
         pre {
             background-color: #212529;
             color: #f8f9fa;
@@ -63,25 +74,33 @@
             white-space: pre-wrap;
             word-wrap: break-word;
         }
+
         pre code {
             background-color: transparent;
             padding: 0;
             color: inherit;
             font-size: 1em;
         }
-        .tutorial-intro, .tutorial-summary {
+
+        .tutorial-intro,
+        .tutorial-summary {
             background-color: #eef8f3;
             border-left: 5px solid #198754;
             padding: 1.5rem;
             margin: 2rem 0;
         }
+
         .back-to-top-float {
             position: fixed;
-            top: 50%; /* Vertically center */
-            transform: translateY(-50%); /* Adjust for element's own height */
+            top: 50%;
+            /* Vertically center */
+            transform: translateY(-50%);
+            /* Adjust for element's own height */
             right: 20px;
-            z-index: 1000; /* Ensure it's above other content */
+            z-index: 1000;
+            /* Ensure it's above other content */
         }
+
         .back-to-top-float .btn {
             width: 50px;
             height: 50px;
@@ -92,20 +111,22 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學文</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
                         <li class="nav-item"><a class="nav-link" href="../podcast.html">🎙️ Podcast</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
                     </ul>
                 </div>
@@ -144,7 +165,8 @@
                     </div>
 
                     <div class="tutorial-intro" id="table-of-contents">
-                        <h4>本篇文章將聚焦於「打造藍圖」與「管理流程」。您將學會如何從根本上轉變為「規格驅動開發」，並指導您如何撰寫專業的 AI 指令稿來產出 PRD、QA 驗收清單，最後展示如何建立並透過 todo.md 管理您的 AI 專家團隊。</h4>
+                        <h4>本篇文章將聚焦於「打造藍圖」與「管理流程」。您將學會如何從根本上轉變為「規格驅動開發」，並指導您如何撰寫專業的 AI 指令稿來產出 PRD、QA 驗收清單，最後展示如何建立並透過
+                            todo.md 管理您的 AI 專家團隊。</h4>
                         <p><strong>文章大綱：</strong></p>
                         <ul>
                             <li><a href="#section-1">要點一：典範轉移：從「程式碼驅動」到「規格驅動開發 (SDD)」</a></li>
@@ -157,27 +179,37 @@
                     <div class="tutorial-content">
                         <section class="step-by-step">
                             <div class="step">
-                                <h3 id="section-1"><i class="fas fa-exchange-alt step-icon"></i>要點一：典範轉移：從「程式碼驅動」到「規格驅動開發 (SDD)」</h3>
-                                <p><strong>傳統的痛點：</strong> 在許多開發團隊中，規格文件 (PRD) 常常在交付給工程師後，就與實際的開發過程脫節。幾次迭代後，規格文件的參考價值越來越低，最終，產品的「真相」只存在於程式碼中，文件反而成了誤導的來源。</p>
-                                <p>AI 協作讓我們有機會重新強調<strong>「規格優先」</strong>的價值。因為 AI 能理解我們寫的規格文件，並輔助後續的開發與測試，這使得「維護一份清晰、準確的規格」這件事，變得空前重要且有價值。</p>
-                                
+                                <h3 id="section-1"><i
+                                        class="fas fa-exchange-alt step-icon"></i>要點一：典範轉移：從「程式碼驅動」到「規格驅動開發 (SDD)」</h3>
+                                <p><strong>傳統的痛點：</strong> 在許多開發團隊中，規格文件 (PRD)
+                                    常常在交付給工程師後，就與實際的開發過程脫節。幾次迭代後，規格文件的參考價值越來越低，最終，產品的「真相」只存在於程式碼中，文件反而成了誤導的來源。</p>
+                                <p>AI 協作讓我們有機會重新強調<strong>「規格優先」</strong>的價值。因為 AI
+                                    能理解我們寫的規格文件，並輔助後續的開發與測試，這使得「維護一份清晰、準確的規格」這件事，變得空前重要且有價值。</p>
+
                                 <p><strong>工作流程的轉變：</strong></p>
                                 <ul>
-                                    <li><strong>規格成為「可執行的藍圖」</strong>：一份寫得好的規格，不再只是給人看的說明書。您可以直接將它交給 AI，讓 AI 根據這份「藍圖」，自動生成使用者故事、測試案例、甚至初步的程式碼框架。這讓規格本身變得「有用」，而不只是「備查」。</li>
-                                    <li><strong>PM 的精力轉移</strong>：您的主要工作，從「追著工程師問現在做到哪」的事後追蹤，轉移到「如何在一開始就定義清楚需求」的事前準備。當規格定義得越清晰，與工程師的溝通誤差空間就越小。</li>
+                                    <li><strong>規格成為「可執行的藍圖」</strong>：一份寫得好的規格，不再只是給人看的說明書。您可以直接將它交給 AI，讓 AI
+                                        根據這份「藍圖」，自動生成使用者故事、測試案例、甚至初步的程式碼框架。這讓規格本身變得「有用」，而不只是「備查」。</li>
+                                    <li><strong>PM
+                                            的精力轉移</strong>：您的主要工作，從「追著工程師問現在做到哪」的事後追蹤，轉移到「如何在一開始就定義清楚需求」的事前準備。當規格定義得越清晰，與工程師的溝通誤差空間就越小。
+                                    </li>
                                 </ul>
                                 <p>在這種模式下，追蹤規格的變更也變得至關重要。您可以利用 AI 快速比對文件版本，產出清楚的變更紀錄，方便與團隊同步。</p>
                                 <pre><code>你現在是我的專案助理，請比較 @PRD_v1.0.md 和 @PRD_v1.1.md 這兩個版本的差異，並生成一份簡潔的變更摘要，讓我能快速在會議上報告。</code></pre>
                             </div>
 
                             <div class="step">
-                                <h3 id="section-2"><i class="fas fa-file-invoice step-icon"></i>要點二：從「簡報」到「PRD」：AI 輔助規格文件生成</h3>
-                                <p><strong>痛點場景：</strong> 當您有一個複雜的想法或任務，想在小小的終端機對話框裡一次打完，是不是常常覺得很難編輯？又要開始寫新的 PRD (產品需求文件) 了，面對空白的文件，不知從何下手？</p>
-                                <p>一個良好的工作習慣是：<strong>不要在對話框裡寫長篇大論</strong>。而是先把您的想法，有條理地寫在一個 Markdown (`.md`) 檔案裡。您可以把這個檔案，看作是一份要交給 AI 助理的「書面工作簡報 (Briefing)」。</p>
+                                <h3 id="section-2"><i class="fas fa-file-invoice step-icon"></i>要點二：從「簡報」到「PRD」：AI
+                                    輔助規格文件生成</h3>
+                                <p><strong>痛點場景：</strong> 當您有一個複雜的想法或任務，想在小小的終端機對話框裡一次打完，是不是常常覺得很難編輯？又要開始寫新的 PRD
+                                    (產品需求文件) 了，面對空白的文件，不知從何下手？</p>
+                                <p>一個良好的工作習慣是：<strong>不要在對話框裡寫長篇大論</strong>。而是先把您的想法，有條理地寫在一個 Markdown (`.md`)
+                                    檔案裡。您可以把這個檔案，看作是一份要交給 AI 助理的「書面工作簡報 (Briefing)」。</p>
 
                                 <div class="p-3 my-4 bg-light border rounded">
                                     <h5><i class="fas fa-pencil-alt me-2"></i>小提示：什麼是 Markdown？</h5>
-                                    <p>Markdown 是一種輕量級的標記式語言，讓您可以用簡單的純文字語法，來設定文件的格式。因為語法簡單、通用性高，非常適合用來撰寫給 AI 的指令稿或草稿文件。</p>
+                                    <p>Markdown 是一種輕量級的標記式語言，讓您可以用簡單的純文字語法，來設定文件的格式。因為語法簡單、通用性高，非常適合用來撰寫給 AI 的指令稿或草稿文件。
+                                    </p>
                                     <p class="mb-2"><strong>例如，一段這樣的 Markdown 文字：</strong></p>
                                     <pre class="bg-white text-dark"><code># 專案目標
 
@@ -188,7 +220,9 @@
 *請優先完成個人資料頁面*</code></pre>
                                     <p class="mt-3 mb-2"><strong>將會被渲染成類似這樣的效果：</strong></p>
                                     <div class="border p-3 rounded" style="background-color: #fff;">
-                                        <h1 style="font-size: 1.7rem; border-bottom: 1px solid #eee; padding-bottom: .5rem;">專案目標</h1>
+                                        <h1
+                                            style="font-size: 1.7rem; border-bottom: 1px solid #eee; padding-bottom: .5rem;">
+                                            專案目標</h1>
                                         <h2 style="font-size: 1.4rem;">核心功能</h2>
                                         <ul style="list-style-type: none; padding-left: 0;">
                                             <li><input type="checkbox" checked disabled> 使用者登入</li>
@@ -196,10 +230,11 @@
                                         </ul>
                                         <p><em>請優先完成個人資料頁面</em></p>
                                     </div>
-                                    <p class="mt-3">若想學習更多完整的 Markdown 語法，可以參考<a href="https://markdown.tw/" target="_blank">這份台灣的中文教學文件</a>。</p>
+                                    <p class="mt-3">若想學習更多完整的 Markdown 語法，可以參考<a href="https://markdown.tw/"
+                                            target="_blank">這份台灣的中文教學件</a>。</p>
                                     <p class="mt-2 mb-0">當您需要結構化地向 AI 傳達複雜指令時，用 Markdown 來組織您的想法會非常有效。</p>
                                 </div>
-                                
+
                                 <hr class="my-4">
 
                                 <h4 class="text-success">Part 1: 用 Markdown 檔案準備「給 AI 的書面簡報」</h4>
@@ -250,20 +285,25 @@ PRD 內容請直接以 Markdown 格式，產出獨立的 .md 檔案，方便我�
                                     <hr>
                                     <h3><strong>產品需求文件 (PRD): 社群討論區</strong></h3>
                                     <h4><strong>1. 功能描述 (Feature Description)</strong></h4>
-                                    <p>「社群討論區」是一個內建於線上學習平台的互動空間。它旨在讓付費學員可以針對課程內容進行提問、分享學習心得、並與其他學員及講師進行交流。此功能將解決目前平台缺乏互動性的問題，透過建立學習社群來提升用戶黏著度與歸屬感。</p>
-                                    
+                                    <p>「社群討論區」是一個內建於線上學習平台的互動空間。它旨在讓付費學員可以針對課程內容進行提問、分享學習心得、並與其他學員及講師進行交流。此功能將解決目前平台缺乏互動性的問題，透過建立學習社群來提升用戶黏著度與歸屬感。
+                                    </p>
+
                                     <h4><strong>2. 使用者故事 (User Stories)</strong></h4>
                                     <ul>
-                                        <li><strong>作為一名學員，我想要</strong> 一個地方可以提出我在課程中遇到的問題，<strong>以便</strong> 我能得到同學或講師的解答。</li>
+                                        <li><strong>作為一名學員，我想要</strong> 一個地方可以提出我在課程中遇到的問題，<strong>以便</strong>
+                                            我能得到同學或講師的解答。</li>
                                         <li><strong>作為一名學員，我想要</strong> 瀏覽其他人發布的內容，<strong>以便</strong> 我能從他們的經驗中學習。</li>
-                                        <li><strong>作為一名講師，我想要</strong> 看到學員們正在討論的話題，<strong>以便</strong> 我能了解他們普遍遇到的困難，並優化我的教學內容。</li>
+                                        <li><strong>作為一名講師，我想要</strong> 看到學員們正在討論的話題，<strong>以便</strong>
+                                            我能了解他們普遍遇到的困難，並優化我的教學內容。</li>
                                     </ul>
 
                                     <h4><strong>3. 成功指標 (Success Metrics)</strong></h4>
                                     <ul>
-                                        <li><strong>用戶活躍度 (User Activity):</strong> 每週不重複發文/回文的用戶數 (WAU) 達到總付費學員數的 15%。</li>
+                                        <li><strong>用戶活躍度 (User Activity):</strong> 每週不重複發文/回文的用戶數 (WAU) 達到總付費學員數的 15%。
+                                        </li>
                                         <li><strong>內容貢獻量 (Content Contribution):</strong> 每週新產生的貼文與留言總數超過 100 則。</li>
-                                        <li><strong>問題解決率 (Problem Resolution Rate):</strong> 80% 的提問貼文在 48 小時內至少獲得一則回覆。</li>
+                                        <li><strong>問題解決率 (Problem Resolution Rate):</strong> 80% 的提問貼文在 48 小時內至少獲得一則回覆。
+                                        </li>
                                     </ul>
                                 </div>
                                 <p>AI 會快速產出結構化的文件內容。在這份初稿的基礎上，您可以進一步要求 AI 進行任務拆解：</p>
@@ -298,14 +338,16 @@ PRD 內容請直接以 Markdown 格式，產出獨立的 .md 檔案，方便我�
                                         </li>
                                     </ul>
                                 </div>
-                                <p>AI 甚至能產出帶有敏捷開發專案的慣用語 (如 Epic, Task, AC) 的任務列表。這份列表可以直接作為與開發團隊討論的基礎，快速估算工作量，讓專案從一開始就有一個清晰的藍圖。</p>
+                                <p>AI 甚至能產出帶有敏捷開發專案的慣用語 (如 Epic, Task, AC)
+                                    的任務列表。這份列表可以直接作為與開發團隊討論的基礎，快速估算工作量，讓專案從一開始就有一個清晰的藍圖。</p>
                             </div>
 
                             <div class="step">
                                 <h3 id="section-3"><i class="fas fa-vial step-icon"></i>要點三：讓 AI 自動生成「功能驗收清單」</h3>
-                                <p><strong>痛點場景：</strong> 您辛苦寫完的 PRD，交給開發團隊後，他們寫出來的功能，可能常因為雙方對需求規格的理解有偏差，而漏掉一些您在意的細節或邊界條件？</p>
+                                <p><strong>痛點場景：</strong> 您辛苦寫完的
+                                    PRD，交給開發團隊後，他們寫出來的功能，可能常因為雙方對需求規格的理解有偏差，而漏掉一些您在意的細節或邊界條件？</p>
                                 <p>現在，您可以讓 AI 扮演 PM 和開發團隊之間的橋樑。在您寫完規格後，直接讓 AI 根據您的規格，產出第一版的「驗收測試案例 (Test Case)」。</p>
-                                
+
                                 <p><strong>範例：將「貼文發布」規格轉為測試案例</strong></p>
                                 <p>假設您的規格文件 <code>spec.md</code> 中有一段：</p>
                                 <pre><code>**功能：貼文發布**
@@ -338,14 +380,20 @@ PRD 內容請直接以 Markdown 格式，產出獨立的 .md 檔案，方便我�
                             </div>
 
                             <div class="step">
-                                <h3 id="section-4"><i class="fas fa-users-cog step-icon"></i>要點四：建立並管理你的 AI 專家團隊 (`todo.md` 實踐)</h3>
-                                <p><strong>痛點場景：</strong> 作為 PM，撰寫一份新的產品規格書 (PRD) 往往是一個漫長而複雜的過程。如何確保每個環節都能有條不紊地進行，並最終產出高品質的 PRD 和 UI Prototype？</p>
-                                <p>一個成功的領導者，懂得如何組建團隊並管理進度。在與 AI 協作時，您可以透過「角色扮演」與 `todo.md`，建立一個各司其職的「AI 專家團隊」，並清晰地導航整個專案流程。</p>
+                                <h3 id="section-4"><i class="fas fa-users-cog step-icon"></i>要點四：建立並管理你的 AI 專家團隊
+                                    (`todo.md` 實踐)</h3>
+                                <p><strong>痛點場景：</strong> 作為 PM，撰寫一份新的產品規格書 (PRD)
+                                    往往是一個漫長而複雜的過程。如何確保每個環節都能有條不紊地進行，並最終產出高品質的 PRD 和 UI Prototype？</p>
+                                <p>一個成功的領導者，懂得如何組建團隊並管理進度。在與 AI 協作時，您可以透過「角色扮演」與 `todo.md`，建立一個各司其職的「AI
+                                    專家團隊」，並清晰地導航整個專案流程。</p>
 
                                 <hr class="my-4">
 
                                 <h4 class="text-success">Part 1: 建立您的「AI 專家團隊」，各司其職</h4>
-                                <p>您可以為每一位 AI 專家建立一個專屬的 Prompt 指令稿 (例如 <code>market_analyst.md</code>, <code>qa_expert.md</code>)，將您對這個角色的期望、工作流程、產出格式等都定義清楚。您可以把這些 `.md` 檔案看作是您為每位 AI 專家量身打造的「工作手冊」。</p>
+                                <p>您可以為每一位 AI 專家建立一個專屬的 Prompt 指令稿 (例如 <code>market_analyst.md</code>,
+                                    <code>qa_expert.md</code>)，將您對這個角色的期望、工作流程、產出格式等都定義清楚。您可以把這些 `.md` 檔案看作是您為每位 AI
+                                    專家量身打造的「工作手冊」。
+                                </p>
                                 <p><strong>您的 AI 專家團隊可能包含：</strong></p>
                                 <ul>
                                     <li><strong>市場分析師</strong>：專門負責上網研究、分析競品、產出報告。</li>
@@ -355,19 +403,24 @@ PRD 內容請直接以 Markdown 格式，產出獨立的 .md 檔案，方便我�
                                 </ul>
 
                                 <h5 class="mt-4 text-primary">打造高品質「AI 專家」的進階技巧：</h5>
-                                <p>要讓您的 AI 專家不僅僅是個空殼，而是能真正產出高品質內容的得力助手，您可以在您的 <code>.md</code> 指令稿中，融入以下幾種進階的提示 (Prompting) 技巧：</p>
+                                <p>要讓您的 AI 專家不僅僅是個空殼，而是能真正產出高品質內容的得力助手，您可以在您的 <code>.md</code> 指令稿中，融入以下幾種進階的提示
+                                    (Prompting) 技巧：</p>
                                 <ul>
                                     <li class="mt-3">
                                         <strong>專家角色扮演模式 (Expert Persona)</strong><br>
-                                        不只是給予「你是一位產品經理」這種簡單角色，而是設定更精細、更具體的「專家人格」。例如：「你是一位對使用者體驗極度挑剔的設計總監，請用你的視角審視這份 PRD」、「你是一位只在乎商業變現的 CEO，請評估這個功能的潛在營收模式」。讓 AI 從不同利害關係人的視角提供回饋，能讓您的思考更全面。
+                                        不只是給予「你是一位產品經理」這種簡單角色，而是設定更精細、更具體的「專家人格」。例如：「你是一位對使用者體驗極度挑剔的設計總監，請用你的視角審視這份
+                                        PRD」、「你是一位只在乎商業變現的 CEO，請評估這個功能的潛在營收模式」。讓 AI 從不同利害關係人的視角提供回饋，能讓您的思考更全面。
                                     </li>
                                     <li class="mt-3">
                                         <strong>思維鏈 (Chain of Thought) 技巧</strong><br>
-                                        在指令中明確要求 AI「先思考，再回答」。例如，在處理複雜的分析任務時，您可以加上這樣的指令：「請一步一步思考。首先，分析問題的背景。接著，列出可能的解決方案。最後，評估每個方案的優劣並給出建議。」這種方式能引導 AI 進行更嚴謹的邏輯推理，大幅提升回答的品質與準確性。
+                                        在指令中明確要求
+                                        AI「先思考，再回答」。例如，在處理複雜的分析任務時，您可以加上這樣的指令：「請一步一步思考。首先，分析問題的背景。接著，列出可能的解決方案。最後，評估每個方案的優劣並給出建議。」這種方式能引導
+                                        AI 進行更嚴謹的邏輯推理，大幅提升回答的品質與準確性。
                                     </li>
                                     <li class="mt-3">
                                         <strong>少樣本提示法 (Few-shot Prompting)</strong><br>
-                                        在指令中直接給予 AI 1-2 個您想要的輸出範例。這就像是給它一個「樣板」，讓它能精準地模仿您想要的格式、風格或語氣來完成任務。例如，如果您希望 AI 產出特定格式的使用者故事，可以直接在指令中寫下範例，AI 的後續產出就會完全遵照您的格式。
+                                        在指令中直接給予 AI 1-2 個您想要的輸出範例。這就像是給它一個「樣板」，讓它能精準地模仿您想要的格式、風格或語氣來完成任務。例如，如果您希望 AI
+                                        產出特定格式的使用者故事，可以直接在指令中寫下範例，AI 的後續產出就會完全遵照您的格式。
                                     </li>
                                 </ul>
 
@@ -424,7 +477,8 @@ PRD 內容請直接以 Markdown 格式，產出獨立的 .md 檔案，方便我�
 準備好了，把文件給我。
 </code></pre>
 
-                                <p class="mt-4">將這些技巧應用在您的 <code>ceo_persona.md</code> 或 <code>qa_expert.md</code> 等檔案中，就能將它們從簡單的指令稿，升級為真正專業、可靠的自動化工具。</p>
+                                <p class="mt-4">將這些技巧應用在您的 <code>ceo_persona.md</code> 或 <code>qa_expert.md</code>
+                                    等檔案中，就能將它們從簡單的指令稿，升級為真正專業、可靠的自動化工具。</p>
 
                                 <p>您的核心工作，不再是親自執行所有事，而是像一位總指揮，清晰地定義問題，並將任務指派給最適合的 AI 專家去處理。</p>
 
@@ -435,9 +489,12 @@ PRD 內容請直接以 Markdown 格式，產出獨立的 .md 檔案，方便我�
                                 <p><strong>PM 撰寫 PRD 的 `todo.md` 工作流：</strong></p>
                                 <ol>
                                     <li><strong>定義最終目標</strong>：PM 首先在 `todo.md` 中明確定義最終目標。</li>
-                                    <li><strong>AI 協助拆解任務</strong>：PM 指示 AI 根據最終目標，將整個流程拆解為一系列具體、可執行的子任務，並列入 `todo.md`。</li>
-                                    <li><strong>PM 審核與指派</strong>：PM 審核任務清單，逐一指派給不同的 AI Agent（例如：`@qa_expert.md`）或由 PM 親自指派。</li>
-                                    <li><strong>AI Agent 執行與自動更新進度</strong>：每個 AI Agent 根據被指派的任務進行工作，並在完成後自動更新 `todo.md` 中的任務狀態，PM 則負責審核每個階段的產出。</li>
+                                    <li><strong>AI 協助拆解任務</strong>：PM 指示 AI 根據最終目標，將整個流程拆解為一系列具體、可執行的子任務，並列入 `todo.md`。
+                                    </li>
+                                    <li><strong>PM 審核與指派</strong>：PM 審核任務清單，逐一指派給不同的 AI Agent（例如：`@qa_expert.md`）或由 PM
+                                        親自指派。</li>
+                                    <li><strong>AI Agent 執行與自動更新進度</strong>：每個 AI Agent 根據被指派的任務進行工作，並在完成後自動更新 `todo.md`
+                                        中的任務狀態，PM 則負責審核每個階段的產出。</li>
                                 </ol>
 
                                 <p><strong>範例：撰寫新功能 PRD 的 `todo.md`</strong></p>
@@ -470,7 +527,8 @@ PRD 內容請直接以 Markdown 格式，產出獨立的 .md 檔案，方便我�
     *   **指派給：** @pm_assistant.md
     *   **驗收條件：** 產出最終版 PRD (`security_feature_prd_final.md`)。
 </code></pre>
-                                <p class="mt-4">當您準備好這份 `todo.md` 後，就可以開始執行您的專案了。您可以對 Gemini CLI 下達一個更精確的啟動指令，引導它如何扮演「總監」並調度其他「AI 專家」：</p>
+                                <p class="mt-4">當您準備好這份 `todo.md` 後，就可以開始執行您的專案了。您可以對 Gemini CLI
+                                    下達一個更精確的啟動指令，引導它如何扮演「總監」並調度其他「AI 專家」：</p>
                                 <pre><code>你現在是我的專案總監。你的任務是閱讀 `@todo.md`，並依序執行其中的任務。
 
 當你遇到一個任務時，請注意「指派給」欄位：
@@ -491,16 +549,21 @@ PRD 內容請直接以 Markdown 格式，產出獨立的 .md 檔案，方便我�
                             <li>展示如何透過「書面簡報」搭配 AI，高效產出結構化的 PRD 初稿。</li>
                             <li>教學如何利用 AI 將規格文件自動轉換為詳盡的 QA 驗收清單，確保交付品質。</li>
                         </ul>
-                        <p class="mt-4">如果您有想交流討論的地方，歡迎到我的 <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank">LinkedIn</a> 找我！</p>
-                        <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank" class="btn btn-primary mt-2">前往 LinkedIn</a>
+                        <p class="mt-4">如果您有想交流討論的地方，歡迎到我的 <a href="https://www.linkedin.com/in/junjia-hou/"
+                                target="_blank">LinkedIn</a> 找我！</p>
+                        <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank"
+                            class="btn btn-primary mt-2">前往 LinkedIn</a>
                         <p>透過這些 AI 驅動的策略，PM 可以將更多精力投入到策略思考和創新決策中，從「忙碌的管理者」轉型為「產品賦能者」，帶領團隊高效達成產品目標。</p>
                     </div>
                 </article>
 
                 <div class="d-flex justify-content-between flex-wrap mt-5">
-                    <a href="gemini-cli-tutorial-3.html" class="btn btn-secondary btn-lg mb-2 mb-md-0"><i class="fas fa-arrow-left me-2"></i>上一篇：AI 賦能產品探索與定義</a>
-                    <a href="../tutorials.html" class="btn btn-primary btn-lg mb-2 mb-md-0"><i class="fas fa-list me-2"></i>返回 教學列表</a>
-                    <a href="gemini-cli-tutorial-5.html" class="btn btn-secondary btn-lg">下一篇：AI 時代的敏捷實踐與 PM 新角色 <i class="fas fa-arrow-right ms-2"></i></a>
+                    <a href="gemini-cli-tutorial-3.html" class="btn btn-secondary btn-lg mb-2 mb-md-0"><i
+                            class="fas fa-arrow-left me-2"></i>上一篇：AI 賦能產品探索與定義</a>
+                    <a href="../tutorials.html" class="btn btn-primary btn-lg mb-2 mb-md-0"><i
+                            class="fas fa-list me-2"></i>返回 教學列表</a>
+                    <a href="gemini-cli-tutorial-5.html" class="btn btn-secondary btn-lg">下一篇：AI 時代的敏捷實踐與 PM 新角色 <i
+                            class="fas fa-arrow-right ms-2"></i></a>
                 </div>
             </div>
         </div>
@@ -524,4 +587,5 @@ PRD 內容請直接以 Markdown 格式，產出獨立的 .md 檔案，方便我�
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>
 </body>
+
 </html>

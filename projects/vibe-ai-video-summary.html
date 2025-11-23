@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-TW" data-bs-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>專案: AI Vibe Coding 影片自動摘要與字幕 - Luke的作品集</title>
-    <meta name="description" content="透過 Vibe Coding，體驗強大的影片內容分析能力。這個 Side Project 展示了如何利用 AI 技術自動生成影片的逐字稿、時間軸以及精煉的摘要，將繁瑣的內容整理工作化繁為簡。">
+    <title>專案: AI Vibe Coding 影片自動摘要與字幕 - Luke的作品</title>
+    <meta name="description"
+        content="透過 Vibe Coding，體驗強大的影片內容分析能力。這個 Side Project 展示了如何利用 AI 技術自動生成影片的逐字稿、時間軸以及精煉的摘要，將繁瑣的內容整理工作化繁為簡。">
     <meta name="keywords" content="Vibe Coding AI, AI, 影片摘要, 逐字稿, 自動字幕, 內容分析, Luke Hou, 侯俊嘉">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -13,7 +15,7 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-0V2L1DQVPY');
     </script>
@@ -24,25 +26,31 @@
             padding: 4rem 0;
             color: white;
         }
+
         .project-hero h1 {
             font-weight: 700;
         }
+
         .summary-card {
             position: sticky;
             top: 20px;
         }
+
         .tech-badge {
             font-size: 0.9rem;
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
         }
+
         .gallery-img {
             cursor: pointer;
             transition: transform 0.2s;
         }
+
         .gallery-img:hover {
             transform: scale(1.05);
         }
+
         .floating-toggle-btn {
             position: fixed;
             top: 50%;
@@ -54,10 +62,11 @@
             padding: 1rem 0.5rem;
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
-            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+            box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
+
 <body>
     <a href="vibe-ai-video-summary-business.html" class="btn btn-primary floating-toggle-btn" title="切換至商業視角說明">
         <i class="bi bi-briefcase-fill"></i> 商業視角說明
@@ -66,14 +75,15 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="../index.html">Luke Hou</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學文</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
                     </ul>
                 </div>
@@ -118,13 +128,16 @@
                                 <li class="list-group-item d-flex justify-content-between align-items-start">
                                     <div class="ms-2 me-auto">
                                         <div class="fw-bold">高效語音轉文字 (OpenAI Whisper)</div>
-                                        整合 <a href="https://github.com/openai/whisper" target="_blank" rel="noopener noreferrer">OpenAI Whisper</a> 模型，在本地端即可實現高精度的語音辨識，並生成帶有時間軸的逐字稿。
+                                        整合 <a href="https://github.com/openai/whisper" target="_blank"
+                                            rel="noopener noreferrer">OpenAI Whisper</a>
+                                        模型，在本地端即可實現高精度的語音辨識，並生成帶有時間軸的逐字稿。
                                     </div>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-start">
                                     <div class="ms-2 me-auto">
                                         <div class="fw-bold">輕量級 AI 摘要 (MediaTek Breeze)</div>
-                                        採用聯發科開源的 <a href="https://huggingface.co/MediaTek-Research" target="_blank" rel="noopener noreferrer">Breeze</a> 小型語言模型，在有限的硬體資源下，快速提煉逐字稿內容，生成結構化摘要。
+                                        採用聯發科開源的 <a href="https://huggingface.co/MediaTek-Research" target="_blank"
+                                            rel="noopener noreferrer">Breeze</a> 小型語言模型，在有限的硬體資源下，快速提煉逐字稿內容，生成結構化摘要。
                                     </div>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-start">
@@ -132,7 +145,7 @@
                                         <div class="fw-bold">用鍵盤左右鍵就可以切換上下句，保護工程師脆弱的手腕。</div>
                                         在大圖瀏覽模式下，直接用鍵盤就可以換頁，讓苟延殘喘的手腕、拇指跟食指暫時休息一下。
                                     </div>
-                                </li>                                
+                                </li>
                             </ol>
 
                             <hr class="my-4">
@@ -145,20 +158,23 @@
                                 </li>
                                 <li class="list-group-item">
                                     <div class="fw-bold">模型精度與效能的平衡</div>
-                                    <p class="mb-0">選用 Breeze 這類小型語言模型是為了在多數個人電腦上也能運行，但其摘要的精準度與細膩度，與大型商用模型 (如 GPT-4) 相比仍有差距。儘管如此，對於日常會議記錄、教學影片等內容的整理，其表現已足夠應付。</p>
+                                    <p class="mb-0">選用 Breeze 這類小型語言模型是為了在多數個人電腦上也能運行，但其摘要的精準度與細膩度，與大型商用模型 (如 GPT-4)
+                                        相比仍有差距。儘管如此，對於日常會議記錄、教學影片等內容的整理，其表現已足夠應付。</p>
                                 </li>
-                            </ul>                            
-                            
+                            </ul>
+
                             <hr class="my-4">
 
                             <h2 class="h3 mb-3"><i class="bi bi-kanban me-2"></i>成果展示</h2>
                             <p class="text-muted">以下為工具實際運行的截圖，有請山姆奧特曼先生友情(?)展示了從影片到逐字稿與摘要的成品。</p>
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <img src="../images/vibe-ai-1.png" alt="Vibe AI 操作介面" class="img-fluid rounded gallery-img">
+                                    <img src="../images/vibe-ai-1.png" alt="Vibe AI 操作介面"
+                                        class="img-fluid rounded gallery-img">
                                 </div>
                                 <div class="col-md-6">
-                                    <img src="../images/vibe-ai-2.png" alt="Vibe AI 大圖模式" class="img-fluid rounded gallery-img">
+                                    <img src="../images/vibe-ai-2.png" alt="Vibe AI 大圖模式"
+                                        class="img-fluid rounded gallery-img">
                                 </div>
                             </div>
 
@@ -171,7 +187,8 @@
                 <div class="col-lg-4">
                     <div class="card shadow-sm summary-card">
                         <div class="card-body">
-                            <h3 class="card-title h5 border-bottom pb-2 mb-3"><i class="bi bi-bar-chart-line-fill me-2"></i>價值與影響</h3>
+                            <h3 class="card-title h5 border-bottom pb-2 mb-3"><i
+                                    class="bi bi-bar-chart-line-fill me-2"></i>價值與影響</h3>
                             <ul class="list-unstyled">
                                 <li class="mb-3 d-flex">
                                     <i class="bi bi-clock-history h4 text-primary me-3"></i>
@@ -206,7 +223,8 @@
                         </div>
                     </div>
                     <div class="d-grid mt-3">
-                        <a href="../portfolio.html" class="btn btn-outline-primary"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+                        <a href="../portfolio.html" class="btn btn-outline-primary"><i
+                                class="bi bi-arrow-left-circle me-2"></i>返回作品</a>
                     </div>
                 </div>
             </div>
@@ -238,7 +256,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
             const modalImage = document.getElementById('modalImage');
-            
+
             document.querySelectorAll('.gallery-img').forEach(img => {
                 img.addEventListener('click', function () {
                     modalImage.src = this.src;
@@ -248,4 +266,5 @@
         });
     </script>
 </body>
+
 </html>

@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>案例研究：用AI賦能QA，將版本資訊轉化為測試策略 - Luke Hou 作品集</title>
-    <meta name="description" content="了解我如何打造一個AI助理，自動將數百張Jira tickets轉化為精準的QA測試計畫，將每次版更的準備時間從數小時縮短至數分鐘，讓品質保證(QA)真正成為價值的守門員。">
+    <title>案例研究：用AI賦能QA，將版本資訊轉化為測試策略 - Luke Hou 作品</title>
+    <meta name="description"
+        content="了解我如何打造一個AI助理，自動將數百張Jira tickets轉化為精準的QA測試計畫，將每次版更的準備時間從數小時縮短至數分鐘，讓品質保證(QA)真正成為價值的守門員。">
     <meta name="keywords" content="QA, 測試策略, AI, 自動化, Release Notes, Jira, 效率提升, Luke Hou, 侯俊嘉">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -13,18 +15,53 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-0V2L1DQVPY');
     </script>
     <style>
-        .hero-section { background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/n8n-ai-release-notes-automation/release-summary-output.png') no-repeat center center; background-size: cover; padding: 5rem 0; color: white; }
-        .hero-section h1 { font-weight: 700; }
-        .impact-card { background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: .5rem; padding: 1.5rem; margin-bottom: 1.5rem; }
-        .impact-card .icon { font-size: 2.5rem; color: #0d6efd; }
-        .feature-card { text-align: center; padding: 1.5rem; border: 1px solid #dee2e6; border-radius: .5rem; height: 100%; }
-        .feature-card .icon { font-size: 2.5rem; margin-bottom: 1rem; color: #0d6efd; }
-        body { background-color: #fdf5e6; }
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/n8n-ai-release-notes-automation/release-summary-output.png') no-repeat center center;
+            background-size: cover;
+            padding: 5rem 0;
+            color: white;
+        }
+
+        .hero-section h1 {
+            font-weight: 700;
+        }
+
+        .impact-card {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .impact-card .icon {
+            font-size: 2.5rem;
+            color: #0d6efd;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 1.5rem;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            height: 100%;
+        }
+
+        .feature-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #0d6efd;
+        }
+
+        body {
+            background-color: #fdf5e6;
+        }
+
         .floating-toggle-btn {
             position: fixed;
             top: 50%;
@@ -36,10 +73,11 @@
             padding: 1rem 0.5rem;
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
-            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+            box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
+
 <body>
     <a href="n8n-ai-release-notes-automation.html" class="btn btn-dark floating-toggle-btn" title="切換至技術視角說明">
         <i class="bi bi-code-slash"></i> 技術視角說明
@@ -48,12 +86,13 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span
+                        class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">♾️ 首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學文</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">✈️分享</a></li>
                     </ul>
                 </div>
@@ -65,7 +104,8 @@
         <section class="hero-section text-center">
             <div class="container">
                 <h1 class="display-4">版本發布後，你的QA團隊是在測試，還是在考古？</h1>
-                <p class="lead col-lg-8 mx-auto">我如何打造一個AI助理，自動將數百張Jira tickets轉化為精準的QA測試計畫，將每次版更的準備時間從數小時縮短至數分鐘，讓品質保證(QA)真正成為價值的守門員。</p>
+                <p class="lead col-lg-8 mx-auto">我如何打造一個AI助理，自動將數百張Jira
+                    tickets轉化為精準的QA測試計畫，將每次版更的準備時間從數小時縮短至數分鐘，讓品質保證(QA)真正成為價值的守門員。</p>
             </div>
         </section>
 
@@ -74,8 +114,10 @@
                 <div class="col-lg-10">
 
                     <div class="text-center mb-5">
-                        <h2 class="h1 mb-3"><i class="bi bi-journal-bookmark-fill text-danger me-2"></i>The Challenge: 資訊洪流中的品質守門員</h2>
-                        <p class="lead text-muted">軟體版本發布後，QA 團隊面臨巨大挑戰：如何在數十到上百張 Jira tickets 中，快速找出核心變動、評估風險、定義測試範圍？傳統手動整理不僅效率低下，更容易遺漏關鍵的回歸測試點，成為影響產品質量與上市時程的瓶頸。</p>
+                        <h2 class="h1 mb-3"><i class="bi bi-journal-bookmark-fill text-danger me-2"></i>The Challenge:
+                            資訊洪流中的品質守門員</h2>
+                        <p class="lead text-muted">軟體版本發布後，QA 團隊面臨巨大挑戰：如何在數十到上百張 Jira tickets
+                            中，快速找出核心變動、評估風險、定義測試範圍？傳統手動整理不僅效率低下，更容易遺漏關鍵的回歸測試點，成為影響產品質量與上市時程的瓶頸。</p>
                     </div>
                     <div class="row text-center mb-5">
                         <div class="col-md-4">
@@ -95,17 +137,20 @@
                     <hr class="my-5">
 
                     <div class="text-center mb-5">
-                        <h2 class="h1 mb-3"><i class="bi bi-lightbulb-fill text-primary me-2"></i>The Solution: 賦能QA的AI測試策略家</h2>
-                        <p class="lead text-muted">我開發了一套自動化流程，作為 QA 團隊的「AI 測試策略家」。它能主動消化繁雜的版更資訊，並產出聚焦、 actionable 的測試情報，讓 QA 從資訊的被動接收者，轉變為品質策略的主導者。</p>
+                        <h2 class="h1 mb-3"><i class="bi bi-lightbulb-fill text-primary me-2"></i>The Solution:
+                            賦能QA的AI測試策略家</h2>
+                        <p class="lead text-muted">我開發了一套自動化流程，作為 QA 團隊的「AI 測試策略家」。它能主動消化繁雜的版更資訊，並產出聚焦、 actionable
+                            的測試情報，讓 QA 從資訊的被動接收者，轉變為品質策略的主導者。</p>
                     </div>
-                    
+
                     <div class="row g-4 mb-5">
                         <div class="col-md-4">
                             <div class="feature-card">
                                 <div class="icon"><i class="bi bi-file-earmark-zip-fill"></i></div>
                                 <h5>AI 全局洞察</h5>
                                 <p>AI 自動讀取本次版更的所有 Jira tickets，生成高度濃縮的版本摘要，讓 QA 在短時間內掌握全局。</p>
-                                <img src="../images/n8n-ai-release-notes-automation/release-summary-output.png" alt="版本摘要" class="img-fluid rounded shadow">
+                                <img src="../images/n8n-ai-release-notes-automation/release-summary-output.png"
+                                    alt="版本摘要" class="img-fluid rounded shadow">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -113,7 +158,8 @@
                                 <div class="icon"><i class="bi bi-card-checklist"></i></div>
                                 <h5>AI 風險聚焦</h5>
                                 <p>AI 深入分析每張 ticket 的內容，智能建議需要重點回歸測試的功能，並生成初步的驗證清單。</p>
-                                <img src="../images/n8n-ai-release-notes-automation/qa-checklist-output.png" alt="QA 驗證要點" class="img-fluid rounded shadow">
+                                <img src="../images/n8n-ai-release-notes-automation/qa-checklist-output.png"
+                                    alt="QA 驗證要點" class="img-fluid rounded shadow">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -121,7 +167,8 @@
                                 <div class="icon"><i class="bi bi-arrow-repeat"></i></div>
                                 <h5>無縫資訊同步</h5>
                                 <p>所有分析結果會被自動發布到 Confluence，確保 QA、PM、開發者之間的資訊完全同步，降低溝通成本。</p>
-                                <img src="../images/n8n-ai-release-notes-automation/ticket-list-output.png" alt="詳細 Ticket 列表" class="img-fluid rounded shadow">
+                                <img src="../images/n8n-ai-release-notes-automation/ticket-list-output.png"
+                                    alt="詳細 Ticket 列表" class="img-fluid rounded shadow">
                             </div>
                         </div>
                     </div>
@@ -163,17 +210,24 @@
 
                     <div class="accordion" id="tech-deep-dive">
                         <div class="accordion-item">
-                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-tech"><strong>對技術實現細節感興趣？點此展開</strong></button></h2>
-                            <div id="collapse-tech" class="accordion-collapse collapse" data-bs-parent="#tech-deep-dive">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapse-tech"><strong>對技術實現細節感興趣？點此展開</strong></button></h2>
+                            <div id="collapse-tech" class="accordion-collapse collapse"
+                                data-bs-parent="#tech-deep-dive">
                                 <div class="accordion-body">
                                     <h4 class="h5">核心做法</h4>
                                     <p>此工作流透過 n8n 串連 Jira 與 Confluence 的 API，並將取得的資料送交大型語言模型 (LLM) 進行分析。</p>
                                     <ol>
-                                        <li><strong>抓取 Jira 資訊:</strong> 使用 JQL (Jira Query Language) 查詢抓取指定版本的所有 Jira Tickets。</li>
-                                        <li><strong>AI 分析與生成:</strong> 將 Tickets 內容批次送入 AI 模型，透過精心設計的 Prompt，分別生成「版本摘要」、「單一 Ticket 摘要」與「QA 測試重點」。</li>
-                                        <li><strong>發布至 Confluence:</strong> 將 AI 生成的結構化內容，透過 Confluence API 自動建立或更新成一個格式精美的 Release Notes 頁面，確保資訊同步。</li>
+                                        <li><strong>抓取 Jira 資訊:</strong> 使用 JQL (Jira Query Language) 查詢抓取指定版本的所有 Jira
+                                            Tickets。</li>
+                                        <li><strong>AI 分析與生成:</strong> 將 Tickets 內容批次送入 AI 模型，透過精心設計的
+                                            Prompt，分別生成「版本摘要」、「單一 Ticket 摘要」與「QA 測試重點」。</li>
+                                        <li><strong>發布至 Confluence:</strong> 將 AI 生成的結構化內容，透過 Confluence API
+                                            自動建立或更新成一個格式精美的 Release Notes 頁面，確保資訊同步。</li>
                                     </ol>
-                                    <img src="../images/n8n-ai-release-notes-automation/n8n-ai-release-notes-workflow.jpg" alt="n8n 整體工作流" class="img-fluid rounded img-bordered">
+                                    <img src="../images/n8n-ai-release-notes-automation/n8n-ai-release-notes-workflow.jpg"
+                                        alt="n8n 整體工作流" class="img-fluid rounded img-bordered">
                                 </div>
                             </div>
                         </div>
@@ -186,11 +240,13 @@
 
     <footer class="bg-white mt-5 py-4 border-top">
         <div class="container text-center">
-            <a href="../portfolio.html" class="btn btn-outline-primary mb-3"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+            <a href="../portfolio.html" class="btn btn-outline-primary mb-3"><i
+                    class="bi bi-arrow-left-circle me-2"></i>返回作品</a>
             <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

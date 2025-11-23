@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,15 +17,18 @@
             display: block;
             margin: 1.5rem auto;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .tutorial-content figure {
             margin: 1.5rem 0;
             text-align: center;
         }
+
         .tutorial-content figure img {
             margin: 0 auto;
         }
+
         .step {
             margin-bottom: 2.5rem;
             padding: 2rem;
@@ -33,9 +37,11 @@
             background-color: #f8f9fa;
             transition: box-shadow 0.3s ease-in-out;
         }
+
         .step:hover {
-            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
         }
+
         .step h3 {
             font-size: 1.75rem;
             color: #0d6efd;
@@ -43,16 +49,20 @@
             display: flex;
             align-items: center;
         }
+
         .step h3 .step-icon {
             margin-right: 1rem;
             font-size: 1.5rem;
         }
-        .tutorial-intro, .tutorial-summary {
+
+        .tutorial-intro,
+        .tutorial-summary {
             background-color: #e9f7ff;
             border-left: 5px solid #0d6efd;
             padding: 1.5rem;
             margin: 2rem 0;
         }
+
         .alert-gemini {
             background-color: #fff3cd;
             border-color: #ffeeba;
@@ -60,19 +70,21 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學文</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
                     </ul>
                 </div>
@@ -89,11 +101,14 @@
 
                     <div class="tutorial-intro">
                         <h4>前言</h4>
-                        <p>有了 n8n 環境和 Supabase 資料庫後，現在是時候為我們的自動化流程注入 AI 的智慧了。本章節將帶您一步步完成 Google Gemini API Key 的申請流程，讓您的 n8n 工作流也能擁有強大的語言模型能力。</p>
+                        <p>有了 n8n 環境和 Supabase 資料庫後，現在是時候為我們的自動化流程注入 AI 的智慧了。本章節將帶您一步步完成 Google Gemini API Key 的申請流程，讓您的
+                            n8n 工作流也能擁有強大的語言模型能力。</p>
                     </div>
 
                     <div class="alert alert-gemini alert-dismissible fade show" role="alert">
-                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 API key 綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案，或使用地端 LLM，亦或是公司提供的 API。
+                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 API key 綁定在免費方案
+                        (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案，或使用地端 LLM，亦或是公司提供的
+                        API。
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 
@@ -103,17 +118,20 @@
                                 <h3><i class="fas fa-cloud step-icon"></i>步驟一：建立 Google Cloud 專案</h3>
                                 <p>Gemini API Key 需要綁定在一個 Google Cloud 專案上。如果您還沒有專案，請依照以下步驟建立：</p>
                                 <ol>
-                                    <li>前往 <a href="https://cloud.google.com/?hl=zh-TW" target="_blank">Google Cloud Console</a> 並登入您的 Google 帳號。</li>
+                                    <li>前往 <a href="https://cloud.google.com/?hl=zh-TW" target="_blank">Google Cloud
+                                            Console</a> 並登入您的 Google 帳號。</li>
                                     <li>點擊頁面左上角的專案選單，然後選擇「新增專案」。</li>
                                     <li>為您的專案命名 (例如: <code>n8nTest</code>)，然後點擊「建立」。</li>
                                     <li>建立完成後，請確保您已從頂端選單選取了這個新專案。</li>
                                 </ol>
                                 <figure>
-                                    <a href="3/image%203.png" target="_blank"><img src="3/image%203.png" alt="Google Cloud Console新增專案" class="img-fluid"></a>
+                                    <a href="3/image%203.png" target="_blank"><img src="3/image%203.png"
+                                            alt="Google Cloud Console新增專案" class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 1: 點擊新增專案</figcaption>
                                 </figure>
                                 <figure>
-                                    <a href="3/image%204.png" target="_blank"><img src="3/image%204.png" alt="Google Cloud Console建立專案" class="img-fluid"></a>
+                                    <a href="3/image%204.png" target="_blank"><img src="3/image%204.png"
+                                            alt="Google Cloud Console建立專案" class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 2: 設定專案名稱並建立</figcaption>
                                 </figure>
                             </div>
@@ -121,10 +139,12 @@
                             <div class="step">
                                 <h3><i class="fas fa-robot step-icon"></i>步驟二：前往 Google AI Studio</h3>
                                 <p>接下來，我們將透過 Google AI Studio 來生成 API Key。</p>
-                                <p><a href="https://aistudio.google.com/" target="_blank" class="btn btn-primary"><i class="fas fa-external-link-alt me-2"></i>前往 Google AI Studio</a></p>
+                                <p><a href="https://aistudio.google.com/" target="_blank" class="btn btn-primary"><i
+                                            class="fas fa-external-link-alt me-2"></i>前往 Google AI Studio</a></p>
                                 <p>登入後，點擊頁面左側或上方的 "Get API Key" 按鈕。</p>
                                 <figure>
-                                    <a href="3/image%208.png" target="_blank"><img src="3/image%208.png" alt="Google AI Studio取得API金鑰" class="img-fluid"></a>
+                                    <a href="3/image%208.png" target="_blank"><img src="3/image%208.png"
+                                            alt="Google AI Studio取得API金鑰" class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 3: 點擊 Get API Key</figcaption>
                                 </figure>
                             </div>
@@ -139,14 +159,17 @@
                                     <li>系統會生成一組 API 金鑰。請立即點擊 "Copy" 按鈕複製。</li>
                                 </ol>
                                 <div class="alert alert-danger">
-                                    <strong><i class="fas fa-exclamation-triangle me-2"></i>安全第一：</strong> 這組 API Key 代表了您應用程式的身份。<strong>請務必將其存放在安全的地方 (如密碼管理器)，絕對不要外洩或直接寫在任何公開的程式碼中。</strong>
+                                    <strong><i class="fas fa-exclamation-triangle me-2"></i>安全第一：</strong> 這組 API Key
+                                    代表了您應用程式的身份。<strong>請務必將其存放在安全的地方 (如密碼管理器)，絕對不要外洩或直接寫在任何公開的程式碼中。</strong>
                                 </div>
                                 <figure>
-                                    <a href="3/image%2010.png" target="_blank"><img src="3/image%2010.png" alt="Google AI Studio選擇專案" class="img-fluid"></a>
+                                    <a href="3/image%2010.png" target="_blank"><img src="3/image%2010.png"
+                                            alt="Google AI Studio選擇專案" class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 4: 選擇先前建立的 Google Cloud 專案</figcaption>
                                 </figure>
                                 <figure>
-                                    <a href="3/image%2012.png" target="_blank"><img src="3/image%2012.png" alt="Google AI Studio複製API金鑰" class="img-fluid"></a>
+                                    <a href="3/image%2012.png" target="_blank"><img src="3/image%2012.png"
+                                            alt="Google AI Studio複製API金鑰" class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 5: 複製生成後的 API Key</figcaption>
                                 </figure>
                             </div>
@@ -161,12 +184,14 @@
                             <li>在 Google AI Studio 中，將 API Key 與您的專案關聯。</li>
                             <li>成功生成並複製了您的 Gemini API Key。</li>
                         </ul>
-                        <p>有了 API Key，我們就可以在 n8n 中大展身手了。下一篇文章，我們將實際動手 <a href="n8n-tutorial-4.html">建立第一個 n8n 工作流，將資料寫入先前建立的 Supabase 向量資料庫中</a>。</p>
+                        <p>有了 API Key，我們就可以在 n8n 中大展身手了。下一篇文章，我們將實際動手 <a href="n8n-tutorial-4.html">建立第一個 n8n
+                                工作流，將資料寫入先前建立的 Supabase 向量資料庫中</a>。</p>
                     </div>
                 </article>
 
                 <div class="mt-5 text-center">
-                    <a href="../tutorials.html#basic-series" class="btn btn-primary btn-lg"><i class="fas fa-list me-2"></i>返回 教學列表</a>
+                    <a href="../tutorials.html#basic-series" class="btn btn-primary btn-lg"><i
+                            class="fas fa-list me-2"></i>返回 教學列表</a>
                 </div>
             </div>
         </div>
@@ -180,4 +205,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>
 </body>
+
 </html>

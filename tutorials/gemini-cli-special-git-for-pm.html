@@ -131,9 +131,9 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學文</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
                         <li class="nav-item"><a class="nav-link" href="../podcast.html">🎙️ Podcast</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
                     </ul>
                 </div>
@@ -225,8 +225,8 @@
                                 <pre><code class="language-bash">git config --global user.name "您的英文名字"
 git config --global user.email "您的Email"</code></pre>
                                 <p class="mt-3">例如：</p>
-                                <pre><code class="language-bash">git config --global user.name "Luke Hou"
-git config --global user.email "luke@example.com"</code></pre>
+                                <pre><code class="language-bash">git config --global user.name "John Doe"
+git config --global user.email "johndoe@example.com"</code></pre>
                                 <img src="../images/gemini-cli-tutorial-6/01-git-config.jpg"
                                     alt="在 VS Code 終端機輸入 git config 指令的截圖">
                                 <p class="img-placeholder-text">圖說：在終端機輸入這兩行指令，按下 Enter 後不會有特別的顯示，這是正常的。</p>
@@ -348,7 +348,8 @@ secrets.txt
 *.mp3
 *.wav
 *.zip
-temp/
+Record/
+LegacyPRD/
 </code></pre>
                                 <p class="mt-3"><strong>語法小教學：</strong></p>
                                 <ul>
@@ -380,8 +381,10 @@ temp/
                                     <li>您會看到 <code>PRD_v1.md</code> 出現在 "Changes" (變更) 清單中。</li>
                                     <li>將滑鼠移到檔案名稱旁，點擊 <strong>"+" (Stage Changes)</strong> 號。</li>
                                     <li>檔案會移動到 "Staged Changes" (暫存的變更) 區域。這表示「行李打包好了」。</li>
-                                    <li>接下來依序將您剛剛複製進來的工作檔案一個一個 <strong>"+" (Stage Changes)</strong>即可。(剛開始先不使用 Stage
-                                        all，我們手動逐一暫存比較放心。)</li>
+                                    <li>接下來依序將您剛剛複製進來的工作檔案一個一個 <strong>"+" (Stage Changes)</strong>即可，包含
+                                        <code>.gitignore</code> 也要喔。
+                                    </li>
+                                    <li>(剛開始先不使用 Stage all，我們手動逐一暫存比較放心。)</li>
                                 </ol>
                                 <img src="../images/gemini-cli-tutorial-6/07-stage.jpg"
                                     alt="在 VS Code 中點擊 + 號將檔案加入暫存區的截圖">
@@ -391,7 +394,7 @@ temp/
                                 <h3><i class="fas fa-tag step-icon"></i>動作二：標記 (Commit)</h3>
                                 <p>為這包行李貼上說明標籤，方便以後查找。</p>
                                 <ol>
-                                    <li>在上方輸入框輸入這次變更的說明。例如：「完成會員註冊流程草稿」。</li>
+                                    <li>在上方輸入框輸入這次變更的說明。例如：「完成會員註冊流程草稿」，這部分要簡潔扼要又不失重點，將來您要找這個變更時，一眼就能看懂。</li>
                                     <li>點擊 <strong>"Commit" (提交)</strong> 按鈕。</li>
                                 </ol>
                                 <img src="../images/gemini-cli-tutorial-6/08-commit.jpg" alt="輸入 Commit 訊息並點擊提交按鈕的截圖">
@@ -402,10 +405,12 @@ temp/
                                 <h3><i class="fas fa-paper-plane step-icon"></i>動作三：Push (推送)</h3>
                                 <p>將紀錄推送到雲端保險庫。</p>
                                 <ol>
-                                    <li>點擊視窗左下角的雲朵圖案 <strong>"Publish Branch"</strong> 按鈕。</li>
-                                    <li>如果是第一次，它可能會跳出確認視窗，點擊 "OK" 即可。</li>
+                                    <li>點擊雲朵圖案 <strong>"Publish Branch"</strong> 按鈕。</li>
                                 </ol>
                                 <img src="../images/gemini-cli-tutorial-6/09-push.jpg"
+                                    alt="點擊 Sync Changes 按鈕同步到 GitHub 的截圖">
+                                往下看到 <strong>"GRAPH"</strong> 區塊，已經可以看到我們的 <code>main</code> 分支已經有了我們的紀錄。(紫色雲朵圖)
+                                <img src="../images/gemini-cli-tutorial-6/10-graph.jpg"
                                     alt="點擊 Sync Changes 按鈕同步到 GitHub 的截圖">
                             </div>
                         </section>
@@ -459,7 +464,7 @@ temp/
                                 <ol>
                                     <li>在<strong>左邊視窗 (過去)</strong> 找到您誤刪的那段文字。</li>
                                     <li>像平常一樣選取它，按 <code>Ctrl+C</code> (複製)。</li>
-                                    <li>點擊<strong>右邊視窗 (現在)</strong>，將游標移到您想插入的位置。</li>
+                                    <li>回到被您改壞的那個檔案編輯視窗，找到您想插入的位置。</li>
                                     <li>按 <code>Ctrl+V</code> (貼上)。</li>
                                     <li>按下 <code>Ctrl+S</code> 存檔。</li>
                                 </ol>

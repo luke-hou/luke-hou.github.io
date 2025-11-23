@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,15 +17,18 @@
             display: block;
             margin: 1.5rem auto;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .tutorial-content figure {
             margin: 1.5rem 0;
             text-align: center;
         }
+
         .tutorial-content figure img {
             margin: 0 auto;
         }
+
         .step {
             margin-bottom: 2.5rem;
             padding: 2rem;
@@ -33,9 +37,11 @@
             background-color: #f8f9fa;
             transition: box-shadow 0.3s ease-in-out;
         }
+
         .step:hover {
-            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
         }
+
         .step h3 {
             font-size: 1.75rem;
             color: #0d6efd;
@@ -43,10 +49,12 @@
             display: flex;
             align-items: center;
         }
+
         .step h3 .step-icon {
             margin-right: 1rem;
             font-size: 1.5rem;
         }
+
         code {
             background-color: #e9ecef;
             padding: .2rem .4rem;
@@ -54,6 +62,7 @@
             font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             font-size: .875em;
         }
+
         pre {
             background-color: #212529;
             color: #f8f9fa;
@@ -62,18 +71,22 @@
             white-space: pre-wrap;
             word-wrap: break-word;
         }
+
         pre code {
             background-color: transparent;
             padding: 0;
             color: inherit;
             font-size: 1em;
         }
-        .tutorial-intro, .tutorial-summary {
+
+        .tutorial-intro,
+        .tutorial-summary {
             background-color: #e9f7ff;
             border-left: 5px solid #0d6efd;
             padding: 1.5rem;
             margin: 2rem 0;
         }
+
         .alert-gemini {
             background-color: #fff3cd;
             border-color: #ffeeba;
@@ -81,19 +94,21 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學文</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
                     </ul>
                 </div>
@@ -110,11 +125,14 @@
 
                     <div class="tutorial-intro">
                         <h4>前言</h4>
-                        <p>在上一篇文章中，我們成功建置了 n8n 的本地環境。接下來，我們需要一個地方來儲存和管理我們的資料。本章將引導您完成 Supabase 的帳號申請，並建立一個強大的向量資料庫，這將是我們後續進行 AI 相關應用的核心基礎。</p>
+                        <p>在上一篇文章中，我們成功建置了 n8n 的本地環境。接下來，我們需要一個地方來儲存和管理我們的資料。本章將引導您完成 Supabase
+                            的帳號申請，並建立一個強大的向量資料庫，這將是我們後續進行 AI 相關應用的核心基礎。</p>
                     </div>
 
                     <div class="alert alert-gemini alert-dismissible fade show" role="alert">
-                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 Gemini API key 綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案，或使用地端 LLM，亦或是公司提供的 API。
+                        <strong><i class="fas fa-exclamation-triangle me-2"></i>重要提醒：</strong> 如果您的 Gemini API key
+                        綁定在免費方案 (free tier) 且未啟用帳單，則 Gemini 處理的資料可能被用於模型訓練。若涉及機敏資訊且必須使用 Gemini，請務必升級至付費方案，或使用地端
+                        LLM，亦或是公司提供的 API。
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
 
@@ -123,14 +141,17 @@
                             <div class="step">
                                 <h3><i class="fas fa-user-plus step-icon"></i>步驟一：註冊 Supabase 帳號</h3>
                                 <p>首先，前往 Supabase 官方網站並開始註冊流程。</p>
-                                <p><a href="https://supabase.com/" target="_blank" class="btn btn-primary"><i class="fas fa-external-link-alt me-2"></i>前往 Supabase 官網</a></p>
+                                <p><a href="https://supabase.com/" target="_blank" class="btn btn-primary"><i
+                                            class="fas fa-external-link-alt me-2"></i>前往 Supabase 官網</a></p>
                                 <p>點擊 "Start your project"，然後選擇 "Sign Up Now" 使用 Email 進行註冊。填寫您的信箱和密碼，並完成信箱驗證。</p>
                                 <figure>
-                                    <a href="2/image.png" target="_blank"><img src="2/image.png" alt="Supabase官網首頁" class="img-fluid"></a>
+                                    <a href="2/image.png" target="_blank"><img src="2/image.png" alt="Supabase官網首頁"
+                                            class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 1: 點擊 Start your project</figcaption>
                                 </figure>
                                 <figure>
-                                    <a href="2/image%202.png" target="_blank"><img src="2/image%202.png" alt="Supabase註冊資訊填寫" class="img-fluid"></a>
+                                    <a href="2/image%202.png" target="_blank"><img src="2/image%202.png"
+                                            alt="Supabase註冊資訊填寫" class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 2: 填寫註冊資訊並完成信箱驗證</figcaption>
                                 </figure>
                             </div>
@@ -139,18 +160,21 @@
                                 <h3><i class="fas fa-sitemap step-icon"></i>步驟二：建立組織與專案</h3>
                                 <p>登入後，首先需要建立一個「組織 (Organization)」，您可以將其視為一個工作區。接著，在組織內建立一個新的「專案 (Project)」。</p>
                                 <ol>
-                                    <li>點擊 "New Organization"，輸入組織名稱 (例如: <code>n8nTest</code>)，點擊 "Create Organization"。</li>
+                                    <li>點擊 "New Organization"，輸入組織名稱 (例如: <code>n8nTest</code>)，點擊 "Create
+                                        Organization"。</li>
                                     <li>接著建立新專案，輸入專案名稱 (例如: <code>n8nProject</code>)。</li>
                                     <li><strong>請務必設定一組安全的資料庫密碼並妥善保存。</strong></li>
                                     <li>選擇離您最近的 Region (區域) 以獲得較低的延遲。</li>
                                     <li>點擊 "Create new project"。</li>
                                 </ol>
                                 <figure>
-                                    <a href="2/image%204.png" target="_blank"><img src="2/image%204.png" alt="Supabase組織設定" class="img-fluid"></a>
+                                    <a href="2/image%204.png" target="_blank"><img src="2/image%204.png"
+                                            alt="Supabase組織設定" class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 3: 建立新組織</figcaption>
                                 </figure>
                                 <figure>
-                                    <a href="2/image%205.png" target="_blank"><img src="2/image%205.png" alt="Supabase專案設定" class="img-fluid"></a>
+                                    <a href="2/image%205.png" target="_blank"><img src="2/image%205.png"
+                                            alt="Supabase專案設定" class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 4: 設定新專案資訊</figcaption>
                                 </figure>
                             </div>
@@ -164,7 +188,10 @@
                                     <li>將下方的 SQL 語法貼入查詢編輯器中。這段語法會：
                                         <ul>
                                             <li>啟用 <code>vector</code> 擴充功能。</li>
-                                            <li>建立一個名為 <code>nhi_drug_768</code> 的資料表，包含 <code>content</code>、<code>metadata</code> 和 <code>embedding</code> (768 維) 欄位。</li>
+                                            <li>建立一個名為 <code>nhi_drug_768</code> 的資料表，包含
+                                                <code>content</code>、<code>metadata</code> 和 <code>embedding</code> (768
+                                                維) 欄位。
+                                            </li>
                                             <li>建立一個名為 <code>match_nhi_drug_768</code> 的函式，用於後續的向量相似度搜尋。</li>
                                         </ul>
                                     </li>
@@ -209,7 +236,8 @@ end;
 $$;</code></pre>
                                 <p>貼上語法後，點擊 "Run" 按鈕執行。成功後，您會在下方看到 "Success. No rows returned" 的訊息。</p>
                                 <figure>
-                                    <a href="2/image%209.png" target="_blank"><img src="2/image%209.png" alt="貼上SQL語法" class="img-fluid"></a>
+                                    <a href="2/image%209.png" target="_blank"><img src="2/image%209.png" alt="貼上SQL語法"
+                                            class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 5: 在 SQL Editor 中貼上語法並執行</figcaption>
                                 </figure>
                             </div>
@@ -224,7 +252,8 @@ $$;</code></pre>
                                     <li><strong>注意：</strong> 啟用 RLS 後，預設會拒絕所有存取，我們需要在後續步驟中設定適當的 Policy 才可讓 n8n 存取。</li>
                                 </ol>
                                 <figure>
-                                    <a href="2/image%2014.png" target="_blank"><img src="2/image%2014.png" alt="Supabase資料表RLS disabled狀態" class="img-fluid"></a>
+                                    <a href="2/image%2014.png" target="_blank"><img src="2/image%2014.png"
+                                            alt="Supabase資料表RLS disabled狀態" class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 6: 點擊 Enable RLS</figcaption>
                                 </figure>
                             </div>
@@ -239,10 +268,13 @@ $$;</code></pre>
                                     <li>點擊 "Reveal" 後再點擊 "Copy" 來複製這組金鑰。</li>
                                 </ol>
                                 <div class="alert alert-danger">
-                                    <strong><i class="fas fa-exclamation-triangle me-2"></i>極度重要：</strong> <code>service_role</code> 金鑰擁有您資料庫的完整權限，等同於最高管理員。<strong>請務必將其存放在安全的地方 (如密碼管理器)，絕對不要外洩或直接寫在前端程式碼中。</strong>
+                                    <strong><i class="fas fa-exclamation-triangle me-2"></i>極度重要：</strong>
+                                    <code>service_role</code> 金鑰擁有您資料庫的完整權限，等同於最高管理員。<strong>請務必將其存放在安全的地方
+                                        (如密碼管理器)，絕對不要外洩或直接寫在前端程式碼中。</strong>
                                 </div>
                                 <figure>
-                                    <a href="2/image%2019.png" target="_blank"><img src="2/image%2019.png" alt="Supabase專案API金鑰" class="img-fluid"></a>
+                                    <a href="2/image%2019.png" target="_blank"><img src="2/image%2019.png"
+                                            alt="Supabase專案API金鑰" class="img-fluid"></a>
                                     <figcaption class="text-muted mt-2">圖 7: 複製 service_role 金鑰</figcaption>
                                 </figure>
                             </div>
@@ -258,12 +290,14 @@ $$;</code></pre>
                             <li>為資料表啟用 RLS，提升資料庫的安全性。</li>
                             <li>取得並妥善保存了具備完整權限的 <code>service_role</code> API 金鑰。</li>
                         </ul>
-                        <p>在下一篇教學中，我們將會介紹 <a href="n8n-tutorial-3.html">如何申請 Gemini API Key</a>，為我們的自動化流程注入強大的 AI 生成能力。</p>
+                        <p>在下一篇教學中，我們將會介紹 <a href="n8n-tutorial-3.html">如何申請 Gemini API Key</a>，為我們的自動化流程注入強大的 AI 生成能力。
+                        </p>
                     </div>
                 </article>
 
                 <div class="mt-5 text-center">
-                    <a href="../tutorials.html#basic-series" class="btn btn-primary btn-lg"><i class="fas fa-list me-2"></i>返回 教學列表</a>
+                    <a href="../tutorials.html#basic-series" class="btn btn-primary btn-lg"><i
+                            class="fas fa-list me-2"></i>返回 教學列表</a>
                 </div>
             </div>
         </div>
@@ -277,4 +311,5 @@ $$;</code></pre>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>
 </body>
+
 </html>

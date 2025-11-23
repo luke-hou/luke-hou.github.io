@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,15 +14,16 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-0V2L1DQVPY');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-0V2L1DQVPY');
     </script>
     <style>
         body {
             background-color: #f0f2f5;
         }
+
         .hero-banner {
             position: relative;
             padding: 8rem 1rem;
@@ -33,18 +35,21 @@
             border-radius: 0.5rem;
             margin-bottom: 3rem;
         }
+
         .hero-banner h1 {
             font-weight: 700;
             font-size: 3.5rem;
         }
+
         .article-card {
             background-color: white;
             border: none;
             border-radius: 0.75rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             margin-bottom: 2rem;
             padding: 2.5rem;
         }
+
         .article-card h2 {
             border-bottom: 2px solid #0d6efd;
             padding-bottom: 0.5rem;
@@ -52,17 +57,20 @@
             font-size: 2rem;
             font-weight: 600;
         }
+
         .article-card h3 {
             font-size: 1.5rem;
             font-weight: 600;
             color: #343a40;
         }
+
         .icon-list .list-group-item {
             border: none;
             padding-left: 0;
             display: flex;
             align-items: flex-start;
         }
+
         .icon-list .bi {
             font-size: 1.5rem;
             color: #0d6efd;
@@ -70,6 +78,7 @@
             min-width: 2rem;
             margin-top: 0.25rem;
         }
+
         .custom-blockquote {
             border-left: 4px solid #0d6efd;
             padding: 1rem 1.5rem;
@@ -77,9 +86,11 @@
             margin: 1.5rem 0;
             font-style: italic;
         }
+
         .text-danger strong {
             color: #dc3545 !important;
         }
+
         .code-block {
             background-color: #212529;
             color: #f8f9fa;
@@ -90,20 +101,22 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">♾️ 首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學文</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學</a></li>
                         <li class="nav-item"><a class="nav-link" href="../podcast.html">🎙️ Podcast</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">✈️分享</a></li>
                     </ul>
                 </div>
@@ -122,13 +135,15 @@
 
                 <article>
                     <div class="article-card">
-                        <p class="fs-5 lead">系統 Go-Live 是任何 IT 專案中最具挑戰性的階段。對於必須在第一線直接面對使用者的支援人員而言，這不僅是技術能力的考驗，更是溝通、應變與壓力管理的終極試煉。本手冊旨在提供一套結構化的戰術框架，幫助代號「羅盤」(Compass) 的你，在混亂中保持專業，有效解決問題，並最終確保系統成功導入。</p>
+                        <p class="fs-5 lead">系統 Go-Live 是任何 IT
+                            專案中最具挑戰性的階段。對於必須在第一線直接面對使用者的支援人員而言，這不僅是技術能力的考驗，更是溝通、應變與壓力管理的終極試煉。本手冊旨在提供一套結構化的戰術框架，幫助代號「羅盤」(Compass)
+                            的你，在混亂中保持專業，有效解決問題，並最終確保系統成功導入。</p>
                     </div>
 
                     <div class="article-card">
                         <h2>第一階段：整備與心態建立</h2>
                         <p>成功的應對始於充分的準備。在上線日之前，你必須完成角色定位、工具整備與回報機制建立。</p>
-                        
+
                         <h3 class="mt-4 mb-3">1. 關鍵角色再定義</h3>
                         <div class="row g-4">
                             <div class="col-md-4">
@@ -162,35 +177,52 @@
 
                         <h3 class="mt-5 mb-3">2. 核心裝備清單</h3>
                         <ul class="list-group list-group-flush icon-list">
-                            <li class="list-group-item"><i class="bi bi-universal-access"></i><div><strong>實體裝備:</strong> 識別證、舒適的鞋子、小型筆記本與筆 (以防萬一)。</div></li>
-                            <li class="list-group-item"><i class="bi bi-pc-display-horizontal"></i><div><strong>數位裝備:</strong> 手機與滿電的行動電源、快速行動回報系統、離線 FAQ 知識庫。</div></li>
+                            <li class="list-group-item"><i class="bi bi-universal-access"></i>
+                                <div><strong>實體裝備:</strong> 識別證、舒適的鞋子、小型筆記本與筆 (以防萬一)。</div>
+                            </li>
+                            <li class="list-group-item"><i class="bi bi-pc-display-horizontal"></i>
+                                <div><strong>數位裝備:</strong> 手機與滿電的行動電源、快速行動回報系統、離線 FAQ 知識庫。</div>
+                            </li>
                         </ul>
 
                         <h3 class="mt-5 mb-3">3. 情報回報機制：打造零阻力的資訊高速公路</h3>
-                        <p>傳統的回報方式（筆記、記憶、事後登打）在混亂的Go-Live現場是災難的根源。資訊延遲、細節遺失、回報意願低落是常見痛點。一個專業的團隊應建立一個現代化的回報機制，打通前線到開發的「最後一哩路」。</p>
-                        
+                        <p>傳統的回報方式（筆記、記憶、事後登打）在混亂的Go-Live現場是災難的根源。資訊延遲、細節遺失、回報意願低落是常見痛點。一個專業的團隊應建立一個現代化的回報機制，打通前線到開發的「最後一哩路」。
+                        </p>
+
                         <div class="row g-4 align-items-center mt-4">
                             <div class="col-md-6">
                                 <h5 class="text-center">理想的回報流程：LINE 即時通報</h5>
-                                <p class="text-muted text-center small">第一線人員應能透過最熟悉的工具（如LINE），以聊天、拍照的方式即時回報問題，無需離開現場或中斷與使用者的互動。</p>
-                                <img src="../images/n8n-line-bot-jira-automation/image.png" alt="LINE 回報示範" class="img-fluid rounded shadow-sm">
+                                <p class="text-muted text-center small">
+                                    第一線人員應能透過最熟悉的工具（如LINE），以聊天、拍照的方式即時回報問題，無需離開現場或中斷與使用者的互動。</p>
+                                <img src="../images/n8n-line-bot-jira-automation/image.png" alt="LINE 回報示範"
+                                    class="img-fluid rounded shadow-sm">
                             </div>
                             <div class="col-md-6">
                                 <h5 class="text-center">後端自動化：自動生成開發任務</h5>
-                                <p class="text-muted text-center small">回報的訊息與圖片應透過自動化流程（如n8n），在背景無縫轉換為一張資訊完整的Jira Ticket，並通知相關開發人員。</p>
-                                <img src="../images/n8n-line-bot-jira-automation/0f64c0ed-ef64-4a0f-8267-0cda0930e9d2.png" alt="自動建立的 Jira Ticket" class="img-fluid rounded shadow-sm">
+                                <p class="text-muted text-center small">回報的訊息與圖片應透過自動化流程（如n8n），在背景無縫轉換為一張資訊完整的Jira
+                                    Ticket，並通知相關開發人員。</p>
+                                <img src="../images/n8n-line-bot-jira-automation/0f64c0ed-ef64-4a0f-8267-0cda0930e9d2.png"
+                                    alt="自動建立的 Jira Ticket" class="img-fluid rounded shadow-sm">
                             </div>
                         </div>
 
                         <div class="mt-4 p-3 bg-light rounded">
                             <p class="fw-bold">這種自動化流程能帶來顯著效益：</p>
                             <ul class="list-unstyled mb-0">
-                                <li class="mb-2"><i class="bi bi-lightning-charge-fill text-primary me-2"></i><strong>10倍效率提升：</strong> 將回報時間從數分鐘縮短至一分鐘內。</li>
-                                <li class="mb-2"><i class="bi bi-camera-fill text-primary me-2"></i><strong>100%資訊保真度：</strong> 圖文並茂的即時回報，完整還原現場情境。</li>
-                                <li class="mb-0"><i class="bi bi-unlock-fill text-primary me-2"></i><strong>零門檻協作：</strong> 無需為所有現場人員購買Jira授權或進行培訓。</li>
+                                <li class="mb-2"><i
+                                        class="bi bi-lightning-charge-fill text-primary me-2"></i><strong>10倍效率提升：</strong>
+                                    將回報時間從數分鐘縮短至一分鐘內。</li>
+                                <li class="mb-2"><i
+                                        class="bi bi-camera-fill text-primary me-2"></i><strong>100%資訊保真度：</strong>
+                                    圖文並茂的即時回報，完整還原現場情境。</li>
+                                <li class="mb-0"><i
+                                        class="bi bi-unlock-fill text-primary me-2"></i><strong>零門檻協作：</strong>
+                                    無需為所有現場人員購買Jira授權或進行培訓。</li>
                             </ul>
                             <div class="text-end mt-2">
-                                <a href="../projects/n8n-line-bot-jira-automation-business.html" class="btn btn-sm btn-outline-primary">查看相關案例研究 <i class="bi bi-arrow-right-short"></i></a>
+                                <a href="../projects/n8n-line-bot-jira-automation-business.html"
+                                    class="btn btn-sm btn-outline-primary">查看相關案例研究 <i
+                                        class="bi bi-arrow-right-short"></i></a>
                             </div>
                         </div>
                     </div>
@@ -198,12 +230,18 @@
                     <div class="article-card">
                         <h2>第二階段：前線交戰準則 (The 3-Minute Rule)</h2>
                         <p>當使用者提出問題時，遵循 L-V-C-A-P 框架，目標在三分鐘內完成一次有效的交戰並脫身。</p>
-                        
+
                         <h3 class="mt-4 mb-3">Listen (聆聽): 吸收資訊，而非準備反駁</h3>
                         <ul class="list-group list-group-flush icon-list">
-                            <li class="list-group-item"><i class="bi bi-mic-mute"></i><div><strong>沉默的開場:</strong> 閉嘴，專注地聽，讓使用者把第一波情緒宣洩完。</div></li>
-                            <li class="list-group-item"><i class="bi bi-person-arms-up"></i><div><strong>肢體語言:</strong> 身體微前傾（表示感興趣），有節奏地點頭（表示正在吸收）。</div></li>
-                            <li class="list-group-item"><i class="bi bi-quote"></i><div><strong>關鍵字複述:</strong> 在使用者喘息時，複述核心問題。「好的，我理解，查詢延遲超過30秒...」</div></li>
+                            <li class="list-group-item"><i class="bi bi-mic-mute"></i>
+                                <div><strong>沉默的開場:</strong> 閉嘴，專注地聽，讓使用者把第一波情緒宣洩完。</div>
+                            </li>
+                            <li class="list-group-item"><i class="bi bi-person-arms-up"></i>
+                                <div><strong>肢體語言:</strong> 身體微前傾（表示感興趣），有節奏地點頭（表示正在吸收）。</div>
+                            </li>
+                            <li class="list-group-item"><i class="bi bi-quote"></i>
+                                <div><strong>關鍵字複述:</strong> 在使用者喘息時，複述核心問題。「好的，我理解，查詢延遲超過30秒...」</div>
+                            </li>
                         </ul>
 
                         <h3 class="mt-4 mb-3">Validate (驗證): 建立同理，而非製造對立</h3>
@@ -215,78 +253,99 @@
 
                         <h3 class="mt-4 mb-3">Categorize (分類): 快速診斷，對症下藥</h3>
                         <p>將問題歸類為A類(操作不熟)、B類(系統問題)或C類(流程不符/功能欠缺)，並採取相應的行動劇本。以下提供幾個常見情境，供你迅速對號入座：</p>
-                        
+
                         <div class="accordion mt-4" id="categorizeExamples">
                             <!-- Accordion Item 1: A類 -->
                             <div class="accordion-item">
-                              <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                  <i class="bi bi-person-video me-2"></i><strong>A類：操作不熟 (How-To)</strong>
-                                </button>
-                              </h2>
-                              <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#categorizeExamples">
-                                <div class="accordion-body">
-                                  <p><strong>關鍵特徵：</strong>使用者表情困惑，常用「這個要怎麼...」、「找不到...」等問句。</p>
-                                  <hr>
-                                  <p><strong>行動劇本：</strong></p>
-                                  <blockquote class="small p-3 bg-light border rounded">「護理長，別擔心，這個新功能藏得比較深。<strong>我現在操作一次給您看，您幫我看看是不是您要的。</strong>」
-                                    <footer class="blockquote-footer mt-1">重點：邀請他一起確認，而不是單向教學。</footer>
-                                  </blockquote>
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                        <i class="bi bi-person-video me-2"></i><strong>A類：操作不熟 (How-To)</strong>
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                    data-bs-parent="#categorizeExamples">
+                                    <div class="accordion-body">
+                                        <p><strong>關鍵特徵：</strong>使用者表情困惑，常用「這個要怎麼...」、「找不到...」等問句。</p>
+                                        <hr>
+                                        <p><strong>行動劇本：</strong></p>
+                                        <blockquote class="small p-3 bg-light border rounded">
+                                            「護理長，別擔心，這個新功能藏得比較深。<strong>我現在操作一次給您看，您幫我看看是不是您要的。</strong>」
+                                            <footer class="blockquote-footer mt-1">重點：邀請他一起確認，而不是單向教學。</footer>
+                                        </blockquote>
+                                    </div>
                                 </div>
-                              </div>
                             </div>
-                      
+
                             <!-- Accordion Item 2: B類 -->
                             <div class="accordion-item">
-                              <h2 class="accordion-header" id="headingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                  <i class="bi bi-bug me-2"></i><strong>B類：系統問題 (Bug / Performance)</strong>
-                                </button>
-                              </h2>
-                              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#categorizeExamples">
-                                <div class="accordion-body">
-                                  <h5>B1類：偶發性Bug</h5>
-                                  <p><strong>關鍵特徵：</strong>「剛剛還可以，現在突然不行了」、「有時候可以有時候不行」。</p>
-                                  <p><strong>行動劇本：</strong></p>
-                                  <blockquote class="small p-3 bg-light border rounded">「了解，這種偶發問題最麻煩了。<strong>您能不能回想一下，在它壞掉前，您點了什麼特別的東西嗎？</strong> 沒關係，想不起來也正常。我已經把時間點和狀況都記錄下來了。」
-                                    <footer class="blockquote-footer mt-1">重點：引導他回憶，同時給他台階下。</footer>
-                                  </blockquote>
-                                  <hr class="my-4">
-                                  <h5>B2類：可重現Bug/效能問題</h5>
-                                  <p><strong>關鍵特徵：</strong>每次操作都發生同樣的錯誤或延遲。</p>
-                                  <p><strong>行動劇本：</strong></p>
-                                  <blockquote class="small p-3 bg-light border rounded">「好的，這個問題我看見了。這<strong>肯定是系統的問題，不是您的操作問題。</strong> 我現在立刻用最高優先級把它上報，這個畫面您先留著，我拍張照。」
-                                    <footer class="blockquote-footer mt-1">重點：明確把責任歸到系統，解除他的自我懷疑。</footer>
-                                  </blockquote>
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <i class="bi bi-bug me-2"></i><strong>B類：系統問題 (Bug / Performance)</strong>
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                    data-bs-parent="#categorizeExamples">
+                                    <div class="accordion-body">
+                                        <h5>B1類：偶發性Bug</h5>
+                                        <p><strong>關鍵特徵：</strong>「剛剛還可以，現在突然不行了」、「有時候可以有時候不行」。</p>
+                                        <p><strong>行動劇本：</strong></p>
+                                        <blockquote class="small p-3 bg-light border rounded">
+                                            「了解，這種偶發問題最麻煩了。<strong>您能不能回想一下，在它壞掉前，您點了什麼特別的東西嗎？</strong>
+                                            沒關係，想不起來也正常。我已經把時間點和狀況都記錄下來了。」
+                                            <footer class="blockquote-footer mt-1">重點：引導他回憶，同時給他台階下。</footer>
+                                        </blockquote>
+                                        <hr class="my-4">
+                                        <h5>B2類：可重現Bug/效能問題</h5>
+                                        <p><strong>關鍵特徵：</strong>每次操作都發生同樣的錯誤或延遲。</p>
+                                        <p><strong>行動劇本：</strong></p>
+                                        <blockquote class="small p-3 bg-light border rounded">
+                                            「好的，這個問題我看見了。這<strong>肯定是系統的問題，不是您的操作問題。</strong>
+                                            我現在立刻用最高優先級把它上報，這個畫面您先留著，我拍張照。」
+                                            <footer class="blockquote-footer mt-1">重點：明確把責任歸到系統，解除他的自我懷疑。</footer>
+                                        </blockquote>
+                                    </div>
                                 </div>
-                              </div>
                             </div>
-                      
+
                             <!-- Accordion Item 3: C類 -->
                             <div class="accordion-item">
-                              <h2 class="accordion-header" id="headingThree">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                  <i class="bi bi-puzzle me-2"></i><strong>C類：流程不符／功能欠缺 (Process Mismatch)</strong>
-                                </button>
-                              </h2>
-                              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#categorizeExamples">
-                                <div class="accordion-body">
-                                  <p><strong>關鍵特徵：</strong>「以前可以XXX，現在為什麼不行？」、「這個流程不符合我們科室的習慣。」</p>
-                                  <hr>
-                                  <p><strong>行動劇本：</strong></p>
-                                  <blockquote class="small p-3 bg-light border rounded">「您提的這一點非常重要，<strong>我猜這可能是當初設計時沒有考慮到您們科室的特殊情況。</strong> 我會把您的建議原封不動地帶回去給產品團隊，這對我們下一版改進非常有幫助。」
-                                    <footer class="blockquote-footer mt-1">重點：承認流程考慮不周，並把他的抱怨「升級」為寶貴的「建議」。</footer>
-                                  </blockquote>
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseThree" aria-expanded="false"
+                                        aria-controls="collapseThree">
+                                        <i class="bi bi-puzzle me-2"></i><strong>C類：流程不符／功能欠缺 (Process
+                                            Mismatch)</strong>
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse"
+                                    aria-labelledby="headingThree" data-bs-parent="#categorizeExamples">
+                                    <div class="accordion-body">
+                                        <p><strong>關鍵特徵：</strong>「以前可以XXX，現在為什麼不行？」、「這個流程不符合我們科室的習慣。」</p>
+                                        <hr>
+                                        <p><strong>行動劇本：</strong></p>
+                                        <blockquote class="small p-3 bg-light border rounded">
+                                            「您提的這一點非常重要，<strong>我猜這可能是當初設計時沒有考慮到您們科室的特殊情況。</strong>
+                                            我會把您的建議原封不動地帶回去給產品團隊，這對我們下一版改進非常有幫助。」
+                                            <footer class="blockquote-footer mt-1">重點：承認流程考慮不周，並把他的抱怨「升級」為寶貴的「建議」。
+                                            </footer>
+                                        </blockquote>
+                                    </div>
                                 </div>
-                              </div>
                             </div>
                         </div>
 
                         <h3 class="mt-4 mb-3">Act (行動): 展現進度，給予信心</h3>
                         <p>行動是最好的安撫劑。當著使用者的面，打開回報工具大聲念出處理步驟。此外，提供「短期止痛藥」(Workaround)：</p>
                         <ul class="list-group list-group-flush icon-list">
-                            <li class="list-group-item"><i class="bi bi-prescription2"></i><div><strong>提供替代方案:</strong> 「在問題釐清前，我們可以先處理另一個個案嗎？」或「這個功能我們先用手工單處理，我會確保資料之後補上。」</div></li>
-                            <li class="list-group-item"><i class="bi bi-exclamation-triangle"></i><div><strong>若無替代方案:</strong> 誠實地承認。「這個問題目前沒有替代方案，唯一的辦法就是等系統修復。我會在 15 分鐘內跟您回報初步處理方式，就算沒有進度，我也會來跟您說一聲。」</div></li>
+                            <li class="list-group-item"><i class="bi bi-prescription2"></i>
+                                <div><strong>提供替代方案:</strong> 「在問題釐清前，我們可以先處理另一個個案嗎？」或「這個功能我們先用手工單處理，我會確保資料之後補上。」</div>
+                            </li>
+                            <li class="list-group-item"><i class="bi bi-exclamation-triangle"></i>
+                                <div><strong>若無替代方案:</strong> 誠實地承認。「這個問題目前沒有替代方案，唯一的辦法就是等系統修復。我會在 15
+                                    分鐘內跟您回報初步處理方式，就算沒有進度，我也會來跟您說一聲。」</div>
+                            </li>
                         </ul>
 
                         <h3 class="mt-4 mb-3">Promise (承諾): 設定預期，優雅退場</h3>
@@ -301,10 +360,16 @@
                         <h3 class="mt-4 mb-3">1. 非語言溝通策略</h3>
                         <p>在面對激烈情緒時，你的身體就是盾牌：</p>
                         <ul class="list-group list-group-flush icon-list">
-                            <li class="list-group-item"><i class="bi bi-person-standing"></i><div><strong>姿態:</strong> 不要站得直挺挺（具對抗意味）。稍微側身45度，用肩膀對著他。</div></li>
-                            <li class="list-group-item"><i class="bi bi-arrows-angle-expand"></i><div><strong>距離:</strong> 保持約1.5公尺的社交距離，不要入侵對方個人空間。</div></li>
+                            <li class="list-group-item"><i class="bi bi-person-standing"></i>
+                                <div><strong>姿態:</strong> 不要站得直挺挺（具對抗意味）。稍微側身45度，用肩膀對著他。</div>
+                            </li>
+                            <li class="list-group-item"><i class="bi bi-arrows-angle-expand"></i>
+                                <div><strong>距離:</strong> 保持約1.5公尺的社交距離，不要入侵對方個人空間。</div>
+                            </li>
                             <li class="list-group-item
-                            "><i class="bi bi-hand-index-thumb"></i><div><strong>手勢:</strong> 雙手絕不抱胸。自然下垂或一手拿筆記本，手心可適時朝上表示沒有惡意。</div></li>
+                            "><i class="bi bi-hand-index-thumb"></i>
+                                <div><strong>手勢:</strong> 雙手絕不抱胸。自然下垂或一手拿筆記本，手心可適時朝上表示沒有惡意。</div>
+                            </li>
                         </ul>
 
                         <h3 class="mt-5 mb-3">2. 公開場域的應對劇本</h3>
@@ -312,16 +377,22 @@
                             <div class="col-lg-6">
                                 <div class="card h-100 shadow-sm">
                                     <div class="card-body">
-                                        <h5 class="card-title"><i class="bi bi-people-fill text-primary"></i> 策略一：成為盟友</h5>
-                                        <p class="card-text">將自己與使用者劃在同一陣線。「您說的對，這個環節的表現簡直不可思議。您能不能再具體跟我說一次？我要把您的原話，一字不漏地貼給寫這段程式的工程師看。」</p>
+                                        <h5 class="card-title"><i class="bi bi-people-fill text-primary"></i> 策略一：成為盟友
+                                        </h5>
+                                        <p class="card-text">
+                                            將自己與使用者劃在同一陣線。「您說的對，這個環節的表現簡直不可思議。您能不能再具體跟我說一次？我要把您的原話，一字不漏地貼給寫這段程式的工程師看。」
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="card h-100 shadow-sm">
                                     <div class="card-body">
-                                        <h5 class="card-title"><i class="bi bi-shield-check text-primary"></i> 策略二：冷靜的專家</h5>
-                                        <p class="card-text">用條列式拆解情緒，並將焦點轉移到「解決當下」。先轉向旁邊的病人微笑說：「不好意思，新系統剛上線，讓您久等了。」再轉回使用者，壓低聲音說：「醫師，現在最重要是讓門診繼續，我們能不能先...」</p>
+                                        <h5 class="card-title"><i class="bi bi-shield-check text-primary"></i> 策略二：冷靜的專家
+                                        </h5>
+                                        <p class="card-text">
+                                            用條列式拆解情緒，並將焦點轉移到「解決當下」。先轉向旁邊的病人微笑說：「不好意思，新系統剛上線，讓您久等了。」再轉回使用者，壓低聲音說：「醫師，現在最重要是讓門診繼續，我們能不能先...」
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -342,7 +413,9 @@
 
                     <div class="article-card text-center">
                         <h2>結論</h2>
-                        <p class="lead">第一線的成功，奠基於充分的準備、結構化的應對框架、以及強大的心理素質。透過本文提出的戰術，你將不僅僅是在「存活」，而是在為系統的成功落地貢獻不可或缺的專業價值。記住，你的堅韌，就是系統的韌性。</p>
+                        <p class="lead">
+                            第一線的成功，奠基於充分的準備、結構化的應對框架、以及強大的心理素質。透過本文提出的戰術，你將不僅僅是在「存活」，而是在為系統的成功落地貢獻不可或缺的專業價值。記住，你的堅韌，就是系統的韌性。
+                        </p>
                     </div>
                 </article>
             </div>
@@ -358,4 +431,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>
 </body>
+
 </html>

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>案例研究：AI影片煉金術 - 將小時級會議轉為分鐘級洞察 - Luke Hou 作品集</title>
+    <title>案例研究：AI影片煉金術 - 將小時級會議轉為分鐘級洞察 - Luke Hou 作品</title>
     <meta name="description" content="了解我如何打造一個100%本地運行的AI工具，自動將影片轉化為帶有時間軸的逐字稿和重點摘要，將1小時的影片消化時間縮短至5分鐘，並確保資料絕對隱私。">
     <meta name="keywords" content="AI, 影片摘要, 會議記錄, 知識管理, Whisper, 本地化AI, Luke Hou, 侯俊嘉">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -13,18 +14,50 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-0V2L1DQVPY');
     </script>
     <style>
-        .hero-section { background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/vibe-ai-2.png') no-repeat center center; background-size: cover; padding: 5rem 0; color: white; }
-        .hero-section h1 { font-weight: 700; }
-        .impact-card { background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: .5rem; padding: 1.5rem; margin-bottom: 1.5rem; }
-        .impact-card .icon { font-size: 2.5rem; color: #0d6efd; }
-        .feature-card { text-align: center; padding: 1.5rem; }
-        .feature-card .icon { font-size: 3rem; margin-bottom: 1rem; color: #0d6efd; }
-        body { background-color: #fdf5e6; }
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/vibe-ai-2.png') no-repeat center center;
+            background-size: cover;
+            padding: 5rem 0;
+            color: white;
+        }
+
+        .hero-section h1 {
+            font-weight: 700;
+        }
+
+        .impact-card {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .impact-card .icon {
+            font-size: 2.5rem;
+            color: #0d6efd;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .feature-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0d6efd;
+        }
+
+        body {
+            background-color: #fdf5e6;
+        }
+
         .floating-toggle-btn {
             position: fixed;
             top: 50%;
@@ -36,10 +69,11 @@
             padding: 1rem 0.5rem;
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
-            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+            box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
+
 <body>
     <a href="vibe-ai-video-summary.html" class="btn btn-dark floating-toggle-btn" title="切換至技術視角說明">
         <i class="bi bi-code-slash"></i> 技術視角說明
@@ -48,12 +82,13 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span
+                        class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">♾️ 首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學文</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">✈️分享</a></li>
                     </ul>
                 </div>
@@ -65,7 +100,8 @@
         <section class="hero-section text-center">
             <div class="container">
                 <h1 class="display-4">你真的有時間看完所有會議錄影和線上課程嗎？</h1>
-                <p class="lead col-lg-8 mx-auto">我如何打造一個100%本地運行的AI工具，自動將影片轉化為帶有時間軸的逐字稿和重點摘要，將1小時的影片消化時間縮短至5分鐘，並確保資料絕對隱私。</p>
+                <p class="lead col-lg-8 mx-auto">
+                    我如何打造一個100%本地運行的AI工具，自動將影片轉化為帶有時間軸的逐字稿和重點摘要，將1小時的影片消化時間縮短至5分鐘，並確保資料絕對隱私。</p>
             </div>
         </section>
 
@@ -74,8 +110,10 @@
                 <div class="col-lg-10">
 
                     <div class="text-center mb-5">
-                        <h2 class="h1 mb-3"><i class="bi bi-camera-video-off-fill text-danger me-2"></i>The Challenge: 沉睡的影像資產</h2>
-                        <p class="lead text-muted">我們錄下大量的會議、線上課程和研討會，但這些珍貴的影像資料往往變成「數位墳場」。沒有人有時間重看一小時的影片，來尋找兩分鐘的關鍵決策，導致知識無法有效傳承與再利用。</p>
+                        <h2 class="h1 mb-3"><i class="bi bi-camera-video-off-fill text-danger me-2"></i>The Challenge:
+                            沉睡的影像資產</h2>
+                        <p class="lead text-muted">
+                            我們錄下大量的會議、線上課程和研討會，但這些珍貴的影像資料往往變成「數位墳場」。沒有人有時間重看一小時的影片，來尋找兩分鐘的關鍵決策，導致知識無法有效傳承與再利用。</p>
                     </div>
                     <div class="row text-center mb-5">
                         <div class="col-md-4">
@@ -95,10 +133,11 @@
                     <hr class="my-5">
 
                     <div class="text-center mb-5">
-                        <h2 class="h1 mb-3"><i class="bi bi-pc-display text-primary me-2"></i>The Solution: 你的本地端 AI 影片分析師</h2>
+                        <h2 class="h1 mb-3"><i class="bi bi-pc-display text-primary me-2"></i>The Solution: 你的本地端 AI
+                            影片分析師</h2>
                         <p class="lead text-muted">我開發了一款完全在使用者本機運行的AI工具，它能將任何影片「煉金」成結構化的文字資訊，兼顧效率與安全。</p>
                     </div>
-                    
+
                     <div class="row align-items-center g-4 mb-5">
                         <div class="col-md-6">
                             <h4 class="text-center">1. 影片轉錄為逐字稿</h4>
@@ -150,19 +189,32 @@
 
                     <div class="accordion" id="tech-deep-dive">
                         <div class="accordion-item">
-                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-tech"><strong>對技術實現細節感興趣？點此展開</strong></button></h2>
-                            <div id="collapse-tech" class="accordion-collapse collapse" data-bs-parent="#tech-deep-dive">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapse-tech"><strong>對技術實現細節感興趣？點此展開</strong></button></h2>
+                            <div id="collapse-tech" class="accordion-collapse collapse"
+                                data-bs-parent="#tech-deep-dive">
                                 <div class="accordion-body">
                                     <h4 class="h5">核心做法</h4>
                                     <ol>
-                                        <li><strong>100% 本地端運行:</strong> 整個流程完全在本地端 (localhost) 運行，影片與資料無需上傳，最大程度保障資料安全與使用者隱私。</li>
-                                        <li><strong>高效語音轉文字 (OpenAI Whisper):</strong> 整合 <a href="https://github.com/openai/whisper" target="_blank" rel="noopener noreferrer">OpenAI Whisper</a> 模型，在本地端即可實現高精度的語音辨識，並生成帶有時間軸的逐字稿。</li>
-                                        <li><strong>輕量級 AI 摘要 (MediaTek Breeze):</strong> 採用聯發科開源的 <a href="https://huggingface.co/MediaTek-Research" target="_blank" rel="noopener noreferrer">Breeze</a> 小型語言模型，在有限的硬體資源下，快速提煉逐字稿內容，生成結構化摘要。</li>
+                                        <li><strong>100% 本地端運行:</strong> 整個流程完全在本地端 (localhost)
+                                            運行，影片與資料無需上傳，最大程度保障資料安全與使用者隱私。</li>
+                                        <li><strong>高效語音轉文字 (OpenAI Whisper):</strong> 整合 <a
+                                                href="https://github.com/openai/whisper" target="_blank"
+                                                rel="noopener noreferrer">OpenAI Whisper</a>
+                                            模型，在本地端即可實現高精度的語音辨識，並生成帶有時間軸的逐字稿。</li>
+                                        <li><strong>輕量級 AI 摘要 (MediaTek Breeze):</strong> 採用聯發科開源的 <a
+                                                href="https://huggingface.co/MediaTek-Research" target="_blank"
+                                                rel="noopener noreferrer">Breeze</a> 小型語言模型，在有限的硬體資源下，快速提煉逐字稿內容，生成結構化摘要。
+                                        </li>
                                     </ol>
                                     <h5 class="mt-4">技術取捨與挑戰</h5>
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item bg-transparent px-0"><strong>硬體依賴:</strong> 由於 AI 模型皆在本地端運行，需要具備一定等級的 GPU 才能流暢使用，這也帶來了較高的功耗。</li>
-                                        <li class="list-group-item bg-transparent px-0"><strong>模型精度與效能的平衡:</strong> 選用 Breeze 這類小型語言模型是為了在多數個人電腦上也能運行，但其摘要的精準度與大型商用模型 (如 GPT-4) 相比仍有差距。儘管如此，對於日常會議記錄、教學影片等內容的整理，其表現已足夠應付。</li>
+                                        <li class="list-group-item bg-transparent px-0"><strong>硬體依賴:</strong> 由於 AI
+                                            模型皆在本地端運行，需要具備一定等級的 GPU 才能流暢使用，這也帶來了較高的功耗。</li>
+                                        <li class="list-group-item bg-transparent px-0"><strong>模型精度與效能的平衡:</strong> 選用
+                                            Breeze 這類小型語言模型是為了在多數個人電腦上也能運行，但其摘要的精準度與大型商用模型 (如 GPT-4)
+                                            相比仍有差距。儘管如此，對於日常會議記錄、教學影片等內容的整理，其表現已足夠應付。</li>
                                     </ul>
                                 </div>
                             </div>
@@ -176,11 +228,13 @@
 
     <footer class="bg-white mt-5 py-4 border-top">
         <div class="container text-center">
-            <a href="../portfolio.html" class="btn btn-outline-primary mb-3"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+            <a href="../portfolio.html" class="btn btn-outline-primary mb-3"><i
+                    class="bi bi-arrow-left-circle me-2"></i>返回作品</a>
             <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

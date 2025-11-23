@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PM x Gemini CLI (一)：完整環境設定與專案準備 - Luke Hou 侯俊嘉的AI自動化與工作流指南</title>
-    <meta name="description" content="PM 與 Gemini CLI 協作系列第一篇，從零開始，詳細介紹 Gemini CLI 的安裝、設定，以及 VS Code 環境的準備，為後續的協作流程打下堅實基礎。">
-    <meta name="keywords" content="Gemini CLI, Gemini CLI 教學, Gemini CLI 安裝, PM, 產品經理, AI 協作, 環境設定, VS Code, Markdown, Luke Hou, 侯俊嘉">
+    <meta name="description"
+        content="PM 與 Gemini CLI 協作系列第一篇，從零開始，詳細介紹 Gemini CLI 的安裝、設定，以及 VS Code 環境的準備，為後續的協作流程打下堅實基礎。">
+    <meta name="keywords"
+        content="Gemini CLI, Gemini CLI 教學, Gemini CLI 安裝, PM, 產品經理, AI 協作, 環境設定, VS Code, Markdown, Luke Hou, 侯俊嘉">
     <link rel="icon" href="../images/favicon.jpg" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -17,15 +20,18 @@
             display: block;
             margin: 1.5rem auto;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .tutorial-content figure {
             margin: 1.5rem 0;
             text-align: center;
         }
+
         .tutorial-content figure img {
             margin: 0 auto;
         }
+
         .step {
             margin-bottom: 2.5rem;
             padding: 2rem;
@@ -34,9 +40,11 @@
             background-color: #f8f9fa;
             transition: box-shadow 0.3s ease-in-out;
         }
+
         .step:hover {
-            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
         }
+
         .step h3 {
             font-size: 1.75rem;
             color: #198754;
@@ -44,10 +52,12 @@
             display: flex;
             align-items: center;
         }
+
         .step h3 .step-icon {
             margin-right: 1rem;
             font-size: 1.5rem;
         }
+
         code {
             background-color: #e9ecef;
             padding: .2rem .4rem;
@@ -55,6 +65,7 @@
             font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             font-size: .875em;
         }
+
         pre {
             background-color: #212529;
             color: #f8f9fa;
@@ -63,23 +74,28 @@
             white-space: pre-wrap;
             word-wrap: break-word;
         }
+
         pre code {
             background-color: transparent;
             padding: 0;
             color: inherit;
             font-size: 1em;
         }
-        .tutorial-intro, .tutorial-summary {
+
+        .tutorial-intro,
+        .tutorial-summary {
             background-color: #eef8f3;
             border-left: 5px solid #198754;
             padding: 1.5rem;
             margin: 2rem 0;
         }
+
         .platform-comparison {
             display: flex;
             flex-wrap: wrap;
             gap: 1rem;
         }
+
         .platform-column {
             flex: 1;
             min-width: 300px;
@@ -88,6 +104,7 @@
             border-radius: 0.5rem;
             background-color: #ffffff;
         }
+
         .platform-column h4 {
             color: #198754;
             margin-bottom: 1rem;
@@ -96,20 +113,22 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學文</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
                         <li class="nav-item"><a class="nav-link" href="../podcast.html">🎙️ Podcast</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
                     </ul>
                 </div>
@@ -126,7 +145,7 @@
 
                     <div class="podcast-player mb-4">
                         <h5><i class="fas fa-headphones-alt me-2"></i>本集 Podcast</h5>
-                        
+
                         <h6 class="mt-3">EP1：AI 老司機的 Gemini CLI 工作流</h6>
                         <audio controls class="w-100">
                             <source src="../Podcast/EP-1-AI_Veteran.m4a" type="audio/mp4">
@@ -137,7 +156,9 @@
                     <div class="alert alert-success mb-4" role="alert">
                         <h4 class="alert-heading">🚀 為什麼 PM 要學 Gemini CLI + VS Code？</h4>
                         <p>身為產品經理，每天都在跟無數的文件、需求、數據和會議奮戰。如果有一個方法，可以從繁瑣的庶務中解放出來，將精力專注在產品策略、使用者體驗和團隊溝通上，那該有多好？</p>
-                        <p>這就是本系列文章要帶給您的核心價值：學習如何透過 <strong>Gemini CLI</strong> 這個強大的 AI 命令列工具，結合 <strong>VS Code</strong> 這個專業的編輯器，打造一個專屬於 PM 的高效工作流。我們將不再只是「使用」AI，而是「指揮」AI，讓它成為您最得力的數位助理，幫您處理文件、分析資料、生成報告，甚至與工程師進行更順暢的技術溝通。</p>
+                        <p>這就是本系列文章要帶給您的核心價值：學習如何透過 <strong>Gemini CLI</strong> 這個強大的 AI 命令列工具，結合 <strong>VS
+                                Code</strong> 這個專業的編輯器，打造一個專屬於 PM
+                            的高效工作流。我們將不再只是「使用」AI，而是「指揮」AI，讓它成為您最得力的數位助理，幫您處理文件、分析資料、生成報告，甚至與工程師進行更順暢的技術溝通。</p>
                         <p>值得強調的是，這些方法或許不是業界最新、最頂尖的技術，但它們絕對是經過實踐驗證，能夠立即應用於您的日常工作中，帶來實質效率提升的工具。</p>
                         <hr>
                         <p class="mb-0">忘掉那些複雜的設定和令人生畏的程式碼，本教學將用最淺顯易懂的方式，帶您一步步從零開始。準備好，讓您的工作效率翻十倍了嗎？</p>
@@ -158,31 +179,40 @@
                         <section class="step-by-step">
                             <div class="step">
                                 <h3><i class="fas fa-code step-icon"></i>步驟一：安裝 Node.js (工具的「地基」)</h3>
-                                <p>您可以把 <strong>Node.js</strong> 想像成蓋房子前的「地基」或「作業系統」。就像您的電腦需要 Windows 或 macOS 才能執行 Word 或 Photoshop 一樣，許多好用的開發工具 (包含我們的主角 Gemini CLI) 都需要先安裝 Node.js 這個穩固的基礎，才能在上面順利運作。</p>
-                                <p>簡單來說，這是第一步，也是最重要的一步。請參考 <a href="../n8n_tutorials/n8n-tutorial-1.html#步驟一：下載 Node.js" target="_blank">n8n 教學 (一) 的步驟一</a>，完成 Node.js 的安裝。</p>
+                                <p>您可以把 <strong>Node.js</strong> 想像成蓋房子前的「地基」或「作業系統」。就像您的電腦需要 Windows 或 macOS 才能執行 Word
+                                    或 Photoshop 一樣，許多好用的開發工具 (包含我們的主角 Gemini CLI) 都需要先安裝 Node.js 這個穩固的基礎，才能在上面順利運作。</p>
+                                <p>簡單來說，這是第一步，也是最重要的一步。請參考 <a href="../n8n_tutorials/n8n-tutorial-1.html#步驟一：下載 Node.js"
+                                        target="_blank">n8n 教學 (一) 的步驟一</a>，完成 Node.js 的安裝。</p>
                             </div>
 
                             <div class="step">
                                 <h3><i class="fas fa-terminal step-icon"></i>步驟二：安裝 Gemini CLI (真正的「AI助理」)</h3>
-                                <p>地基打好後，我們來安裝主角 Gemini CLI。安裝 Node.js 時，會附帶一個名為 <strong>npm</strong> 的小工具，您可以把它想像成「開發工具的 App Store」。我們就是透過這個 App Store 來安裝 Gemini CLI。</p>
-                                <p>接下來，我們要打開一個叫做「終端機」的程式。它可能看起來有點陌生，不像我們平常點擊圖示的操作介面。您可以把它想像成一個**直接跟電腦下指令的對話框**，我們用打字的方式命令電腦做事，非常直接且高效。</p>
+                                <p>地基打好後，我們來安裝主角 Gemini CLI。安裝 Node.js 時，會附帶一個名為 <strong>npm</strong>
+                                    的小工具，您可以把它想像成「開發工具的 App Store」。我們就是透過這個 App Store 來安裝 Gemini CLI。</p>
+                                <p>接下來，我們要打開一個叫做「終端機」的程式。它可能看起來有點陌生，不像我們平常點擊圖示的操作介面。您可以把它想像成一個**直接跟電腦下指令的對話框**，我們用打字的方式命令電腦做事，非常直接且高效。
+                                </p>
                                 <div class="alert alert-info small py-2">
                                     <i class="fas fa-info-circle me-2"></i>
-                                    <strong>小提示：</strong>在接下來的文章中，所有指稱「終端機」、「CMD」或「PowerShell」的地方，您都可以把它們想像成是您與 AI 助理進行文字對話的「小黑窗」或「對話視窗」。
+                                    <strong>小提示：</strong>在接下來的文章中，所有指稱「終端機」、「CMD」或「PowerShell」的地方，您都可以把它們想像成是您與 AI
+                                    助理進行文字對話的「小黑窗」或「對話視窗」。
                                 </div>
                                 <div class="platform-comparison">
                                     <div class="platform-column">
                                         <h4>Windows</h4>
                                         <p>打開「命令提示字元 (CMD)」或「PowerShell」，輸入以下指令後按下 Enter：</p>
                                         <pre><code>npm install -g @google/gemini-cli</code></pre>
-                                        <p class="mt-2"><small>💡 這裡的 <code>-g</code> 是個小技巧，代表「安裝在共用區」。這樣不論您在哪個資料夾工作，隨時都能呼叫 Gemini CLI 這個助理。</small></p>
+                                        <p class="mt-2"><small>💡 這裡的 <code>-g</code>
+                                                是個小技巧，代表「安裝在共用區」。這樣不論您在哪個資料夾工作，隨時都能呼叫 Gemini CLI 這個助理。</small></p>
                                     </div>
                                     <div class="platform-column">
                                         <h4>macOS</h4>
                                         <p>打開「終端機 (Terminal)」，輸入以下指令後按下 Enter：</p>
                                         <pre><code>npm install -g @google/gemini-cli</code></pre>
-                                        <p class="mt-2"><small>💡 這裡的 <code>-g</code> 是個小技巧，代表「安裝在共用區」。這樣不論您在哪個資料夾工作，隨時都能呼叫 Gemini CLI 這個助理。</small></p>
-                                        <p>如果看到 "permission denied" (權限不足) 的錯誤，別擔心！這只是系統需要您給它管理員權限。請在指令最前面加上 <code>sudo</code> (就像是跟警衛說「我是管理員」)，然後再輸入一次密碼即可：</p>
+                                        <p class="mt-2"><small>💡 這裡的 <code>-g</code>
+                                                是個小技巧，代表「安裝在共用區」。這樣不論您在哪個資料夾工作，隨時都能呼叫 Gemini CLI 這個助理。</small></p>
+                                        <p>如果看到 "permission denied" (權限不足) 的錯誤，別擔心！這只是系統需要您給它管理員權限。請在指令最前面加上
+                                            <code>sudo</code> (就像是跟警衛說「我是管理員」)，然後再輸入一次密碼即可：
+                                        </p>
                                         <pre><code>sudo npm install -g @google/gemini-cli</code></pre>
                                     </div>
                                 </div>
@@ -193,22 +223,27 @@
 
                             <div class="step">
                                 <h3><i class="fas fa-desktop step-icon"></i>步驟三：安裝 VS Code (我們的「工作室」)</h3>
-                                <p>Visual Studio Code (簡稱 VS Code) 是一個功能強大又好用的免費編輯器。您可以把它想像成我們的「數位工作室」，之後所有與 AI 協作的檔案、筆記和程式碼，都會在這裡進行編輯和管理。</p>
+                                <p>Visual Studio Code (簡稱 VS Code) 是一個功能強大又好用的免費編輯器。您可以把它想像成我們的「數位工作室」，之後所有與 AI
+                                    協作的檔案、筆記和程式碼，都會在這裡進行編輯和管理。</p>
                                 <div class="platform-comparison">
                                     <div class="platform-column">
                                         <h4>Windows</h4>
-                                        <p>前往 <a href="https://code.visualstudio.com/download" target="_blank">VS Code 官方網站</a>，下載 Windows 安裝檔並完成安裝。</p>
+                                        <p>前往 <a href="https://code.visualstudio.com/download" target="_blank">VS Code
+                                                官方網站</a>，下載 Windows 安裝檔並完成安裝。</p>
                                     </div>
                                     <div class="platform-column">
                                         <h4>macOS</h4>
-                                        <p>前往 <a href="https://code.visualstudio.com/download" target="_blank">VS Code 官方網站</a>，下載 macOS 安裝檔並完成安裝。</p>
+                                        <p>前往 <a href="https://code.visualstudio.com/download" target="_blank">VS Code
+                                                官方網站</a>，下載 macOS 安裝檔並完成安裝。</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="step">
                                 <h3><i class="fas fa-folder-open step-icon"></i>步驟四：建立專案資料夾 (專屬的「專案檔案櫃」)</h3>
-                                <p>在您的電腦上建立一個新的資料夾，作為存放所有 AI 協作專案的「檔案櫃」。建議取一個有意義的名稱，例如專案名稱 <code>gemini-projects</code>，方便日後查找。</p>
+                                <p>在您的電腦上建立一個新的資料夾，作為存放所有 AI 協作專案的「檔案櫃」。建議取一個有意義的名稱，例如專案名稱
+                                    <code>gemini-projects</code>，方便日後查找。
+                                </p>
                                 <p class="mt-2"><small>💡 您可以使用滑鼠右鍵新增資料夾，也可以在「終端機」中輸入以下指令來建立，體驗一下用指令操作的感覺！</small></p>
                                 <div class="platform-comparison">
                                     <div class="platform-column">
@@ -231,7 +266,8 @@
                                     <div class="platform-column">
                                         <h4>Windows</h4>
                                         <p>點擊 VS Code 左上角的「檔案」->「開啟資料夾...」，然後選擇您剛才建立的資料夾。</p>
-                                        <p>或者，在終端機裡先切換到專案資料夾，然後輸入 <code>code .</code> (這個點代表「這裡」)，讓 VS Code 直接打開目前的資料夾：</p>
+                                        <p>或者，在終端機裡先切換到專案資料夾，然後輸入 <code>code .</code> (這個點代表「這裡」)，讓 VS Code 直接打開目前的資料夾：
+                                        </p>
                                         <pre><code>cd C:\Users\您的使用者名稱\Documents\gemini-projects
 code .</code></pre>
                                     </div>
@@ -247,7 +283,8 @@ code .</code></pre>
 
                             <div class="step">
                                 <h3><i class="fas fa-puzzle-piece step-icon"></i>步驟六：安裝 Markdown 美化外掛</h3>
-                                <p>Gemini CLI 很常以 <strong>Markdown</strong> 格式回覆我們，這是一種輕量的筆記語法。除此之外，我們也會用這種格式來撰寫 Prompt 跟 AI 溝通，為了讓這種格式的內容在我們的「工作室」(VS Code) 中看起來更漂亮、更像一份正式文件，我們需要安裝一個美化用的外掛。</p>
+                                <p>Gemini CLI 很常以 <strong>Markdown</strong> 格式回覆我們，這是一種輕量的筆記語法。除此之外，我們也會用這種格式來撰寫 Prompt
+                                    跟 AI 溝通，為了讓這種格式的內容在我們的「工作室」(VS Code) 中看起來更漂亮、更像一份正式文件，我們需要安裝一個美化用的外掛。</p>
                                 <ol>
                                     <li>打開 VS Code。</li>
                                     <li>點擊左邊像俄羅斯方塊一樣的「擴充功能」圖示 (快捷鍵 <code>Ctrl+Shift+X</code>)。</li>
@@ -255,10 +292,13 @@ code .</code></pre>
                                     <li>找到它之後，點擊「安裝」。</li>
                                 </ol>
                                 <figure class="text-center my-4">
-                                    <img src="../images/gemini_cli_tutorial01.jpg" alt="VS Code extension marketplace showing Markdown Preview Enhanced" class="img-fluid rounded shadow">
+                                    <img src="../images/gemini_cli_tutorial01.jpg"
+                                        alt="VS Code extension marketplace showing Markdown Preview Enhanced"
+                                        class="img-fluid rounded shadow">
                                     <figcaption class="mt-2 text-muted">圖：在 VS Code 中安裝 Markdown 美化外掛。</figcaption>
                                 </figure>
-                                <p>安裝後，當您打開一個 `.md` 結尾的 Markdown 檔案時，就可以點擊 VS Code 右上角的「預覽」按鈕(在縮小按鈕左側)，看到它被美化排版後的樣子了。</p>
+                                <p>安裝後，當您打開一個 `.md` 結尾的 Markdown 檔案時，就可以點擊 VS Code 右上角的「預覽」按鈕(在縮小按鈕左側)，看到它被美化排版後的樣子了。
+                                </p>
                             </div>
                         </section>
                     </div>
@@ -270,7 +310,8 @@ code .</code></pre>
                             <p>雖然 VS Code 裡面也可以開終端機，但我們強烈建議您**另外打開一個獨立的終端機視窗，和 VS Code 左右並排**，就像下圖那樣。</p>
                             <p>為什麼要這麼麻煩？因為這樣做有三大好處：</p>
                             <ul>
-                                <li><strong>角色分明不混亂</strong>：左邊是您的「工作室」(VS Code)，專心處理文件；右邊是您的「AI 助理」(終端機)，專心與 AI 對話。分工清楚，思路才不會打結。</li>
+                                <li><strong>角色分明不混亂</strong>：左邊是您的「工作室」(VS Code)，專心處理文件；右邊是您的「AI 助理」(終端機)，專心與 AI
+                                    對話。分工清楚，思路才不會打結。</li>
                                 <li><strong>保留完整對話紀錄</strong>：獨立的終端機可以儲存非常長的對話歷史，方便您隨時回頭查看「上次跟 AI 聊了什麼」。</li>
                                 <li><strong>避免視窗被蓋掉</strong>：不會因為在 VS Code 裡忙別的事情，而不小心把與 AI 的對話視窗給關掉或蓋住。</li>
                             </ul>
@@ -280,8 +321,10 @@ code .</code></pre>
                     </div>
 
                     <figure class="text-center my-4">
-                        <img src="../images/gemini-cli-workflow-setup.jpg" alt="VS Code and Gemini CLI side-by-side workflow" class="img-fluid rounded shadow">
-                        <figcaption class="mt-2 text-muted">圖：建議的工作流佈局：一邊是 VS Code 工作室，另一邊是獨立的 Gemini CLI 助理視窗。</figcaption>
+                        <img src="../images/gemini-cli-workflow-setup.jpg"
+                            alt="VS Code and Gemini CLI side-by-side workflow" class="img-fluid rounded shadow">
+                        <figcaption class="mt-2 text-muted">圖：建議的工作流佈局：一邊是 VS Code 工作室，另一邊是獨立的 Gemini CLI 助理視窗。
+                        </figcaption>
                     </figure>
 
                     <div class="tutorial-summary">
@@ -292,14 +335,18 @@ code .</code></pre>
                             <li>安裝了 Visual Studio Code，並設定了專案資料夾。</li>
                             <li>安裝了 Markdown 渲染外掛，提升了文件編輯體驗。</li>
                         </ul>
-                        <p class="mt-4">如果您有想交流討論的地方，歡迎到我的 <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank">LinkedIn</a> 找我！</p>
-                        <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank" class="btn btn-primary mt-2">前往 LinkedIn</a>
+                        <p class="mt-4">如果您有想交流討論的地方，歡迎到我的 <a href="https://www.linkedin.com/in/junjia-hou/"
+                                target="_blank">LinkedIn</a> 找我！</p>
+                        <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank"
+                            class="btn btn-primary mt-2">前往 LinkedIn</a>
                     </div>
                 </article>
 
                 <div class="d-flex justify-content-between flex-wrap mt-5">
-                    <a href="../tutorials.html" class="btn btn-primary btn-lg mb-2 mb-md-0"><i class="fas fa-list me-2"></i>返回 教學列表</a>
-                    <a href="gemini-cli-tutorial-2.html" class="btn btn-secondary btn-lg">下一篇：Gemini CLI 基本指令與認證 <i class="fas fa-arrow-right ms-2"></i></a>
+                    <a href="../tutorials.html" class="btn btn-primary btn-lg mb-2 mb-md-0"><i
+                            class="fas fa-list me-2"></i>返回 教學列表</a>
+                    <a href="gemini-cli-tutorial-2.html" class="btn btn-secondary btn-lg">下一篇：Gemini CLI 基本指令與認證 <i
+                            class="fas fa-arrow-right ms-2"></i></a>
                 </div>
             </div>
         </div>
@@ -313,4 +360,5 @@ code .</code></pre>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>
 </body>
+
 </html>

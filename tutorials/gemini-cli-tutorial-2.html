@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PM x Gemini CLI (二)：Gemini CLI 基本指令與認證 - Luke Hou 侯俊嘉的AI自動化與工作流指南</title>
-    <meta name="description" content="PM 與 Gemini CLI 協作系列第二篇，詳細介紹如何在專案資料夾中啟動 Gemini CLI，進行 Google 帳號認證，並說明 /init 和 /clear 指令的使用時機與功能。">
-    <meta name="keywords" content="Gemini CLI, Gemini CLI 教學, PM, 產品經理, AI 協作, Gemini CLI 指令, Gemini CLI 認證, /auth, /init, /clear, Luke Hou, 侯俊嘉">
+    <meta name="description"
+        content="PM 與 Gemini CLI 協作系列第二篇，詳細介紹如何在專案資料夾中啟動 Gemini CLI，進行 Google 帳號認證，並說明 /init 和 /clear 指令的使用時機與功能。">
+    <meta name="keywords"
+        content="Gemini CLI, Gemini CLI 教學, PM, 產品經理, AI 協作, Gemini CLI 指令, Gemini CLI 認證, /auth, /init, /clear, Luke Hou, 侯俊嘉">
     <link rel="icon" href="../images/favicon.jpg" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -17,15 +20,18 @@
             display: block;
             margin: 1.5rem auto;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .tutorial-content figure {
             margin: 1.5rem 0;
             text-align: center;
         }
+
         .tutorial-content figure img {
             margin: 0 auto;
         }
+
         .step {
             margin-bottom: 2.5rem;
             padding: 2rem;
@@ -34,9 +40,11 @@
             background-color: #f8f9fa;
             transition: box-shadow 0.3s ease-in-out;
         }
+
         .step:hover {
-            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
         }
+
         .step h3 {
             font-size: 1.75rem;
             color: #198754;
@@ -44,10 +52,12 @@
             display: flex;
             align-items: center;
         }
+
         .step h3 .step-icon {
             margin-right: 1rem;
             font-size: 1.5rem;
         }
+
         code {
             background-color: #e9ecef;
             padding: .2rem .4rem;
@@ -55,6 +65,7 @@
             font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             font-size: .875em;
         }
+
         pre {
             background-color: #212529;
             color: #f8f9fa;
@@ -63,23 +74,28 @@
             white-space: pre-wrap;
             word-wrap: break-word;
         }
+
         pre code {
             background-color: transparent;
             padding: 0;
             color: inherit;
             font-size: 1em;
         }
-        .tutorial-intro, .tutorial-summary {
+
+        .tutorial-intro,
+        .tutorial-summary {
             background-color: #eef8f3;
             border-left: 5px solid #198754;
             padding: 1.5rem;
             margin: 2rem 0;
         }
+
         .platform-comparison {
             display: flex;
             flex-wrap: wrap;
             gap: 1rem;
         }
+
         .platform-column {
             flex: 1;
             min-width: 300px;
@@ -88,19 +104,25 @@
             border-radius: 0.5rem;
             background-color: #ffffff;
         }
+
         .platform-column h4 {
             color: #198754;
             margin-bottom: 1rem;
             border-bottom: 1px solid #e0e0e0;
             padding-bottom: 0.5rem;
         }
+
         .back-to-top-float {
             position: fixed;
-            top: 50%; /* Vertically center */
-            transform: translateY(-50%); /* Adjust for element's own height */
+            top: 50%;
+            /* Vertically center */
+            transform: translateY(-50%);
+            /* Adjust for element's own height */
             right: 20px;
-            z-index: 1000; /* Ensure it's above other content */
+            z-index: 1000;
+            /* Ensure it's above other content */
         }
+
         .back-to-top-float .btn {
             width: 50px;
             height: 50px;
@@ -111,20 +133,22 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學文</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
                         <li class="nav-item"><a class="nav-link" href="../podcast.html">🎙️ Podcast</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
                     </ul>
                 </div>
@@ -169,7 +193,8 @@
                             <div class="step">
                                 <h3 id="step-1"><i class="fas fa-play-circle step-icon"></i>步驟一：在專案資料夾「呼叫」AI 助理</h3>
                                 <p>首先，打開您的「工作室」(VS Code)，並確認您已經處於正確的專案資料夾中 (例如 <code>gemini-projects</code>)。</p>
-                                <p>接著，打開您獨立的「AI 助理對話視窗」(終端機)，我們需要先「走進」專案的檔案櫃，才能讓助理知道要處理哪個專案的檔案。請使用 <code>cd</code> (Change Directory) 指令切換位置：</p>
+                                <p>接著，打開您獨立的「AI 助理對話視窗」(終端機)，我們需要先「走進」專案的檔案櫃，才能讓助理知道要處理哪個專案的檔案。請使用 <code>cd</code>
+                                    (Change Directory) 指令切換位置：</p>
                                 <p><strong>Windows:</strong> (路徑是您自己建立的)</p>
                                 <pre><code>cd C:\Users\您的使用者名稱\Documents\gemini-projects</code></pre>
                                 <p><strong>macOS:</strong> (路徑是您自己建立的)</p>
@@ -177,11 +202,13 @@
                                 <p>成功進入資料夾後，輸入 <code>gemini</code> 指令，正式「呼叫」您的 AI 助理上線！</p>
                                 <pre><code>gemini</code></pre>
                                 <p>第一次見面，助理會引導您完成接下來的「身份認證」。</p>
-                                <p><small>💡 小提示：您可以隨時輸入 <code>gemini --help</code>，偷看一下助理支援哪些進階的呼叫方式 (例如指定用哪個模型)。</small></p>
+                                <p><small>💡 小提示：您可以隨時輸入 <code>gemini --help</code>，偷看一下助理支援哪些進階的呼叫方式
+                                        (例如指定用哪個模型)。</small></p>
                             </div>
 
                             <div class="step">
-                                <h3 id="step-2"><i class="fas fa-user-check step-icon"></i>步驟二：身份認證 (<code>/auth</code>)，取得「通行證」</h3>
+                                <h3 id="step-2"><i class="fas fa-user-check step-icon"></i>步驟二：身份認證
+                                    (<code>/auth</code>)，取得「通行證」</h3>
                                 <p>第一次呼叫助理，或助理的「通行證」過期時，需要進行身份認證。您可以把 <code>/auth</code> 指令想像成「重新登入」。</p>
                                 <pre><code>/auth</code></pre>
                                 <p><strong>認證流程就像網站登入一樣簡單：</strong></p>
@@ -194,11 +221,14 @@
                             </div>
 
                             <div class="step">
-                                <h3 id="step-3"><i class="fas fa-sync-alt step-icon"></i>步驟三：用 <code>/init</code> 指令「佈置辦公桌」</h3>
+                                <h3 id="step-3"><i class="fas fa-sync-alt step-icon"></i>步驟三：用 <code>/init</code>
+                                    指令「佈置辦公桌」</h3>
                                 <p><code>/init</code> 指令非常重要！您可以把它想像成：<strong>「為眼前的這個新專案，幫 AI 助理佈置好他的辦公桌。」</strong></p>
                                 <p>當您在一個新的專案資料夾，或想讓 AI 助理「重新整理思緒、忘掉一切重來」時，就使用這個指令。</p>
                                 <pre><code>/init</code></pre>
-                                <p>它會幫您建立專案專屬的設定檔，例如 <code>GEMINI.md</code>。您可以把這些檔案想成是助理的「專案筆記本」，裡面可以記錄這個專案的背景、特殊要求等，讓助理的服務更貼近您的需求。</p>
+                                <p>它會幫您建立專案專屬的設定檔，例如
+                                    <code>GEMINI.md</code>。您可以把這些檔案想成是助理的「專案筆記本」，裡面可以記錄這個專案的背景、特殊要求等，讓助理的服務更貼近您的需求。
+                                </p>
                                 <p><strong>什麼時候用？</strong></p>
                                 <ul>
                                     <li>✅ <strong>【最常用】</strong>在一個全新的專案資料夾(已經放入專案需要的原始資料)，第一次呼叫助理後。</li>
@@ -208,7 +238,8 @@
                             </div>
 
                             <div class="step">
-                                <h3 id="step-4"><i class="fas fa-eraser step-icon"></i>步驟四：用 <code>/clear</code> 指令「開啟新話題」</h3>
+                                <h3 id="step-4"><i class="fas fa-eraser step-icon"></i>步驟四：用 <code>/clear</code>
+                                    指令「開啟新話題」</h3>
                                 <p>如果您只是想清掉螢幕上的對話，讓畫面變乾淨，並讓 AI 助理忘記「剛才的對話內容」，就可以用 <code>/clear</code> 指令。</p>
                                 <p>這就像是對助理說：<strong>「好了，我們換個新話題吧！」</strong></p>
                                 <pre><code>/clear</code></pre>
@@ -246,17 +277,25 @@
 │   4. No, suggest changes (esc)</code></pre>
                                 <h4>選項該怎麼選？</h4>
                                 <ul>
-                                    <li><strong>1. Yes, allow once (只允許這次):</strong> 「這次改的沒問題，批准！」<br><strong>強烈建議永遠選這個！</strong> 每次都親自審核 AI 的修改，是對專案品質負責的表現。這是專業人士與 AI 協作的最佳方式。</li>
-                                    <li><strong>2. Yes, allow always (一律允許):</strong> 「不用問了，之後都直接改！」<br><strong>高風險選項！</strong> 除非您今天只想玩玩，或在處理一個不重要的暫存檔案，否則請避免使用。這等於是將專案的修改權完全交給 AI。</li>
-                                    <li><strong>3. Modify with external editor (我來微調):</strong> 「這個方向不錯，但我自己來改幾個字。」<br>AI 的建議會被貼到您的 VS Code 中，讓您做最後的編輯。</li>
-                                    <li><strong>4. No, suggest changes (esc) (拒絕):</strong> 「等等，這個改動我不滿意。」或「方向錯了，重來。」<br>您可以拒絕這次修改，然後接著用文字告訴 AI 該如何調整它的建議。</li>
+                                    <li><strong>1. Yes, allow once (只允許這次):</strong>
+                                        「這次改的沒問題，批准！」<br><strong>強烈建議永遠選這個！</strong> 每次都親自審核 AI 的修改，是對專案品質負責的表現。這是專業人士與
+                                        AI 協作的最佳方式。</li>
+                                    <li><strong>2. Yes, allow always (一律允許):</strong>
+                                        「不用問了，之後都直接改！」<br><strong>高風險選項！</strong>
+                                        除非您今天只想玩玩，或在處理一個不重要的暫存檔案，否則請避免使用。這等於是將專案的修改權完全交給 AI。</li>
+                                    <li><strong>3. Modify with external editor (我來微調):</strong>
+                                        「這個方向不錯，但我自己來改幾個字。」<br>AI 的建議會被貼到您的 VS Code 中，讓您做最後的編輯。</li>
+                                    <li><strong>4. No, suggest changes (esc) (拒絕):</strong>
+                                        「等等，這個改動我不滿意。」或「方向錯了，重來。」<br>您可以拒絕這次修改，然後接著用文字告訴 AI 該如何調整它的建議。</li>
                                 </ul>
                                 <p>養成<strong>永遠使用 `Allow once`</strong> 的好習慣，代表您清楚身為人類專家的價值與責任。</p>
                             </div>
 
                             <div class="step">
                                 <h3 id="step-7"><i class="fas fa-exchange-alt step-icon"></i>該請「策略顧問」還是「執行秘書」？</h3>
-                                <p>Gemini AI 家族有許多能力不同的模型。您可以把 <strong>Gemini Pro</strong> 當成知識淵博的「策略顧問」，而 <strong>Gemini Flash</strong> 則是反應迅速的「執行秘書」。</p>
+                                <p>Gemini AI 家族有許多能力不同的模型。您可以把 <strong>Gemini Pro</strong> 當成知識淵博的「策略顧問」，而
+                                    <strong>Gemini Flash</strong> 則是反應迅速的「執行秘書」。
+                                </p>
 
                                 <h4>「策略顧問」 (Pro model) 的出場時機：</h4>
                                 <p>當任務需要<strong>深度思考、創意發想、分析複雜問題</strong>時，就該請 Pro 顧問出馬。它更聰明，但思考時間較長，費用也較高。</p>
@@ -280,14 +319,15 @@
                             <div class="step">
                                 <h3 id="step-8"><i class="fas fa-lightbulb step-icon"></i>PM 馬上能用的實戰範例</h3>
                                 <div class="alert alert-danger" role="alert">
-                                    <strong>重要提醒：</strong> 把 AI 當成您的外包工作夥伴。請勿將任何公司內部機密或客戶隱私資料貼給它，因為這些內容可能成為 AI 學習的一部分。請務必遵守公司的資訊安全規範。
+                                    <strong>重要提醒：</strong> 把 AI 當成您的外包工作夥伴。請勿將任何公司內部機密或客戶隱私資料貼給它，因為這些內容可能成為 AI
+                                    學習的一部分。請務必遵守公司的資訊安全規範。
                                 </div>
-                                    <p>在 AI 助理對話視窗中，有一個超強大的功能，就是用 <code>@</code> 符號，直接「餵」檔案給 AI 讀。</p>
-                                    <ul>
-                                        <li><code>@檔案名稱.txt</code>：讀取單一檔案。</li>
-                                        <li><code>@資料夾名稱</code>：讀取整個資料夾裡的所有檔案。</li>
-                                    </ul>
-                                    <p>對 PM 來說，這代表您可以直接把手邊的文件丟給 AI 處理，例如：</p>
+                                <p>在 AI 助理對話視窗中，有一個超強大的功能，就是用 <code>@</code> 符號，直接「餵」檔案給 AI 讀。</p>
+                                <ul>
+                                    <li><code>@檔案名稱.txt</code>：讀取單一檔案。</li>
+                                    <li><code>@資料夾名稱</code>：讀取整個資料夾裡的所有檔案。</li>
+                                </ul>
+                                <p>對 PM 來說，這代表您可以直接把手邊的文件丟給 AI 處理，例如：</p>
                                 <ul>
                                     <li><strong>快速摘要會議記錄：</strong></li>
                                     <pre><code>請幫我摘要這份會議記錄，並列出所有待辦事項(Action Items)和負責人。
@@ -311,20 +351,28 @@
                             <li>在專案資料夾中啟動了 Gemini CLI。</li>
                             <li>使用 Google 帳號完成了 Gemini CLI 的認證。</li>
                             <li>了解了 <code>/init</code> 和 <code>/clear</code> 指令的使用時機與功能。</li>
-                            <li>掌握了其他常用的 Gemini CLI 指令，例如 <code>/help</code>、<code>/about</code>、<code>/chat</code>、<code>/copy</code>、<code>/docs</code>、<code>/directory</code>、<code>/memory</code> 和 <code>!</code>。</li>
+                            <li>掌握了其他常用的 Gemini CLI 指令，例如
+                                <code>/help</code>、<code>/about</code>、<code>/chat</code>、<code>/copy</code>、<code>/docs</code>、<code>/directory</code>、<code>/memory</code>
+                                和 <code>!</code>。
+                            </li>
                             <li>了解了 Gemini Pro 與 Gemini Flash 的切換機制與適用情境。</li>
                             <li>探索了 Gemini CLI 在 PM 工作中的快速應用範例。</li>
                         </ul>
-                        <p class="mt-4">如果您有想交流討論的地方，歡迎到我的 <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank">LinkedIn</a> 找我！</p>
-                        <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank" class="btn btn-primary mt-2">前往 LinkedIn</a>
+                        <p class="mt-4">如果您有想交流討論的地方，歡迎到我的 <a href="https://www.linkedin.com/in/junjia-hou/"
+                                target="_blank">LinkedIn</a> 找我！</p>
+                        <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank"
+                            class="btn btn-primary mt-2">前往 LinkedIn</a>
                         <p>現在，您已經掌握了 Gemini CLI 的基本操作，可以開始利用它來處理您的工作了！</p>
                     </div>
                 </article>
 
                 <div class="d-flex justify-content-between flex-wrap mt-5">
-                    <a href="gemini-cli-tutorial-1.html" class="btn btn-secondary btn-lg mb-2 mb-md-0"><i class="fas fa-arrow-left me-2"></i>上一篇：環境設定與專案準備</a>
-                    <a href="../tutorials.html" class="btn btn-primary btn-lg mb-2 mb-md-0"><i class="fas fa-list me-2"></i>返回 教學列表</a>
-                    <a href="gemini-cli-tutorial-3.html" class="btn btn-secondary btn-lg">下一篇：AI 賦能產品探索與需求釐清 <i class="fas fa-arrow-right ms-2"></i></a>
+                    <a href="gemini-cli-tutorial-1.html" class="btn btn-secondary btn-lg mb-2 mb-md-0"><i
+                            class="fas fa-arrow-left me-2"></i>上一篇：環境設定與專案準備</a>
+                    <a href="../tutorials.html" class="btn btn-primary btn-lg mb-2 mb-md-0"><i
+                            class="fas fa-list me-2"></i>返回 教學列表</a>
+                    <a href="gemini-cli-tutorial-3.html" class="btn btn-secondary btn-lg">下一篇：AI 賦能產品探索與需求釐清 <i
+                            class="fas fa-arrow-right ms-2"></i></a>
                 </div>
             </div>
         </div>
@@ -344,4 +392,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>
 </body>
+
 </html>

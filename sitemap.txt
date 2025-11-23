@@ -6,7 +6,7 @@
 
 - **首頁 (Home)**
   - `index.html`
-- **作品集 (Portfolio)**
+- **作品 (Portfolio)**
   - 'portfolio.html'
   - 'podcast.html'
 - **部落格 (Blog)**
@@ -14,9 +14,9 @@
 - **n8n 教學 (n8n Tutorials)**
   - `tutorials.html`
 
-## 作品集項目 (Portfolio Projects)
+## 作品項目 (Portfolio Projects)
 
-此頁面隸屬於「作品集」。每個專案都提供「商業視角說明」與「技術視角說明」兩種版本。
+此頁面隸屬於「作品」。每個專案都提供「商業視角說明」與「技術視角說明」兩種版本。
 
 - **從一句話到完整 PRD：多代理 AI 自動化生成系統**
   - 技術視角說明: `projects/prd-ai-generation.html`
@@ -107,7 +107,7 @@
 
 ## Gemini CLI 教學系列 (Gemini CLI Tutorial Series)
 
-此頁面隸屬於「教學文」。
+此頁面隸屬於「教學」。
 
 - **第一章：環境設定與專案準備**
   - `tutorials/gemini-cli-tutorial-1.html`

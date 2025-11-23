@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>案例研究：Go-Live 流程再造與智慧派案系統 - Luke Hou 作品集</title>
-    <meta name="description" content="一個將團隊從繁瑣的行政工作中解放的真實案例。看我如何識別流程瓶頸，並打造一個串連 Google Sheet、Jira 與 Teams 的自動化流程，將問題回報到任務指派的處理時間從數小時縮短至數秒。">
+    <title>案例研究：Go-Live 流程再造與智慧派案系統 - Luke Hou 作品</title>
+    <meta name="description"
+        content="一個將團隊從繁瑣的行政工作中解放的真實案例。看我如何識別流程瓶頸，並打造一個串連 Google Sheet、Jira 與 Teams 的自動化流程，將問題回報到任務指派的處理時間從數小時縮短至數秒。">
     <meta name="keywords" content="專案管理, 流程優化, 商業案例, 自動化, n8n, Jira, 效率提升, Luke Hou, 侯俊嘉">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -13,7 +15,7 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-0V2L1DQVPY');
     </script>
@@ -24,13 +26,43 @@
             padding: 5rem 0;
             color: white;
         }
-        .hero-section h1 { font-weight: 700; }
-        body { background-color: #fdf5e6; }
-        .impact-card { background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: .5rem; padding: 1.5rem; margin-bottom: 1.5rem; }
-        .impact-card .icon { font-size: 2.5rem; color: #0d6efd; }
-        .gallery-img { cursor: pointer; transition: transform 0.2s; }
-        .gallery-img:hover { transform: scale(1.05); }
-        .img-bordered { border: 1px solid #dee2e6; padding: 5px; border-radius: 0.375rem; }
+
+        .hero-section h1 {
+            font-weight: 700;
+        }
+
+        body {
+            background-color: #fdf5e6;
+        }
+
+        .impact-card {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .impact-card .icon {
+            font-size: 2.5rem;
+            color: #0d6efd;
+        }
+
+        .gallery-img {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.05);
+        }
+
+        .img-bordered {
+            border: 1px solid #dee2e6;
+            padding: 5px;
+            border-radius: 0.375rem;
+        }
+
         .floating-toggle-btn {
             position: fixed;
             top: 50%;
@@ -42,10 +74,11 @@
             padding: 1rem 0.5rem;
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
-            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+            box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
+
 <body>
     <a href="golive-jira-automation.html" class="btn btn-dark floating-toggle-btn" title="切換至技術視角說明">
         <i class="bi bi-code-slash"></i> 技術視角說明
@@ -54,14 +87,15 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">♾️ 首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學文</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">✈️分享</a></li>
                     </ul>
                 </div>
@@ -73,7 +107,8 @@
         <section class="hero-section text-center">
             <div class="container">
                 <h1 class="display-4">從匆忙到從容：上線期的效率救星</h1>
-                <p class="lead col-lg-8 mx-auto">一個串連 Google Sheet、Jira 與 Teams 的自動化流程，將問題回報到任務指派的處理時間從數小時縮短至數秒，將團隊從繁瑣的行政工作中解放。</p>
+                <p class="lead col-lg-8 mx-auto">一個串連 Google Sheet、Jira 與 Teams
+                    的自動化流程，將問題回報到任務指派的處理時間從數小時縮短至數秒，將團隊從繁瑣的行政工作中解放。</p>
             </div>
         </section>
 
@@ -83,8 +118,10 @@
 
                     <!-- 1. The Challenge -->
                     <div class="text-center mb-5">
-                        <h2 class="h1 mb-3"><i class="bi bi-exclamation-octagon-fill text-danger me-2"></i>The Challenge: 一線回饋的任務管理</h2>
-                        <p class="lead text-muted">系統上線 (Go-Live) 是壓力最大的時刻。問題從四面八方湧入，團隊成員習慣先記在共用試算表，再手動轉成 Jira 開發任務。然而這個「手動」的步驟，卻是團隊效率的隱形殺手。</p>
+                        <h2 class="h1 mb-3"><i class="bi bi-exclamation-octagon-fill text-danger me-2"></i>The
+                            Challenge: 一線回饋的任務管理</h2>
+                        <p class="lead text-muted">系統上線 (Go-Live) 是壓力最大的時刻。問題從四面八方湧入，團隊成員習慣先記在共用試算表，再手動轉成 Jira
+                            開發任務。然而這個「手動」的步驟，卻是團隊效率的隱形殺手。</p>
                     </div>
                     <div class="row text-center mb-5">
                         <div class="col-md-4">
@@ -105,47 +142,58 @@
 
                     <!-- 2. The Solution -->
                     <div class="text-center mb-5">
-                        <h2 class="h1 mb-3"><i class="bi bi-robot text-primary me-2"></i>The Solution: 一個 7x24 小時的智慧數位助理</h2>
-                        <p class="lead text-muted">在發現原訂問題回報流程恐有以上潛在風險後，我主動發起並完成這個專案，利用 n8n 打造了一個自動化工作流，扮演團隊的「數位助理」。它串連了我們任務管理所需的眾多工具，建立一個無縫的自動化流程閉環。</p>
+                        <h2 class="h1 mb-3"><i class="bi bi-robot text-primary me-2"></i>The Solution: 一個 7x24 小時的智慧數位助理
+                        </h2>
+                        <p class="lead text-muted">在發現原訂問題回報流程恐有以上潛在風險後，我主動發起並完成這個專案，利用 n8n
+                            打造了一個自動化工作流，扮演團隊的「數位助理」。它串連了我們任務管理所需的眾多工具，建立一個無縫的自動化流程閉環。</p>
                     </div>
-                    
+
                     <!-- Gallery -->
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
-                      <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="workflow-tab" data-bs-toggle="tab" data-bs-target="#workflow" type="button" role="tab" aria-controls="workflow" aria-selected="true">自動化流程藍圖</button>
-                      </li>
-                      <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="sheet-tab" data-bs-toggle="tab" data-bs-target="#sheet" type="button" role="tab" aria-controls="sheet" aria-selected="false">唯一的資訊入口</button>
-                      </li>
-                      <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="jira-tab" data-bs-toggle="tab" data-bs-target="#jira" type="button" role="tab" aria-controls="jira" aria-selected="false">標準化的開發任務</button>
-                      </li>
-                      <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="teams-tab" data-bs-toggle="tab" data-bs-target="#teams" type="button" role="tab" aria-controls="teams" aria-selected="false">即時的團隊同步</button>
-                      </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="workflow-tab" data-bs-toggle="tab"
+                                data-bs-target="#workflow" type="button" role="tab" aria-controls="workflow"
+                                aria-selected="true">自動化流程藍圖</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="sheet-tab" data-bs-toggle="tab" data-bs-target="#sheet"
+                                type="button" role="tab" aria-controls="sheet" aria-selected="false">唯一的資訊入口</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="jira-tab" data-bs-toggle="tab" data-bs-target="#jira"
+                                type="button" role="tab" aria-controls="jira" aria-selected="false">標準化的開發任務</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="teams-tab" data-bs-toggle="tab" data-bs-target="#teams"
+                                type="button" role="tab" aria-controls="teams" aria-selected="false">即時的團隊同步</button>
+                        </li>
                     </ul>
                     <div class="tab-content border border-top-0 p-3 rounded-bottom mb-5">
-                      <div class="tab-pane active" id="workflow" role="tabpanel" aria-labelledby="workflow-tab">
-                        <h5 class="mt-2">自動化流程藍圖</h5>
-                        <p>這就是數位助理的大腦。它定時監控、過濾、處理、派工、反饋、通知，所有步驟一氣呵成。</p>
-                        <p>減少人工轉錄資訊不清楚或格式混亂的潛在風險，同時提升團隊效率，在人力資源有限的情況下，讓團隊可以將更多時間投注在解決問題上。</p>
-                        <img src="../images/golive_jira_automation/workflow.jpg" alt="n8n 整體工作流" class="img-fluid rounded gallery-img img-bordered">
-                      </div>
-                      <div class="tab-pane" id="sheet" role="tabpanel" aria-labelledby="sheet-tab">
-                        <h5 class="mt-2">唯一的資訊入口：Google Sheet</h5>
-                        <p>團隊成員只需專注於填寫這張表單，確認問題後標記 "Y"，剩下的全交給數位助理自動完成。</p>
-                        <img src="../images/golive_jira_automation/googlesheets.jpg" alt="Google Sheet 輸入" class="img-fluid rounded gallery-img img-bordered">
-                      </div>
-                      <div class="tab-pane" id="jira" role="tabpanel" aria-labelledby="jira-tab">
-                        <h5 class="mt-2">標準化的開發任務：Jira Ticket</h5>
-                        <p>無論誰回報，都能自動產出格式統一、重點清晰的任務單，讓工程師能立刻動手，無需反覆確認。</p>
-                        <img src="../images/golive_jira_automation/jiraticket.jpg" alt="Jira 產出" class="img-fluid rounded gallery-img img-bordered">
-                      </div>
-                      <div class="tab-pane" id="teams" role="tabpanel" aria-labelledby="teams-tab">
-                        <h5 class="mt-2">即時的團隊同步：Microsoft Teams</h5>
-                        <p>任務創建後，關鍵資訊會被整理成精美卡片，即時推送到團隊頻道，確保所有人資訊同步。</p>
-                        <img src="../images/golive_jira_automation/teams.jpg" alt="Teams 通知" class="img-fluid rounded gallery-img img-bordered">
-                      </div>
+                        <div class="tab-pane active" id="workflow" role="tabpanel" aria-labelledby="workflow-tab">
+                            <h5 class="mt-2">自動化流程藍圖</h5>
+                            <p>這就是數位助理的大腦。它定時監控、過濾、處理、派工、反饋、通知，所有步驟一氣呵成。</p>
+                            <p>減少人工轉錄資訊不清楚或格式混亂的潛在風險，同時提升團隊效率，在人力資源有限的情況下，讓團隊可以將更多時間投注在解決問題上。</p>
+                            <img src="../images/golive_jira_automation/workflow.jpg" alt="n8n 整體工作流"
+                                class="img-fluid rounded gallery-img img-bordered">
+                        </div>
+                        <div class="tab-pane" id="sheet" role="tabpanel" aria-labelledby="sheet-tab">
+                            <h5 class="mt-2">唯一的資訊入口：Google Sheet</h5>
+                            <p>團隊成員只需專注於填寫這張表單，確認問題後標記 "Y"，剩下的全交給數位助理自動完成。</p>
+                            <img src="../images/golive_jira_automation/googlesheets.jpg" alt="Google Sheet 輸入"
+                                class="img-fluid rounded gallery-img img-bordered">
+                        </div>
+                        <div class="tab-pane" id="jira" role="tabpanel" aria-labelledby="jira-tab">
+                            <h5 class="mt-2">標準化的開發任務：Jira Ticket</h5>
+                            <p>無論誰回報，都能自動產出格式統一、重點清晰的任務單，讓工程師能立刻動手，無需反覆確認。</p>
+                            <img src="../images/golive_jira_automation/jiraticket.jpg" alt="Jira 產出"
+                                class="img-fluid rounded gallery-img img-bordered">
+                        </div>
+                        <div class="tab-pane" id="teams" role="tabpanel" aria-labelledby="teams-tab">
+                            <h5 class="mt-2">即時的團隊同步：Microsoft Teams</h5>
+                            <p>任務創建後，關鍵資訊會被整理成精美卡片，即時推送到團隊頻道，確保所有人資訊同步。</p>
+                            <img src="../images/golive_jira_automation/teams.jpg" alt="Teams 通知"
+                                class="img-fluid rounded gallery-img img-bordered">
+                        </div>
                     </div>
 
                     <hr class="my-5">
@@ -188,10 +236,18 @@
                     <div class="mb-5">
                         <h2 class="text-center h1 mb-4">My Role & Skills</h2>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><i class="bi bi-search me-2 text-primary"></i><strong>主動性與問題定義:</strong> 自主發現團隊工作流程中的瓶頸，並將其定義為一個可被解決的具體問題。</li>
-                            <li class="list-group-item"><i class="bi bi-diagram-3-fill me-2 text-primary"></i><strong>流程設計與自動化:</strong> 規劃並實施端到端的自動化解決方案，串連多個異質系統，達到零人工介入。</li>
-                            <li class="list-group-item"><i class="bi bi-puzzle-fill me-2 text-primary"></i><strong>跨系統整合能力:</strong> 熟練運用 API 與 Webhook，讓 Google Sheets, Jira, Teams 等工具協同工作。</li>
-                            <li class="list-group-item"><i class="bi bi-people-fill me-2 text-primary"></i><strong>使用者中心思維:</strong> 站在團隊成員的角度思考，設計出符合他們使用習慣且能無痛導入的流程。</li>
+                            <li class="list-group-item"><i
+                                    class="bi bi-search me-2 text-primary"></i><strong>主動性與問題定義:</strong>
+                                自主發現團隊工作流程中的瓶頸，並將其定義為一個可被解決的具體問題。</li>
+                            <li class="list-group-item"><i
+                                    class="bi bi-diagram-3-fill me-2 text-primary"></i><strong>流程設計與自動化:</strong>
+                                規劃並實施端到端的自動化解決方案，串連多個異質系統，達到零人工介入。</li>
+                            <li class="list-group-item"><i
+                                    class="bi bi-puzzle-fill me-2 text-primary"></i><strong>跨系統整合能力:</strong> 熟練運用 API 與
+                                Webhook，讓 Google Sheets, Jira, Teams 等工具協同工作。</li>
+                            <li class="list-group-item"><i
+                                    class="bi bi-people-fill me-2 text-primary"></i><strong>使用者中心思維:</strong>
+                                站在團隊成員的角度思考，設計出符合他們使用習慣且能無痛導入的流程。</li>
                         </ul>
                     </div>
 
@@ -210,22 +266,32 @@
                     <div class="accordion" id="tech-deep-dive">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="heading-tech">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-tech" aria-expanded="false" aria-controls="collapse-tech">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse-tech" aria-expanded="false" aria-controls="collapse-tech">
                                     <strong>對技術實現細節感興趣？點此展開</strong>
                                 </button>
                             </h2>
-                            <div id="collapse-tech" class="accordion-collapse collapse" aria-labelledby="heading-tech" data-bs-parent="#tech-deep-dive">
+                            <div id="collapse-tech" class="accordion-collapse collapse" aria-labelledby="heading-tech"
+                                data-bs-parent="#tech-deep-dive">
                                 <div class="accordion-body">
-                                    <h4 class="h5">核心做法：一個聰明且自律的自動化閉環</h4> 
+                                    <h4 class="h5">核心做法：一個聰明且自律的自動化閉環</h4>
                                     <p>這個 n8n 工作流的核心思想是「監控、處理、回饋、通知」，形成一個完整的自動化閉環。</p>
                                     <ol>
-                                        <li><b>定時監控 (Schedule Trigger):</b> 工作流每 15 分鐘自動啟動一次，檢查 Google Sheet 中是否有新的任務。</li>
-                                        <li><b>智慧篩選 (Google Sheets Node):</b> 只抓取<code>Jira Link</code> 欄位為空，且 <code>可Jira</code> 欄位被標記為 "Y" 的資料列，確保只有經過核對確認、且尚未開票的回報才會進入流程。</li>
-                                        <li><b>格式化處理 (Code Node):</b> 將所有相關欄位，組合成一個結構清晰的 Jira Wiki Markup 描述。同時，根據回報的「嚴重度等級」自動對應成 Jira 的 Priority ID。</li>
-                                        <li><b>自動開票 (Jira Node):</b> 將格式化後的內容，連同 Assignee、Reporter、Labels 等資訊，自動建立一張高品質的 Jira Bug Ticket。</li>
-                                        <li><b>即時回饋 (Google Sheets Node):</b> Jira Ticket 建立成功後，立即將含有連結的 Jira Key 回寫到 Google Sheet，並將狀態更新為 "Done"。</li>
-                                        <li><b>主動通知 (HTTP Request to Power Automate):</b> 組合一個精美的 Teams Adaptive Card，透過 Webhook 將新工單的關鍵資訊即時推送到團隊頻道。</li>
-                                        <li><b>錯誤告警 (Telegram Node):</b> 在關鍵節點設置了錯誤處理，一旦發生問題，會立即發送通知到我的 Telegram，以便即時介入。</li>
+                                        <li><b>定時監控 (Schedule Trigger):</b> 工作流每 15 分鐘自動啟動一次，檢查 Google Sheet 中是否有新的任務。
+                                        </li>
+                                        <li><b>智慧篩選 (Google Sheets Node):</b> 只抓取<code>Jira Link</code> 欄位為空，且
+                                            <code>可Jira</code> 欄位被標記為 "Y" 的資料列，確保只有經過核對確認、且尚未開票的回報才會進入流程。
+                                        </li>
+                                        <li><b>格式化處理 (Code Node):</b> 將所有相關欄位，組合成一個結構清晰的 Jira Wiki Markup
+                                            描述。同時，根據回報的「嚴重度等級」自動對應成 Jira 的 Priority ID。</li>
+                                        <li><b>自動開票 (Jira Node):</b> 將格式化後的內容，連同 Assignee、Reporter、Labels 等資訊，自動建立一張高品質的
+                                            Jira Bug Ticket。</li>
+                                        <li><b>即時回饋 (Google Sheets Node):</b> Jira Ticket 建立成功後，立即將含有連結的 Jira Key 回寫到
+                                            Google Sheet，並將狀態更新為 "Done"。</li>
+                                        <li><b>主動通知 (HTTP Request to Power Automate):</b> 組合一個精美的 Teams Adaptive Card，透過
+                                            Webhook 將新工單的關鍵資訊即時推送到團隊頻道。</li>
+                                        <li><b>錯誤告警 (Telegram Node):</b> 在關鍵節點設置了錯誤處理，一旦發生問題，會立即發送通知到我的 Telegram，以便即時介入。
+                                        </li>
                                     </ol>
                                 </div>
                             </div>
@@ -239,7 +305,8 @@
 
     <footer class="bg-white mt-5 py-4 border-top">
         <div class="container text-center">
-            <a href="../portfolio.html" class="btn btn-outline-primary mb-3"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+            <a href="../portfolio.html" class="btn btn-outline-primary mb-3"><i
+                    class="bi bi-arrow-left-circle me-2"></i>返回作品</a>
             <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
         </div>
     </footer>
@@ -263,7 +330,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
             const modalImage = document.getElementById('modalImage');
-            
+
             document.querySelectorAll('.gallery-img').forEach(img => {
                 img.addEventListener('click', function () {
                     modalImage.src = this.src;
@@ -273,4 +340,5 @@
         });
     </script>
 </body>
+
 </html>

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>案例研究：用LINE打通現場到開發的「最後一哩路」 - Luke Hou 作品集</title>
+    <title>案例研究：用LINE打通現場到開發的「最後一哩路」 - Luke Hou 作品</title>
     <meta name="description" content="了解我如何打造一個LINE回報機器人，讓第一線人員用手機聊天就能即時回報問題、附上截圖，並自動在Jira生成開發任務，將回報效率提升10倍以上。">
     <meta name="keywords" content="LINE Bot, Jira, 自動化, 流程優化, 現場回報, QA, Luke Hou, 侯俊嘉">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -13,18 +14,50 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-0V2L1DQVPY');
     </script>
     <style>
-        .hero-section { background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/n8n-line-bot-jira-automation/image.png') no-repeat center center; background-size: cover; padding: 5rem 0; color: white; }
-        .hero-section h1 { font-weight: 700; }
-        .impact-card { background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: .5rem; padding: 1.5rem; margin-bottom: 1.5rem; }
-        .impact-card .icon { font-size: 2.5rem; color: #0d6efd; }
-        .feature-card { text-align: center; padding: 1.5rem; }
-        .feature-card .icon { font-size: 3rem; margin-bottom: 1rem; color: #0d6efd; }
-        body { background-color: #fdf5e6; }
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/n8n-line-bot-jira-automation/image.png') no-repeat center center;
+            background-size: cover;
+            padding: 5rem 0;
+            color: white;
+        }
+
+        .hero-section h1 {
+            font-weight: 700;
+        }
+
+        .impact-card {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .impact-card .icon {
+            font-size: 2.5rem;
+            color: #0d6efd;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .feature-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0d6efd;
+        }
+
+        body {
+            background-color: #fdf5e6;
+        }
+
         .floating-toggle-btn {
             position: fixed;
             top: 50%;
@@ -36,10 +69,11 @@
             padding: 1rem 0.5rem;
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
-            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+            box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
+
 <body>
     <a href="n8n-line-bot-jira-automation.html" class="btn btn-dark floating-toggle-btn" title="切換至技術視角說明">
         <i class="bi bi-code-slash"></i> 技術視角說明
@@ -48,12 +82,13 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span
+                        class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">♾️ 首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學文</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">✈️分享</a></li>
                     </ul>
                 </div>
@@ -65,7 +100,8 @@
         <section class="hero-section text-center">
             <div class="container">
                 <h1 class="display-4">你的問題回報流程，是加速器還是絆腳石？</h1>
-                <p class="lead col-lg-8 mx-auto">我如何打造一個LINE回報機器人，讓第一線人員用手機聊天就能即時回報問題、附上截圖，並自動在Jira生成開發任務，將回報效率提升10倍以上。</p>
+                <p class="lead col-lg-8 mx-auto">我如何打造一個LINE回報機器人，讓第一線人員用手機聊天就能即時回報問題、附上截圖，並自動在Jira生成開發任務，將回報效率提升10倍以上。
+                </p>
             </div>
         </section>
 
@@ -74,7 +110,8 @@
                 <div class="col-lg-10">
 
                     <div class="text-center mb-5">
-                        <h2 class="h1 mb-3"><i class="bi bi-cone-striped text-danger me-2"></i>The Challenge: 現場與開發團隊的鴻溝</h2>
+                        <h2 class="h1 mb-3"><i class="bi bi-cone-striped text-danger me-2"></i>The Challenge: 現場與開發團隊的鴻溝
+                        </h2>
                         <p class="lead text-muted">在客戶現場進行使用者測試或系統導入時，第一線人員發現的問題，往往難以即時、完整地傳遞給後方開發團隊。傳統流程充滿了斷點。</p>
                     </div>
                     <div class="row text-center mb-5">
@@ -95,25 +132,30 @@
                     <hr class="my-5">
 
                     <div class="text-center mb-5">
-                        <h2 class="h1 mb-3"><i class="bi bi-chat-dots-fill text-primary me-2"></i>The Solution: 會開Jira單的LINE機器人</h2>
+                        <h2 class="h1 mb-3"><i class="bi bi-chat-dots-fill text-primary me-2"></i>The Solution:
+                            會開Jira單的LINE機器人</h2>
                         <p class="lead text-muted">我打造了一個「問題回報閘道」，將團隊最熟悉、最高頻使用的通訊軟體 LINE，直接變成了強大的Jira問題回報入口。</p>
                     </div>
-                    
+
                     <div class="row align-items-center g-4 mb-5">
                         <div class="col-md-6">
                             <h4 class="text-center">1. 在LINE中即時回報</h4>
                             <p class="text-center text-muted">現場人員只需用手機打字、拍照，就像和同事聊天一樣簡單，即可完成問題回報。</p>
-                            <img src="../images/n8n-line-bot-jira-automation/image.png" alt="Line 回報示範" class="img-fluid rounded shadow">
+                            <img src="../images/n8n-line-bot-jira-automation/image.png" alt="Line 回報示範"
+                                class="img-fluid rounded shadow">
                         </div>
                         <div class="col-md-6">
                             <h4 class="text-center">2. 自動生成Jira任務</h4>
-                            <p class="text-center text-muted">n8n自動化流程在背景運作，將LINE的訊息和圖片，轉化為一張資訊完整的Jira Ticket，並自動歸檔到對應專案。</p>
-                            <img src="../images/n8n-line-bot-jira-automation/0f64c0ed-ef64-4a0f-8267-0cda0930e9d2.png" alt="自動建立的 Jira Ticket" class="img-fluid rounded shadow">
+                            <p class="text-center text-muted">n8n自動化流程在背景運作，將LINE的訊息和圖片，轉化為一張資訊完整的Jira
+                                Ticket，並自動歸檔到對應專案。</p>
+                            <img src="../images/n8n-line-bot-jira-automation/0f64c0ed-ef64-4a0f-8267-0cda0930e9d2.png"
+                                alt="自動建立的 Jira Ticket" class="img-fluid rounded shadow">
                         </div>
                     </div>
                     <div class="text-center">
                         <p>整個過程對使用者來說，只是傳了幾則LINE訊息，但背後已完成跨系統的複雜工作。</p>
-                        <img src="../images/n8n-line-bot-jira-automation/2025-08-30_20-18-32.jpg" alt="n8n 整體工作流" class="img-fluid rounded shadow-lg">
+                        <img src="../images/n8n-line-bot-jira-automation/2025-08-30_20-18-32.jpg" alt="n8n 整體工作流"
+                            class="img-fluid rounded shadow-lg">
                     </div>
 
                     <hr class="my-5">
@@ -153,16 +195,24 @@
 
                     <div class="accordion" id="tech-deep-dive">
                         <div class="accordion-item">
-                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-tech"><strong>對技術實現細節感興趣？點此展開</strong></button></h2>
-                            <div id="collapse-tech" class="accordion-collapse collapse" data-bs-parent="#tech-deep-dive">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapse-tech"><strong>對技術實現細節感興趣？點此展開</strong></button></h2>
+                            <div id="collapse-tech" class="accordion-collapse collapse"
+                                data-bs-parent="#tech-deep-dive">
                                 <div class="accordion-body">
                                     <h4 class="h5">核心做法</h4>
                                     <ol>
-                                        <li><strong>LINE Bot Webhook 觸發:</strong> 使用者在 LINE 傳送訊息或圖片，觸發 n8n 的 Webhook 節點，即時捕捉回報內容。</li>
-                                        <li><strong>智慧分派:</strong> n8n 工作流會根據訊息中的關鍵字（如專案代號 Project Key），自動將 Ticket 建立到正確的 Jira 專案中。</li>
-                                        <li><strong>Jira API 整合:</strong> 自動呼叫 Jira API 建立 Ticket，並將 LINE 傳來的圖片作為附件(Attachment)上傳，完整重現現場狀況。</li>
-                                        <li><strong>欄位自動化:</strong> 自動填寫回報者(Reporter)、指派對象(Assignee)、標籤(Labels)等欄位，減少手動操作，確保資訊一致性。</li>
-                                        <li><strong>Excel 總表歸檔:</strong> 同步將每一筆回報的內容與對應的 Jira 網址登記到 Excel 總表，方便非 Jira 使用者追蹤與管理。</li>
+                                        <li><strong>LINE Bot Webhook 觸發:</strong> 使用者在 LINE 傳送訊息或圖片，觸發 n8n 的 Webhook
+                                            節點，即時捕捉回報內容。</li>
+                                        <li><strong>智慧分派:</strong> n8n 工作流會根據訊息中的關鍵字（如專案代號 Project Key），自動將 Ticket
+                                            建立到正確的 Jira 專案中。</li>
+                                        <li><strong>Jira API 整合:</strong> 自動呼叫 Jira API 建立 Ticket，並將 LINE
+                                            傳來的圖片作為附件(Attachment)上傳，完整重現現場狀況。</li>
+                                        <li><strong>欄位自動化:</strong>
+                                            自動填寫回報者(Reporter)、指派對象(Assignee)、標籤(Labels)等欄位，減少手動操作，確保資訊一致性。</li>
+                                        <li><strong>Excel 總表歸檔:</strong> 同步將每一筆回報的內容與對應的 Jira 網址登記到 Excel 總表，方便非 Jira
+                                            使用者追蹤與管理。</li>
                                     </ol>
                                 </div>
                             </div>
@@ -176,11 +226,13 @@
 
     <footer class="bg-white mt-5 py-4 border-top">
         <div class="container text-center">
-            <a href="../portfolio.html" class="btn btn-outline-primary mb-3"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+            <a href="../portfolio.html" class="btn btn-outline-primary mb-3"><i
+                    class="bi bi-arrow-left-circle me-2"></i>返回作品</a>
             <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

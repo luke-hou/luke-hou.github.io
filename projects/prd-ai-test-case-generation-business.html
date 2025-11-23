@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>案例研究：導入AI智能體，將產品需求(PRD)自動轉化為測試藍圖 - Luke Hou 作品集</title>
+    <title>案例研究：導入AI智能體，將產品需求(PRD)自動轉化為測試藍圖 - Luke Hou 作品</title>
     <meta name="description" content="了解我如何設計一個AI多智能體系統，讓AI讀懂PRD、參考歷史案例，並自動在Jira中生成高品質的測試案例，將單一功能的測試準備時間從數小時縮短至數分鐘。">
     <meta name="keywords" content="AI, Multi-Agent, RAG, 測試自動化, QA, Jira, Confluence, 流程優化, Luke Hou, 侯俊嘉">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -13,18 +14,50 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-0V2L1DQVPY');
     </script>
     <style>
-        .hero-section { background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/prd-ai-test-case-generation-main.png') no-repeat center center; background-size: cover; padding: 5rem 0; color: white; }
-        .hero-section h1 { font-weight: 700; }
-        .impact-card { background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: .5rem; padding: 1.5rem; margin-bottom: 1.5rem; }
-        .impact-card .icon { font-size: 2.5rem; color: #0d6efd; }
-        .feature-card { text-align: center; padding: 1.5rem; }
-        .feature-card .icon { font-size: 3rem; margin-bottom: 1rem; color: #0d6efd; }
-        body { background-color: #fdf5e6; }
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/prd-ai-test-case-generation-main.png') no-repeat center center;
+            background-size: cover;
+            padding: 5rem 0;
+            color: white;
+        }
+
+        .hero-section h1 {
+            font-weight: 700;
+        }
+
+        .impact-card {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .impact-card .icon {
+            font-size: 2.5rem;
+            color: #0d6efd;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .feature-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0d6efd;
+        }
+
+        body {
+            background-color: #fdf5e6;
+        }
+
         .floating-toggle-btn {
             position: fixed;
             top: 50%;
@@ -36,10 +69,11 @@
             padding: 1rem 0.5rem;
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
-            box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+            box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
+
 <body>
     <a href="prd-ai-test-case-generation.html" class="btn btn-dark floating-toggle-btn" title="切換至技術視角說明">
         <i class="bi bi-code-slash"></i> 技術視角說明
@@ -48,12 +82,13 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span
+                        class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../index.html">♾️ 首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學文</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品集</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品</a></li>
                         <li class="nav-item"><a class="nav-link" href="../blog.html">✈️分享</a></li>
                     </ul>
                 </div>
@@ -65,7 +100,8 @@
         <section class="hero-section text-center">
             <div class="container">
                 <h1 class="display-4">你的團隊還在「手抄」需求文件來寫測試案例嗎？</h1>
-                <p class="lead col-lg-8 mx-auto">我如何設計一個AI多智能體系統，讓AI讀懂PRD、參考歷史案例，並自動在Jira中生成高品質的測試案例，將單一功能的測試準備時間從數小時縮短至數分鐘。</p>
+                <p class="lead col-lg-8 mx-auto">
+                    我如何設計一個AI多智能體系統，讓AI讀懂PRD、參考歷史案例，並自動在Jira中生成高品質的測試案例，將單一功能的測試準備時間從數小時縮短至數分鐘。</p>
             </div>
         </section>
 
@@ -74,8 +110,10 @@
                 <div class="col-lg-10">
 
                     <div class="text-center mb-5">
-                        <h2 class="h1 mb-3"><i class="bi bi-pen-fill text-danger me-2"></i>The Challenge: 軟體測試的「最初一哩路」瓶頸</h2>
-                        <p class="lead text-muted">在軟體開發生命週期(SDLC)中，QA工程師根據產品需求文件(PRD)手動撰寫測試案例，是一項極其重要但又充滿挑戰的工作。這個「最初一哩路」往往成為整個測試週期的瓶頸。</p>
+                        <h2 class="h1 mb-3"><i class="bi bi-pen-fill text-danger me-2"></i>The Challenge: 軟體測試的「最初一哩路」瓶頸
+                        </h2>
+                        <p class="lead text-muted">
+                            在軟體開發生命週期(SDLC)中，QA工程師根據產品需求文件(PRD)手動撰寫測試案例，是一項極其重要但又充滿挑戰的工作。這個「最初一哩路」往往成為整個測試週期的瓶頸。</p>
                     </div>
                     <div class="row text-center mb-5">
                         <div class="col-md-4">
@@ -95,10 +133,12 @@
                     <hr class="my-5">
 
                     <div class="text-center mb-5">
-                        <h2 class="h1 mb-3"><i class="bi bi-people-fill text-primary me-2"></i>The Solution: 協同作戰的 AI 智能體團隊</h2>
-                        <p class="lead text-muted">我沒有使用單一的 AI，而是設計了一個「AI 智能體團隊」，讓不同的 AI 角色各司其職，協同作戰，以產出最符合團隊需求的測試案例。</p>
+                        <h2 class="h1 mb-3"><i class="bi bi-people-fill text-primary me-2"></i>The Solution: 協同作戰的 AI
+                            智能體團隊</h2>
+                        <p class="lead text-muted">我沒有使用單一的 AI，而是設計了一個「AI 智能體團隊」，讓不同的 AI 角色各司其職，協同作戰，以產出最符合團隊需求的測試案例。
+                        </p>
                     </div>
-                    
+
                     <div class="row g-4 mb-5 text-center">
                         <div class="col-md-4">
                             <div class="feature-card">
@@ -123,7 +163,8 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <img src="../images/prd-ai-test-case-generation-flow-1.png" alt="工作流程圖" class="img-fluid rounded shadow-lg">
+                        <img src="../images/prd-ai-test-case-generation-flow-1.png" alt="工作流程圖"
+                            class="img-fluid rounded shadow-lg">
                     </div>
 
                     <hr class="my-5">
@@ -163,22 +204,32 @@
 
                     <div class="accordion" id="tech-deep-dive">
                         <div class="accordion-item">
-                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-tech"><strong>對技術實現細節感興趣？點此展開</strong></button></h2>
-                            <div id="collapse-tech" class="accordion-collapse collapse" data-bs-parent="#tech-deep-dive">
+                            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapse-tech"><strong>對技術實現細節感興趣？點此展開</strong></button></h2>
+                            <div id="collapse-tech" class="accordion-collapse collapse"
+                                data-bs-parent="#tech-deep-dive">
                                 <div class="accordion-body">
                                     <h4 class="h5">核心做法：AI 智能體協作 (AI Agent Collaboration)</h4>
-                                    <p>此專案基於 n8n 的多智能體 (Multi-Agent) 框架，並採用了 RAG (Retrieval-Augmented Generation) 技術來提升 AI 回覆的準確性與相關性。</p>
+                                    <p>此專案基於 n8n 的多智能體 (Multi-Agent) 框架，並採用了 RAG (Retrieval-Augmented Generation) 技術來提升
+                                        AI 回覆的準確性與相關性。</p>
                                     <ol>
-                                        <li><strong>建立向量知識庫 (Vector Stores):</strong> 分別將 Confluence 上的 PRD 文件和 Jira 上的歷史測試案例，處理後存入兩個獨立的向量資料庫，作為 AI 的長期記憶。</li>
+                                        <li><strong>建立向量知識庫 (Vector Stores):</strong> 分別將 Confluence 上的 PRD 文件和 Jira
+                                            上的歷史測試案例，處理後存入兩個獨立的向量資料庫，作為 AI 的長期記憶。</li>
                                         <li><strong>設計 AI 智能體 (AI Agents):</strong>
                                             <ul>
-                                                <li><strong>PRD 需求分析師:</strong> 該 Agent 被設定為只能從 PRD 向量知識庫中檢索資訊，以回答關於產品規格的問題。</li>
-                                                <li><strong>格式模仿專家:</strong> 該 Agent 被設定為只能從歷史測試案例向量知識庫中檢索資訊，以學習團隊的寫作風格。</li>
-                                                <li><strong>測試案例總監:</strong> 作為主智能體，它不直接連接任何知識庫，而是透過工具(Tools)來呼叫上述兩個專家，並根據他們的回答來生成最終的測試案例。</li>
+                                                <li><strong>PRD 需求分析師:</strong> 該 Agent 被設定為只能從 PRD
+                                                    向量知識庫中檢索資訊，以回答關於產品規格的問題。</li>
+                                                <li><strong>格式模仿專家:</strong> 該 Agent 被設定為只能從歷史測試案例向量知識庫中檢索資訊，以學習團隊的寫作風格。
+                                                </li>
+                                                <li><strong>測試案例總監:</strong>
+                                                    作為主智能體，它不直接連接任何知識庫，而是透過工具(Tools)來呼叫上述兩個專家，並根據他們的回答來生成最終的測試案例。</li>
                                             </ul>
                                         </li>
-                                        <li><strong>自動化 Jira 整合:</strong> 總監智能體產出的結果會被格式化，並透過 Jira API 批次建立 tickets，同時自動填入系統、測試分類等客製化欄位。</li>
-                                        <li><strong>智慧型版本更新:</strong> 當 PRD 文件更新時，可選擇性觸發工作流，自動清除舊版測試案例並生成新版，大幅降低需求變更時的維護成本。</li>
+                                        <li><strong>自動化 Jira 整合:</strong> 總監智能體產出的結果會被格式化，並透過 Jira API 批次建立
+                                            tickets，同時自動填入系統、測試分類等客製化欄位。</li>
+                                        <li><strong>智慧型版本更新:</strong> 當 PRD
+                                            文件更新時，可選擇性觸發工作流，自動清除舊版測試案例並生成新版，大幅降低需求變更時的維護成本。</li>
                                     </ol>
                                 </div>
                             </div>
@@ -192,11 +243,13 @@
 
     <footer class="bg-white mt-5 py-4 border-top">
         <div class="container text-center">
-            <a href="../portfolio.html" class="btn btn-outline-primary mb-3"><i class="bi bi-arrow-left-circle me-2"></i>返回作品集</a>
+            <a href="../portfolio.html" class="btn btn-outline-primary mb-3"><i
+                    class="bi bi-arrow-left-circle me-2"></i>返回作品</a>
             <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
