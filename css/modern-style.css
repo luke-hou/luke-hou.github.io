@@ -5,7 +5,8 @@
     --bg-dark: #0f172a;
     --text-light: #f8fafc;
     --text-gray: #94a3b8;
-    --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+    /* Blue/Sky/Slate Gradient */
+    --primary-gradient: linear-gradient(135deg, #2563eb 0%, #0ea5e9 50%, #e2e8f0 100%);
     --glass-bg: rgba(30, 41, 59, 0.7);
     --glass-border: rgba(255, 255, 255, 0.1);
     --card-hover-transform: translateY(-5px);
@@ -60,7 +61,7 @@ body {
 
 .profile-img-glow {
     border-radius: 50%;
-    box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+    box-shadow: 0 0 30px rgba(37, 99, 235, 0.5);
     border: 3px solid rgba(255, 255, 255, 0.1);
     transition: transform 0.3s ease;
 }
@@ -114,7 +115,7 @@ body {
 
 .glass-card:hover {
     transform: var(--card-hover-transform);
-    border-color: rgba(168, 85, 247, 0.5);
+    border-color: rgba(37, 99, 235, 0.5);
     box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
 
@@ -216,12 +217,12 @@ body {
 .btn-primary-modern:hover {
     opacity: 0.9;
     color: white;
-    box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
 }
 
 .btn-outline-modern {
     background: transparent;
-    border: 2px solid rgba(168, 85, 247, 0.5);
+    border: 2px solid rgba(37, 99, 235, 0.5);
     color: white;
     border-radius: 50px;
     padding: 0.8rem 2rem;
@@ -230,8 +231,8 @@ body {
 }
 
 .btn-outline-modern:hover {
-    background: rgba(168, 85, 247, 0.1);
-    border-color: #a855f7;
+    background: rgba(37, 99, 235, 0.1);
+    border-color: #2563eb;
     color: white;
 }
 
@@ -249,7 +250,7 @@ body {
     left: -10%;
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, #6366f1 0%, rgba(99, 102, 241, 0) 70%);
+    background: radial-gradient(circle, #2563eb 0%, rgba(37, 99, 235, 0) 70%);
     animation-delay: 0s;
 }
 
@@ -258,7 +259,7 @@ body {
     right: -10%;
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, #ec4899 0%, rgba(236, 72, 153, 0) 70%);
+    background: radial-gradient(circle, #0ea5e9 0%, rgba(14, 165, 233, 0) 70%);
     animation-delay: -5s;
 }
 
@@ -267,7 +268,7 @@ body {
     left: 20%;
     width: 300px;
     height: 300px;
-    background: radial-gradient(circle, #a855f7 0%, rgba(168, 85, 247, 0) 70%);
+    background: radial-gradient(circle, #06b6d4 0%, rgba(6, 182, 212, 0) 70%);
     animation-delay: -2s;
 }
 
@@ -294,7 +295,7 @@ body {
     position: relative;
     border-radius: 1rem;
     overflow: hidden;
-    box-shadow: 0 0 40px rgba(168, 85, 247, 0.3);
+    box-shadow: 0 0 40px rgba(37, 99, 235, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
     aspect-ratio: 1/1;
     display: flex;
@@ -309,7 +310,7 @@ body {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5));
+    filter: drop-shadow(0 0 10px rgba(37, 99, 235, 0.5));
 }
 
 .episode-number {
@@ -467,17 +468,17 @@ body {
 /* Impact Badge */
 .impact-badge {
     display: inline-block;
-    background: linear-gradient(90deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    color: #6ee7b7;
-    /* Emerald 300 */
+    background: linear-gradient(90deg, rgba(6, 182, 212, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    color: #67e8f9;
+    /* Cyan 300 */
     padding: 0.35rem 0.8rem;
     border-radius: 8px;
     font-size: 0.9rem;
     font-weight: 700;
     margin-bottom: 0.75rem;
     backdrop-filter: blur(4px);
-    box-shadow: 0 0 10px rgba(16, 185, 129, 0.1);
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.1);
 }
 
 /* Impact Badge Overlay */
@@ -489,9 +490,9 @@ body {
     display: inline-block;
     background: rgba(15, 23, 42, 0.85);
     /* Darker background for contrast */
-    border: 1px solid rgba(16, 185, 129, 0.5);
-    color: #34d399;
-    /* Emerald 400 - brighter */
+    border: 1px solid rgba(6, 182, 212, 0.5);
+    color: #22d3ee;
+    /* Cyan 400 - brighter */
     padding: 0.35rem 0.8rem;
     border-radius: 8px;
     font-size: 0.85rem;
