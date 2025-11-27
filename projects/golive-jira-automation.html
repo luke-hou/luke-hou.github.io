@@ -112,6 +112,30 @@
                     <div class="card bg-transparent border-0">
                         <div class="card-body px-0">
 
+                            <!-- Challenge & Solution Summary -->
+                            <div class="row g-4 mb-5">
+                                <div class="col-md-6">
+                                    <div class="glass-card h-100 p-4" style="border-left: 4px solid #ef4444;">
+                                        <h3 class="h4 text-danger mb-3"><i class="bi bi-fire me-2"></i>The Challenge
+                                        </h3>
+                                        <p class="text-gray">
+                                            「系統上線期間問題回報量大，人工將 Google Sheet 回報轉錄為 Jira 工單不僅耗時（每張 3-5
+                                            分鐘），且常因格式不一導致溝通成本增加。」
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="glass-card h-100 p-4" style="border-left: 4px solid #22c55e;">
+                                        <h3 class="h4 text-success mb-3"><i class="bi bi-check-circle-fill me-2"></i>The
+                                            Solution</h3>
+                                        <p class="text-gray">
+                                            「開發一個 n8n 自動化工作流，定時讀取 Google Sheet，自動將回報轉換為格式標準化的 Jira 工單，並透過 Webhook 即時發送
+                                            Teams 通知，實現了從回報到指派的零人工介入閉環。」
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
                             <h2 class="card-title h3 mb-3"><i
                                     class="bi bi-exclamation-triangle-fill me-2"></i>專案緣起：Go-Live 期間的大作戰</h2>
                             <p>系統上線 (Go-Live) 初期，是資訊團隊壓力最大的時刻。問題回報會從四面八方湧入：電話、LINE 群組、甚至是走廊上的攔截。為了快速記錄，大家習慣先將問題登記在一個共用的
