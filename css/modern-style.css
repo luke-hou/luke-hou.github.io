@@ -119,25 +119,32 @@ body {
 }
 
 .card-img-top {
-    height: 200px; /* Set a fixed height */
-    object-fit: cover; /* Crop images to fit, maintaining aspect ratio */
+    height: 200px;
+    /* Set a fixed height */
+    object-fit: cover;
+    /* Crop images to fit, maintaining aspect ratio */
 }
 
 /* Portfolio Card Tags */
 .portfolio-tags {
     margin-top: 1rem;
-    margin-bottom: 1.5rem; /* Add some space before the buttons */
+    margin-bottom: 1.5rem;
+    /* Add some space before the buttons */
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    justify-content: center; /* Center the tags */
+    justify-content: center;
+    /* Center the tags */
 }
 
 .tech-tag {
-    background-color: rgba(255, 255, 255, 0.1); /* Lighter than #333 for better glass effect */
-    color: var(--text-light); /* Use theme variable */
+    background-color: rgba(255, 255, 255, 0.1);
+    /* Lighter than #333 for better glass effect */
+    color: var(--text-light);
+    /* Use theme variable */
     padding: 0.3rem 0.8rem;
-    border-radius: 50px; /* Pill shape like the buttons */
+    border-radius: 50px;
+    /* Pill shape like the buttons */
     font-size: 0.75rem;
     font-weight: 500;
     border: 1px solid var(--glass-border);
@@ -217,7 +224,8 @@ body {
     border: 2px solid rgba(168, 85, 247, 0.5);
     color: white;
     border-radius: 50px;
-    padding: 0.5rem 1.5rem;
+    padding: 0.8rem 2rem;
+    font-weight: 600;
     transition: all 0.3s;
 }
 
@@ -339,88 +347,157 @@ body {
 .tutorial-series {
     margin-bottom: 3rem;
     padding: 2rem;
-    background: var(--glass-bg); /* Use glass background */
-    border-radius: 16px; /* Match glass-card radius */
+    background: var(--glass-bg);
+    /* Use glass background */
+    border-radius: 16px;
+    /* Match glass-card radius */
     border: 1px solid var(--glass-border);
 }
+
 .tutorial-series h2 {
     font-size: 2.25rem;
-    color: var(--text-light); /* Light text for dark background */
+    color: var(--text-light);
+    /* Light text for dark background */
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
-    border-bottom: 2px solid; /* Will be set by specific series */
+    border-bottom: 2px solid;
+    /* Will be set by specific series */
     display: flex;
     align-items: center;
 }
+
 .tutorial-series h2 .series-icon {
     margin-right: 1rem;
-    background: var(--primary-gradient); /* Use gradient for icon color */
+    background: var(--primary-gradient);
+    /* Use gradient for icon color */
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
 /* Specific series colors - adjust to dark theme */
 .tutorial-series-advanced {
     /* Use a subtle color or slight variation of glass-bg for distinction */
-    background: rgba(30, 41, 59, 0.8); /* Slightly darker glass */
-    border-color: rgba(255, 229, 143, 0.2); /* Faded yellow border */
+    background: rgba(30, 41, 59, 0.8);
+    /* Slightly darker glass */
+    border-color: rgba(255, 229, 143, 0.2);
+    /* Faded yellow border */
 }
+
 .tutorial-series-advanced h2 {
-    color: #ffd700; /* Gold */
+    color: #ffd700;
+    /* Gold */
     border-bottom-color: #ffd700;
 }
+
 .tutorial-series-advanced h2 .series-icon {
     color: #ffd700;
-    -webkit-text-fill-color: #ffd700; /* Override transparent for specific color */
+    -webkit-text-fill-color: #ffd700;
+    /* Override transparent for specific color */
 }
 
 .tutorial-series-pm {
     /* Use a subtle color or slight variation of glass-bg for distinction */
-    background: rgba(30, 41, 59, 0.6); /* Slightly lighter glass */
-    border-color: rgba(166, 217, 193, 0.2); /* Faded green border */
+    background: rgba(30, 41, 59, 0.6);
+    /* Slightly lighter glass */
+    border-color: rgba(166, 217, 193, 0.2);
+    /* Faded green border */
 }
+
 .tutorial-series-pm h2 {
-    color: #32cd32; /* Lime green */
+    color: #32cd32;
+    /* Lime green */
     border-bottom-color: #32cd32;
 }
+
 .tutorial-series-pm h2 .series-icon {
     color: #32cd32;
-    -webkit-text-fill-color: #32cd32; /* Override transparent for specific color */
+    -webkit-text-fill-color: #32cd32;
+    /* Override transparent for specific color */
 }
+
 /* Quick links section adaptation */
 .quick-links {
-    background: var(--glass-bg) !important; /* Force glass background */
+    background: var(--glass-bg) !important;
+    /* Force glass background */
     border: 1px solid var(--glass-border) !important;
     border-radius: 16px !important;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
 .quick-links h3 {
     background: var(--primary-gradient);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
 .quick-links .btn-outline-primary {
     border-color: rgba(99, 102, 241, 0.5);
     color: var(--text-light);
 }
+
 .quick-links .btn-outline-primary:hover {
     background: rgba(99, 102, 241, 0.1);
     border-color: #6366f1;
 }
+
 .quick-links .btn-outline-success {
-    border-color: rgba(50, 205, 50, 0.5); /* LimeGreen */
+    border-color: rgba(50, 205, 50, 0.5);
+    /* LimeGreen */
     color: var(--text-light);
 }
+
 .quick-links .btn-outline-success:hover {
     background: rgba(50, 205, 50, 0.1);
     border-color: #32cd32;
 }
+
 .quick-links .btn-outline-warning {
-    border-color: rgba(255, 215, 0, 0.5); /* Gold */
+    border-color: rgba(255, 215, 0, 0.5);
+    /* Gold */
     color: var(--text-light);
 }
+
 .quick-links .btn-outline-warning:hover {
     background: rgba(255, 215, 0, 0.1);
     border-color: #ffd700;
+}
+
+/* Impact Badge */
+.impact-badge {
+    display: inline-block;
+    background: linear-gradient(90deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #6ee7b7;
+    /* Emerald 300 */
+    padding: 0.35rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.1);
+}
+
+/* Impact Badge Overlay */
+.impact-badge-overlay {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+    display: inline-block;
+    background: rgba(15, 23, 42, 0.85);
+    /* Darker background for contrast */
+    border: 1px solid rgba(16, 185, 129, 0.5);
+    color: #34d399;
+    /* Emerald 400 - brighter */
+    padding: 0.35rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+    /* Let clicks pass through to the image link */
 }

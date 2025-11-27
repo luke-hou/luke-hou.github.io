@@ -7,8 +7,8 @@
 - **首頁 (Home)**
   - `index.html`
 - **作品 (Portfolio)**
-  - 'portfolio.html'
-  - 'podcast.html'
+  - `portfolio.html`
+  - `podcast.html`
 - **部落格 (Blog)**
   - `blog.html`
 - **n8n 教學 (n8n Tutorials)**
@@ -18,6 +18,9 @@
 
 此頁面隸屬於「作品」。每個專案都提供「商業視角說明」與「技術視角說明」兩種版本。
 
+- **半小時從 0 到上線：Google AI Studio 打造 HIS 搜尋神器**
+  - 技術視角說明: `projects/kuromi-his-search.html`
+  - 商業視角說明: `projects/kuromi-his-search-business.html`
 - **從一句話到完整 PRD：多代理 AI 自動化生成系統**
   - 技術視角說明: `projects/prd-ai-generation.html`
   - 商業視角說明: `projects/prd-ai-generation-business.html`
@@ -104,6 +107,8 @@
   - `n8n_tutorials/n8n-tutorial-8.html`
 - **第九章：改造 Chat 工作流**
   - `n8n_tutorials/n8n-tutorial-9.html`
+- **第十章：從快照還原 Qdrant 資料庫**
+  - `n8n_tutorials/n8n-tutorial-10.html`
 
 ## Gemini CLI 教學系列 (Gemini CLI Tutorial Series)
 
@@ -124,8 +129,3 @@
 
 ---
 *注意：此地圖不包含 CSS、JavaScript、圖片、音檔或暫存文件等資源文件。*
-https://luke-hou.github.io/projects/kuromi-his-search.html
-https://luke-hou.github.io/projects/kuromi-his-search-business.html
-
-https://luke-hou.github.io/projects/kuromi-his-search.html
-https://luke-hou.github.io/projects/kuromi-his-search-business.html
