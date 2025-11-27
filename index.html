@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/modern-style.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
     <script>
@@ -56,18 +58,29 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="hero-section text-center">
-        <div class="container">
+    <section class="hero-section text-center position-relative">
+        <!-- Animated Background Elements -->
+        <div class="hero-bg-animation">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+            <div class="blob blob-3"></div>
+        </div>
+
+        <div class="container position-relative z-2">
             <div class="row justify-content-center align-items-center">
-                <div class="col-lg-8">
-                    <img src="images/index.jpg" class="profile-img-glow mb-4" alt="Luke Hou" width="180">
-                    <h1 class="hero-title">Luke Hou</h1>
-                    <p class="hero-subtitle mb-4">資深醫療資訊系統分析師 | 開發與 SQA | AI 自動化愛好者</p>
-                    <p class="lead text-light opacity-75 mb-5">
-                        致力於將複雜的醫療流程轉化為穩定、高效且安全的技術解決方案。<br>
-                        善於運用 AI 與自動化工具，釋放團隊潛能。
+                <div class="col-lg-8" data-aos="zoom-in" data-aos-duration="1000">
+                    <div class="profile-wrapper mb-4">
+                        <img src="images/index.jpg" class="profile-img-glow" alt="Luke Hou" width="180">
+                    </div>
+                    <h1 class="hero-title mb-2">Luke Hou</h1>
+                    <div class="h3 text-light mb-4" style="min-height: 40px;">
+                        <span id="typed-text"></span>
+                    </div>
+
+                    <p class="lead text-light opacity-75 mb-5" data-aos="fade-up" data-aos-delay="200">
+                        運用 AI 與自動化工具，釋放團隊潛能。
                     </p>
-                    <div class="d-flex justify-content-center gap-3">
+                    <div class="d-flex justify-content-center gap-3" data-aos="fade-up" data-aos-delay="400">
                         <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank"
                             class="btn btn-primary-modern">
                             <i class="fab fa-linkedin me-2"></i>Connect on LinkedIn
@@ -95,10 +108,10 @@
 
         <!-- Core Competencies -->
         <section class="mb-5">
-            <h2 class="section-title-modern">核心專業能力</h2>
+            <h2 class="section-title-modern" data-aos="fade-up">核心專業能力</h2>
             <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="glass-card text-center">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass-card text-center" data-tilt>
                         <div class="icon-box mx-auto text-danger">
                             <i class="fas fa-exchange-alt fa-2x"></i>
                         </div>
@@ -106,8 +119,8 @@
                         <p class="text-gray small">參與醫學中心級 HIS 轉置，從 UAT 到維運，確保核心業務無縫轉移。</p>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="glass-card text-center">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="glass-card text-center" data-tilt>
                         <div class="icon-box mx-auto text-primary">
                             <i class="fas fa-laptop-medical fa-2x"></i>
                         </div>
@@ -115,8 +128,8 @@
                         <p class="text-gray small">具備 HIS 開發、優化與維運能力，豐富的跨部門協作與系統整合經驗。</p>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="glass-card text-center">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="glass-card text-center" data-tilt>
                         <div class="icon-box mx-auto text-success">
                             <i class="fas fa-shield-alt fa-2x"></i>
                         </div>
@@ -128,7 +141,7 @@
         </section>
 
         <!-- Productivity & Tech Highlights -->
-        <section class="mb-5">
+        <section class="mb-5" data-aos="fade-left">
             <div class="glass-card p-5">
                 <div class="row align-items-center">
                     <div class="col-lg-5 mb-4 mb-lg-0">
@@ -168,7 +181,7 @@
         </section>
 
         <!-- Professional Philosophy -->
-        <section class="mb-5">
+        <section class="mb-5" data-aos="zoom-in">
             <div class="glass-card text-center position-relative overflow-hidden">
                 <div
                     style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: var(--primary-gradient); filter: blur(80px); opacity: 0.3;">
@@ -187,11 +200,11 @@
 
         <!-- Featured Content -->
         <section id="featured-content" class="mb-5">
-            <h2 class="section-title-modern">精選內容</h2>
+            <h2 class="section-title-modern" data-aos="fade-up">精選內容</h2>
             <div class="row g-4">
                 <!-- Featured Tutorials -->
-                <div class="col-lg-6">
-                    <div class="glass-card h-100 d-flex flex-column">
+                <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
+                    <div class="glass-card h-100 d-flex flex-column" data-tilt>
                         <h5 class="card-title mb-4"><i class="fas fa-graduation-cap me-2 text-warning"></i>精選教學</h5>
                         <div class="list-group list-group-flush flex-grow-1">
                             <a href="tutorials.html#gemini-pm-series"
@@ -213,8 +226,8 @@
                     </div>
                 </div>
                 <!-- Featured Projects -->
-                <div class="col-lg-6">
-                    <div class="glass-card h-100 d-flex flex-column">
+                <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
+                    <div class="glass-card h-100 d-flex flex-column" data-tilt>
                         <h5 class="card-title mb-4"><i class="fas fa-rocket me-2 text-danger"></i>代表專案</h5>
                         <div class="list-group list-group-flush flex-grow-1">
                             <a href="projects/golive-jira-automation.html"
@@ -253,6 +266,13 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Typed.js -->
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    <!-- Vanilla Tilt -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
     <script src="js/main.js"></script>
 </body>
 

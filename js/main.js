@@ -1,6 +1,47 @@
 // js/main.js
-document.addEventListener('DOMContentLoaded', function() {
-    // --- Navbar Loading Logic ---
+document.addEventListener('DOMContentLoaded', function () {
+
+    // --- Initialize Libraries ---
+
+    // Initialize AOS
+    if (typeof AOS !== 'undefined') {
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+    }
+
+    // Initialize Typed.js
+    if (document.getElementById('typed-text') && typeof Typed !== 'undefined') {
+        new Typed('#typed-text', {
+            strings: [
+                '資深醫療資訊系統分析師',
+                '軟體開發工程師',
+                'AI 自動化愛好者',
+                'SQA 品質守門員'
+            ],
+            typeSpeed: 50,
+            backSpeed: 30,
+            backDelay: 2000,
+            loop: true,
+            cursorChar: '|',
+            autoInsertCss: true
+        });
+    }
+
+    // Initialize Vanilla Tilt
+    if (typeof VanillaTilt !== 'undefined') {
+        VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+            max: 5,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.2,
+            scale: 1.02
+        });
+    }
+
     // --- Existing Logic ---
 
     // 添加平滑滾動效果 (for anchor links on the same page)
@@ -24,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const portfolioItems = document.querySelectorAll('#portfolio-grid .portfolio-item');
 
         filterButtons.forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const filter = this.getAttribute('data-filter');
 
                 // Update active state on buttons
@@ -60,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const modalBody = portfolioModal.querySelector('.modal-body');
 
             modalTitle.textContent = projectDetails.title;
-            
+
             let bodyContent = `<img src="${projectDetails.image}" alt="${projectDetails.title}" class="img-fluid mb-3">`;
             bodyContent += `<p><strong>技術棧:</strong> ${projectDetails.tech}</p>`;
             bodyContent += `<p>${projectDetails.description}</p>`;
@@ -125,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         return blogs[blogId] || { title: '未知文章', content: '沒有找到文章內容' };
     }
-        
+
     // --- Helper function for Navbar ---
     function setActiveNavLink() {
         const pathParts = window.location.pathname.split('/');
@@ -135,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const navLinks = document.querySelectorAll('#navbarNav .nav-link');
-    
+
         navLinks.forEach(link => {
             const linkHref = link.getAttribute('href');
             if (!linkHref) return;
@@ -151,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Back to top button logic
     const backToTopBtn = document.querySelector('.back-to-top-btn');
     if (backToTopBtn) {
-        backToTopBtn.addEventListener('click', function(e) {
+        backToTopBtn.addEventListener('click', function (e) {
             e.preventDefault();
             window.scrollTo({
                 top: 0,
@@ -159,4 +200,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+
+    // Initialize active nav link
+    setActiveNavLink();
 });
