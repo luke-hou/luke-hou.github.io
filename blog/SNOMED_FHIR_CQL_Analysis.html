@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SNOMED CT, FHIR 與 CQL：醫療互通性鐵三角深度分析</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Chosen Palette: Modern Clinical Teal & Warm Slate. Background: #f8fafc (Slate 50), Primary: #0d9488 (Teal 600), Secondary: #475569 (Slate 600), Accent: #f59e0b (Amber 500) -->
+    <!-- Application Structure Plan: 
+         Updated Structure with Deep Dive:
+         1. 'Overview': High-level context and value proposition.
+         2. 'Structure': Interactive ontology explorer (Chart.js).
+         3. 'Comparison': ICD vs SNOMED granularity (Chart.js Bar).
+         4. 'Advanced Stack' (NEW): The core relation between FHIR, SNOMED, and CQL.
+            - Visual Layer concept.
+            - Interactive CQL Logic Engine Sandbox.
+         5. 'Simulator': Basic mapping simulator.
+         6. 'Roadmap': Timeline.
+         
+         The new 'Advanced' section is crucial for answering the specific prompt about CQL/FHIR relations.
+    -->
+    <!-- Visualization & Content Choices:
+         - Advanced Section: Uses a "Layered Stack" UI layout to visually separate Structure, Meaning, and Logic.
+         - CQL Sandbox: Uses simple JS logic to simulate an inference engine. It demonstrates "Subsumption" (Is-a relationships) which is the power of SNOMED+CQL.
+         - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        /* Custom Chart Container Styling */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 450px;
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        .active-nav {
+            border-bottom: 3px solid #0d9488;
+            color: #0d9488;
+            font-weight: 700;
+        }
+
+        .nav-item {
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover {
+            color: #0d9488;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Logic Block Styling for CQL Section */
+        .logic-block {
+            transition: all 0.3s ease;
+        }
+
+        .logic-block:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -1px rgb(0 0 0 / 0.06);
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl md:text-2xl font-bold text-teal-700">SNOMED CT <span
+                            class="text-slate-600 text-sm md:text-lg font-normal">| 互通性鐵三角分析</span></span>
+                </div>
+                <div class="hidden md:flex space-x-4 items-center overflow-x-auto">
+                    <button onclick="switchTab('overview')" id="nav-overview"
+                        class="nav-item active-nav px-2 py-2 text-sm font-medium whitespace-nowrap">總覽</button>
+                    <button onclick="switchTab('structure')" id="nav-structure"
+                        class="nav-item px-2 py-2 text-sm font-medium whitespace-nowrap">結構</button>
+                    <button onclick="switchTab('advanced')" id="nav-advanced"
+                        class="nav-item px-2 py-2 text-sm font-medium whitespace-nowrap bg-teal-50 text-teal-700 rounded-t">進階：FHIR/CQL</button>
+                    <button onclick="switchTab('comparison')" id="nav-comparison"
+                        class="nav-item px-2 py-2 text-sm font-medium whitespace-nowrap">治理比較</button>
+                    <button onclick="switchTab('simulator')" id="nav-simulator"
+                        class="nav-item px-2 py-2 text-sm font-medium whitespace-nowrap">模擬器</button>
+                    <button onclick="switchTab('roadmap')" id="nav-roadmap"
+                        class="nav-item px-2 py-2 text-sm font-medium whitespace-nowrap">路徑</button>
+                    <a href="../blog.html"
+                        class="nav-item px-2 py-2 text-sm font-medium whitespace-nowrap text-slate-500 hover:text-teal-600 ml-2 border-l pl-4 border-slate-300">
+                        ↩ 回部落格
+                    </a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="flex items-center md:hidden">
+                    <button onclick="toggleMobileMenu()"
+                        class="text-slate-600 hover:text-teal-600 focus:outline-none p-2">
+                        <span class="text-2xl">☰</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-50 border-t border-slate-200">
+            <button onclick="switchTab('overview')"
+                class="block w-full text-left px-4 py-2 hover:bg-slate-200 border-b border-slate-100">總覽與價值</button>
+            <button onclick="switchTab('structure')"
+                class="block w-full text-left px-4 py-2 hover:bg-slate-200 border-b border-slate-100">結構與層級</button>
+            <button onclick="switchTab('advanced')"
+                class="block w-full text-left px-4 py-2 bg-teal-50 text-teal-800 font-bold border-b border-slate-100">進階：互通性鐵三角
+                (FHIR/CQL)</button>
+            <button onclick="switchTab('comparison')"
+                class="block w-full text-left px-4 py-2 hover:bg-slate-200 border-b border-slate-100">ICD vs
+                SNOMED</button>
+            <button onclick="switchTab('simulator')"
+                class="block w-full text-left px-4 py-2 hover:bg-slate-200 border-b border-slate-100">互通性模擬</button>
+            <button onclick="switchTab('roadmap')"
+                class="block w-full text-left px-4 py-2 hover:bg-slate-200 border-b border-slate-100">台灣發展路徑</button>
+            <a href="../blog.html"
+                class="block w-full text-left px-4 py-2 bg-slate-100 text-slate-600 hover:bg-slate-200 font-bold">
+                ↩ 回部落格
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+        <!-- SECTION 1: OVERVIEW -->
+        <section id="overview" class="fade-in">
+            <div class="mb-8 bg-white p-6 rounded-lg shadow-sm border-l-4 border-teal-500">
+                <h1 class="text-3xl font-bold text-slate-800 mb-4">醫療資料治理的核心引擎</h1>
+                <p class="text-slate-600 leading-relaxed text-lg">
+                    本報告分析了 **SNOMED CT** 在台灣推動智慧醫療與國際接軌中的關鍵角色。
+                    要實現真正的互通性，我們需要「鐵三角」：**FHIR** 提供標準容器，**SNOMED CT** 提供精確內容，而 **CQL** 則提供可執行的邏輯。
+                </p>
+                <div class="mt-4 flex gap-4">
+                    <button onclick="switchTab('advanced')"
+                        class="bg-teal-600 text-white px-4 py-2 rounded shadow hover:bg-teal-700 transition">深入了解互通性鐵三角
+                        &rarr;</button>
+                </div>
+            </div>
+
+            <!-- Consultant's Insight Block (NEW) -->
+            <div class="mb-12 bg-indigo-50 border-l-4 border-indigo-600 p-6 rounded-r-lg shadow-sm">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0">
+                        <span class="text-3xl">💡</span>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-bold text-indigo-900">資深類比：從「健保申報」到「價值醫療」的轉型</h3>
+                        <p class="mt-2 text-indigo-800 text-sm leading-relaxed">
+                            在台灣，許多醫院 CIO 常問：「我們已有 ICD-10 申報健保，為何還需要 SNOMED？」
+                            <br><br>
+                            其實，<span class="font-bold border-b border-indigo-400">ICD 是「跟健保署請款的帳單」，而 SNOMED CT
+                                則是「醫生寫給醫生看的交班日記」。</span>
+                            帳單需要的是「歸類」以便計價（例如：肺炎一律給付 3000 點），但日記需要的是「精確」以便救人（例如：左下肺葉金黃色葡萄球菌肺炎）。
+                            <br><br>
+                            如果不導入 SNOMED CT，我們的醫療 AI 模型將永遠只能學到「帳單等級」的粗糙知識，無法邁向真正的精準醫療。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <!-- Card 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow border border-slate-100 group cursor-pointer"
+                    onclick="switchTab('structure')">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="text-4xl text-teal-100 bg-teal-600 rounded-full w-12 h-12 flex items-center justify-center font-bold">
+                            1</div>
+                        <span class="text-sm text-slate-400">點擊詳情 &rarr;</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-teal-600">精確的臨床語意</h3>
+                    <p class="text-slate-600 text-sm">突破 ICD-10 的顆粒度限制。從「不特定肺炎」精進至「右肺下葉病毒性肺炎」，為 CDSS (臨床決策系統) 提供可信數據。
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow border border-slate-100 group cursor-pointer"
+                    onclick="switchTab('comparison')">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="text-4xl text-blue-100 bg-blue-600 rounded-full w-12 h-12 flex items-center justify-center font-bold">
+                            2</div>
+                        <span class="text-sm text-slate-400">點擊詳情 &rarr;</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-blue-600">健保與臨床雙軌並行</h3>
+                    <p class="text-slate-600 text-sm">解決「同病異碼」痛點。實作 Automated Mapping，讓醫師只需輸入一次臨床診斷，系統自動產出健保碼與SNOMED碼。
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow border border-slate-100 group cursor-pointer"
+                    onclick="switchTab('advanced')">
+                    <div class="flex items-center justify-between mb-4">
+                        <div
+                            class="text-4xl text-amber-100 bg-amber-500 rounded-full w-12 h-12 flex items-center justify-center font-bold">
+                            3</div>
+                        <span class="text-sm text-slate-400">點擊詳情 &rarr;</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-amber-600">智慧醫院評鑑利器</h3>
+                    <p class="text-slate-600 text-sm">符合 HIMSS EMRAM 與台灣智慧醫院標章要求。透過 FHIR+CQL 實現跨院互通與自動化品質指標監測。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: STRUCTURE (The Ontology) -->
+        <section id="structure" class="hidden fade-in">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-teal-500 pl-4">SNOMED CT 的邏輯結構</h2>
+                <p class="mt-2 text-slate-600">
+                    SNOMED CT 是多重階層 (Poly-hierarchy) 的本體論 (Ontology)。
+                    下圖展示了其頂層階層的分佈，這種結構是 CQL 進行邏輯推論的基礎。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                <div class="flex flex-col items-center">
+                    <div class="chart-container">
+                        <canvas id="hierarchyChart"></canvas>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-2 text-center">互動式圖表：點擊區塊查看詳細說明</p>
+                </div>
+
+                <div id="hierarchy-detail"
+                    class="bg-white p-6 rounded-lg shadow-md border-t-4 border-slate-300 min-h-[350px]">
+                    <h3 class="text-xl font-bold text-slate-800 mb-3" id="hierarchy-title">請點擊左側圖表</h3>
+                    <p class="text-slate-600 mb-4 leading-relaxed" id="hierarchy-desc">
+                        SNOMED CT 包含 19 個頂層階層。透過 Is-a (是一種) 的關係，系統可以自動推論。例如：搜尋「傳染病」會自動包含「COVID-19」，因為在結構樹中 COVID-19
+                        是傳染病的子節點。
+                    </p>
+                    <div id="hierarchy-stats" class="hidden bg-slate-50 p-4 rounded border border-slate-200">
+                        <h4 class="font-bold text-sm text-slate-700 mb-2">臨床應用範例：</h4>
+                        <ul class="list-disc list-inside text-sm text-slate-600" id="hierarchy-examples">
+                            <li>等待互動...</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: ADVANCED (NEW) -->
+        <section id="advanced" class="hidden fade-in">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-indigo-600 pl-4">互通性鐵三角：FHIR, SNOMED CT 與
+                    CQL</h2>
+                <p class="mt-2 text-slate-600 text-lg">
+                    要實現真正的智慧醫療，我們需要三個層次標準的結合。這不僅是傳輸資料，更是關於「知識的可計算性 (Computable Knowledge)」。
+                </p>
+            </div>
+
+            <!-- Conceptual Stack Visualization -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+                <!-- Layer 3: Logic -->
+                <div class="logic-block bg-white p-6 rounded-lg shadow border-t-8 border-indigo-500 relative">
+                    <div
+                        class="absolute -top-4 -right-4 bg-indigo-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">
+                        3</div>
+                    <h3 class="text-xl font-bold text-indigo-700 mb-2">CQL (邏輯層)</h3>
+                    <p class="text-xs font-mono bg-slate-100 p-2 rounded mb-2 text-slate-600">Clinical Quality Language
+                    </p>
+                    <p class="text-sm text-slate-600">
+                        <strong>大腦與規則。</strong><br>
+                        定義「做什麼」。它讀取資料並執行邏輯判斷。例如：「如果病患患有糖尿病且 HbA1c > 9%，則建議調整藥物」。
+                    </p>
+                </div>
+                <!-- Layer 2: Semantics -->
+                <div class="logic-block bg-white p-6 rounded-lg shadow border-t-8 border-teal-500 relative">
+                    <div
+                        class="absolute -top-4 -right-4 bg-teal-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">
+                        2</div>
+                    <h3 class="text-xl font-bold text-teal-700 mb-2">SNOMED CT (語意層)</h3>
+                    <p class="text-xs font-mono bg-slate-100 p-2 rounded mb-2 text-slate-600">Value Sets / Codes</p>
+                    <p class="text-sm text-slate-600">
+                        <strong>詞彙與定義。</strong><br>
+                        定義「是什麼」。透過標準代碼與階層關係，讓電腦知道「Type 2 Diabetes」也是一種「Diabetes」。
+                    </p>
+                </div>
+                <!-- Layer 1: Structure -->
+                <div class="logic-block bg-white p-6 rounded-lg shadow border-t-8 border-amber-500 relative">
+                    <div
+                        class="absolute -top-4 -right-4 bg-amber-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">
+                        1</div>
+                    <h3 class="text-xl font-bold text-amber-700 mb-2">FHIR (結構層)</h3>
+                    <p class="text-xs font-mono bg-slate-100 p-2 rounded mb-2 text-slate-600">Resources / API</p>
+                    <p class="text-sm text-slate-600">
+                        <strong>容器與傳輸。</strong><br>
+                        定義「怎麼裝」。提供標準的資料格式 (JSON/XML) 來承載病患資料與 SNOMED 代碼。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Interactive CQL Engine Sandbox -->
+            <div class="bg-slate-900 rounded-xl p-6 md:p-8 shadow-2xl text-slate-200">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-6 border-b border-slate-700 pb-4">
+                    <div>
+                        <h3 class="text-2xl font-bold text-white">🧮 CQL 邏輯推論模擬器</h3>
+                        <p class="text-slate-400 text-sm mt-1">體驗 SNOMED CT 的階層關係 (Hierarchy) 如何賦予 CQL 強大的查詢能力。</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Left: Logic Definition -->
+                    <div class="space-y-6">
+                        <div class="bg-slate-800 p-4 rounded-lg border border-slate-700">
+                            <label class="block text-indigo-400 text-sm font-bold mb-2">1. 定義 CQL 規則 (Logic)</label>
+                            <p class="text-xs text-slate-400 mb-3">目標：找出所有「糖尿病」患者 (包含所有子類型)。</p>
+                            <div class="font-mono text-sm bg-black p-3 rounded border-l-4 border-indigo-500">
+                                <span class="text-pink-400">define</span> "Is Diabetic":<br>
+                                &nbsp;&nbsp;<span class="text-blue-400">exists</span> ([Condition: Code <span
+                                    class="text-yellow-400">in</span> "Diabetes Mellitus Value Set"])
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2">
+                                * "in" 運算子會透過 SNOMED CT 自動包含所有下位概念。
+                            </p>
+                        </div>
+
+                        <div class="bg-slate-800 p-4 rounded-lg border border-slate-700">
+                            <label class="block text-amber-400 text-sm font-bold mb-2">2. 輸入 FHIR 病歷資料 (Data)</label>
+                            <label class="text-xs text-slate-400 block mb-2">選擇病人的診斷代碼：</label>
+                            <select id="cql-patient-select"
+                                class="w-full bg-slate-900 border border-slate-600 text-white rounded p-2 mb-2 focus:ring-2 focus:ring-indigo-500 outline-none">
+                                <option value="dm2">44054006 | Type 2 diabetes mellitus (第二型糖尿病)</option>
+                                <option value="dm1">46635009 | Type 1 diabetes mellitus (第一型糖尿病)</option>
+                                <option value="retinopathy">4855003 | Diabetic retinopathy (糖尿病視網膜病變)</option>
+                                <option value="asthma">195967001 | Asthma (氣喘)</option>
+                            </select>
+                            <button onclick="runCQL()"
+                                class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded transition shadow-lg mt-2">
+                                執行 CQL 推論 &rarr;
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right: Execution Result -->
+                    <div class="bg-black p-4 rounded-lg border border-slate-700 relative min-h-[300px] flex flex-col">
+                        <span class="text-xs text-slate-500 absolute top-2 right-3">Console / Engine Output</span>
+
+                        <div id="cql-output-initial"
+                            class="flex-grow flex items-center justify-center text-slate-600 text-sm italic">
+                            等待執行...<br>請選擇病歷並點擊執行
+                        </div>
+
+                        <div id="cql-output-result" class="hidden font-mono text-sm space-y-3">
+                            <div class="border-b border-slate-800 pb-2">
+                                <span class="text-slate-400">> 載入 SNOMED CT 本體論... </span><span
+                                    class="text-green-500">OK</span><br>
+                                <span class="text-slate-400">> 載入 Value Set "Diabetes"... </span><span
+                                    class="text-green-500">OK (包含 80+ 子概念)</span>
+                            </div>
+
+                            <div>
+                                <span class="text-blue-400">INPUT FHIR Resource:</span><br>
+                                <span class="text-slate-300">Condition.code = </span> <span class="text-yellow-300"
+                                    id="cql-code-display"></span>
+                            </div>
+
+                            <div class="pl-4 border-l-2 border-slate-700">
+                                <span class="text-slate-400">邏輯判斷:</span><br>
+                                檢查代碼 <span id="cql-check-code" class="text-yellow-300"></span> 是否屬於 "Diabetes"?<br>
+                                <span class="text-purple-400">SNOMED Engine:</span> 查詢 Is-a 關係...
+                                <div id="cql-relationship" class="text-slate-300 my-1"></div>
+                            </div>
+
+                            <div class="mt-4 pt-2 border-t border-slate-700">
+                                <span class="text-slate-400">RESULT:</span>
+                                <span id="cql-final-result" class="text-2xl font-bold ml-2"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: COMPARISON (Governance) -->
+        <section id="comparison" class="hidden fade-in">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-blue-600 pl-4">資料治理：ICD 與 SNOMED CT 的差異
+                </h2>
+                <p class="mt-2 text-slate-600">
+                    台灣現行的醫療資料主要依賴 ICD-10 進行申報。ICD 的設計是為了<strong>統計與計費</strong>，顆粒度（Granularity）不足。
+                    SNOMED CT 則專注於<strong>臨床紀錄</strong>，能解決資料治理中「細節流失」的問題。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Data Point 1 -->
+                <div
+                    class="col-span-1 bg-blue-50 p-4 rounded-lg border border-blue-100 shadow-sm relative overflow-hidden">
+                    <div
+                        class="absolute top-0 right-0 bg-blue-200 text-blue-800 text-xs font-bold px-2 py-1 rounded-bl">
+                        健保 VPN</div>
+                    <h4 class="font-bold text-blue-800 mb-1">ICD-10-CM (健保碼)</h4>
+                    <p class="text-sm text-blue-600 font-semibold mb-2">目的：支付 (Payment)、統計</p>
+                    <p class="text-xs text-slate-600 mb-2">像是一個「檔案櫃的標籤」，將相似的疾病歸在同一類。台灣健保依此給付點數。</p>
+                    <div class="bg-white p-2 rounded border border-blue-200 mt-2">
+                        <p class="text-xs font-mono text-slate-500">Code: J18.9</p>
+                        <p class="text-xs font-bold text-slate-700">Pneumonia, unspecified</p>
+                        <p class="text-[10px] text-red-500 mt-1">無法區分致病菌、部位。</p>
+                    </div>
+                </div>
+                <!-- Arrow -->
+                <div class="col-span-1 flex items-center justify-center text-slate-400">
+                    <div class="text-center">
+                        <p class="text-2xl font-bold">VS</p>
+                        <p class="text-xs">互補而非取代</p>
+                    </div>
+                </div>
+                <!-- Data Point 2 -->
+                <div
+                    class="col-span-1 bg-teal-50 p-4 rounded-lg border border-teal-100 shadow-sm relative overflow-hidden">
+                    <div
+                        class="absolute top-0 right-0 bg-teal-200 text-teal-800 text-xs font-bold px-2 py-1 rounded-bl">
+                        電子病歷 EMR</div>
+                    <h4 class="font-bold text-teal-800 mb-1">SNOMED CT (臨床碼)</h4>
+                    <p class="text-sm text-teal-600 font-semibold mb-2">目的：照護 (Care)、精準醫療</p>
+                    <p class="text-xs text-slate-600 mb-2">像是一個「精密的指紋」，能夠描述疾病的位置、成因、嚴重程度等具體屬性。</p>
+                    <div class="bg-white p-2 rounded border border-teal-200 mt-2">
+                        <p class="text-xs font-mono text-slate-500">Code: 444645005</p>
+                        <p class="text-xs font-bold text-slate-700">Viral pneumonia of left lower lobe</p>
+                        <p class="text-[10px] text-green-600 mt-1">清楚標示：病毒性、左下肺葉。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm mb-6">
+                <h3 class="text-lg font-bold text-slate-700 mb-4 text-center">顆粒度比較：代碼數量級差異</h3>
+                <div class="chart-container">
+                    <canvas id="comparisonChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: SIMULATOR (Basic) -->
+        <section id="simulator" class="hidden fade-in">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-amber-500 pl-4">互通性模擬器：從本地到國際</h2>
+                <p class="mt-2 text-slate-600">
+                    此模擬器展示如何將本地輸入轉換為 SNOMED CT 並生成 FHIR 格式。
+                    (欲了解更深入的邏輯推論，請參見「進階：FHIR/CQL」分頁)
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- INPUT -->
+                <div class="bg-white p-6 rounded-lg shadow-md border border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-700 mb-4 border-b pb-2">🩺 步驟 1: 醫師臨床輸入</h3>
+                    <select id="diagnosis-select"
+                        class="w-full p-3 border border-slate-300 rounded-md shadow-sm focus:ring-teal-500 bg-slate-50 mb-6"
+                        onchange="runSimulation()">
+                        <option value="" disabled selected>-- 請選擇診斷 --</option>
+                        <option value="dm2">Type 2 Diabetes Mellitus</option>
+                        <option value="pneumonia">Viral Pneumonia (Left Lower Lobe)</option>
+                        <option value="covid">COVID-19 Confirmed</option>
+                        <option value="ami">Acute Myocardial Infarction</option>
+                    </select>
+
+                    <div id="local-display" class="hidden">
+                        <div class="bg-slate-100 p-4 rounded text-sm text-slate-600 font-mono">
+                            <p><span class="font-bold text-slate-800">Local Text:</span> <span id="local-text"></span>
+                            </p>
+                            <p class="mt-2"><span class="font-bold text-slate-800">ICD-10-CM:</span> <span
+                                    id="local-icd" class="bg-blue-100 text-blue-800 px-2 py-1 rounded"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OUTPUT -->
+                <div
+                    class="bg-slate-900 p-6 rounded-lg shadow-md text-green-400 font-mono text-sm overflow-hidden relative">
+                    <h3 class="text-lg font-bold text-white mb-4 border-b border-slate-700 pb-2">🌐 步驟 2: FHIR JSON</h3>
+                    <div id="fhir-output" class="hidden">
+                        <pre class="whitespace-pre-wrap break-all" id="json-code"></pre>
+                    </div>
+                    <div id="fhir-placeholder" class="text-slate-500 italic h-32 flex items-center justify-center">
+                        等待輸入...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: ROADMAP -->
+        <section id="roadmap" class="hidden fade-in">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-purple-600 pl-4">台灣 SNOMED CT 發展路徑 (接軌 TW
+                    Core IG)</h2>
+                <p class="mt-2 text-slate-600">
+                    這不僅是技術的升級，更是台灣醫療資訊基礎建設的十年大計。從加入國際組織到 TW Core IG 的實質落地。
+                </p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-md mb-6">
+                <div id="roadmapChart" style="width:100%; height:400px;"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                <div class="bg-purple-50 p-4 rounded border border-purple-100">
+                    <h4 class="font-bold text-purple-800 mb-2">近期里程碑：TW Core IG</h4>
+                    <p class="text-sm text-slate-600">
+                        台灣核心實作指引 (TW Core IG) 已正式採納 SNOMED CT 作為多個 Resource 的綁定術語。例如：
+                        AllergyIntolerance (過敏)、Condition (診斷)、Procedure (處置)。這意味著未來醫院若要通過互通性驗證，SNOMED 是必考題。
+                    </p>
+                </div>
+                <div class="bg-indigo-50 p-4 rounded border border-indigo-100">
+                    <h4 class="font-bold text-indigo-800 mb-2">未來願景：次世代健保</h4>
+                    <p class="text-sm text-slate-600">
+                        透過 FHIR + SNOMED 實現「歸戶後的精準健康資料庫」。不再只有申報數據，而是包含臨床細節的真實世界數據 (RWD)，這將大幅加速台灣的新藥研發與 AI 模型訓練。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-slate-300 py-6 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-sm">SNOMED CT, FHIR 與 CQL 醫療資料治理互通性分析平台</p>
+        </div>
+    </footer>
+
+    <!-- Application Logic -->
+    <script>
+        // --- State Management ---
+        const state = {
+            activeTab: 'overview',
+            hierarchyChartInstance: null,
+            comparisonChartInstance: null
+        };
+
+        // --- Data Store ---
+        const reportData = {
+            hierarchy: {
+                labels: ['Clinical finding (臨床發現)', 'Procedure (處置)', 'Body structure (結構)', 'Substance (物質)', 'Organism (生物)', 'Pharm/bio (藥物)', 'Other'],
+                data: [115000, 60000, 35000, 28000, 35000, 20000, 57000],
+                descriptions: [
+                    "包含疾病、症狀。CQL 常在此層級進行篩選 (例如：篩選所有高血壓患者)。",
+                    "醫療行為。可用於 CQL 品質指標 (例如：是否執行了糖尿病足部檢查)。",
+                    "解剖結構。用於定義疾病部位。",
+                    "化學物質。用於過敏原檢查。",
+                    "病原體。用於微生物報告互通。",
+                    "藥品。CQL 可用於藥物交互作用檢查。",
+                    "其他情境值與屬性。"
+                ],
+                examples: [
+                    "例：Viral pneumonia (病毒性肺炎)",
+                    "例：Appendectomy (闌尾切除術)",
+                    "例：Left ventricle (左心室)",
+                    "例：Insulin (胰島素)",
+                    "例：S. pneumoniae (肺炎鏈球菌)",
+                    "例：Paracetamol (乙醯胺酚)",
+                    "例：History of (病史)"
+                ]
+            },
+            comparison: {
+                labels: ['ICD-10 (計費)', 'SNOMED CT (臨床)'],
+                data: [14000, 350000]
+            },
+            simulator: {
+                dm2: { text: "Type 2 Diabetes", icd: "E11.9", sctCode: "44054006", sctDisplay: "Type 2 diabetes mellitus (disorder)" },
+                pneumonia: { text: "Viral Pneumonia LLL", icd: "J12.9 (Unspecified)", sctCode: "444645005", sctDisplay: "Viral pneumonia of left lower lobe (disorder)" },
+                covid: { text: "COVID-19 Confirmed", icd: "U07.1", sctCode: "840539006", sctDisplay: "Disease caused by SARS-CoV-2" },
+                ami: { text: "Acute MI", icd: "I21.9", sctCode: "57054005", sctDisplay: "Acute myocardial infarction" }
+            },
+            cqlLogic: {
+                dm2: { isMatch: true, reason: "IS-A Diabetes Mellitus (44054006 < 73211009)" },
+                dm1: { isMatch: true, reason: "IS-A Diabetes Mellitus (46635009 < 73211009)" },
+                retinopathy: { isMatch: true, reason: "IS-A Diabetes Mellitus (Complication link)" }, // Simplified for demo
+                asthma: { isMatch: false, reason: "Not a subtype of Diabetes Mellitus" }
+            }
+        };
+
+        // --- Navigation Logic ---
+        function switchTab(tabId) {
+            document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                btn.classList.remove('active-nav', 'text-teal-600');
+                btn.classList.add('text-slate-500');
+                // Special handling for the Advanced tab styling
+                if (btn.id === 'nav-advanced') {
+                    btn.classList.remove('bg-teal-100');
+                    btn.classList.add('bg-teal-50');
+                }
+            });
+
+            document.getElementById(tabId).classList.remove('hidden');
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if (activeBtn) {
+                activeBtn.classList.add('active-nav', 'text-teal-600');
+                activeBtn.classList.remove('text-slate-500');
+                if (tabId === 'advanced') {
+                    activeBtn.classList.add('bg-teal-100');
+                }
+            }
+
+            document.getElementById('mobile-menu').classList.add('hidden');
+            state.activeTab = tabId;
+
+            if (tabId === 'structure' && !state.hierarchyChartInstance) renderHierarchyChart();
+            if (tabId === 'comparison' && !state.comparisonChartInstance) renderComparisonChart();
+            if (tabId === 'roadmap') renderRoadmapChart();
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        // --- Visualization: Structure ---
+        function renderHierarchyChart() {
+            const ctx = document.getElementById('hierarchyChart').getContext('2d');
+            state.hierarchyChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: reportData.hierarchy.labels,
+                    datasets: [{
+                        data: reportData.hierarchy.data,
+                        backgroundColor: ['#0d9488', '#0f766e', '#3b82f6', '#6366f1', '#8b5cf6', '#ec4899', '#94a3b8'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 10 } } },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) updateHierarchyDetail(elements[0].index);
+                    }
+                }
+            });
+        }
+
+        function updateHierarchyDetail(index) {
+            document.getElementById('hierarchy-title').innerText = reportData.hierarchy.labels[index];
+            document.getElementById('hierarchy-title').classList.add('text-teal-700');
+            document.getElementById('hierarchy-desc').innerText = reportData.hierarchy.descriptions[index];
+            document.getElementById('hierarchy-examples').innerHTML = `<li class="font-semibold text-teal-700">${reportData.hierarchy.examples[index]}</li>`;
+            document.getElementById('hierarchy-detail').classList.add('border-teal-500');
+            document.getElementById('hierarchy-stats').classList.remove('hidden');
+        }
+
+        // --- Visualization: Comparison ---
+        function renderComparisonChart() {
+            const ctx = document.getElementById('comparisonChart').getContext('2d');
+            state.comparisonChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: reportData.comparison.labels,
+                    datasets: [{
+                        label: '概念數量 (Log Scale)',
+                        data: reportData.comparison.data,
+                        backgroundColor: ['#3b82f6', '#0d9488'],
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { type: 'logarithmic' } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        // --- Visualization: Roadmap ---
+        function renderRoadmapChart() {
+            if (document.getElementById('roadmapChart').data) return;
+            const trace = {
+                x: ['2023', '2024', '2025', '2026', '2028', '2030'],
+                y: [1, 2, 3, 4, 5, 5.5],
+                text: ['加入 SNOMED Int.', '成立 NRC', 'TW Core IG 落地', 'FHIR 交換平台試辦', '次世代健保整合', '全人精準健康'],
+                mode: 'markers+text',
+                textposition: 'top center',
+                marker: { size: 25, color: ['#94a3b8', '#94a3b8', '#3b82f6', '#0d9488', '#0d9488', '#7c3aed'] },
+                type: 'scatter'
+            };
+            Plotly.newPlot('roadmapChart', [trace], {
+                title: '台灣醫療資訊標準化進程',
+                xaxis: { range: ['2023', '2031'] },
+                yaxis: { showgrid: false, zeroline: false, showticklabels: false, range: [0, 6] },
+                margin: { l: 20, r: 20, t: 40, b: 20 }
+            }, { responsive: true, displayModeBar: false });
+        }
+
+        // --- Logic: CQL Sandbox (NEW) ---
+        function runCQL() {
+            const select = document.getElementById('cql-patient-select');
+            const key = select.value;
+            const logic = reportData.cqlLogic[key];
+            const text = select.options[select.selectedIndex].text;
+
+            // UI Update
+            document.getElementById('cql-output-initial').classList.add('hidden');
+            document.getElementById('cql-output-result').classList.remove('hidden');
+
+            // Set Loading state slightly
+            document.getElementById('cql-final-result').innerText = "...";
+            document.getElementById('cql-final-result').className = "text-2xl font-bold ml-2 text-slate-400";
+
+            setTimeout(() => {
+                // Display Code
+                document.getElementById('cql-code-display').innerText = text;
+                document.getElementById('cql-check-code').innerText = text.split('|')[0].trim();
+
+                // Display Reason
+                if (logic.isMatch) {
+                    document.getElementById('cql-relationship').innerHTML = `<span class="text-green-400">✔ Found Relationship:</span> ${logic.reason}`;
+                    document.getElementById('cql-final-result').innerHTML = `<span class="text-green-500">TRUE (符合)</span>`;
+                } else {
+                    document.getElementById('cql-relationship').innerHTML = `<span class="text-red-400">✘ No Relationship:</span> ${logic.reason}`;
+                    document.getElementById('cql-final-result').innerHTML = `<span class="text-red-500">FALSE (不符合)</span>`;
+                }
+            }, 500);
+        }
+
+        // --- Logic: Simulator (Basic) ---
+        function runSimulation() {
+            const select = document.getElementById('diagnosis-select');
+            const key = select.value;
+            if (!key) return;
+            const data = reportData.simulator[key];
+
+            document.getElementById('local-display').classList.remove('hidden');
+            document.getElementById('local-text').innerText = data.text;
+            document.getElementById('local-icd').innerText = data.icd;
+
+            document.getElementById('fhir-placeholder').classList.remove('hidden');
+            document.getElementById('fhir-output').classList.add('hidden');
+            document.getElementById('fhir-placeholder').innerText = "Processing...";
+
+            setTimeout(() => {
+                document.getElementById('fhir-placeholder').classList.add('hidden');
+                document.getElementById('fhir-output').classList.remove('hidden');
+                const json = {
+                    "resourceType": "Condition",
+                    "code": {
+                        "coding": [{ "system": "http://snomed.info/sct", "code": data.sctCode, "display": data.sctDisplay }]
+                    },
+                    "subject": { "reference": "Patient/123" }
+                };
+                document.getElementById('json-code').innerText = JSON.stringify(json, null, 2);
+            }, 600);
+        }
+
+        window.addEventListener('resize', () => {
+            if (state.activeTab === 'roadmap') Plotly.Plots.resize('roadmapChart');
+        });
+    </script>
+</body>
+
+</html>
