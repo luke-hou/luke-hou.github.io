@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 守護者與治理 - Line Bot MVP 系列 - Luke的作品</title>
+    <meta name="description" content="深入解析 Line Bot MVP 的 AI 治理功能：從情緒溫度計、多模型架構到主動式議題偵測，打造一個 24 小時待命的團隊守護者。">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-0V2L1DQVPY');
+    </script>
+    <style>
+        :root {
+            /* Christmas Palette */
+            --xmas-red: #D42426;
+            --xmas-green: #165B33;
+            --xmas-gold: #F8B229;
+            --xmas-snow: #F0F2F5;
+            --xmas-dark: #0F0F0F;
+        }
+
+        body {
+            background-color: var(--xmas-dark);
+            background-image:
+                radial-gradient(white, rgba(255, 255, 255, .2) 2px, transparent 3px),
+                radial-gradient(white, rgba(255, 255, 255, .15) 1px, transparent 2px),
+                radial-gradient(white, rgba(255, 255, 255, .1) 2px, transparent 3px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            background-position: 0 0, 40px 60px, 130px 270px;
+            animation: snow 20s linear infinite;
+        }
+
+        @keyframes snow {
+            0% {
+                background-position: 0 0, 40px 60px, 130px 270px;
+            }
+
+            100% {
+                background-position: 550px 1000px, 400px 400px, 300px 300px;
+            }
+        }
+
+        .project-hero {
+            background: linear-gradient(rgba(248, 178, 41, 0.2), rgba(15, 15, 15, 0.8));
+            padding: 5rem 0;
+            color: white;
+            border-bottom: 2px solid var(--xmas-red);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(248, 178, 41, 0.2);
+            border-radius: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--xmas-gold);
+        }
+
+        .article-content h2 {
+            color: var(--xmas-gold);
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .article-content h3 {
+            color: white;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--xmas-red);
+            padding-left: 1rem;
+        }
+
+        .tech-note {
+            background: rgba(248, 178, 41, 0.1);
+            border-left: 4px solid var(--xmas-gold);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-danger">
+            <div class="container">
+                <a class="navbar-brand text-danger fw-bold" href="../index.html">🎄 Luke Hou 聖誕特輯</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="line-bot-mvp.html">🔙 回系列首頁</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="project-hero text-center">
+            <div class="container">
+                <span class="badge bg-warning text-dark mb-2">Series Ep.3</span>
+                <h1 class="display-5 fw-bold mb-3">AI 守護者：從被動救火到主動治理</h1>
+                <p class="lead text-white-50">一個全年無休的 AI 夥伴，幫你監測情緒、發現問題、傳承知識。</p>
+            </div>
+        </section>
+
+        <section class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-9 article-content">
+
+
+
+                    <!-- Intro -->
+                    <div class="glass-card p-4 mb-5">
+                        <p class="lead text-white">
+                            「我們都有忙碌的時候，但系統問題與客戶情緒是隨時可能發生的。」
+                        </p>
+                        <p class="text-white-50">
+                            這就是為什麼我們要引入 AI。這套系統不是一個只會回話的 Chatbot，它更像是一個會觀察、會思考的「守護者」。
+                            在我們無暇兼顧時，它幫忙看著最重要的事情：**情緒** 與 **風險**。
+                        </p>
+                    </div>
+
+                    <!-- 1. Sentiment Monitor -->
+                    <h2>1. 情緒溫度計 (Sentiment Monitor)</h2>
+                    <p class="text-white-50">
+                        專案經理最怕的不是 Bug，而是「客戶生氣了但我不知道」。
+                        我設計了一套紅綠燈機制，讓 AI 自動分析群組對話的語氣。
+                    </p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="p-3 border border-success rounded text-center mb-3">
+                                <h4 class="text-success">🟢 80-100</h4>
+                                <small class="text-white-50">健康。進展順利，氣氛良好。</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 border border-warning rounded text-center mb-3">
+                                <h4 class="text-warning">🟡 60-80</h4>
+                                <small class="text-white-50">警告。語氣轉趨急促，有不確定性。</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 border border-danger rounded text-center mb-3">
+                                <h4 class="text-danger">🔴 0-60</h4>
+                                <small class="text-white-50">危險。偵測到失望或憤怒，需介入。</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-center my-4">
+                        <div class="col-md-12">
+                            <!-- Placeholder -->
+                            <img src="https://placehold.co/800x400/331111/FFF?text=TODO:+Insert+Sentiment+Monitor+Dashboard"
+                                alt="Dashboard 上的情緒溫度計模組展示"
+                                class="img-fluid rounded shadow border border-secondary mb-2 w-100">
+                        </div>
+                    </div>
+
+                    <!-- 2. Multi Model -->
+                    <h2>2. 多模型架構：三個臭皮匠</h2>
+                    <p class="text-white-50">
+                        為了應對不同的任務需求，我採用了「多模型切換」的架構。這就像是聘請了三位不同個性的助理：
+                    </p>
+                    <ul>
+                        <li class="text-info"><strong>Azure OpenAI (GPT-4)</strong>: 穩重、嚴謹。負責處理企業機密與資安要求高的分析。</li>
+                        <li class="text-success"><strong>Google Gemini (Flash)</strong>: 敏捷、快速。負責大量的日誌摘要與即時比對。</li>
+                        <li class="text-white"><strong>OpenAI</strong>: 靈活、創新。用於嘗試最新的 Prompt 實驗。</li>
+                    </ul>
+
+                    <div class="row align-items-center my-4">
+                        <div class="col-md-12">
+                            <!-- Placeholder -->
+                            <img src="https://placehold.co/800x300/151515/FFF?text=TODO:+Insert+Model+Selection+Dropdown"
+                                alt="前端介面上切換不同 AI 模型的下拉選單展示"
+                                class="img-fluid rounded shadow border border-secondary mb-2 w-100">
+                        </div>
+                    </div>
+
+                    <!-- 3. Issue Discovery -->
+                    <h2>3. 主動式議題偵測 (Issue Discovery)</h2>
+                    <p class="text-white-50">
+                        AI 不只能總結過去，還能幫你「預判未來」。
+                        它會掃描那些還沒被轉成工單的閒聊，自動識別出「潛在的 Bug 回報」或「有價值的建議」。
+                        系統會列出一張 <strong>To-Do List</strong>，確保沒有任何重要需求被遺忘。
+                    </p>
+
+                    <div class="row align-items-center my-4">
+                        <div class="col-md-12">
+                            <!-- Placeholder -->
+                            <img src="https://placehold.co/800x400/222244/FFF?text=TODO:+Insert+Issue+Discovery+List"
+                                alt="AI 自動偵測出的待處理議題清單介面"
+                                class="img-fluid rounded shadow border border-secondary mb-2 w-100">
+                        </div>
+                    </div>
+
+                    <!-- 4. Knowledge Base -->
+                    <h2>4. 活的知識庫</h2>
+                    <p class="text-white-50">
+                        每一次精彩的技術排除，都不該隨風而逝。
+                        AI 會像個認真的實習生，自動將對話萃取成 SOP 或 FAQ 草稿。資深前輩只需要花 10 秒鐘審閱，這份智慧就能永久傳承。
+                    </p>
+
+                    <div class="row align-items-center my-4">
+                        <div class="col-md-12">
+                            <!-- Placeholder -->
+                            <img src="https://placehold.co/800x400/444422/FFF?text=TODO:+Insert+KB+Editor+Interface"
+                                alt="AI 知識庫編輯器介面：左側為原始對話，右側為 AI 生成的 SOP 草稿"
+                                class="img-fluid rounded shadow border border-secondary mb-2 w-100">
+                        </div>
+                    </div>
+
+                    <!-- Video Demo -->
+                    <div class="mt-5 mb-5 position-relative">
+                        <div class="ratio ratio-16x9 shadow-lg rounded-4 border border-warning">
+                            <iframe src="https://www.youtube.com/embed/7j8ea-0M4P4" title="YouTube video player"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                        </div>
+                        <div class="text-center mt-2">
+                            <span class="badge bg-danger bg-opacity-75"><i class="bi bi-youtube me-1"></i> Feature
+                                Demo</span>
+                        </div>
+                    </div>
+
+                    <hr class="my-5 border-secondary">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="line-bot-workflow.html" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-2"></i>Ep.2 協作橋梁篇
+                        </a>
+                        <a href="line-bot-mvp.html" class="btn btn-warning">
+                            回到系列首頁 <i class="bi bi-house-door-fill me-2"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark mt-5 py-4 border-top border-secondary-subtle">
+        <div class="container text-center">
+            <p class="text-white-50 mb-0">&copy; 2025 Luke Hou. All rights reserved. 🎄 Merry Christmas!</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

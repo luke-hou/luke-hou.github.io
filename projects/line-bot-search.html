@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>時光機與對話資產 - Line Bot MVP 系列 - Luke的作品</title>
+    <meta name="description" content="深入解析 Line Bot MVP 的時光機功能：如何透過與 Supabase 的整合，實現對話資產的永久備份、零信任資安與極致的搜尋體驗。">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-0V2L1DQVPY');
+    </script>
+    <style>
+        :root {
+            /* Christmas Palette */
+            --xmas-red: #D42426;
+            --xmas-green: #165B33;
+            --xmas-gold: #F8B229;
+            --xmas-snow: #F0F2F5;
+            --xmas-dark: #0F0F0F;
+        }
+
+        body {
+            background-color: var(--xmas-dark);
+            background-image:
+                radial-gradient(white, rgba(255, 255, 255, .2) 2px, transparent 3px),
+                radial-gradient(white, rgba(255, 255, 255, .15) 1px, transparent 2px),
+                radial-gradient(white, rgba(255, 255, 255, .1) 2px, transparent 3px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            background-position: 0 0, 40px 60px, 130px 270px;
+            animation: snow 20s linear infinite;
+        }
+
+        @keyframes snow {
+            0% {
+                background-position: 0 0, 40px 60px, 130px 270px;
+            }
+
+            100% {
+                background-position: 550px 1000px, 400px 400px, 300px 300px;
+            }
+        }
+
+        .project-hero {
+            background: linear-gradient(rgba(22, 91, 51, 0.9), rgba(15, 15, 15, 0.8));
+            padding: 5rem 0;
+            color: white;
+            border-bottom: 2px solid var(--xmas-gold);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(248, 178, 41, 0.2);
+            border-radius: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--xmas-gold);
+        }
+
+        .article-content h2 {
+            color: var(--xmas-gold);
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .article-content h3 {
+            color: white;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--xmas-red);
+            padding-left: 1rem;
+        }
+
+        .tech-note {
+            background: rgba(22, 91, 51, 0.2);
+            border-left: 4px solid var(--xmas-green);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-danger">
+            <div class="container">
+                <a class="navbar-brand text-danger fw-bold" href="../index.html">🎄 Luke Hou 聖誕特輯</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="line-bot-mvp.html">🔙 回系列首頁</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="project-hero text-center">
+            <div class="container">
+                <span class="badge bg-warning text-dark mb-2">Series Ep.1</span>
+                <h1 class="display-5 fw-bold mb-3">Line Bot 時光機：對話資產管理</h1>
+                <p class="lead text-white-50">如何透過自動化與資安架構，把雜亂的 LINE 變成有序的企業資產。</p>
+            </div>
+        </section>
+
+        <section class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-9 article-content">
+
+
+
+                    <!-- Intro -->
+                    <div class="glass-card p-4 mb-5">
+                        <p class="lead text-white">
+                            「欸，上個月客戶傳的那張報價單截圖在哪？」<br>
+                            「檔案已過期...」
+                        </p>
+                        <p class="text-white-50">
+                            不管是在軟體開發還是傳統產業，最珍貴的往往不是文件，而是那些散落在通訊軟體裡的「碎片化溝通」。
+                            這一篇，我想分享我是如何用 Supabase 與 Zero-Trust 架構，打造一台讓團隊隨時能回溯真相的「時光機」。
+                        </p>
+                    </div>
+
+                    <!-- 1. Auto Backup -->
+                    <h2>1. 永久保存的雲端時光機 (Auto-Backup)</h2>
+                    <p class="text-white-50">
+                        Line 的「檔案過期」機制是所有 PM 的惡夢。在這個系統中，我設計了一套自動化的攔截機制。
+                        透過 Webhook，系統會即時監聽每一則訊息。
+                    </p>
+
+                    <div class="row align-items-center my-4">
+                        <div class="col-md-12">
+                            <!-- Placeholder -->
+                            <img src="https://placehold.co/800x400/165B33/FFF?text=TODO:+Insert+Supabase+Storage+Dashboard"
+                                alt="Supabase Storage Dashboard 展示所有自動備份的圖片與影片"
+                                class="img-fluid rounded shadow border border-secondary mb-2 w-100">
+                            <p class="text-center text-muted small">所有透過 Line 傳送的圖片，都會自動同步到安全儲存桶。</p>
+                        </div>
+                    </div>
+
+                    <div class="tech-note">
+                        <strong>🛠️ 技術細節：</strong>
+                        得益於 <strong>Supabase (PostgreSQL)</strong> 的強大整合，我不只是備份檔案，還將發送時間、群組來源等 Metadata 一併索引。
+                        這意味著，即使 Line 原檔失效，你隨時都能回到後台搜尋並下載。
+                    </div>
+
+                    <!-- 2. Zero Trust Security -->
+                    <h2>2. 比 Line 相簿更安全的「零信任」架構</h2>
+                    <p class="text-white-50">
+                        企業資料上雲，最怕的就是外洩。在這裡，我摒棄了傳統「連結即權限」的作法，採用了更嚴格的 <strong>動態簽名 (Dynamic Signed URL)</strong> 機制。
+                    </p>
+
+                    <h3>什麼是 Signed URL？</h3>
+                    <p class="text-white-50">
+                        想像一下，傳統的圖片連結就像一把「備用鑰匙」，誰撿到都能開門。
+                        而 Signed URL 則像是一張「限時通行證」。當管理員點擊預覽時，後端才會即時生成一個只有 60 秒有效期的連結。
+                        時間一到，連結自動作廢。就算連結被轉傳出去，外面的人也什麼都看不到。
+                    </p>
+
+                    <div class="row align-items-center my-4">
+                        <div class="col-md-12">
+                            <!-- Placeholder -->
+                            <img src="https://placehold.co/800x400/2C3E50/FFF?text=TODO:+Insert+Zero-Trust+Security+Diagram"
+                                alt="Zero-Trust 安全架構圖：展示 X-Line-Signature 驗證與 Signed URL 流程"
+                                class="img-fluid rounded shadow border border-secondary mb-2 w-100">
+                            <p class="text-center text-muted small">從接收訊息的簽章驗證，到存取圖片的動態授權，全程嚴密防護。</p>
+                        </div>
+                    </div>
+
+                    <!-- 3. Human Centric -->
+                    <h2>3. 看見真實的人 (Human-Centric Data)</h2>
+                    <p class="text-white-50">
+                        很多後台系統只顯示生硬的 User ID (`U1s2f...`)，這讓數據變得很沒溫度。
+                        我相信，每一個 ID 背後都是一位努力工作的夥伴。
+                    </p>
+
+                    <h3>行內編輯 (Inline Edit)</h3>
+                    <p class="text-white-50">
+                        在後台列表中，我實作了「點擊即編輯」的功能。如果客戶使用了奇怪的暱稱，管理員可以直接點擊名字修改成「王經理」。
+                        此外，我還加入了一個貼心的小功能：<strong>「統計排除」</strong>。
+                    </p>
+                    <p class="text-white-50">
+                        有些群組裡會有「匯率機器人」或「系統公告帳號」，這些不該算進「團隊工作量」。
+                        只要勾選排除，統計圖表就會瞬間變得乾淨準確。
+                    </p>
+
+                    <div class="row align-items-center my-4">
+                        <div class="col-md-12">
+                            <!-- Placeholder -->
+                            <img src="https://placehold.co/800x400/442222/FFF?text=TODO:+Insert+Inline+Edit+and+User+Stats+Demo"
+                                alt="展示行內編輯使用者名稱，以及勾選「排除統計」的介面的操作畫面"
+                                class="img-fluid rounded shadow border border-secondary mb-2 w-100">
+                        </div>
+                    </div>
+
+                    <!-- 4. UX -->
+                    <h2>4. 極致流暢的搜尋體驗</h2>
+                    <p class="text-white-50">
+                        為了幫使用者省下每一秒，我在搜尋功能上下足了功夫。
+                        加入了 <strong>防抖 (Debounce)</strong> 設計，當你還在打字的瞬間，系統就已經開始在背景幫你過濾出結果。
+                        不需要按 Enter，不需要等待旋轉圈圈，一切都是那麼自然流暢。
+                    </p>
+
+                    <div class="row align-items-center my-4">
+                        <div class="col-md-12">
+                            <!-- Placeholder -->
+                            <img src="https://placehold.co/800x400/333333/FFF?text=TODO:+Insert+Search+Interface+Screenshot"
+                                alt="搜尋介面截圖：展示關鍵字高亮 (Highlighting) 與多維度篩選器"
+                                class="img-fluid rounded shadow border border-secondary mb-2 w-100">
+                        </div>
+                    </div>
+
+                    <!-- Video Demo -->
+                    <div class="mt-5 mb-5 position-relative">
+                        <div class="ratio ratio-16x9 shadow-lg rounded-4 border border-warning">
+                            <iframe src="https://www.youtube.com/embed/7j8ea-0M4P4" title="YouTube video player"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                        </div>
+                        <div class="text-center mt-2">
+                            <span class="badge bg-danger bg-opacity-75"><i class="bi bi-youtube me-1"></i> Feature
+                                Demo</span>
+                        </div>
+                    </div>
+
+                    <hr class="my-5 border-secondary">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="line-bot-mvp.html" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-2"></i>回系列首頁
+                        </a>
+                        <a href="line-bot-workflow.html" class="btn btn-warning">
+                            Ep.2 協作橋梁篇 <i class="bi bi-arrow-right me-2"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark mt-5 py-4 border-top border-secondary-subtle">
+        <div class="container text-center">
+            <p class="text-white-50 mb-0">&copy; 2025 Luke Hou. All rights reserved. 🎄 Merry Christmas!</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
