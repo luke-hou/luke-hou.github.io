@@ -20,22 +20,67 @@
         gtag('config', 'G-0V2L1DQVPY');
     </script>
     <style>
+        :root {
+            /* Christmas Palette */
+            --xmas-red: #D42426;
+            --xmas-green: #165B33;
+            --xmas-gold: #F8B229;
+            --xmas-snow: #F0F2F5;
+            --xmas-dark: #0F0F0F;
+        }
+
+        body {
+            background-color: var(--xmas-dark);
+            background-image:
+                radial-gradient(white, rgba(255, 255, 255, .2) 2px, transparent 3px),
+                radial-gradient(white, rgba(255, 255, 255, .15) 1px, transparent 2px),
+                radial-gradient(white, rgba(255, 255, 255, .1) 2px, transparent 3px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            background-position: 0 0, 40px 60px, 130px 270px;
+            animation: snow 20s linear infinite;
+        }
+
+        @keyframes snow {
+            0% {
+                background-position: 0 0, 40px 60px, 130px 270px;
+            }
+
+            100% {
+                background-position: 550px 1000px, 400px 400px, 300px 300px;
+            }
+        }
+
         .project-hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/2025-12-24_23-54-29.jpg') no-repeat center center;
+            background: linear-gradient(rgba(22, 91, 51, 0.8), rgba(212, 36, 38, 0.6)), url('../images/2025-12-24_23-54-29.jpg') no-repeat center center;
             background-size: cover;
             padding: 5rem 0;
             color: white;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 4px solid var(--xmas-gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-hero::after {
+            content: '❄️';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 2rem;
+            animation: float 3s ease-in-out infinite;
         }
 
         .project-hero h1 {
             font-weight: 800;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.8), 0 0 20px var(--xmas-gold);
+            font-family: 'Georgia', serif;
+            /* More festive/classic look */
         }
 
         .summary-card {
             position: sticky;
             top: 100px;
+            background: rgba(22, 91, 51, 0.2) !important;
+            border: 1px solid var(--xmas-gold) !important;
         }
 
         .tech-badge {
@@ -43,39 +88,78 @@
             margin-right: 0.5rem;
             margin-bottom: 0.5rem;
             padding: 0.5em 0.8em;
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid var(--xmas-green);
+            color: var(--xmas-snow) !important;
         }
 
         .feature-icon {
             font-size: 2rem;
             margin-bottom: 1rem;
             display: inline-block;
-            padding: 10px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--xmas-red), var(--xmas-dark));
+            box-shadow: 0 4px 15px rgba(212, 36, 38, 0.4);
+            border: 2px solid var(--xmas-gold);
         }
 
-        /* Glassmorphism for cards */
+        /* Glassmorphism for cards with Christmas twist */
         .glass-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(248, 178, 41, 0.3);
+            /* Gold border */
             border-radius: 16px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 20px;
+            right: 20px;
+            height: 4px;
+            background-color: var(--xmas-green);
+            /* Green top accent */
+            border-radius: 4px;
+            opacity: 0.7;
         }
 
         .glass-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(212, 36, 38, 0.2);
+            /* Red glow */
+            border-color: var(--xmas-gold);
+        }
+
+        .xmas-text-highlight {
+            color: var(--xmas-gold) !important;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-10px) rotate(10deg);
+            }
+
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
         }
     </style>
 </head>
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary-subtle">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-danger">
             <div class="container">
-                <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
+                <a class="navbar-brand text-danger fw-bold" href="../index.html">🎄 Luke Hou 聖誕特輯</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -95,9 +179,10 @@
     <main>
         <section class="project-hero text-center">
             <div class="container">
-                <span class="badge bg-primary mb-3">AI Vibe Coding Series</span>
-                <h1 class="display-4 mb-3">Line Bot MVP<br>打造有溫度的 AI 協作時光機</h1>
-                <p class="lead text-light opacity-75">不再被訊息淹沒，讓溝通回歸本質。<br>一個懂你、幫你、讓你早點回家的團隊好幫手。</p>
+                <span class="badge bg-danger border border-warning text-warning mb-3">🎄 AI Vibe Coding Xmas
+                    Edition</span>
+                <h1 class="display-4 mb-3">Line Bot MVP<br><span class="xmas-text-highlight">有溫度的</span> AI 協作時光機</h1>
+                <p class="lead text-light opacity-90">🎁 不再被訊息淹沒，這是送給團隊最好的聖誕禮物。<br>一個懂你、幫你、讓你早點回家過節的好幫手。</p>
             </div>
         </section>
 
@@ -107,46 +192,49 @@
                 <div class="col-lg-8">
 
                     <!-- Introduction -->
-                    <div class="mb-5">
-                        <h2 class="h3 mb-4 text-white"><i class="bi bi-person-heart me-2 text-info"></i>緣起：科技不該冷冰冰</h2>
-                        <blockquote class="blockquote border-start border-4 border-info ps-4 text-muted">
+                    <div class="mb-5 text-center">
+                        <h2 class="h3 mb-4 text-white"><i class="bi bi-gift-fill me-2 text-danger"></i>緣起：科技不該冷冰冰</h2>
+                        <blockquote
+                            class="blockquote border-start border-4 border-danger ps-4 text-light text-start mx-auto"
+                            style="max-width: 600px;">
                             <p class="mb-2">「科技不該是冷冰冰的代碼，而是幫大家省下時間、早點回家的溫柔力量。」</p>
                         </blockquote>
-                        <p>
+                        <p class="text-white-50">
                             這是我用 <strong>AI Vibe Coding</strong> 模式，一點一滴打造出來的團隊協作系統。
-                            目的是解決所有 PM、HR 以及 RD 工程師每天最頭痛的問題：**被 LINE 訊息淹沒**。
+                            目的是解決所有 PM、HR 以及 RD 工程師每天最頭痛的問題：<strong class="text-danger">被 LINE 訊息淹沒</strong>。
                         </p>
                     </div>
 
                     <!-- Part 1: Time Machine -->
                     <div class="glass-card p-4 mb-5">
                         <div class="d-flex align-items-center mb-3">
-                            <div class="feature-icon text-warning me-3">
-                                <i class="bi bi-clock-history"></i>
+                            <div class="feature-icon me-3">
+                                <i class="bi bi-clock-history text-light"></i>
                             </div>
                             <h3 class="h4 mb-0 text-white">1. 把雜亂的 LINE 變成有序的時光機</h3>
                         </div>
-                        <p class="text-muted mb-4">
+                        <p class="text-white-50 mb-4">
                             只要有用 LINE 的人就知道，在氾濫的群組裡翻找歷史紀錄有多痛苦。
                             我不希望大家把時間浪費在「找東西」上，所以我做了一個像時光機一樣的後台。
                         </p>
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <h5 class="h6 text-warning-emphasis">☁️ 永久保存 (Auto-Backup)</h5>
-                                <p class="small text-muted">不管是截圖、錄影還是文字，通通自動備份到雲端 (Supabase)。就算 LINE
+                                <h5 class="h6 text-warning">☁️ 永久保存 (Auto-Backup)</h5>
+                                <p class="small text-white-50">不管是截圖、錄影還是文字，通通自動備份到雲端 (Supabase)。就算 LINE
                                     顯示「檔案已過期」，後台隨時都能下載。</p>
                             </div>
                             <div class="col-md-6">
-                                <h5 class="h6 text-warning-emphasis">🎯 找回專注 (Focus Mode)</h5>
-                                <p class="small text-muted">一鍵過濾「收到」、「謝謝」等雜訊。關鍵字 (Bug, Urgent) 自動高亮，讓你一眼掃視，絕不漏接重點。</p>
+                                <h5 class="h6 text-warning">🎯 找回專注 (Focus Mode)</h5>
+                                <p class="small text-white-50">一鍵過濾「收到」、「謝謝」等雜訊。關鍵字 (Bug, Urgent) 自動高亮，讓你一眼掃視，絕不漏接重點。
+                                </p>
                             </div>
                             <div class="col-md-6">
-                                <h5 class="h6 text-warning-emphasis">👤 看見真實的人</h5>
-                                <p class="small text-muted">顯示真實姓名而非 ID，支援「行內編輯」快速修正，並可標記排除機器人，讓數據更貼近真實團隊樣貌。</p>
+                                <h5 class="h6 text-warning">👤 看見真實的人</h5>
+                                <p class="small text-white-50">顯示真實姓名而非 ID，支援「行內編輯」快速修正，並可標記排除機器人，讓數據更貼近真實團隊樣貌。</p>
                             </div>
                             <div class="col-md-6">
-                                <h5 class="h6 text-warning-emphasis">📊 決策者的戰情室</h5>
-                                <p class="small text-muted">將抽象的「感覺很忙」轉化為「今日訊息量」、「待修工單」等真實圖表，成為你爭取資源的最強底氣。</p>
+                                <h5 class="h6 text-warning">📊 決策者的戰情室</h5>
+                                <p class="small text-white-50">將抽象的「感覺很忙」轉化為「今日訊息量」、「待修工單」等真實圖表，成為你爭取資源的最強底氣。</p>
                             </div>
                         </div>
                     </div>
@@ -154,27 +242,29 @@
                     <!-- Part 2: Bridge -->
                     <div class="glass-card p-4 mb-5">
                         <div class="d-flex align-items-center mb-3">
-                            <div class="feature-icon text-success me-3">
-                                <i class="bi bi-link-45deg"></i>
+                            <div class="feature-icon me-3"
+                                style="background: linear-gradient(135deg, var(--xmas-green), var(--xmas-dark)); box-shadow: 0 4px 15px rgba(22, 91, 51, 0.4);">
+                                <i class="bi bi-link-45deg text-light"></i>
                             </div>
                             <h3 class="h4 mb-0 text-white">2. 架起 RD 與 PM 的友誼橋梁</h3>
                         </div>
-                        <p class="text-muted mb-4">
+                        <p class="text-white-50 mb-4">
                             PM 辛苦整理需求，RD 辛苦修 Bug，為什麼還是覺得資訊不同步？
                             這個系統將 LINE (溝通) 和 Jira (執行) 無縫串聯，減少複製貼上，讓協作更順暢。
                         </p>
 
-                        <div class="card bg-dark bg-opacity-50 border-0 mb-3">
+                        <div class="card bg-dark bg-opacity-50 border-0 mb-3 border-start border-success border-3">
                             <div class="card-body">
                                 <h5 class="h6 text-success"><i class="bi bi-magic me-2"></i>殺手鐧：AI 自動生成工單</h5>
-                                <p class="card-text small text-muted">
+                                <p class="card-text small text-white-50">
                                     這不只是省下複製貼上的時間，更幫你省下「組織語言」的力氣。
-                                    勾選多則對話與圖片，<strong>AI 自動讀懂上下文</strong>，瞬間生成一張結構完整、邏輯清晰的 Jira 工單。你只需要做最後確認。
+                                    勾選多則對話與圖片，<strong class="text-white">AI 自動讀懂上下文</strong>，瞬間生成一張結構完整、邏輯清晰的 Jira
+                                    工單。你只需要做最後確認。
                                 </p>
                             </div>
                         </div>
 
-                        <ul class="list-unstyled text-muted small">
+                        <ul class="list-unstyled text-white-50 small">
                             <li class="mb-2"><i
                                     class="bi bi-check-circle-fill text-success me-2"></i><strong>附件自動搬家：</strong>轉工單時，LINE
                                 裡的截圖/影片自動上傳至 Jira，RD 不用再問「圖在哪？」。</li>
@@ -189,12 +279,12 @@
                     <!-- Part 3: AI Guardian -->
                     <div class="glass-card p-4 mb-5">
                         <div class="d-flex align-items-center mb-3">
-                            <div class="feature-icon text-danger me-3">
-                                <i class="bi bi-shield-check"></i>
+                            <div class="feature-icon me-3" style="border-color: #D42426;">
+                                <i class="bi bi-shield-check text-light"></i>
                             </div>
                             <h3 class="h4 mb-0 text-white">3. 你的 AI 守護者</h3>
                         </div>
-                        <p class="text-muted mb-4">
+                        <p class="text-white-50 mb-4">
                             系統問題與客戶情緒隨時可能發生。AI 不是要取代誰，而是像一個可靠的守護者，在我們無暇兼顧時幫忙看著。
                         </p>
 
@@ -202,28 +292,30 @@
                             <div class="col-md-6">
                                 <div class="border-start border-danger border-3 ps-3">
                                     <h5 class="h6 text-white">🌡️ 情緒溫度計 (Sentiment Monitor)</h5>
-                                    <p class="small text-muted mb-0">AI
+                                    <p class="small text-white-50 mb-0">AI
                                         幫每個群組打分數。當感測到「憤怒」或「失望」語氣，主動亮紅燈預警，讓我們從「被動救火」轉為「主動關懷」。</p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="border-start border-danger border-3 ps-3">
                                     <h5 class="h6 text-white">🕵️ 主動式議題偵測 (Issue Discovery)</h5>
-                                    <p class="small text-muted mb-0">AI 主動掃描對話中潛在的 Bug 回報或功能建議，列出「防漏網之魚」待辦清單，確保重要需求不被遺忘。
+                                    <p class="small text-white-50 mb-0">AI 主動掃描對話中潛在的 Bug
+                                        回報或功能建議，列出「防漏網之魚」待辦清單，確保重要需求不被遺忘。
                                     </p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="border-start border-danger border-3 ps-3">
                                     <h5 class="h6 text-white">📚 活的知識庫 (Living KB)</h5>
-                                    <p class="small text-muted mb-0">每一次精彩的技術排除，AI 自動捕捉生成 FAQ。資深前輩的智慧，透過 AI 編輯器輕鬆傳承給新人。
+                                    <p class="small text-white-50 mb-0">每一次精彩的技術排除，AI 自動捕捉生成 FAQ。資深前輩的智慧，透過 AI
+                                        編輯器輕鬆傳承給新人。
                                     </p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="border-start border-danger border-3 ps-3">
                                     <h5 class="h6 text-white">🧘 溫暖的溝通助理</h5>
-                                    <p class="small text-muted mb-0">進度卡住了？一鍵「催單」，AI 幫你寫出專業又不失禮貌的詢問訊息（還會加 Emoji
+                                    <p class="small text-white-50 mb-0">進度卡住了？一鍵「催單」，AI 幫你寫出專業又不失禮貌的詢問訊息（還會加 Emoji
                                         😊），讓溝通更圓融。</p>
                                 </div>
                             </div>
@@ -234,13 +326,21 @@
 
                     <!-- Conclusion -->
                     <div class="text-center">
-                        <h2 class="h3 mb-3">給夥伴的話</h2>
-                        <p class="text-muted mx-auto" style="max-width: 600px;">
+                        <h2 class="h3 mb-3 text-warning">🎄 給夥伴的話</h2>
+                        <p class="text-white-50 mx-auto" style="max-width: 600px;">
                             這個 MVP 的初衷，是希望透過技術，把繁瑣的群組管理與行政雜事交給 AI。
                             這就是我用 AI Vibe Coding 想要傳達的價值：
                         </p>
-                        <h4 class="text-white my-4">務實、高效、以人為本。</h4>
-                        <p class="lead text-info">只要你敢想，AI 就能帶你飛。</p>
+                        <h4 class="text-white my-4"><i class="bi bi-star-fill text-warning"></i> 務實、高效、以人為本 <i
+                                class="bi bi-star-fill text-warning"></i></h4>
+                        <p class="lead text-danger">🎅 只要你敢想，AI 就能帶你飛。</p>
+
+                        <!-- Image Placeholder -->
+                        <div class="mt-4">
+                            <img src="../images/2025-12-24_23-08-26.jpg" alt="Demo Screenshot"
+                                class="img-fluid rounded shadow border border-warning">
+                            <p class="text-white-50 mt-2 small">（此處為 Mock Data 假資料，並非真實群組訊息。）</p>
+                        </div>
                     </div>
 
                 </div>
@@ -249,35 +349,35 @@
                 <div class="col-lg-4">
                     <div class="card shadow-sm summary-card bg-body-tertiary border-0">
                         <div class="card-body">
-                            <h3 class="card-title h5 border-bottom pb-2 mb-3">
-                                <i class="bi bi-code-slash me-2"></i>專案檔案
+                            <h3 class="card-title h5 border-bottom border-warning pb-2 mb-3 text-white">
+                                <i class="bi bi-snow2 me-2 text-info"></i>專案檔案
                             </h3>
                             <div class="mb-4">
-                                <span class="badge bg-secondary mb-1">Status: MVP</span>
+                                <span class="badge bg-danger mb-1">Status: MVP</span>
                                 <span class="badge bg-success mb-1">Live Demo Available</span>
                             </div>
 
                             <h5 class="h6 text-white-50 mb-2">專案亮點</h5>
-                            <ul class="list-unstyled small text-muted">
-                                <li class="mb-2"><i class="bi bi-star-fill text-warning me-2"></i>Line 訊息全備份與搜尋</li>
-                                <li class="mb-2"><i class="bi bi-star-fill text-warning me-2"></i>AI 語意分析與摘要</li>
-                                <li class="mb-2"><i class="bi bi-star-fill text-warning me-2"></i>Jira 雙向整合 (附檔上傳)</li>
-                                <li class="mb-2"><i class="bi bi-star-fill text-warning me-2"></i>情緒健康度監控儀表板</li>
+                            <ul class="list-unstyled small text-white-50">
+                                <li class="mb-2"><i class="bi bi-gift-fill text-danger me-2"></i>Line 訊息全備份與搜尋</li>
+                                <li class="mb-2"><i class="bi bi-gift-fill text-danger me-2"></i>AI 語意分析與摘要</li>
+                                <li class="mb-2"><i class="bi bi-gift-fill text-danger me-2"></i>Jira 雙向整合 (附檔上傳)</li>
+                                <li class="mb-2"><i class="bi bi-gift-fill text-danger me-2"></i>情緒健康度監控儀表板</li>
                             </ul>
 
                             <h5 class="h6 text-white-50 mt-4 mb-2">技術堆疊</h5>
                             <div class="d-flex flex-wrap">
-                                <span class="badge text-bg-primary tech-badge">Python</span>
-                                <span class="badge text-bg-success tech-badge">Line Messaging API</span>
-                                <span class="badge text-bg-info tech-badge">OpenAI / Gemini</span>
-                                <span class="badge text-bg-warning tech-badge">Supabase (PostgreSQL)</span>
-                                <span class="badge text-bg-primary tech-badge">Jira API</span>
-                                <span class="badge text-bg-secondary tech-badge">Bootstrap 5</span>
+                                <span class="badge tech-badge">Python</span>
+                                <span class="badge tech-badge">Line Messaging API</span>
+                                <span class="badge tech-badge">OpenAI / Gemini</span>
+                                <span class="badge tech-badge">Supabase (PostgreSQL)</span>
+                                <span class="badge tech-badge">Jira API</span>
+                                <span class="badge tech-badge">Google Cloud Run</span>
                             </div>
                         </div>
-                        <div class="card-footer bg-transparent border-top border-secondary">
+                        <div class="card-footer bg-transparent border-top border-warning">
                             <div class="d-grid">
-                                <a href="../portfolio.html" class="btn btn-outline-light">
+                                <a href="../portfolio.html" class="btn btn-outline-warning">
                                     <i class="bi bi-arrow-left-circle me-2"></i>返回作品集
                                 </a>
                             </div>
@@ -312,7 +412,7 @@
         <div class="container text-center">
             <a href="../portfolio.html" class="btn btn-outline-light mb-3"><i
                     class="bi bi-arrow-left-circle me-2"></i>返回作品</a>
-            <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
+            <p class="text-white-50 mb-0">&copy; 2025 Luke Hou. All rights reserved. 🎄 Merry Christmas! 2025/12/24</p>
         </div>
     </footer>
 
