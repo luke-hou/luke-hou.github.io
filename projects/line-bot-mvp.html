@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>專案預告: Line Bot MVP - 打造有溫度的 AI 協作時光機 - Luke的作品</title>
+    <meta name="description" content="一個結合 AI 與自動化的 Line 群組管理系統。不僅是訊息備份的時光機，更是連接 RD 與 PM 的橋樑，以及守護團隊情緒與品質的 AI 助手。">
+    <meta name="keywords"
+        content="Line Bot, AI, ChatGPT, OpenAI, Gemini, Jira, 自動化, Python, Supabase, 專案管理, 團隊協作, Luke Hou">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-0V2L1DQVPY');
+    </script>
+    <style>
+        .project-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/2025-12-24_23-54-29.jpg') no-repeat center center;
+            background-size: cover;
+            padding: 5rem 0;
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .project-hero h1 {
+            font-weight: 800;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .summary-card {
+            position: sticky;
+            top: 100px;
+        }
+
+        .tech-badge {
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            padding: 0.5em 0.8em;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            padding: 10px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Glassmorphism for cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary-subtle">
+            <div class="container">
+                <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">♾️ 首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">✈️分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="project-hero text-center">
+            <div class="container">
+                <span class="badge bg-primary mb-3">AI Vibe Coding Series</span>
+                <h1 class="display-4 mb-3">Line Bot MVP<br>打造有溫度的 AI 協作時光機</h1>
+                <p class="lead text-light opacity-75">不再被訊息淹沒，讓溝通回歸本質。<br>一個懂你、幫你、讓你早點回家的團隊好幫手。</p>
+            </div>
+        </section>
+
+        <section class="container mt-5">
+            <div class="row">
+                <!-- Main Content -->
+                <div class="col-lg-8">
+
+                    <!-- Introduction -->
+                    <div class="mb-5">
+                        <h2 class="h3 mb-4 text-white"><i class="bi bi-person-heart me-2 text-info"></i>緣起：科技不該冷冰冰</h2>
+                        <blockquote class="blockquote border-start border-4 border-info ps-4 text-muted">
+                            <p class="mb-2">「科技不該是冷冰冰的代碼，而是幫大家省下時間、早點回家的溫柔力量。」</p>
+                        </blockquote>
+                        <p>
+                            這是我用 <strong>AI Vibe Coding</strong> 模式，一點一滴打造出來的團隊協作系統。
+                            目的是解決所有 PM、HR 以及 RD 工程師每天最頭痛的問題：**被 LINE 訊息淹沒**。
+                        </p>
+                    </div>
+
+                    <!-- Part 1: Time Machine -->
+                    <div class="glass-card p-4 mb-5">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon text-warning me-3">
+                                <i class="bi bi-clock-history"></i>
+                            </div>
+                            <h3 class="h4 mb-0 text-white">1. 把雜亂的 LINE 變成有序的時光機</h3>
+                        </div>
+                        <p class="text-muted mb-4">
+                            只要有用 LINE 的人就知道，在氾濫的群組裡翻找歷史紀錄有多痛苦。
+                            我不希望大家把時間浪費在「找東西」上，所以我做了一個像時光機一樣的後台。
+                        </p>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <h5 class="h6 text-warning-emphasis">☁️ 永久保存 (Auto-Backup)</h5>
+                                <p class="small text-muted">不管是截圖、錄影還是文字，通通自動備份到雲端 (Supabase)。就算 LINE
+                                    顯示「檔案已過期」，後台隨時都能下載。</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="h6 text-warning-emphasis">🎯 找回專注 (Focus Mode)</h5>
+                                <p class="small text-muted">一鍵過濾「收到」、「謝謝」等雜訊。關鍵字 (Bug, Urgent) 自動高亮，讓你一眼掃視，絕不漏接重點。</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="h6 text-warning-emphasis">👤 看見真實的人</h5>
+                                <p class="small text-muted">顯示真實姓名而非 ID，支援「行內編輯」快速修正，並可標記排除機器人，讓數據更貼近真實團隊樣貌。</p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="h6 text-warning-emphasis">📊 決策者的戰情室</h5>
+                                <p class="small text-muted">將抽象的「感覺很忙」轉化為「今日訊息量」、「待修工單」等真實圖表，成為你爭取資源的最強底氣。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Part 2: Bridge -->
+                    <div class="glass-card p-4 mb-5">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon text-success me-3">
+                                <i class="bi bi-link-45deg"></i>
+                            </div>
+                            <h3 class="h4 mb-0 text-white">2. 架起 RD 與 PM 的友誼橋梁</h3>
+                        </div>
+                        <p class="text-muted mb-4">
+                            PM 辛苦整理需求，RD 辛苦修 Bug，為什麼還是覺得資訊不同步？
+                            這個系統將 LINE (溝通) 和 Jira (執行) 無縫串聯，減少複製貼上，讓協作更順暢。
+                        </p>
+
+                        <div class="card bg-dark bg-opacity-50 border-0 mb-3">
+                            <div class="card-body">
+                                <h5 class="h6 text-success"><i class="bi bi-magic me-2"></i>殺手鐧：AI 自動生成工單</h5>
+                                <p class="card-text small text-muted">
+                                    這不只是省下複製貼上的時間，更幫你省下「組織語言」的力氣。
+                                    勾選多則對話與圖片，<strong>AI 自動讀懂上下文</strong>，瞬間生成一張結構完整、邏輯清晰的 Jira 工單。你只需要做最後確認。
+                                </p>
+                            </div>
+                        </div>
+
+                        <ul class="list-unstyled text-muted small">
+                            <li class="mb-2"><i
+                                    class="bi bi-check-circle-fill text-success me-2"></i><strong>附件自動搬家：</strong>轉工單時，LINE
+                                裡的截圖/影片自動上傳至 Jira，RD 不用再問「圖在哪？」。</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i><strong>Jira
+                                    智慧比對：</strong>開單前先查重，避免重複工單浪費資源。</li>
+                            <li class="mb-2"><i
+                                    class="bi bi-check-circle-fill text-success me-2"></i><strong>購物車式暫存區：</strong>客戶東一句西一句？先勾選放進暫存區，再用
+                                AI 組合成完整任務。</li>
+                        </ul>
+                    </div>
+
+                    <!-- Part 3: AI Guardian -->
+                    <div class="glass-card p-4 mb-5">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon text-danger me-3">
+                                <i class="bi bi-shield-check"></i>
+                            </div>
+                            <h3 class="h4 mb-0 text-white">3. 你的 AI 守護者</h3>
+                        </div>
+                        <p class="text-muted mb-4">
+                            系統問題與客戶情緒隨時可能發生。AI 不是要取代誰，而是像一個可靠的守護者，在我們無暇兼顧時幫忙看著。
+                        </p>
+
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="border-start border-danger border-3 ps-3">
+                                    <h5 class="h6 text-white">🌡️ 情緒溫度計 (Sentiment Monitor)</h5>
+                                    <p class="small text-muted mb-0">AI
+                                        幫每個群組打分數。當感測到「憤怒」或「失望」語氣，主動亮紅燈預警，讓我們從「被動救火」轉為「主動關懷」。</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="border-start border-danger border-3 ps-3">
+                                    <h5 class="h6 text-white">🕵️ 主動式議題偵測 (Issue Discovery)</h5>
+                                    <p class="small text-muted mb-0">AI 主動掃描對話中潛在的 Bug 回報或功能建議，列出「防漏網之魚」待辦清單，確保重要需求不被遺忘。
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="border-start border-danger border-3 ps-3">
+                                    <h5 class="h6 text-white">📚 活的知識庫 (Living KB)</h5>
+                                    <p class="small text-muted mb-0">每一次精彩的技術排除，AI 自動捕捉生成 FAQ。資深前輩的智慧，透過 AI 編輯器輕鬆傳承給新人。
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="border-start border-danger border-3 ps-3">
+                                    <h5 class="h6 text-white">🧘 溫暖的溝通助理</h5>
+                                    <p class="small text-muted mb-0">進度卡住了？一鍵「催單」，AI 幫你寫出專業又不失禮貌的詢問訊息（還會加 Emoji
+                                        😊），讓溝通更圓融。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-5 border-secondary">
+
+                    <!-- Conclusion -->
+                    <div class="text-center">
+                        <h2 class="h3 mb-3">給夥伴的話</h2>
+                        <p class="text-muted mx-auto" style="max-width: 600px;">
+                            這個 MVP 的初衷，是希望透過技術，把繁瑣的群組管理與行政雜事交給 AI。
+                            這就是我用 AI Vibe Coding 想要傳達的價值：
+                        </p>
+                        <h4 class="text-white my-4">務實、高效、以人為本。</h4>
+                        <p class="lead text-info">只要你敢想，AI 就能帶你飛。</p>
+                    </div>
+
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <div class="card shadow-sm summary-card bg-body-tertiary border-0">
+                        <div class="card-body">
+                            <h3 class="card-title h5 border-bottom pb-2 mb-3">
+                                <i class="bi bi-code-slash me-2"></i>專案檔案
+                            </h3>
+                            <div class="mb-4">
+                                <span class="badge bg-secondary mb-1">Status: MVP</span>
+                                <span class="badge bg-success mb-1">Live Demo Available</span>
+                            </div>
+
+                            <h5 class="h6 text-white-50 mb-2">專案亮點</h5>
+                            <ul class="list-unstyled small text-muted">
+                                <li class="mb-2"><i class="bi bi-star-fill text-warning me-2"></i>Line 訊息全備份與搜尋</li>
+                                <li class="mb-2"><i class="bi bi-star-fill text-warning me-2"></i>AI 語意分析與摘要</li>
+                                <li class="mb-2"><i class="bi bi-star-fill text-warning me-2"></i>Jira 雙向整合 (附檔上傳)</li>
+                                <li class="mb-2"><i class="bi bi-star-fill text-warning me-2"></i>情緒健康度監控儀表板</li>
+                            </ul>
+
+                            <h5 class="h6 text-white-50 mt-4 mb-2">技術堆疊</h5>
+                            <div class="d-flex flex-wrap">
+                                <span class="badge text-bg-primary tech-badge">Python</span>
+                                <span class="badge text-bg-success tech-badge">Line Messaging API</span>
+                                <span class="badge text-bg-info tech-badge">OpenAI / Gemini</span>
+                                <span class="badge text-bg-warning tech-badge">Supabase (PostgreSQL)</span>
+                                <span class="badge text-bg-primary tech-badge">Jira API</span>
+                                <span class="badge text-bg-secondary tech-badge">Bootstrap 5</span>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent border-top border-secondary">
+                            <div class="d-grid">
+                                <a href="../portfolio.html" class="btn btn-outline-light">
+                                    <i class="bi bi-arrow-left-circle me-2"></i>返回作品集
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- LinkedIn Discussion Section -->
+    <section class="bg-body-tertiary py-5 mt-5 border-top border-secondary-subtle">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <i class="bi bi-linkedin" style="font-size: 3rem; color: #0077b5;"></i>
+                    <h2 class="h3 mt-3 mb-3">💬 想要討論或分享你的想法？</h2>
+                    <p class="text-muted mb-4">
+                        歡迎到我的 LinkedIn 文章留言，與我和其他讀者一起交流討論！
+                        無論是對這個 AI 協作系統的看法、你的實作經驗，或是任何問題，都歡迎分享。
+                    </p>
+                    <a href="https://www.linkedin.com/in/junjia-hou/" class="btn btn-primary btn-lg" target="_blank"
+                        rel="noopener noreferrer">
+                        <i class="bi bi-linkedin me-2"></i>前往 LinkedIn 連繫我
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark mt-auto py-4 border-top border-secondary-subtle">
+        <div class="container text-center">
+            <a href="../portfolio.html" class="btn btn-outline-light mb-3"><i
+                    class="bi bi-arrow-left-circle me-2"></i>返回作品</a>
+            <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
