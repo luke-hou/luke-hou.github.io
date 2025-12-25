@@ -10,35 +10,33 @@
     <link rel="icon" href="/images/favicon.jpg" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/modern-style.css">
+    <link rel="stylesheet" href="css/terminal-style.css">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-0V2L1DQVPY');
     </script>
 </head>
 
-<body>
+<body class="terminal-page">
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container">
-                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <a class="navbar-brand" href="https://www.luke.ninja">$ luke@ninja ~</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="index.html">♾️ 首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="tutorials.html">⚡教學</a></li>
-                        <li class="nav-item"><a class="nav-link" href="podcast.html">🎙️ Podcast</a></li>
-                        <li class="nav-item"><a class="nav-link" href="portfolio.html">📚作品</a></li>
-                        <li class="nav-item"><a class="nav-link" href="blog.html">✈️分享</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html">~/home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="tutorials.html">~/tutorials</a></li>
+                        <li class="nav-item"><a class="nav-link" href="podcast.html">~/podcast</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="portfolio.html">~/projects</a></li>
+                        <li class="nav-item"><a class="nav-link" href="blog.html">~/blog</a></li>
                     </ul>
                 </div>
             </div>
@@ -46,173 +44,122 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="hero-section-modern">
+    <section class="terminal-hero">
         <div class="container">
             <div class="row">
-                <div class="col-lg-10 mx-auto text-center">
-                    <h1 class="hero-title-gradient mb-3">技術實踐與專案展示</h1>
-                    <p class="hero-subtitle">這裡是我將想法轉化為實際解決方案的紀錄。</p>
-                    <p class="text-gray mt-3">每個 Side Project 都代表著一次技術探索與實踐的成長。</p>
+                <div class="col-lg-8">
+                    <p class="terminal-prompt">cat ~/about/projects.md</p>
+                    <h1 class="terminal-title">技術實踐與專案展示<span class="cursor-blink"></span></h1>
+                    <p class="terminal-subtitle">
+                        // 這裡是我將想法轉化為實際解決方案的紀錄<br>
+                        // 每個 Side Project 都代表著一次技術探索與實踐的成長
+                    </p>
                 </div>
             </div>
-        </div>
-        <!-- Wave Divider -->
-        <div class="custom-shape-divider-bottom">
-            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
-                preserveAspectRatio="none">
-                <path
-                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-                    class="shape-fill"></path>
-            </svg>
         </div>
     </section>
 
-    <main class="container main-content-overlap">
-        <!-- Featured Projects -->
-        <div class="mb-5">
-            <h2 class="section-title-featured mb-4">精選專案</h2>
-            <div class="row g-4">
-                <!-- vibeTask (Featured) -->
-                <div class="col-lg-12">
-                    <div class="glass-card-featured h-100 d-flex flex-column flex-md-row align-items-center p-4">
-                        <div class="position-relative w-100 w-md-50 me-md-4 mb-3 mb-md-0">
-                            <img src="images/vibe-task-ai/2025-11-27.jpg" alt="vibeTask AI 智慧任務管理系統示意圖"
-                                class="img-fluid rounded shadow-lg">
-                            <!-- <div class="impact-badge-overlay" style="top: 15px; left: 15px; font-size: 1rem;">📅
-                                工作管理效率提升 60% </div> -->
-                        </div>
-                        <div class="w-100 w-md-50">
-                            <h3 class="mb-3 fw-bold text-featured">vibeTask: AI 驅動的賽博龐克任務管理系統</h3>
-                            <p class="text-light mb-4">這不僅是一個任務清單，而是你的 AI 生產力副駕駛。整合 Google
-                                Gemini，主動分析任務優先級，提供科學排程建議，並自動生成日報與心智圖。</p>
-                            <div class="mb-4">
-                                <span class="badge-featured me-2">Featured</span>
-                                <span class="tech-tag">Vibe Coding</span>
-                                <span class="tech-tag">Gemini CLI</span>
-                                <span class="tech-tag">Python</span>
-                            </div>
-                            <div class="d-flex gap-3">
-                                <a href="projects/vibe-coding-task-management-business.html"
-                                    class="btn btn-primary-featured"><i class="fas fa-briefcase me-2"></i>商業視角</a>
-                                <a href="projects/vibe-coding-task-management.html" class="btn btn-outline-featured"><i
-                                        class="fas fa-code me-2"></i>技術視角</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PRD AI Generation -->
-                <div class="col-lg-6">
-                    <div class="glass-card-featured h-100 d-flex flex-column">
-                        <div class="position-relative">
-                            <img src="images/prd-ai-test-case-generation-flow-5.jpg" alt="PRD AI 生成自動化示意圖"
-                                class="card-img-top">
-                            <div class="impact-badge-overlay">🚀 PRD 初稿時間減少 80%</div>
-                        </div>
-                        <div class="p-4 d-flex flex-column flex-grow-1">
-                            <h5 class="mb-3 text-featured fw-bold">從一句話到一份 PRD：多智能體 AI 自動化生成系統</h5>
-                            <p class="text-light small flex-grow-1">一個結合多個 AI 代理與混合式 RAG 的 n8n
-                                工作流，將一句自然語言需求，轉化為包含規格、使用者故事與測試案例的完整 Confluence 文件初稿。</p>
-                            <div class="portfolio-tags">
-                                <span class="badge-featured me-2">Featured</span>
-                                <span class="tech-tag">n8n</span>
-                                <span class="tech-tag">AI</span>
-                                <span class="tech-tag">Agent</span>
-                            </div>
-                            <div class="mt-auto text-center">
-                                <a href="projects/prd-ai-generation-business.html"
-                                    class="btn btn-primary-featured btn-sm"><i
-                                        class="fas fa-briefcase me-1"></i>商業視角</a>
-                                <a href="projects/prd-ai-generation.html" class="btn btn-outline-featured btn-sm"><i
-                                        class="fas fa-code me-1"></i>技術視角</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Notion AI Summary -->
-                <div class="col-lg-6">
-                    <div class="glass-card-featured h-100 d-flex flex-column">
-                        <div class="position-relative">
-                            <img src="images/notion-ai-summary/workflow.jpg" alt="Notion AI 閱讀助理示意圖"
-                                class="card-img-top">
-                            <div class="impact-badge-overlay">🧠 知識庫自動化增長 3 倍</div>
-                        </div>
-                        <div class="p-4 d-flex flex-column flex-grow-1">
-                            <h5 class="mb-3 text-featured fw-bold">Notion AI 閱讀助理</h5>
-                            <p class="text-light small flex-grow-1">自動讀取 Notion 文章連結，利用 AI
-                                生成摘要與標題，並將結果回寫，打造一個全自動的個人知識庫消化系統。</p>
-                            <div class="portfolio-tags">
-                                <span class="badge-featured me-2">Featured</span>
-                                <span class="tech-tag">n8n</span>
-                                <span class="tech-tag">Notion</span>
-                                <span class="tech-tag">AI</span>
-                            </div>
-                            <div class="mt-auto text-center">
-                                <a href="projects/notion-ai-summary-business.html"
-                                    class="btn btn-primary-featured btn-sm"><i
-                                        class="fas fa-briefcase me-1"></i>商業視角</a>
-                                <a href="projects/notion-ai-summary.html" class="btn btn-outline-featured btn-sm"><i
-                                        class="fas fa-code me-1"></i>技術視角</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+    <main class="container py-5">
         <!-- Filter Buttons -->
-        <div class="text-center mb-5" id="portfolio-filters">
-            <button class="btn btn-primary-modern" data-filter="all">全部</button>
-            <button class="btn btn-outline-modern" data-filter="n8n-automation">n8n 工作流自動化</button>
-            <button class="btn btn-outline-modern" data-filter="ai-dev-tools">AI 與開發者工具</button>
-            <button class="btn btn-outline-modern" data-filter="line-bot">LINE Bot 整合</button>
+        <div class="terminal-filters text-center" id="portfolio-filters">
+            <p class="terminal-prompt mb-3">ls -la --filter=</p>
+            <button class="btn btn-terminal-active" data-filter="all">*</button>
+            <button class="btn btn-terminal-outline" data-filter="n8n-automation">n8n</button>
+            <button class="btn btn-terminal-outline" data-filter="ai-dev-tools">AI</button>
+            <button class="btn btn-terminal-outline" data-filter="line-bot">LINE Bot</button>
         </div>
 
         <!-- Portfolio Grid -->
         <div class="row g-4" id="portfolio-grid">
-            <!-- Line Bot MVP (New) -->
+            <!-- Line Bot MVP -->
             <div class="col-lg-6 portfolio-item" data-categories="ai-dev-tools line-bot">
-                <div class="glass-card h-100 d-flex flex-column">
-                    <div class="position-relative">
-                        <img src="images/line-ai-bot-mvp/2025-12-24_23-54-29.jpg" alt="Line Bot MVP 示意圖" class="card-img-top">
-                        <div class="impact-badge-overlay">🚀 AI Vibe Coding</div>
-                    </div>
-                    <div class="p-4 d-flex flex-column flex-grow-1">
-                        <h5 class="mb-3">Line Bot MVP: 打造有溫度的 AI 協作時光機</h5>
-                        <p class="text-gray small flex-grow-1">不再被訊息淹沒。一個結合備份、搜尋、情緒偵測與自動化協作的完整解決方案。</p>
-                        <div class="portfolio-tags">
-                            <span class="tech-tag">AI</span>
-                            <span class="tech-tag">Line Bot</span>
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">Supabase</span>
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
                         </div>
-                        <div class="mt-auto text-center">
-                            <a href="projects/line-bot-mvp.html" class="btn btn-outline-modern btn-sm w-100"><i
-                                    class="fas fa-code me-1"></i>查看作品</a>
+                        <span class="file-path">~/projects/line-bot-mvp</span>
+                    </div>
+                    <img src="images/line-ai-bot-mvp/2025-12-24_23-54-29.jpg" alt="Line Bot MVP"
+                        class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">🚀 AI Vibe Coding</span>
+                        <h5 class="terminal-card-title">Line Bot MVP: AI 協作時光機</h5>
+                        <p class="terminal-card-desc">不再被訊息淹沒。結合備份、搜尋、情緒偵測與自動化協作的完整解決方案。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">AI</span>
+                            <span class="terminal-tag">Line Bot</span>
+                            <span class="terminal-tag">Python</span>
+                            <span class="terminal-tag">Supabase</span>
+                        </div>
+                        <div class="terminal-actions">
+                            <a href="projects/line-bot-mvp.html" class="btn btn-terminal btn-terminal-primary">cat
+                                README.md</a>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- vibeTask -->
+            <div class="col-lg-6 portfolio-item" data-categories="ai-dev-tools">
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/vibe-task</span>
+                    </div>
+                    <img src="images/vibe-task-ai/2025-11-27.jpg" alt="vibeTask" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">📅 效率提升 60%</span>
+                        <h5 class="terminal-card-title">vibeTask: AI 賽博龐克任務管理</h5>
+                        <p class="terminal-card-desc">整合 Google Gemini，主動分析任務優先級，提供科學排程建議。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">Vibe Coding</span>
+                            <span class="terminal-tag">Gemini CLI</span>
+                            <span class="terminal-tag">Python</span>
+                        </div>
+                        <div class="terminal-actions">
+                            <a href="projects/vibe-coding-task-management-business.html"
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/vibe-coding-task-management.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Kuromi HIS Search -->
             <div class="col-lg-6 portfolio-item" data-categories="ai-dev-tools">
-                <div class="glass-card h-100 d-flex flex-column">
-                    <div class="position-relative">
-                        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2940&auto=format&fit=crop"
-                            alt="Kuromi HIS Search 示意圖" class="card-img-top">
-                        <div class="impact-badge-overlay">⚡ 查詢效率提升 90% (No-Code)</div>
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/kuromi-his-search</span>
                     </div>
-                    <div class="p-4 d-flex flex-column flex-grow-1">
-                        <h5 class="mb-3">半小時從 0 到上線：Google AI Studio 打造 HIS 搜尋神器</h5>
-                        <p class="text-gray small flex-grow-1">不寫一行 Code，只給 AI 一個檔，立刻換來絲滑流暢的 HIS 系統選單搜尋神器。</p>
-                        <div class="portfolio-tags"><span class="tech-tag">Google AI Studio</span><span
-                                class="tech-tag">GenAI</span><span class="tech-tag">NoCode</span><span
-                                class="tech-tag">HIS</span><span class="tech-tag">搜尋</span></div>
-                        <div class="mt-auto text-center">
-                            <a href="projects/kuromi-his-search-business.html" class="btn btn-primary-modern btn-sm"><i
-                                    class="fas fa-briefcase me-1"></i>商業視角</a>
-                            <a href="projects/kuromi-his-search.html" class="btn btn-outline-modern btn-sm"><i
-                                    class="fas fa-code me-1"></i>技術視角</a>
+                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2940&auto=format&fit=crop"
+                        alt="Kuromi HIS Search" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">⚡ 查詢效率 +90% (No-Code)</span>
+                        <h5 class="terminal-card-title">半小時 0→1：HIS 搜尋神器</h5>
+                        <p class="terminal-card-desc">不寫一行 Code，只給 AI 一個檔，立刻換來絲滑流暢的 HIS 系統選單搜尋。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">AI Studio</span>
+                            <span class="terminal-tag">GenAI</span>
+                            <span class="terminal-tag">NoCode</span>
+                        </div>
+                        <div class="terminal-actions">
+                            <a href="projects/kuromi-his-search-business.html"
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/kuromi-his-search.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
                         </div>
                     </div>
                 </div>
@@ -220,333 +167,448 @@
 
             <!-- PRD AI Generation -->
             <div class="col-lg-6 portfolio-item" data-categories="n8n-automation ai-dev-tools">
-                <div class="glass-card h-100 d-flex flex-column">
-                    <div class="position-relative">
-                        <img src="images/prd-ai-test-case-generation-flow-5.jpg" alt="PRD AI 生成自動化示意圖"
-                            class="card-img-top">
-                        <div class="impact-badge-overlay">🚀 PRD 撰寫時間減少 80%</div>
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/prd-ai-gen</span>
                     </div>
-                    <div class="p-4 d-flex flex-column flex-grow-1">
-                        <h5 class="mb-3">從一句話到完整 PRD：多代理 AI 自動化生成系統</h5>
-                        <p class="text-gray small flex-grow-1">一個結合多個 AI 代理與混合式 RAG 的 n8n
-                            工作流，將一句自然語言需求，轉化為包含規格、使用者故事與測試案例的完整 Confluence 文件。</p>
-                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span
-                                class="tech-tag">AI</span><span class="tech-tag">Agent</span><span
-                                class="tech-tag">RAG</span><span class="tech-tag">Confluence</span></div>
-                        <div class="mt-auto text-center">
-                            <a href="projects/prd-ai-generation-business.html" class="btn btn-primary-modern btn-sm"><i
-                                    class="fas fa-briefcase me-1"></i>商業視角</a>
-                            <a href="projects/prd-ai-generation.html" class="btn btn-outline-modern btn-sm"><i
-                                    class="fas fa-code me-1"></i>技術視角</a>
+                    <img src="images/prd-ai-test-case-generation-flow-5.jpg" alt="PRD AI Generation"
+                        class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">🚀 PRD 時間 -80%</span>
+                        <h5 class="terminal-card-title">一句話到 PRD：多智能體生成</h5>
+                        <p class="terminal-card-desc">結合多 AI 代理與 RAG，將需求轉化為完整 Confluence 文件初稿。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">AI Agent</span>
+                            <span class="terminal-tag">RAG</span>
+                        </div>
+                        <div class="terminal-actions">
+                            <a href="projects/prd-ai-generation-business.html"
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/prd-ai-generation.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
                         </div>
                     </div>
                 </div>
             </div>
+
             <!-- Line Chat Record AI Summary -->
             <div class="col-lg-6 portfolio-item" data-categories="n8n-automation ai-dev-tools">
-                <div class="glass-card h-100 d-flex flex-column">
-                    <div class="position-relative">
-                        <img src="images/LineChatRecord_AI_Summary_output.jpg" alt="Line 對話紀錄 AI 摘要示意圖"
-                            class="card-img-top">
-                        <div class="impact-badge-overlay">📉 資訊遺漏率降至 0%</div>
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/line-ai-summary</span>
                     </div>
-                    <div class="p-4 d-flex flex-column flex-grow-1">
-                        <h5 class="mb-3">Line 對話紀錄 AI 自動摘要</h5>
-                        <p class="text-gray small flex-grow-1">從散亂的對話到結構化的每日報告，實現全自動監控、AI 摘要、郵件派送的智慧工作流。</p>
-                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span
-                                class="tech-tag">AI</span><span class="tech-tag">Gmail</span><span
-                                class="tech-tag">Google Drive</span><span class="tech-tag">Automation</span></div>
-                        <div class="mt-auto text-center">
+                    <img src="images/LineChatRecord_AI_Summary_output.jpg" alt="Line Chat AI Summary"
+                        class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">📉 遺漏率 0%</span>
+                        <h5 class="terminal-card-title">Line 對話紀錄 AI 自動摘要</h5>
+                        <p class="terminal-card-desc">從散亂對話到結構化日報，全自動監控、AI 摘要、郵件派送。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">AI</span>
+                            <span class="terminal-tag">Gmail</span>
+                        </div>
+                        <div class="terminal-actions">
                             <a href="projects/line-chat-record-ai-summary-business.html"
-                                class="btn btn-primary-modern btn-sm"><i class="fas fa-briefcase me-1"></i>商業視角</a>
-                            <a href="projects/line-chat-record-ai-summary.html" class="btn btn-outline-modern btn-sm"><i
-                                    class="fas fa-code me-1"></i>技術視角</a>
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/line-chat-record-ai-summary.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
                         </div>
                     </div>
                 </div>
             </div>
+
             <!-- Go-Live Jira Automation -->
             <div class="col-lg-6 portfolio-item" data-categories="n8n-automation">
-                <div class="glass-card h-100 d-flex flex-column">
-                    <div class="position-relative">
-                        <img src="images/golive_jira_automation/teams.jpg" alt="Go-Live Jira 工單自動化示意圖"
-                            class="card-img-top">
-                        <div class="impact-badge-overlay">✅ 人工回報錯誤率 0%</div>
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/golive-jira</span>
                     </div>
-                    <div class="p-4 d-flex flex-column flex-grow-1">
-                        <h5 class="mb-3">Go-Live 利器：Sheet to Jira 自動化</h5>
-                        <p class="text-gray small flex-grow-1">從雜亂的回報到結構化的 Jira 工單，實現零人工、高品質、即時通知的自動化閉環。</p>
-                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span
-                                class="tech-tag">Jira</span><span class="tech-tag">Google Sheets</span><span
-                                class="tech-tag">Teams</span><span class="tech-tag">Automation</span></div>
-                        <div class="mt-auto text-center">
+                    <img src="images/golive_jira_automation/teams.jpg" alt="Go-Live Jira" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">✅ 回報錯誤率 0%</span>
+                        <h5 class="terminal-card-title">Go-Live: Sheet to Jira 自動化</h5>
+                        <p class="terminal-card-desc">從雜亂回報到結構化 Jira 工單，零人工、高品質、即時通知。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">Jira</span>
+                            <span class="terminal-tag">Sheets</span>
+                        </div>
+                        <div class="terminal-actions">
                             <a href="projects/golive-jira-automation-business.html"
-                                class="btn btn-primary-modern btn-sm"><i class="fas fa-briefcase me-1"></i>商業視角</a>
-                            <a href="projects/golive-jira-automation.html" class="btn btn-outline-modern btn-sm"><i
-                                    class="fas fa-code me-1"></i>技術視角</a>
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/golive-jira-automation.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Gmail 重要郵件自動彙報 -->
+
+            <!-- Gmail Digest -->
             <div class="col-lg-6 portfolio-item" data-categories="n8n-automation">
-                <div class="glass-card h-100 d-flex flex-column">
-                    <div class="position-relative">
-                        <img src="images/gmail-digest/output.jpg" alt="Gmail 重要郵件自動彙報示意圖" class="card-img-top">
-                        <div class="impact-badge-overlay">📧 每日自動過濾 200+ 封郵件</div>
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/gmail-digest</span>
                     </div>
-                    <div class="p-4 d-flex flex-column flex-grow-1">
-                        <h5 class="mb-3">Gmail 重要郵件自動彙報</h5>
-                        <p class="text-gray small flex-grow-1">每日定時掃描 Gmail，篩選出帳單、收據等重要郵件，整理成摘要報告後，透過 Telegram 推播。</p>
-                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span
-                                class="tech-tag">Gmail</span><span class="tech-tag">Telegram</span><span
-                                class="tech-tag">Automation</span></div>
-                        <div class="mt-auto text-center">
+                    <img src="images/gmail-digest/output.jpg" alt="Gmail Digest" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">📧 每日過濾 200+ 封</span>
+                        <h5 class="terminal-card-title">Gmail 重要郵件自動彙報</h5>
+                        <p class="terminal-card-desc">每日掃描 Gmail，篩選帳單收據，透過 Telegram 推播摘要。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">Gmail</span>
+                            <span class="terminal-tag">Telegram</span>
+                        </div>
+                        <div class="terminal-actions">
                             <a href="projects/gmail-telegram-digest-business.html"
-                                class="btn btn-primary-modern btn-sm"><i class="fas fa-briefcase me-1"></i>商業視角</a>
-                            <a href="projects/gmail-telegram-digest.html" class="btn btn-outline-modern btn-sm"><i
-                                    class="fas fa-code me-1"></i>技術視角</a>
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/gmail-telegram-digest.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Notion AI 閱讀助理 -->
+
+            <!-- Notion AI Summary -->
             <div class="col-lg-6 portfolio-item" data-categories="n8n-automation ai-dev-tools">
-                <div class="glass-card h-100 d-flex flex-column">
-                    <div class="position-relative">
-                        <img src="images/notion-ai-summary/workflow.jpg" alt="Notion AI 閱讀助理示意圖" class="card-img-top">
-                        <div class="impact-badge-overlay">🧠 知識庫自動化增長 3 倍</div>
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/notion-ai</span>
                     </div>
-                    <div class="p-4 d-flex flex-column flex-grow-1">
-                        <h5 class="mb-3">Notion AI 閱讀助理</h5>
-                        <p class="text-gray small flex-grow-1">自動讀取 Notion 文章連結，利用 AI 生成摘要與標題，並將結果回寫，打造一個全自動的個人知識庫消化系統。
-                        </p>
-                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span
-                                class="tech-tag">Notion</span><span class="tech-tag">AI</span><span
-                                class="tech-tag">Gemini</span><span class="tech-tag">Automation</span></div>
-                        <div class="mt-auto text-center">
-                            <a href="projects/notion-ai-summary-business.html" class="btn btn-primary-modern btn-sm"><i
-                                    class="fas fa-briefcase me-1"></i>商業視角</a>
-                            <a href="projects/notion-ai-summary.html" class="btn btn-outline-modern btn-sm"><i
-                                    class="fas fa-code me-1"></i>技術視角</a>
+                    <img src="images/notion-ai-summary/workflow.jpg" alt="Notion AI" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">🧠 知識庫增長 3x</span>
+                        <h5 class="terminal-card-title">Notion AI 閱讀助理</h5>
+                        <p class="terminal-card-desc">自動讀取文章連結，AI 生成摘要與標題，打造全自動知識庫。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">Notion</span>
+                            <span class="terminal-tag">Gemini</span>
+                        </div>
+                        <div class="terminal-actions">
+                            <a href="projects/notion-ai-summary-business.html"
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/notion-ai-summary.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
                         </div>
                     </div>
                 </div>
             </div>
+
             <!-- n8n LINE 名片王 -->
             <div class="col-lg-6 portfolio-item" data-categories="line-bot n8n-automation ai-dev-tools">
-                <div class="glass-card h-100 d-flex flex-column">
-                    <div class="position-relative">
-                        <img src="images/n8n-line-business-card-automation/n8n-card-bot-workflow.jpg"
-                            alt="n8n LINE 名片管理機器人示意圖" class="card-img-top">
-                        <div class="impact-badge-overlay">⏱️ 建檔時間 3分 → 10秒</div>
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/line-card-bot</span>
                     </div>
-                    <div class="p-4 d-flex flex-column flex-grow-1">
-                        <h5 class="mb-3">用 LINE + AI 打造你的個人 CRM：n8n 名片王</h5>
-                        <p class="text-gray small flex-grow-1">拍照即建檔，AI 自動分析，讓你的人脈活起來。告別手動輸入，迎向智慧人脈管理。</p>
-                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span
-                                class="tech-tag">AI</span><span class="tech-tag">LINE Bot</span><span
-                                class="tech-tag">Google Sheets</span><span class="tech-tag">Automation</span></div>
-                        <div class="mt-auto text-center">
+                    <img src="images/n8n-line-business-card-automation/n8n-card-bot-workflow.jpg" alt="LINE 名片王"
+                        class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">⏱️ 建檔 3分→10秒</span>
+                        <h5 class="terminal-card-title">LINE + AI 個人 CRM：名片王</h5>
+                        <p class="terminal-card-desc">拍照即建檔，AI 自動分析，讓你的人脈活起來。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">LINE Bot</span>
+                            <span class="terminal-tag">AI</span>
+                        </div>
+                        <div class="terminal-actions">
                             <a href="projects/n8n-line-business-card-automation-business.html"
-                                class="btn btn-primary-modern btn-sm"><i class="fas fa-briefcase me-1"></i>商業視角</a>
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
                             <a href="projects/n8n-line-business-card-automation.html"
-                                class="btn btn-outline-modern btn-sm"><i class="fas fa-code me-1"></i>技術視角</a>
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- vibeTask AI 任務管理系統 -->
-            <div class="col-lg-6 portfolio-item" data-categories="ai-dev-tools">
-                <div class="glass-card h-100 d-flex flex-column">
-                    <div class="position-relative">
-                        <img src="images/vibe-task-ai/2025-09-07_13-28-27.jpg" alt="vibeTask AI 智慧任務管理系統示意圖"
-                            class="card-img-top">
-                        <div class="impact-badge-overlay">📅 每日規劃時間減少 15 分鐘</div>
-                    </div>
-                    <div class="p-4 d-flex flex-column flex-grow-1">
-                        <h5 class="mb-3">vibeTask: AI 驅動的賽博龐克任務管理系統</h5>
-                        <p class="text-gray small flex-grow-1">整合 AI 的智慧任務管理系統，旨在透過智慧排程、自動化報告與心智圖，提升個人工作效率與洞察力。</p>
-                        <div class="portfolio-tags"><span class="tech-tag">Vibe Coding</span><span
-                                class="tech-tag">Gemini CLI</span><span class="tech-tag">Python</span></div>
-                        <div class="mt-auto text-center">
-                            <a href="projects/vibe-coding-task-management-business.html"
-                                class="btn btn-primary-modern btn-sm"><i class="fas fa-briefcase me-1"></i>商業視角</a>
-                            <a href="projects/vibe-coding-task-management.html" class="btn btn-outline-modern btn-sm"><i
-                                    class="fas fa-code me-1"></i>技術視角</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- n8n + AI 自動生成 Release Notes -->
+
+            <!-- n8n AI Release Notes -->
             <div class="col-lg-6 portfolio-item" data-categories="n8n-automation">
-                <div class="glass-card h-100 d-flex flex-column">
-                    <div class="position-relative">
-                        <img src="images/n8n-ai-release-notes-automation/n8n-ai-release-notes-workflow.jpg"
-                            alt="n8n + AI 自動生成 Release Notes 示意圖" class="card-img-top">
-                        <div class="impact-badge-overlay">✍️ 節省 93% 手動撰寫時間</div>
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/release-notes</span>
                     </div>
-                    <div class="p-4 d-flex flex-column flex-grow-1">
-                        <h5 class="mb-3">n8n + AI 自動生成 Release Notes</h5>
-                        <p class="text-gray small flex-grow-1">抓取 Jira Ticket，透過 AI 自動生成包含版本摘要、QA 測試重點的 Release Notes。
-                        </p>
-                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span
-                                class="tech-tag">AI</span><span class="tech-tag">Jira</span><span
-                                class="tech-tag">Automation</span></div>
-                        <div class="mt-auto text-center">
+                    <img src="images/n8n-ai-release-notes-automation/n8n-ai-release-notes-workflow.jpg"
+                        alt="Release Notes" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">✍️ 節省 93% 時間</span>
+                        <h5 class="terminal-card-title">n8n + AI Release Notes 生成</h5>
+                        <p class="terminal-card-desc">抓取 Jira Ticket，AI 自動生成版本摘要與 QA 測試重點。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">AI</span>
+                            <span class="terminal-tag">Jira</span>
+                        </div>
+                        <div class="terminal-actions">
                             <a href="projects/n8n-ai-release-notes-automation-business.html"
-                                class="btn btn-primary-modern btn-sm"><i class="fas fa-briefcase me-1"></i>商業視角</a>
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
                             <a href="projects/n8n-ai-release-notes-automation.html"
-                                class="btn btn-outline-modern btn-sm"><i class="fas fa-code me-1"></i>技術視角</a>
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
                         </div>
                     </div>
                 </div>
             </div>
+
             <!-- n8n Line Bot to Jira -->
             <div class="col-lg-6 portfolio-item" data-categories="line-bot n8n-automation">
-                <div class="glass-card h-100 d-flex flex-column">
-                    <div class="position-relative">
-                        <img src="images/n8n-line-bot-jira-automation/image.png" alt="n8n Line Bot 與 Jira 自動化示意圖"
-                            class="card-img-top">
-                        <div class="impact-badge-overlay">🔄 回報流程縮短 70%</div>
-                    </div>
-                    <div class="p-4 d-flex flex-column flex-grow-1">
-                        <h5 class="mb-3">n8n Line Bot 回報快速生成 Jira Ticket</h5>
-                        <p class="text-gray small flex-grow-1">用Line回報問題並附圖，直接建立Jira ticket 到對應的專案，大幅簡化回報流程。</p>
-                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span class="tech-tag">Line
-                                Bot</span><span class="tech-tag">Jira</span><span class="tech-tag">Automation</span>
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
                         </div>
-                        <div class="mt-auto text-center">
+                        <span class="file-path">~/projects/linebot-jira</span>
+                    </div>
+                    <img src="images/n8n-line-bot-jira-automation/image.png" alt="Line Bot Jira"
+                        class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">🔄 回報流程 -70%</span>
+                        <h5 class="terminal-card-title">Line Bot 回報→Jira Ticket</h5>
+                        <p class="terminal-card-desc">用 Line 回報問題並附圖，直接建立 Jira ticket 到對應專案。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">Line Bot</span>
+                            <span class="terminal-tag">Jira</span>
+                        </div>
+                        <div class="terminal-actions">
                             <a href="projects/n8n-line-bot-jira-automation-business.html"
-                                class="btn btn-primary-modern btn-sm"><i class="fas fa-briefcase me-1"></i>商業視角</a>
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
                             <a href="projects/n8n-line-bot-jira-automation.html"
-                                class="btn btn-outline-modern btn-sm"><i class="fas fa-code me-1"></i>技術視角</a>
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- n8n + AI 自動更新 Jira 狀態至 Excel -->
+
+            <!-- n8n + AI Jira to Excel -->
             <div class="col-lg-6 portfolio-item" data-categories="n8n-automation ai-dev-tools">
-                <div class="glass-card h-100 d-flex flex-column">
-                    <div class="position-relative">
-                        <img src="images/n8n-ai-excel-main.png" alt="n8n + AI 自動更新 Jira 狀態至 Excel 示意圖"
-                            class="card-img-top">
-                        <div class="impact-badge-overlay">📊 資料更新頻率提升 7 倍</div>
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/jira-excel</span>
                     </div>
-                    <div class="p-4 d-flex flex-column flex-grow-1">
-                        <h5 class="mb-3">n8n + AI 自動更新 Jira 狀態至 Excel</h5>
-                        <p class="text-gray small flex-grow-1">「一週只能更新兩次的測試總表，我用 AI + 自動化做到每天更新兩次，還多省 93% 時間！」</p>
-                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span
-                                class="tech-tag">AI</span><span class="tech-tag">Jira</span><span
-                                class="tech-tag">Excel</span><span class="tech-tag">Automation</span></div>
-                        <div class="mt-auto text-center">
+                    <img src="images/n8n-ai-excel-main.png" alt="Jira Excel" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">📊 更新頻率 +7x</span>
+                        <h5 class="terminal-card-title">n8n + AI Jira→Excel 同步</h5>
+                        <p class="terminal-card-desc">測試總表從一週兩次→每天兩次，還省 93% 時間！</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">AI</span>
+                            <span class="terminal-tag">Excel</span>
+                        </div>
+                        <div class="terminal-actions">
                             <a href="projects/n8n-ai-excel-automation-business.html"
-                                class="btn btn-primary-modern btn-sm"><i class="fas fa-briefcase me-1"></i>商業視角</a>
-                            <a href="projects/n8n-ai-excel-automation.html" class="btn btn-outline-modern btn-sm"><i
-                                    class="fas fa-code me-1"></i>技術視角</a>
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/n8n-ai-excel-automation.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- PRD AI 測試案例生成 -->
+
+            <!-- PRD AI Test Case -->
             <div class="col-lg-6 portfolio-item" data-categories="n8n-automation ai-dev-tools">
-                <div class="glass-card h-100 d-flex flex-column">
-                    <div class="position-relative">
-                        <img src="images/prd-ai-test-case-generation-main.png" alt="PRD AI 測試案例生成示意圖"
-                            class="card-img-top">
-                        <div class="impact-badge-overlay">🧪 測試案例生成快 10 倍</div>
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/prd-testcase</span>
                     </div>
-                    <div class="p-4 d-flex flex-column flex-grow-1">
-                        <h5 class="mb-3">n8n 從 Confluence PRD 到 Jira：導入 AI 多智能體，自動化測試案例生成</h5>
-                        <p class="text-gray small flex-grow-1">導入 AI 多智能體，利用 n8n 自動化從 PRD 生成 Jira 測試案例，大幅提升效率與案例品質。</p>
-                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span
-                                class="tech-tag">AI</span><span class="tech-tag">Jira</span><span
-                                class="tech-tag">Multi-Agent</span><span class="tech-tag">Confluence</span></div>
-                        <div class="mt-auto text-center">
+                    <img src="images/prd-ai-test-case-generation-main.png" alt="PRD Test Case"
+                        class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">🧪 測試案例 +10x</span>
+                        <h5 class="terminal-card-title">PRD→Jira：AI 測試案例生成</h5>
+                        <p class="terminal-card-desc">導入 AI 多智能體，從 PRD 自動生成 Jira 測試案例。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">Multi-Agent</span>
+                            <span class="terminal-tag">Confluence</span>
+                        </div>
+                        <div class="terminal-actions">
                             <a href="projects/prd-ai-test-case-generation-business.html"
-                                class="btn btn-primary-modern btn-sm"><i class="fas fa-briefcase me-1"></i>商業視角</a>
-                            <a href="projects/prd-ai-test-case-generation.html" class="btn btn-outline-modern btn-sm"><i
-                                    class="fas fa-code me-1"></i>技術視角</a>
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/prd-ai-test-case-generation.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Vibe AI 影片自動摘要 -->
+
+            <!-- Vibe AI Video Summary -->
             <div class="col-lg-6 portfolio-item" data-categories="ai-dev-tools">
-                <div class="glass-card h-100 d-flex flex-column">
-                    <div class="position-relative">
-                        <img src="images/vibe-ai-2.png" alt="Vibe AI 影片自動摘要示意圖" class="card-img-top">
-                        <div class="impact-badge-overlay">🎥 影片資訊獲取快 5 倍</div>
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/video-summary</span>
                     </div>
-                    <div class="p-4 d-flex flex-column flex-grow-1">
-                        <h5 class="mb-3">Vibe Coding：影片自動摘要與字幕生成器</h5>
-                        <p class="text-gray small flex-grow-1">一個將影片內容轉化為結構化文字，提升資訊獲取效率的 AI 工具，全程本地端運行。</p>
-                        <div class="portfolio-tags"><span class="tech-tag">AI</span><span
-                                class="tech-tag">Whisper</span><span class="tech-tag">Vibe Coding</span></div>
-                        <div class="mt-auto text-center">
+                    <img src="images/vibe-ai-2.png" alt="Video Summary" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">🎥 資訊獲取 +5x</span>
+                        <h5 class="terminal-card-title">Vibe Coding：影片摘要生成器</h5>
+                        <p class="terminal-card-desc">將影片內容轉化為結構化文字，全程本地端運行。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">AI</span>
+                            <span class="terminal-tag">Whisper</span>
+                            <span class="terminal-tag">Vibe Coding</span>
+                        </div>
+                        <div class="terminal-actions">
                             <a href="projects/vibe-ai-video-summary-business.html"
-                                class="btn btn-primary-modern btn-sm"><i class="fas fa-briefcase me-1"></i>商業視角</a>
-                            <a href="projects/vibe-ai-video-summary.html" class="btn btn-outline-modern btn-sm"><i
-                                    class="fas fa-code me-1"></i>技術視角</a>
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/vibe-ai-video-summary.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- QA 週報自動化 -->
+
+            <!-- QA Report Automation -->
             <div class="col-lg-6 portfolio-item" data-categories="n8n-automation">
-                <div class="glass-card h-100 d-flex flex-column">
-                    <div class="position-relative">
-                        <img src="images/qa-report-automation-flow-1.png" alt="QA 週報自動化示意圖" class="card-img-top">
-                        <div class="impact-badge-overlay">🕒 週報製作 2小時 → 5分鐘</div>
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/qa-report</span>
                     </div>
-                    <div class="p-4 d-flex flex-column flex-grow-1">
-                        <h5 class="mb-3">n8n + AI：軟體測試週報全自動生成</h5>
-                        <p class="text-gray small flex-grow-1">整合多系統數據，利用 AI 驅動報告生成，將耗時的 QA 週報製作流程徹底自動化。</p>
-                        <div class="portfolio-tags"><span class="tech-tag">n8n</span><span
-                                class="tech-tag">AI</span><span class="tech-tag">Jira</span><span
-                                class="tech-tag">Google Sheets</span><span class="tech-tag">Automation</span></div>
-                        <div class="mt-auto text-center">
+                    <img src="images/qa-report-automation-flow-1.png" alt="QA Report" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">🕒 2小時→5分鐘</span>
+                        <h5 class="terminal-card-title">n8n + AI：QA 週報自動生成</h5>
+                        <p class="terminal-card-desc">整合多系統數據，AI 驅動報告生成，週報製作全自動化。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">AI</span>
+                            <span class="terminal-tag">Jira</span>
+                        </div>
+                        <div class="terminal-actions">
                             <a href="projects/qa-report-automation-business.html"
-                                class="btn btn-primary-modern btn-sm"><i class="fas fa-briefcase me-1"></i>商業視角</a>
-                            <a href="projects/qa-report-automation.html" class="btn btn-outline-modern btn-sm"><i
-                                    class="fas fa-code me-1"></i>技術視角</a>
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/qa-report-automation.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- 健保公告自動通知 -->
+
+            <!-- NHI Notice Automation -->
             <div class="col-lg-6 portfolio-item" data-categories="n8n-automation">
-                <div class="glass-card h-100 d-flex flex-column">
-                    <div class="position-relative">
-                        <img src="images/nhi-notice-automation-main.png" alt="健保公告自動通知示意圖" class="card-img-top">
-                        <div class="impact-badge-overlay">⚡ 關鍵政策回應速度 < 24hr</div>
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
                         </div>
-                        <div class="p-4 d-flex flex-column flex-grow-1">
-                            <h5 class="mb-3">n8n 健保公告自動監控與通知 - 外掛 AI 搜尋摘要</h5>
-                            <p class="text-gray small flex-grow-1">為醫療資訊產業打造的自動化工作流，確保關鍵政策變動即時掌握，降低資訊延誤風險。</p>
-                            <div class="portfolio-tags"><span class="tech-tag">n8n</span><span
-                                    class="tech-tag">AI</span><span class="tech-tag">Web Scraping</span><span
-                                    class="tech-tag">Automation</span></div>
-                            <div class="mt-auto text-center">
-                                <a href="projects/nhi-notice-automation-business.html"
-                                    class="btn btn-primary-modern btn-sm"><i class="fas fa-briefcase me-1"></i>商業視角</a>
-                                <a href="projects/nhi-notice-automation.html" class="btn btn-outline-modern btn-sm"><i
-                                        class="fas fa-code me-1"></i>技術視角</a>
-                            </div>
+                        <span class="file-path">~/projects/nhi-monitor</span>
+                    </div>
+                    <img src="images/nhi-notice-automation-main.png" alt="NHI Monitor" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">⚡ 政策回應 &lt;24hr</span>
+                        <h5 class="terminal-card-title">n8n 健保公告自動監控</h5>
+                        <p class="terminal-card-desc">為醫療產業打造，確保關鍵政策變動即時掌握。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">AI</span>
+                            <span class="terminal-tag">Scraping</span>
+                        </div>
+                        <div class="terminal-actions">
+                            <a href="projects/nhi-notice-automation-business.html"
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/nhi-notice-automation.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     </main>
 
-    <footer class="bg-dark mt-5 py-4">
+    <footer class="terminal-footer">
         <div class="container text-center">
-            <p class="text-gray mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
+            <p class="mb-0">// © 2025 Luke Hou. All rights reserved.</p>
+            <p class="mb-0" style="font-size: 0.75rem; margin-top: 0.5rem;">$ exit 0</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/main.js"></script>
+    <script>
+        // Portfolio Filter
+        document.querySelectorAll('#portfolio-filters .btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Update button states
+                document.querySelectorAll('#portfolio-filters .btn').forEach(btn => {
+                    btn.classList.remove('btn-terminal-active');
+                    btn.classList.add('btn-terminal-outline');
+                });
+                button.classList.remove('btn-terminal-outline');
+                button.classList.add('btn-terminal-active');
+
+                // Filter items
+                const filter = button.getAttribute('data-filter');
+                document.querySelectorAll('.portfolio-item').forEach(item => {
+                    const categories = item.getAttribute('data-categories');
+                    if (filter === 'all' || categories.includes(filter)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
