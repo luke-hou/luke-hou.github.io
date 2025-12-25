@@ -137,8 +137,56 @@
                         </p>
                     </div>
 
-                    <!-- 1. AI Generation -->
-                    <h2>1. 殺手鐧：AI 自動生成工單</h2>
+                    <!-- 1. Inline Management (FIRST) -->
+                    <h2>1. Inline 輕量管理：不離開列表就能搞定一切</h2>
+                    <p class="text-white-50">
+                        每個訊息列表就是一張「戰情摘要表」。我不希望使用者頻繁地切換頁面或開 Modal。
+                        因此，我把最常需要的操作全部做成 <strong>Inline Edit</strong>，讓你一目了然、即點即改。
+                    </p>
+
+                    <h3>📋 Assignee / Status / Priority：最常用的欄位直接編輯</h3>
+                    <p class="text-white-50">
+                        每一則訊息或事件，都可以直接在列表上指定負責人 (Assignee)、狀態 (Status) 與優先級 (Priority)。
+                        不需要點進去再改，點一下下拉選單就完成。這在 Daily Standup 快速過濾待辦事項時特別有用。
+                    </p>
+                    <div class="row align-items-center my-3">
+                        <div class="col-md-12">
+                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-10-49.jpg"
+                                alt="Inline 編輯 Assignee/Status/Priority 下拉選單"
+                                class="img-fluid rounded shadow border border-secondary mb-2 w-100">
+                        </div>
+                    </div>
+
+                    <h3>📝 打備註 (Quick Notes)</h3>
+                    <p class="text-white-50">
+                        有時候你需要對某則訊息留下提醒，例如「已電話確認」「等客戶回覆」。
+                        Inline 備註欄讓你直接在訊息旁邊打字，所有脈絡都留在原地，不會散落在其他地方。
+                    </p>
+                    <div class="row align-items-center my-3">
+                        <div class="col-md-12">
+                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-12-43.jpg" alt="Inline 打備註功能示範"
+                                class="img-fluid rounded shadow border border-secondary mb-2 w-100">
+                        </div>
+                    </div>
+
+                    <h3>⭐ 標註重要 (Flag as Important) & 🚫 快速標註 Ignore</h3>
+                    <p class="text-white-50">
+                        在茫茫訊息海中，一顆星星就能讓關鍵訊息脫穎而出。
+                        一鍵標註「重要」，配合篩選器，快速聚焦今日必須處理的大事。
+                    </p>
+                    <p class="text-white-50">
+                        並非每則訊息都值得追蹤，有些純粹是「收到」、「OK」、「+1」這類無意義的雜訊。
+                        一鍵標註 Ignore，讓它從統計與待辦中消失，保持戰情板的乾淨整潔。
+                    </p>
+                    <div class="row align-items-center my-3">
+                        <div class="col-md-12">
+                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-13-39.jpg" alt="快速標註 Ignore 功能示範"
+                                class="img-fluid rounded shadow border border-secondary mb-2 w-100">
+                        </div>
+                    </div>
+
+                    <!-- 2. AI Generation -->
+                    <h2>2. 殺手鐧：AI 自動生成工單</h2>
                     <p class="text-white-50">
                         這是讓 PM 驚呼 "Magic!" 的功能。不僅是文字摘要，我運用了 <strong>Prompt Engineering</strong> 中的「角色扮演
                         (Role-Playing)」技巧。
@@ -156,54 +204,16 @@
 
                     <div class="row align-items-center my-4">
                         <div class="col-md-12">
-                            <!-- Placeholder -->
-                            <img src="https://placehold.co/800x400/442244/FFF?text=TODO:+Insert+AI+Ticket+Generation+Prompt+result"
-                                alt="AI 自動生成 Jira 工單的介面與結果預覽"
+                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-15-40.jpg" alt="AI 自動生成 Jira 工單的介面與結果預覽"
                                 class="img-fluid rounded shadow border border-secondary mb-2 w-100">
                         </div>
                     </div>
 
-                    <!-- 2. Attachments Migration -->
-                    <h2>2. 附件自動搬家</h2>
-                    <p class="text-white-50">
-                        「截圖在哪裡？」這應該是 RD 最常問的問題排行榜第一名。
-                        在这个功能中，當你把多則 LINE 訊息轉成工單時，系統會自動偵測其中包含的圖片與影片。
-                    </p>
-                    <p class="text-white-50">
-                        後端會自動從 Supabase 下載這些檔案，然後透過 Jira API 上傳到新建立的 Ticket 附件區。
-                        RD 打開工單，所有證據都在附件裡，從此告別「私訊討圖」的日子。
-                    </p>
-
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12">
-                            <!-- Placeholder -->
-                            <img src="https://placehold.co/800x400/113355/FFF?text=TODO:+Insert+Attachments+Migration+Flow"
-                                alt="附件自動搬家流程示意圖：Line > Supabase > Jira Attachments"
-                                class="img-fluid rounded shadow border border-secondary mb-2 w-100">
-                        </div>
-                    </div>
-
-                    <!-- 3. Duplicate Check -->
-                    <h2>3. 智慧比對防呆機智</h2>
-                    <p class="text-white-50">
-                        開單前最怕重複。但我不想讓使用者手動去 Jira 搜尋。
-                        我實作了 **Smart Duplicate Check**。在開單前，你可以點擊「智慧搜尋」，AI 會提取訊息中的關鍵技術詞彙 (Keywords)，然後去 Jira 資料庫撈一撈。
-                        「這個 Bug 是不是上週有人報過了？」系統會直接告訴你。
-                    </p>
-
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12">
-                            <!-- Placeholder -->
-                            <img src="https://placehold.co/800x400/553311/FFF?text=TODO:+Insert+Smart+Duplicate+Check+UI"
-                                alt="智慧重複工單檢查介面" class="img-fluid rounded shadow border border-secondary mb-2 w-100">
-                        </div>
-                    </div>
-
-                    <!-- 4. Shopping Cart -->
-                    <h2>4. 購物車式事件暫存區</h2>
+                    <!-- 3. Shopping Cart -->
+                    <h2>3. 購物車式事件暫存區</h2>
                     <p class="text-white-50">
                         客戶的需求往往是破碎的，東講一句西講一句，散落在早上與下午的對話裡。
-                        所以我設計了一個類似「購物車」的側邊暫存區。
+                        所以我設計了一個類似「購物車」的側邊暫存區，可以把選取多條對話後，綁定為同一事件。
                     </p>
                     <div class="tech-note">
                         <strong>🛒 設計理念：</strong>
@@ -213,12 +223,43 @@
 
                     <div class="row align-items-center my-4">
                         <div class="col-md-12">
-                            <!-- Placeholder -->
-                            <img src="https://placehold.co/800x300/222222/FFF?text=TODO:+Insert+Staging+Panel+UI"
-                                alt="購物車式事件暫存區的操作面板截圖"
+                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-34-16.jpg" alt="購物車式事件暫存區的操作面板截圖"
+                                class="img-fluid rounded shadow border border-secondary mb-2 w-100">
+                        </div>                        
+                        <div class="col-md-12">
+                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-21-21.jpg" alt="購物車式事件暫存區的操作面板截圖"
                                 class="img-fluid rounded shadow border border-secondary mb-2 w-100">
                         </div>
                     </div>
+
+                    <!-- 4. AI Follow-up Assistant -->
+                    <h2>4. AI 催單助手：溫暖的溝通橋樑</h2>
+                    <p class="text-white-50">
+                        進度卡住了？需要去催一下？但又怕催得太直接傷了感情？
+                        這個 <strong>AI 催單助手</strong> 就是你的最佳幫手。
+                    </p>
+                    <p class="text-white-50">
+                        只要點擊「生成催單內容」，AI 會根據你選取的多個事件的上下文，自動幫你寫出一段 <strong>專業、禮貌又不失溫度</strong> 的詢問訊息。
+                        你可以直接複製貼上到 Line 群組，省下組織語言的力氣，還會貼心加上 Emoji 讓氣氛更輕鬆 😊。
+                    </p>
+                    <ul class="text-white-50">
+                        <li><strong>一鍵生成：</strong>AI 自動讀取事件脈絡，產出客製化催單文案</li>
+                        <li><strong>複製即用：</strong>點擊「複製並標記已催單」，訊息複製到剪貼簿，同時系統自動記錄催單時間</li>
+                        <li><strong>禮貌溝通：</strong>不用再煩惱措辭，讓 AI 幫你維護團隊關係</li>
+                    </ul>
+
+                    <div class="row align-items-center my-4">
+                        <div class="col-md-12">
+                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-24-44.jpg" alt="AI 催單助手：生成禮貌催單訊息的介面"
+                                class="img-fluid rounded shadow border border-secondary mb-2 w-100">
+                        </div>
+                    </div>
+                    <div class="row align-items-center my-4">
+                        <div class="col-md-12">
+                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-26-12.jpg" alt="AI 催單助手：生成禮貌催單訊息的介面"
+                                class="img-fluid rounded shadow border border-secondary mb-2 w-100">
+                        </div>
+                    </div>                    
 
                     <!-- Video Demo -->
                     <div class="mt-5 mb-5 position-relative">

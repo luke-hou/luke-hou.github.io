@@ -11,6 +11,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../css/style.css">
+    <!-- PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
     <script>
@@ -51,7 +56,7 @@
         }
 
         .project-hero {
-            background: linear-gradient(rgba(22, 91, 51, 0.8), rgba(212, 36, 38, 0.6)), url('../images/2025-12-24_23-54-29.jpg') no-repeat center center;
+            background: linear-gradient(rgba(22, 91, 51, 0.8), rgba(212, 36, 38, 0.6)), url('../images/line-ai-bot-mvp/2025-12-24_23-54-29.jpg') no-repeat center center;
             background-size: cover;
             padding: 5rem 0;
             color: white;
@@ -183,13 +188,50 @@
                     Edition 2025</span>
                 <h1 class="display-4 mb-3">Line Bot MVP<br><span class="xmas-text-highlight">有溫度的</span> AI 協作時光機</h1>
                 <p class="lead text-light opacity-90">🎁 不再被訊息淹沒，這是送給團隊最好的聖誕禮物。<br>一個懂你、幫你、讓你早點回家過節的好幫手。</p>
+
+                <!-- Project Metadata Bar -->
+                <div class="row justify-content-center mt-5 g-4 text-white-50 small text-uppercase letter-spacing-1">
+                    <div class="col-auto">
+                        <i class="bi bi-tag-fill text-danger me-1"></i> Status: <span class="text-white">MVP /
+                            Live</span>
+                    </div>
+                    <div class="col-auto border-start border-secondary ps-4">
+                        <i class="bi bi-person-fill text-warning me-1"></i> Role: <span class="text-white">Full Stack
+                            Dev</span>
+                    </div>
+                    <div class="col-auto border-start border-secondary ps-4">
+                        <i class="bi bi-calendar-event-fill text-success me-1"></i> Date: <span class="text-white">Dec
+                            2025</span>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section class="container mt-5">
             <div class="row">
-                <!-- Main Content -->
-                <div class="col-lg-8">
+                <!-- Main Content - Centered Single Column -->
+                <div class="col-lg-10 offset-lg-1">
+
+
+                    <!-- Podcast Player -->
+                    <div class="glass-card p-3 mb-5 mx-auto border-danger" style="max-width: 600px;">
+                        <div class="d-flex flex-column flex-md-row align-items-center gap-3">
+                            <div class="d-flex align-items-center justify-content-start w-100">
+                                <div class="rounded-circle bg-danger d-flex align-items-center justify-content-center border border-warning shadow-sm me-3 flex-shrink-0"
+                                    style="width: 50px; height: 50px;">
+                                    <i class="bi bi-mic-fill text-white fs-5"></i>
+                                </div>
+                                <div class="text-start">
+                                    <h6 class="text-warning mb-0">🎅 Podcast：下課！十分鐘的AI - 聖誕特輯(?)</h6>
+                                    <small class="text-white-50">點擊播放，聽聽開發背後的故事</small>
+                                </div>
+                            </div>
+                            <audio controls class="w-100 custom-audio-player">
+                                <source src="../Podcast/line_bot_mvp_podcast_v3.m4a" type="audio/mpeg">
+                                您的瀏覽器不支援音訊播放，請下載檔案收聽。
+                            </audio>
+                        </div>
+                    </div>
 
                     <!-- Introduction -->
                     <div class="mb-5 text-center">
@@ -204,25 +246,7 @@
                             目的是解決所有 PM 以及 RD 工程師每天最頭痛的問題：<strong class="text-danger">被 LINE 訊息淹沒</strong>。
                         </p>
 
-                        <!-- Podcast Player -->
-                        <div class="glass-card p-3 mt-4 mx-auto border-danger" style="max-width: 600px;">
-                            <div class="d-flex flex-column flex-md-row align-items-center gap-3">
-                                <div class="d-flex align-items-center justify-content-start w-100">
-                                    <div class="rounded-circle bg-danger d-flex align-items-center justify-content-center border border-warning shadow-sm me-3 flex-shrink-0"
-                                        style="width: 50px; height: 50px;">
-                                        <i class="bi bi-mic-fill text-white fs-5"></i>
-                                    </div>
-                                    <div class="text-start">
-                                        <h6 class="text-warning mb-0">🎅 Podcast：下課！十分鐘的AI - 聖誕特輯(?)</h6>
-                                        <small class="text-white-50">點擊播放，聽聽開發背後的故事</small>
-                                    </div>
-                                </div>
-                                <audio controls class="w-100 custom-audio-player">
-                                    <source src="assets/podcast_origin_story.mp3" type="audio/mpeg">
-                                    您的瀏覽器不支援音訊播放，請下載檔案收聽。
-                                </audio>
-                            </div>
-                        </div>
+
                     </div>
 
                     <!-- Part 1: Time Machine -->
@@ -371,6 +395,41 @@
 
                     <hr class="my-5 border-secondary">
 
+                    <!-- PDF Slide Viewer -->
+                    <div class="glass-card p-4 mb-5 border-warning">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3 class="h4 text-warning mb-0"><i class="bi bi-easel2-fill me-2"></i>完整簡報 (Project Deck)
+                            </h3>
+                            <div class="text-white-50 small">
+                                Page <span id="page_num" class="text-white fw-bold">1</span> of <span
+                                    id="page_count">--</span>
+                            </div>
+                        </div>
+
+                        <!-- Canvas Container -->
+                        <div class="text-center position-relative bg-dark rounded overflow-hidden shadow-lg border border-secondary"
+                            style="min-height: 300px;">
+                            <div id="pdf-loader"
+                                class="position-absolute top-50 start-50 translate-middle text-warning">
+                                <div class="spinner-border" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                            <canvas id="the-canvas" class="img-fluid"></canvas>
+                        </div>
+
+                        <!-- Controls -->
+                        <div class="d-flex justify-content-center align-items-center gap-3 mt-3">
+                            <button class="btn btn-outline-light rounded-circle" id="prev" title="Previous Page">
+                                <i class="bi bi-chevron-left"></i>
+                            </button>
+                            <span class="text-white-50 small text-uppercase letter-spacing-1">Slide Navigation</span>
+                            <button class="btn btn-outline-warning rounded-circle" id="next" title="Next Page">
+                                <i class="bi bi-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
                     <!-- Conclusion -->
                     <div class="text-center">
                         <h2 class="h3 mb-3 text-warning">🎄 給夥伴的話</h2>
@@ -382,88 +441,286 @@
                                 class="bi bi-star-fill text-warning"></i></h4>
                         <p class="lead text-danger">🎅 只要你敢想，AI 就能帶你飛。</p>
 
-                        <!-- Image Placeholder -->
-                        <div class="mt-4">
-                            <img src="../images/2025-12-24_23-08-26.jpg" alt="Demo Screenshot"
-                                class="img-fluid rounded shadow border border-warning">
-                            <p class="text-white-50 mt-2 small">（此處為 Mock Data 假資料，並非真實群組訊息。）</p>
-                        </div>
+
                     </div>
 
                 </div>
 
-                <!-- Sidebar -->
-                <div class="col-lg-4">
-                    <div class="card shadow-sm summary-card bg-body-tertiary border-0">
-                        <div class="card-body">
-                            <h3 class="card-title h5 border-bottom border-warning pb-2 mb-3 text-white">
-                                <i class="bi bi-snow2 me-2 text-info"></i>專案檔案
-                            </h3>
-                            <div class="mb-4">
-                                <span class="badge bg-danger mb-1">Status: MVP</span>
-                                <span class="badge bg-success mb-1">Live Demo Available</span>
-                            </div>
-
-                            <h5 class="h6 text-white-50 mb-2">專案亮點</h5>
-                            <ul class="list-unstyled small text-white-50">
-                                <li class="mb-2"><i class="bi bi-gift-fill text-danger me-2"></i>Line 訊息全備份與搜尋</li>
-                                <li class="mb-2"><i class="bi bi-gift-fill text-danger me-2"></i>AI 語意分析與摘要</li>
-                                <li class="mb-2"><i class="bi bi-gift-fill text-danger me-2"></i>Jira 雙向整合 (附檔上傳)</li>
-                                <li class="mb-2"><i class="bi bi-gift-fill text-danger me-2"></i>情緒健康度監控儀表板</li>
-                            </ul>
-
-                            <h5 class="h6 text-white-50 mt-4 mb-2">技術堆疊</h5>
-                            <div class="d-flex flex-wrap">
-                                <span class="badge tech-badge">Python</span>
-                                <span class="badge tech-badge">Line Messaging API</span>
-                                <span class="badge tech-badge">OpenAI / Gemini</span>
-                                <span class="badge tech-badge">Supabase (PostgreSQL)</span>
-                                <span class="badge tech-badge">Jira API</span>
-                                <span class="badge tech-badge">Google Cloud Run</span>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-transparent border-top border-warning">
-                            <div class="d-grid">
-                                <a href="../portfolio.html" class="btn btn-outline-warning">
-                                    <i class="bi bi-arrow-left-circle me-2"></i>返回作品集
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            </div>
+            <!-- Sidebar content removed and integrated elsewhere -->
             </div>
         </section>
     </main>
 
-    <!-- LinkedIn Discussion Section -->
-    <section class="bg-body-tertiary py-5 mt-5 border-top border-secondary-subtle">
+    <!-- Developer View Section -->
+    <section class="py-5 position-relative" style="background: rgba(0,0,0,0.3);">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <i class="bi bi-linkedin" style="font-size: 3rem; color: #0077b5;"></i>
-                    <h2 class="h3 mt-3 mb-3">💬 想要討論或分享你的想法？</h2>
-                    <p class="text-muted mb-4">
-                        歡迎到我的 LinkedIn 文章留言，與我和其他讀者一起交流討論！
-                        無論是對這個 AI 協作系統的看法、你的實作經驗，或是任何問題，都歡迎分享。
-                    </p>
-                    <a href="https://www.linkedin.com/in/junjia-hou/" class="btn btn-primary btn-lg" target="_blank"
-                        rel="noopener noreferrer">
-                        <i class="bi bi-linkedin me-2"></i>前往 LinkedIn 連繫我
-                    </a>
+            <div class="row mb-5">
+                <div class="col-12 text-center">
+                    <span class="badge rounded-pill bg-light text-dark mb-2 border border-white">Engineering
+                        Excellence</span>
+                    <h2 class="display-6 fw-bold text-white"><i
+                            class="bi bi-code-slash text-white me-2"></i>工程師視角：Developer View</h2>
+                    <p class="text-white-50">我們不只講故事，更在意系統的強健性 (Robustness) 與品質 (Quality)。</p>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <!-- Automated QA -->
+                <div class="col-lg-6">
+                    <div class="glass-card p-4 h-100 border-light">
+                        <h3 class="h4 text-white mb-3"><i class="bi bi-robot me-2"></i>Automated Quality Assurance</h3>
+                        <p class="text-white-50">身為部分工時的開發者，時間是最寶貴的資源。為了確保每次重構 (Refactor) 都不會破壞現有功能，我建立了一套完整的自動化測試框架。
+                        </p>
+
+                        <div class="card bg-black border-secondary mb-3">
+                            <div class="card-body font-monospace text-success p-3">
+                                > pytest ./tests<br>
+                                <span class="text-white">================ test session starts
+                                    ================</span><br>
+                                collected 51 items<br><br>
+                                tests/test_auth.py <span class="text-success">.......</span> [ 13%]<br>
+                                tests/test_jira.py <span class="text-success">..............</span> [ 41%]<br>
+                                tests/test_ai.py <span class="text-success">......................</span> [ 84%]<br>
+                                tests/test_api.py <span class="text-success">........</span> [100%]<br><br>
+                                <span class="text-success">========== 51 passed in 13.86s ==========</span>
+                            </div>
+                        </div>
+
+                        <ul class="list-unstyled text-white-50">
+                            <li class="mb-2"><i class="bi bi-check-lg text-success me-2"></i><strong>100% Pass
+                                    Rate:</strong> 包含 API CRUD、權限認證與 Supabase 整合測試。</li>
+                            <li class="mb-2"><i class="bi bi-check-lg text-success me-2"></i><strong>CI/CD
+                                    Integration:</strong> 每次 Commit 自動觸發測試，確保品質零死角。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- System Architecture -->
+                <div class="col-lg-6">
+                    <div class="glass-card p-4 h-100 border-warning">
+                        <h3 class="h4 text-warning mb-3"><i class="bi bi-diagram-3-fill me-2"></i>System Architecture
+                        </h3>
+                        <p class="text-white-50">採用現代化 Serverless 架構，專注於業務邏輯而非伺服器管理。結合 Zero-Trust 安全模型，確保企業資料絕對安全。</p>
+
+                        <!-- Placeholder for Architecture Diagram -->
+                        <div class="mb-3">
+                            <img src="https://placehold.co/600x350/222/FFF?text=System+Architecture+Diagram"
+                                alt="System Architecture Diagram"
+                                class="img-fluid rounded border border-secondary shadow-lg">
+                        </div>
+
+                        <ul class="list-unstyled text-white-50 small">
+                            <li class="mb-1"><strong class="text-light">Backend:</strong> Python FastAPI (Async)</li>
+                            <li class="mb-1"><strong class="text-light">Database:</strong> Supabase (PostgreSQL +
+                                Storage)</li>
+                            <li class="mb-1"><strong class="text-light">AI Core:</strong> Azure OpenAI + Google Gemini +
+                                OpenAI (Multi-Model)</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-dark mt-auto py-4 border-top border-secondary-subtle">
-        <div class="container text-center">
-            <a href="../portfolio.html" class="btn btn-outline-light mb-3"><i
-                    class="bi bi-arrow-left-circle me-2"></i>返回作品</a>
-            <p class="text-white-50 mb-0">&copy; 2025 Luke Hou. All rights reserved. 🎄 Merry Christmas! 2025/12/24</p>
+    <!-- Tech Stack Logo Wall -->
+    <section class="py-4 border-top border-secondary-subtle" style="background-color: var(--xmas-dark);">
+        <div class="container">
+            <p class="text-center text-white-50 mb-4 small text-uppercase letter-spacing-2">Powered By Modern Tech Stack
+            </p>
+            <div class="row justify-content-center align-items-center text-center g-4 opacity-75 grayscale-hover-color">
+                <!-- Python -->
+                <div class="col-4 col-md-2">
+                    <i class="bi bi-filetype-py fs-1 text-white"></i>
+                    <div class="small text-white-50 mt-1">Python</div>
+                </div>
+                <!-- Line -->
+                <div class="col-4 col-md-2">
+                    <i class="bi bi-chat-dots-fill fs-1 text-success"></i>
+                    <div class="small text-white-50 mt-1">Line API</div>
+                </div>
+                <!-- OpenAI -->
+                <div class="col-4 col-md-2">
+                    <i class="bi bi-cpu-fill fs-1 text-info"></i>
+                    <div class="small text-white-50 mt-1">AI Models</div>
+                </div>
+                <!-- Supabase -->
+                <div class="col-4 col-md-2">
+                    <i class="bi bi-database-fill fs-1 text-warning"></i>
+                    <div class="small text-white-50 mt-1">Supabase</div>
+                </div>
+                <!-- Jira -->
+                <div class="col-4 col-md-2">
+                    <i class="bi bi-kanban-fill fs-1 text-primary"></i>
+                    <div class="small text-white-50 mt-1">Jira API</div>
+                </div>
+                <!-- Docker/Cloud -->
+                <div class="col-4 col-md-2">
+                    <i class="bi bi-cloud-check-fill fs-1 text-light"></i>
+                    <div class="small text-white-50 mt-1">Serverless</div>
+                </div>
+            </div>
         </div>
-    </footer>
+    </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Final Demo Showcase -->
+    <section class="py-5" style="background-color: var(--xmas-dark);">
+        <div class="container text-center">
+            <h3 class="h4 text-warning mb-4"><i class="bi bi-images me-2"></i>實際運作畫面</h3>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <img src="../images/line-ai-bot-mvp/2025-12-24_23-08-26.jpg" alt="Demo Screenshot"
+                        class="img-fluid rounded shadow-lg border border-warning">
+                    <p class="text-white-50 mt-3 small">（真實群組協作視角：Clear & Organized）</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- LinkedIn Discussion Section -->
+        <section class="bg-body-tertiary py-5 mt-5 border-top border-secondary-subtle">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <i class="bi bi-linkedin" style="font-size: 3rem; color: #0077b5;"></i>
+                        <h2 class="h3 mt-3 mb-3">💬 想要討論或分享你的想法？</h2>
+                        <p class="text-muted mb-4">
+                            歡迎到我的 LinkedIn 文章留言，與我和其他讀者一起交流討論！
+                            無論是對這個 AI 協作系統的看法、你的實作經驗，或是任何問題，都歡迎分享。
+                        </p>
+                        <a href="https://www.linkedin.com/in/junjia-hou/" class="btn btn-primary btn-lg" target="_blank"
+                            rel="noopener noreferrer">
+                            <i class="bi bi-linkedin me-2"></i>前往 LinkedIn 連繫我
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-dark mt-auto py-4 border-top border-secondary-subtle">
+            <div class="container text-center">
+                <a href="../portfolio.html" class="btn btn-outline-light mb-3"><i
+                        class="bi bi-arrow-left-circle me-2"></i>返回作品</a>
+                <p class="text-white-50 mb-0">&copy; 2025 Luke Hou. All rights reserved. 🎄 Merry Christmas! 2025/12/24
+                </p>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            const url = '../assets/AI_Collaboration_Hub_v29.pdf';
+
+            let pdfDoc = null,
+                pageNum = 1,
+                pageRendering = false,
+                pageNumPending = null,
+                scale = 1.5,
+                canvas = document.getElementById('the-canvas'),
+                ctx = canvas.getContext('2d');
+
+            function renderPage(num) {
+                pageRendering = true;
+                pdfDoc.getPage(num).then(function (page) {
+                    // Adjust scale for responsiveness based on container width
+                    const containerWidth = canvas.parentNode.clientWidth;
+                    const unscaledViewport = page.getViewport({ scale: 1 });
+                    const responsiveScale = Math.min(containerWidth / unscaledViewport.width, 1.5); // Cap at 1.5x zoom
+
+                    var viewport = page.getViewport({ scale: responsiveScale });
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    var renderContext = {
+                        canvasContext: ctx,
+                        viewport: viewport
+                    };
+                    var renderTask = page.render(renderContext);
+
+                    renderTask.promise.then(function () {
+                        pageRendering = false;
+                        document.getElementById('pdf-loader').style.display = 'none';
+                        if (pageNumPending !== null) {
+                            renderPage(pageNumPending);
+                            pageNumPending = null;
+                        }
+                    });
+                });
+
+                document.getElementById('page_num').textContent = num;
+            }
+
+            function queueRenderPage(num) {
+                if (pageRendering) {
+                    pageNumPending = num;
+                } else {
+                    renderPage(num);
+                }
+            }
+
+            function onPrevPage() {
+                if (pageNum <= 1) {
+                    return;
+                }
+                pageNum--;
+                queueRenderPage(pageNum);
+            }
+            document.getElementById('prev').addEventListener('click', onPrevPage);
+
+            function onNextPage() {
+                if (pageNum >= pdfDoc.numPages) {
+                    return;
+                }
+                pageNum++;
+                queueRenderPage(pageNum);
+            }
+            document.getElementById('next').addEventListener('click', onNextPage);
+
+            pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
+                pdfDoc = pdfDoc_;
+                // Check if page_count element exists before setting textContent
+                const pageCountEl = document.getElementById('page_count');
+                if (pageCountEl) pageCountEl.textContent = pdfDoc.numPages;
+                renderPage(pageNum);
+            }).catch(function (error) {
+                console.error('Error loading PDF:', error);
+
+                // Fallback: If PDF.js fails (likely CORS on file://), try standard iframe
+                const canvas = document.getElementById('the-canvas');
+                if (canvas) {
+                    const container = canvas.parentElement; // The container div
+                    const card = container.closest('.glass-card'); // The wrapper card
+
+                    // Clear container (remove canvas and loader)
+                    container.innerHTML = '';
+
+                    // Create iframe fallback
+                    const iframe = document.createElement('iframe');
+                    iframe.src = url;
+                    iframe.width = '100%';
+                    iframe.height = '500px';
+                    iframe.style.border = 'none';
+                    container.appendChild(iframe);
+
+                    if (card) {
+                        // Hide custom controls
+                        const prevBtn = card.querySelector('#prev');
+                        if (prevBtn && prevBtn.parentElement) {
+                            prevBtn.parentElement.style.display = 'none';
+                        }
+
+                        // Update header info
+                        const pageCountSpan = card.querySelector('#page_count');
+                        if (pageCountSpan && pageCountSpan.parentElement) {
+                            pageCountSpan.parentElement.textContent = 'Native PDF Viewer (Local Mode)';
+                        }
+                    }
+                }
+            });
+
+            // Handle window resize for responsiveness
+            window.addEventListener('resize', () => {
+                if (pdfDoc) renderPage(pageNum);
+            });
+        </script>
 </body>
 
 </html>
