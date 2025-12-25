@@ -91,6 +91,24 @@
             font-size: 0.95rem;
             color: rgba(255, 255, 255, 0.8);
         }
+
+        .feature-section {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(22, 91, 51, 0.4);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .feature-section:hover {
+            border-color: rgba(22, 91, 51, 0.6);
+            box-shadow: 0 0 20px rgba(22, 91, 51, 0.15);
+        }
+
+        .feature-section h2 {
+            margin-top: 0;
+        }
     </style>
 </head>
 
@@ -129,7 +147,7 @@
                     <!-- Intro -->
                     <div class="glass-card p-4 mb-5">
                         <p class="lead text-white">
-                            「欸，上個月客戶傳的那張報價單截圖在哪？」<br>
+                            🔍「欸，上個月客戶傳的那張報價單截圖在哪？」<br>
                             「檔案已過期...」
                         </p>
                         <p class="text-white-50">
@@ -139,159 +157,170 @@
                     </div>
 
                     <!-- 1. Dashboard & Sentiment -->
-                    <h2>1. 決策者的戰情儀表板 (Dashboard)</h2>
-                    <p class="text-white-50">
-                        一進到系統，你看到的不是雜亂的訊息列表，而是一個讓你「一眼掌握全局」的戰情儀表板。
-                        這裡集結了所有你需要快速決策的關鍵數據。
-                    </p>
+                    <div class="feature-section">
+                        <h2>1. 決策者的戰情儀表板 (Dashboard)</h2>
+                        <p class="text-white-50">
+                            一進到系統，你看到的不是雜亂的訊息列表，而是一個讓你「一眼掌握全局」的戰情儀表板。
+                            這裡集結了所有你需要快速決策的關鍵數據。
+                        </p>
 
-                    <h3>📊 關鍵績效指標 (KPIs at a Glance)</h3>
-                    <p class="text-white-50">
-                        儀表板上還展示了其他關鍵數據：今日訊息量、活躍群組數、待處理工單、以及 Line 訊息到 Jira 的轉換率。
-                        將抽象的「感覺很忙」轉化為數字，成為你爭取資源、匯報進度的最強底氣。
-                    </p>
+                        <h3>📊 關鍵績效指標 (KPIs at a Glance)</h3>
+                        <p class="text-white-50">
+                            儀表板上還展示了其他關鍵數據：今日訊息量、活躍群組數、待處理工單、以及 Line 訊息到 Jira 的轉換率。
+                            將抽象的「感覺很忙」轉化為數字，成為你爭取資源、匯報進度的最強底氣。
+                        </p>
 
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12">
-                            <!-- Placeholder -->
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_14-48-49.jpg"
-                                alt="儀表板截圖：展示客戶群組情緒溫度計與關鍵績效指標 (KPIs)"
-                                class="img-fluid rounded shadow border border-warning mb-2 w-100">
-                            <p class="text-center text-muted small">儀表板一覽：情緒溫度計讓你即時掌握每個客戶群組的健康狀態。</p>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12">
+                                <!-- Placeholder -->
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_14-48-49.jpg"
+                                    alt="儀表板截圖：展示客戶群組情緒溫度計與關鍵績效指標 (KPIs)"
+                                    class="img-fluid rounded shadow border border-warning mb-2 w-100">
+                                <p class="text-center text-muted small">儀表板一覽：情緒溫度計讓你即時掌握每個客戶群組的健康狀態。</p>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 2. Auto Backup -->
-                    <h2>2. 永久保存的雲端時光機 (Auto-Backup)</h2>
-                    <p class="text-white-50">
-                        Line 的「檔案過期」機制是所有 PM 的惡夢。在這個系統中，我設計了一套自動化的攔截機制。
-                        透過 Webhook，系統會即時監聽每一則訊息。
-                    </p>
+                    <div class="feature-section">
+                        <h2>2. 永久保存的雲端時光機 (Auto-Backup)</h2>
+                        <p class="text-white-50">
+                            Line 的「檔案過期」機制是所有 PM 的惡夢。在這個系統中，我設計了一套自動化的攔截機制。
+                            透過 Webhook，系統會即時監聽每一則訊息。
+                        </p>
 
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12">
-                            <!-- Placeholder -->
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_14-50-32.jpg"
-                                alt="Supabase Storage Dashboard 展示所有自動備份的圖片與影片"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <p class="text-center text-muted small">所有透過 Line 傳送的圖片，都會自動同步到安全儲存桶。</p>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12">
+                                <!-- Placeholder -->
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_14-50-32.jpg"
+                                    alt="Supabase Storage Dashboard 展示所有自動備份的圖片與影片"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <p class="text-center text-muted small">所有透過 Line 傳送的圖片，都會自動同步到安全儲存桶。</p>
+                            </div>
+                        </div>
+
+                        <div class="tech-note">
+                            <strong>🛠️ 技術細節：</strong>
+                            得益於 <strong>Supabase (PostgreSQL)</strong> 的強大整合，我不只是備份檔案，還將發送時間、群組來源等 Metadata 一併索引。
+                            這意味著，即使 Line 原檔失效，你隨時都能回到後台搜尋並下載。
                         </div>
                     </div>
 
-                    <div class="tech-note">
-                        <strong>🛠️ 技術細節：</strong>
-                        得益於 <strong>Supabase (PostgreSQL)</strong> 的強大整合，我不只是備份檔案，還將發送時間、群組來源等 Metadata 一併索引。
-                        這意味著，即使 Line 原檔失效，你隨時都能回到後台搜尋並下載。
-                    </div>
-
                     <!-- 3. Zero Trust Security -->
-                    <h2>3. 比 Line 相簿更安全的「零信任」架構</h2>
-                    <p class="text-white-50">
-                        企業資料上雲，最怕的就是外洩。在這裡，我摒棄了傳統「連結即權限」的作法，採用了更嚴格的 <strong>動態簽名 (Dynamic Signed URL)</strong> 機制。
-                    </p>
+                    <div class="feature-section">
+                        <h2>3. 比 Line 相簿更安全的「零信任」架構</h2>
+                        <p class="text-white-50">
+                            企業資料上雲，最怕的就是外洩。在這裡，我摒棄了傳統「連結即權限」的作法，採用了更嚴格的 <strong>動態簽名 (Dynamic Signed URL)</strong> 機制。
+                        </p>
 
-                    <h3>什麼是 Signed URL？</h3>
-                    <p class="text-white-50">
-                        想像一下，傳統的圖片連結就像一把「備用鑰匙」，誰撿到都能開門。
-                        而 Signed URL 則像是一張「限時通行證」。當有鑰匙的管理員點擊預覽時，後端才會即時生成一個只有 60 秒有效期的連結。
-                        時間一到，連結自動作廢。就算連結被轉傳出去，外面的人也什麼都看不到。
-                    </p>
+                        <h3>什麼是 Signed URL？</h3>
+                        <p class="text-white-50">
+                            想像一下，傳統的圖片連結就像一把「備用鑰匙」，誰撿到都能開門。
+                            而 Signed URL 則像是一張「限時通行證」。當有鑰匙的管理員點擊預覽時，後端才會即時生成一個只有 60 秒有效期的連結。
+                            時間一到，連結自動作廢。就算連結被轉傳出去，外面的人也什麼都看不到。
+                        </p>
 
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_14-51-26.jpg"
-                                alt="Zero-Trust 安全架構圖：展示 X-Line-Signature 驗證與 Signed URL 流程"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <p class="text-center text-muted small">從接收訊息的簽章驗證，到存取圖片的動態授權，全程嚴密防護。</p>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_14-51-26.jpg"
+                                    alt="Zero-Trust 安全架構圖：展示 X-Line-Signature 驗證與 Signed URL 流程"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <p class="text-center text-muted small">從接收訊息的簽章驗證，到存取圖片的動態授權，全程嚴密防護。</p>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 4. Human Centric -->
-                    <h2>4. 看見真實的人 (Human-Centric Data)</h2>
-                    <p class="text-white-50">
-                        很多後台系統只顯示生硬的 User ID (`U1s2f...`)，這讓數據變得很沒溫度。
-                        我相信，每一個 ID 背後都是一位努力工作的夥伴。
-                    </p>
+                    <div class="feature-section">
+                        <h2>4. 看見真實的人 (Human-Centric Data)</h2>
+                        <p class="text-white-50">
+                            很多後台系統只顯示生硬的 User ID (`U1s2f...`)，這讓數據變得很沒溫度。
+                            我相信，每一個 ID 背後都是一位努力工作的夥伴。
+                        </p>
 
-                    <h3>行內編輯 (Inline Edit)</h3>
-                    <p class="text-white-50">
-                        在後台列表中，我實作了「點擊即編輯」的功能。如果客戶使用了奇怪的暱稱，管理員可以直接點擊名字修改成「王經理」。
-                        此外，我還加入了一個貼心的小功能：<strong>「統計排除」</strong>。
-                    </p>
-                    <p class="text-white-50">
-                        有些群組裡會有「匯率機器人」或「系統公告帳號」，這些不該算進「團隊工作量」。
-                        只要勾選排除，統計圖表就會瞬間變得乾淨準確。
-                    </p>
+                        <h3>行內編輯 (Inline Edit)</h3>
+                        <p class="text-white-50">
+                            在後台列表中，我實作了「點擊即編輯」的功能。如果客戶使用了奇怪的暱稱，管理員可以直接點擊名字修改成「王經理」。
+                            此外，我還加入了一個貼心的小功能：<strong>「統計排除」</strong>。
+                        </p>
+                        <p class="text-white-50">
+                            有些群組裡會有「匯率機器人」或「系統公告帳號」，這些不該算進「團隊工作量」。
+                            只要勾選排除，統計圖表就會瞬間變得乾淨準確。
+                        </p>
 
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12 text-center">
-                            <!-- Placeholder -->
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_14-52-18.jpg"
-                                alt="展示行內編輯使用者名稱，以及勾選「排除統計」的介面的操作畫面"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">展示行內編輯使用者名稱，以及勾選「排除統計」的介面的操作畫面</small>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12 text-center">
+                                <!-- Placeholder -->
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_14-52-18.jpg"
+                                    alt="展示行內編輯使用者名稱，以及勾選「排除統計」的介面的操作畫面"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">展示行內編輯使用者名稱，以及勾選「排除統計」的介面的操作畫面</small>
+                            </div>
                         </div>
-                    </div>
 
-                    <h3>🔗 Jira 狀態即時連結 (Live Jira Status)</h3>
-                    <p class="text-white-50">
-                        當一則訊息被轉成 Jira 工單後，訊息列表上會直接顯示該工單的 <strong>即時狀態</strong>。
-                        你可以看到票號 (例如 XS-1544)、目前狀態 (In Review / Done / To Do) 以及負責人縮寫。
-                    </p>
-                    <p class="text-white-50">
-                        點擊票號即可跳轉到 Jira 頁面，不需要再到 Jira 搜尋「這張單到底開在哪裡」。
-                        這讓 PM 可以在同一個介面追蹤對話進度與工單進度，大幅減少切換視窗的次數。
-                    </p>
+                        <h3>🔗 Jira 狀態即時連結 (Live Jira Status)</h3>
+                        <p class="text-white-50">
+                            當一則訊息被轉成 Jira 工單後，訊息列表上會直接顯示該工單的 <strong>即時狀態</strong>。
+                            你可以看到票號 (例如 XS-1544)、目前狀態 (In Review / Done / To Do) 以及負責人縮寫。
+                        </p>
+                        <p class="text-white-50">
+                            點擊票號即可跳轉到 Jira 頁面，不需要再到 Jira 搜尋「這張單到底開在哪裡」。
+                            這讓 PM 可以在同一個介面追蹤對話進度與工單進度，大幅減少切換視窗的次數。
+                        </p>
 
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12 text-center">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-08-28.jpg" alt="Jira 狀態即時連結：顯示票號、狀態標籤與負責人"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">Jira 狀態即時連結：顯示票號、狀態標籤與負責人</small>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12 text-center">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-08-28.jpg"
+                                    alt="Jira 狀態即時連結：顯示票號、狀態標籤與負責人"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">Jira 狀態即時連結：顯示票號、狀態標籤與負責人</small>
+                            </div>
                         </div>
-                    </div>
 
-                    <h3>🔔 一鍵催單提醒 (Quick Follow-up)</h3>
-                    <p class="text-white-50">
-                        有些任務需要跟催，但還要自己打一堆字很麻煩，這時候「一鍵催單」就派上用場了。
-                        針對 <strong>單一訊息</strong>，你可以直接點擊「催單」按鈕，系統會自動記錄你催過這則訊息。
-                    </p>
-                    <p class="text-white-50">
-                        已催過的訊息會顯示 <strong>「已催 (Xh Xm)」</strong>，讓你一眼就知道距離上次催單過了多久。
-                        這是輕量級的追蹤機制，適合那些「記得回頭看一下」的事項。
-                    </p>
-                    <p class="text-muted small">
-                        💡 <em>如果需要針對多則訊息打包催單並生成禮貌催單文案，請參考下一篇「協作橋梁篇」的 AI 催單助手功能。</em>
-                    </p>
+                        <h3>🔔 一鍵催單提醒 (Quick Follow-up)</h3>
+                        <p class="text-white-50">
+                            有些任務需要跟催，但還要自己打一堆字很麻煩，這時候「一鍵催單」就派上用場了。
+                            針對 <strong>單一訊息</strong>，你可以直接點擊「催單」按鈕，系統會自動記錄你催過這則訊息。
+                        </p>
+                        <p class="text-white-50">
+                            已催過的訊息會顯示 <strong>「已催 (Xh Xm)」</strong>，讓你一眼就知道距離上次催單過了多久。
+                            這是輕量級的追蹤機制，適合那些「記得回頭看一下」的事項。
+                        </p>
+                        <p class="text-muted small">
+                            💡 <em>如果需要針對多則訊息打包催單並生成禮貌催單文案，請參考下一篇「協作橋梁篇」的 AI 催單助手功能。</em>
+                        </p>
 
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12 text-center">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-29-18.jpg" alt="一鍵催單功能：顯示催單按鈕與已催時間"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">一鍵催單功能：顯示催單按鈕與已催時間</small>
-                        </div>
-                        <div class="col-md-12 text-center">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-31-30.jpg" alt="一鍵催單功能：直接生成催單內容並自動複製"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">一鍵催單功能：直接生成催單內容並自動複製</small>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12 text-center">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-29-18.jpg" alt="一鍵催單功能：顯示催單按鈕與已催時間"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">一鍵催單功能：顯示催單按鈕與已催時間</small>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-31-30.jpg" alt="一鍵催單功能：直接生成催單內容並自動複製"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">一鍵催單功能：直接生成催單內容並自動複製</small>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 5. UX -->
-                    <h2>5. 極致流暢的搜尋體驗</h2>
-                    <p class="text-white-50">
-                        為了幫使用者省下每一秒，我在搜尋功能上下足了功夫。
-                        加入了 <strong>防抖 (Debounce)</strong> 設計，當你還在打字的瞬間，系統就已經開始在背景幫你過濾出結果。
-                        不需要按 Enter，不需要等待旋轉圈圈，一切都是那麼自然流暢。
-                    </p>
+                    <div class="feature-section">
+                        <h2>5. 極致流暢的搜尋體驗</h2>
+                        <p class="text-white-50">
+                            為了幫使用者省下每一秒，我在搜尋功能上下足了功夫。
+                            加入了 <strong>防抖 (Debounce)</strong> 設計，當你還在打字的瞬間，系統就已經開始在背景幫你過濾出結果。
+                            不需要按 Enter，不需要等待旋轉圈圈，一切都是那麼自然流暢。
+                        </p>
 
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12 text-center">
-                            <!-- Placeholder -->
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_14-53-15.jpg"
-                                alt="搜尋介面截圖：展示關鍵字高亮 (Highlighting) 與多維度篩選器"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">搜尋介面截圖：展示關鍵字高亮 (Highlighting) 與多維度篩選器</small>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12 text-center">
+                                <!-- Placeholder -->
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_14-53-15.jpg"
+                                    alt="搜尋介面截圖：展示關鍵字高亮 (Highlighting) 與多維度篩選器"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">搜尋介面截圖：展示關鍵字高亮 (Highlighting) 與多維度篩選器</small>
+                            </div>
                         </div>
                     </div>
 

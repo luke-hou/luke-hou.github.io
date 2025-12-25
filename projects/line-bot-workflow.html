@@ -91,6 +91,24 @@
             font-size: 0.95rem;
             color: rgba(255, 255, 255, 0.8);
         }
+
+        .feature-section {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(212, 36, 38, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .feature-section:hover {
+            border-color: rgba(212, 36, 38, 0.5);
+            box-shadow: 0 0 20px rgba(212, 36, 38, 0.1);
+        }
+
+        .feature-section h2 {
+            margin-top: 0;
+        }
     </style>
 </head>
 
@@ -124,12 +142,10 @@
             <div class="row justify-content-center">
                 <div class="col-lg-9 article-content">
 
-
-
                     <!-- Intro -->
                     <div class="glass-card p-4 mb-5">
                         <p class="lead text-white">
-                            「PM 辛苦整理需求，RD 辛苦修 Bug，為什麼大家還是覺得資訊不同步？」
+                            🤔「PM 辛苦整理需求，RD 辛苦修 Bug，為什麼大家還是覺得資訊不同步？」
                         </p>
                         <p class="text-white-50">
                             這通常不是人的問題，是工具斷層。LINE 是流動的溝通，Jira 是結構化的執行，中間這條鴻溝，就是我這個專案要填補的。
@@ -138,197 +154,208 @@
                     </div>
 
                     <!-- 1. Inline Management (FIRST) -->
-                    <h2>1. Inline 輕量管理：不離開列表就能搞定一切</h2>
-                    <p class="text-white-50">
-                        每個訊息列表就是一張「戰情摘要表」。我不希望使用者頻繁地切換頁面或開 Modal。
-                        因此，我把最常需要的操作全部做成 <strong>Inline Edit</strong>，讓你一目了然、即點即改。
-                    </p>
+                    <div class="feature-section">
+                        <h2>1. Inline 輕量管理：不離開列表就能搞定一切</h2>
+                        <p class="text-white-50">
+                            每個訊息列表就是一張「戰情摘要表」。我不希望使用者頻繁地切換頁面或開 Modal。
+                            因此，我把最常需要的操作全部做成 <strong>Inline Edit</strong>，讓你一目了然、即點即改。
+                        </p>
 
-                    <h3>📋 Assignee / Status / Priority：最常用的欄位直接編輯</h3>
-                    <p class="text-white-50">
-                        每一則訊息或事件，都可以直接在列表上指定負責人 (Assignee)、狀態 (Status) 與優先級 (Priority)。
-                        不需要點進去再改，點一下下拉選單就完成。這在 Daily Standup 快速過濾待辦事項時特別有用。
-                    </p>
-                    <div class="row align-items-center my-3">
-                        <div class="col-md-12 text-center">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-10-49.jpg"
-                                alt="Inline 編輯 Assignee/Status/Priority 下拉選單"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">Inline 編輯 Assignee/Status/Priority 下拉選單</small>
+                        <h3>📋 Assignee / Status / Priority：最常用的欄位直接編輯</h3>
+                        <p class="text-white-50">
+                            每一則訊息或事件，都可以直接在列表上指定負責人 (Assignee)、狀態 (Status) 與優先級 (Priority)。
+                            不需要點進去再改，點一下下拉選單就完成。這在 Daily Standup 快速過濾待辦事項時特別有用。
+                        </p>
+                        <div class="row align-items-center my-3">
+                            <div class="col-md-12 text-center">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-10-49.jpg"
+                                    alt="Inline 編輯 Assignee/Status/Priority 下拉選單"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">Inline 編輯 Assignee/Status/Priority 下拉選單</small>
+                            </div>
                         </div>
-                    </div>
 
-                    <h3>📝 打備註 (Quick Notes)</h3>
-                    <p class="text-white-50">
-                        有時候你需要對某則訊息留下提醒，例如「已電話確認」「等客戶回覆」。
-                        Inline 備註欄讓你直接在訊息旁邊打字，所有脈絡都留在原地，不會散落在其他地方。
-                    </p>
-                    <div class="row align-items-center my-3">
-                        <div class="col-md-12 text-center">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-12-43.jpg" alt="Inline 打備註功能示範"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">Inline 打備註功能示範</small>
+                        <h3>📝 打備註 (Quick Notes)</h3>
+                        <p class="text-white-50">
+                            有時候你需要對某則訊息留下提醒，例如「已電話確認」「等客戶回覆」。
+                            Inline 備註欄讓你直接在訊息旁邊打字，所有脈絡都留在原地，不會散落在其他地方。
+                        </p>
+                        <div class="row align-items-center my-3">
+                            <div class="col-md-12 text-center">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-12-43.jpg" alt="Inline 打備註功能示範"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">Inline 打備註功能示範</small>
+                            </div>
                         </div>
-                    </div>
 
-                    <h3>⭐ 標註重要 (Flag as Important) & 🚫 快速標註 Ignore</h3>
-                    <p class="text-white-50">
-                        在茫茫訊息海中，一顆星星就能讓關鍵訊息脫穎而出。
-                        一鍵標註「重要」，配合篩選器，快速聚焦今日必須處理的大事。
-                    </p>
-                    <p class="text-white-50">
-                        並非每則訊息都值得追蹤，有些純粹是「收到」、「OK」、「+1」這類無意義的雜訊。
-                        一鍵標註 Ignore，讓它從統計與待辦中消失，保持戰情板的乾淨整潔。
-                    </p>
-                    <div class="row align-items-center my-3">
-                        <div class="col-md-12 text-center">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-13-39.jpg" alt="快速標註 Ignore 功能示範"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">快速標註 Ignore 功能示範</small>
+                        <h3>⭐ 標註重要 (Flag as Important) & 🚫 快速標註 Ignore</h3>
+                        <p class="text-white-50">
+                            在茫茫訊息海中，一顆星星就能讓關鍵訊息脫穎而出。
+                            一鍵標註「重要」，配合篩選器，快速聚焦今日必須處理的大事。
+                        </p>
+                        <p class="text-white-50">
+                            並非每則訊息都值得追蹤，有些純粹是「收到」、「OK」、「+1」這類無意義的雜訊。
+                            一鍵標註 Ignore，讓它從統計與待辦中消失，保持戰情板的乾淨整潔。
+                        </p>
+                        <div class="row align-items-center my-3">
+                            <div class="col-md-12 text-center">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-13-39.jpg" alt="快速標註 Ignore 功能示範"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">快速標註 Ignore 功能示範</small>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 2. AI Generation -->
-                    <h2>2. 殺手鐧：AI 自動生成工單</h2>
-                    <p class="text-white-50">
-                        這是讓 PM 驚呼 "Magic!" 的功能。不僅是文字摘要，我運用了 <strong>Prompt Engineering</strong> 中的「角色扮演
-                        (Role-Playing)」技巧。
-                    </p>
+                    <div class="feature-section">
+                        <h2>2. 殺手鐧：AI 自動生成工單</h2>
+                        <p class="text-white-50">
+                            這是讓 PM 驚呼 "Magic!" 的功能。不僅是文字摘要，我運用了 <strong>Prompt Engineering</strong> 中的「角色扮演
+                            (Role-Playing)」技巧。
+                        </p>
 
-                    <h3>AI 如何像資深 PM 一樣思考？</h3>
-                    <p class="text-white-50">
-                        我告訴 AI：「你現在是一位資深的 Jira 管理員與專案經理」。
-                        因此，AI 產出的不只是對話摘要，它會自動將內容結構化：
-                    </p>
-                    <ul>
-                        <li class="text-white-50"><strong>Summary:</strong> 自動生成簡潔有力的標題 (例如：`[iOS] 登入頁面按鈕無效`)</li>
-                        <li class="text-white-50"><strong>Description:</strong> 自動拆解為「重現步驟」、「預期結果」與「實際狀況」。</li>
-                    </ul>
+                        <h3>AI 如何像資深 PM 一樣思考？</h3>
+                        <p class="text-white-50">
+                            我告訴 AI：「你現在是一位資深的 Jira 管理員與專案經理」。
+                            因此，AI 產出的不只是對話摘要，它會自動將內容結構化：
+                        </p>
+                        <ul>
+                            <li class="text-white-50"><strong>Summary:</strong> 自動生成簡潔有力的標題 (例如：`[iOS] 登入頁面按鈕無效`)</li>
+                            <li class="text-white-50"><strong>Description:</strong> 自動拆解為「重現步驟」、「預期結果」與「實際狀況」。</li>
+                        </ul>
 
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12 text-center">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-15-40.jpg" alt="AI 自動生成 Jira 工單的介面與結果預覽"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">AI 自動生成 Jira 工單的介面與結果預覽</small>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12 text-center">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-15-40.jpg"
+                                    alt="AI 自動生成 Jira 工單的介面與結果預覽"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">AI 自動生成 Jira 工單的介面與結果預覽</small>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 3. Shopping Cart -->
-                    <h2>3. 購物車式事件暫存區</h2>
-                    <p class="text-white-50">
-                        客戶的需求往往是破碎的，東講一句西講一句，散落在早上與下午的對話裡。
-                        所以我設計了一個類似「購物車」的側邊暫存區，可以把選取多條對話後，綁定為同一事件。
-                    </p>
-                    <div class="tech-note">
-                        <strong>🛒 設計理念：</strong>
-                        你可以把相關的訊息一條條「加入購物車」(Staging Area)。
-                        最後再一次打包，由 AI 幫你組織成一個完整的「事件 (Event)」，無論是要轉工單還是標記已處理，都變得井井有條。
-                    </div>
-
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12 text-center">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-34-16.jpg" alt="購物車式事件暫存區的操作面板截圖"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">購物車式事件暫存區的操作面板截圖</small>
+                    <div class="feature-section">
+                        <h2>3. 購物車式事件暫存區</h2>
+                        <p class="text-white-50">
+                            客戶的需求往往是破碎的，東講一句西講一句，散落在早上與下午的對話裡。
+                            所以我設計了一個類似「購物車」的側邊暫存區，可以把選取多條對話後，綁定為同一事件。
+                        </p>
+                        <div class="tech-note">
+                            <strong>🛒 設計理念：</strong>
+                            你可以把相關的訊息一條條「加入購物車」(Staging Area)。
+                            最後再一次打包，由 AI 幫你組織成一個完整的「事件 (Event)」，無論是要轉工單還是標記已處理，都變得井井有條。
                         </div>
-                        <div class="col-md-12 text-center">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-21-21.jpg" alt="購物車式事件暫存區的操作面板截圖"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">購物車式事件暫存區的操作面板截圖</small>
+
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12 text-center">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-34-16.jpg" alt="購物車式事件暫存區的操作面板截圖"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">購物車式事件暫存區的操作面板截圖</small>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-21-21.jpg" alt="購物車式事件暫存區的操作面板截圖"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">購物車式事件暫存區的操作面板截圖</small>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 4. AI Follow-up Assistant -->
-                    <h2>4. AI 催單助手：溫暖的溝通橋樑</h2>
-                    <p class="text-white-50">
-                        進度卡住了？需要去催一下？但又怕催得太直接傷了感情？
-                        這個 <strong>AI 催單助手</strong> 就是你的最佳幫手。
-                    </p>
-                    <p class="text-white-50">
-                        只要點擊「生成催單內容」，AI 會根據你選取的多個事件的上下文，自動幫你寫出一段 <strong>專業、禮貌又不失溫度</strong> 的詢問訊息。
-                        你可以直接複製貼上到 Line 群組，省下組織語言的力氣，還會貼心加上 Emoji 讓氣氛更輕鬆 😊。
-                    </p>
-                    <ul class="text-white-50">
-                        <li><strong>一鍵生成：</strong>AI 自動讀取事件脈絡，產出客製化催單文案</li>
-                        <li><strong>複製即用：</strong>點擊「複製並標記已催單」，訊息複製到剪貼簿，同時系統自動記錄催單時間</li>
-                        <li><strong>禮貌溝通：</strong>不用再煩惱措辭，讓 AI 幫你維護團隊關係</li>
-                    </ul>
+                    <div class="feature-section">
+                        <h2>4. AI 催單助手：溫暖的溝通橋樑</h2>
+                        <p class="text-white-50">
+                            進度卡住了？需要去催一下？但又怕催得太直接傷了感情？
+                            這個 <strong>AI 催單助手</strong> 就是你的最佳幫手。
+                        </p>
+                        <p class="text-white-50">
+                            只要點擊「生成催單內容」，AI 會根據你選取的多個事件的上下文，自動幫你寫出一段 <strong>專業、禮貌又不失溫度</strong> 的詢問訊息。
+                            你可以直接複製貼上到 Line 群組，省下組織語言的力氣，還會貼心加上 Emoji 讓氣氛更輕鬆 😊。
+                        </p>
+                        <ul class="text-white-50">
+                            <li><strong>一鍵生成：</strong>AI 自動讀取事件脈絡，產出客製化催單文案</li>
+                            <li><strong>複製即用：</strong>點擊「複製並標記已催單」，訊息複製到剪貼簿，同時系統自動記錄催單時間</li>
+                            <li><strong>禮貌溝通：</strong>不用再煩惱措辭，讓 AI 幫你維護團隊關係</li>
+                        </ul>
 
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-24-44.jpg" alt="AI 催單助手：生成禮貌催單訊息的介面"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">AI 催單助手：生成禮貌催單訊息的介面</small>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-24-44.jpg" alt="AI 催單助手：生成禮貌催單訊息的介面"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">AI 催單助手：生成禮貌催單訊息的介面</small>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-26-12.jpg" alt="AI 催單助手：生成禮貌催單訊息的介面"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">AI 催單助手：生成禮貌催單訊息的介面</small>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-26-12.jpg" alt="AI 催單助手：生成禮貌催單訊息的介面"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">AI 催單助手：生成禮貌催單訊息的介面</small>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 5. Automated Testing -->
-                    <h2>5. AI 專案的品質守護：自動化測試</h2>
-                    <p class="text-white-50">
-                        一個 AI 專案要能穩定運作，光靠手動測試是不夠的。
-                        我建立了一套完整的 <strong>自動化測試框架</strong>，確保每次程式碼變更都不會破壞既有功能。
-                    </p>
+                    <div class="feature-section">
+                        <h2>5. AI 專案的品質守護：自動化測試</h2>
+                        <p class="text-white-50">
+                            一個 AI 專案要能穩定運作，光靠手動測試是不夠的。
+                            我建立了一套完整的 <strong>自動化測試框架</strong>，確保每次程式碼變更都不會破壞既有功能。
+                        </p>
 
-                    <div class="row text-center my-4">
-                        <div class="col-md-3">
-                            <div class="p-3 border border-info rounded mb-3">
-                                <h3 class="text-info fw-bold">51</h3>
-                                <small class="text-white-50">總測試數</small>
+                        <div class="row text-center my-4">
+                            <div class="col-md-3">
+                                <div class="p-3 border border-info rounded mb-3">
+                                    <h3 class="text-info fw-bold">51</h3>
+                                    <small class="text-white-50">總測試數</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="p-3 border border-success rounded mb-3">
+                                    <h3 class="text-success fw-bold">51</h3>
+                                    <small class="text-white-50">通過</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="p-3 border border-danger rounded mb-3">
+                                    <h3 class="text-danger fw-bold">0</h3>
+                                    <small class="text-white-50">失敗</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="p-3 border border-warning rounded mb-3">
+                                    <h3 class="text-warning fw-bold">17s</h3>
+                                    <small class="text-white-50">執行時間</small>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="p-3 border border-success rounded mb-3">
-                                <h3 class="text-success fw-bold">51</h3>
-                                <small class="text-white-50">通過</small>
+
+                        <h3>🧪 測試涵蓋範圍</h3>
+                        <ul class="text-white-50">
+                            <li><strong>輔助函數測試 (18)：</strong>時間差計算、UTC 轉換、日期範圍轉換、清理無效訊息</li>
+                            <li><strong>API CRUD 測試 (17)：</strong>狀態更新、優先級、備註、重要標記、批次更新</li>
+                            <li><strong>認證測試 (9)：</strong>登入成功/失敗、Token 驗證、權限防護</li>
+                            <li><strong>Supabase 整合 (7)：</strong>日誌查詢、群組查詢、事件 CRUD</li>
+                        </ul>
+
+                        <div class="tech-note">
+                            <strong>🛠️ 技術細節：</strong>
+                            使用 <strong>Python pytest</strong> 搭配前端視覺化儀表板，每次部署前自動執行全部測試。
+                            Console 輸出即時顯示測試進度，讓開發者對程式碼品質有充分信心。
+                        </div>
+
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-55-12.jpg" alt="自動化測試儀表板：全面啟動"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">自動化測試儀表板：全面啟動</small>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="p-3 border border-danger rounded mb-3">
-                                <h3 class="text-danger fw-bold">0</h3>
-                                <small class="text-white-50">失敗</small>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-55-26.jpg" alt="自動化測試儀表板：51 個測試全部通過"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">自動化測試儀表板：51 個測試全部通過</small>
                             </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="p-3 border border-warning rounded mb-3">
-                                <h3 class="text-warning fw-bold">17s</h3>
-                                <small class="text-white-50">執行時間</small>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h3>🧪 測試涵蓋範圍</h3>
-                    <ul class="text-white-50">
-                        <li><strong>輔助函數測試 (18)：</strong>時間差計算、UTC 轉換、日期範圍轉換、清理無效訊息</li>
-                        <li><strong>API CRUD 測試 (17)：</strong>狀態更新、優先級、備註、重要標記、批次更新</li>
-                        <li><strong>認證測試 (9)：</strong>登入成功/失敗、Token 驗證、權限防護</li>
-                        <li><strong>Supabase 整合 (7)：</strong>日誌查詢、群組查詢、事件 CRUD</li>
-                    </ul>
-
-                    <div class="tech-note">
-                        <strong>🛠️ 技術細節：</strong>
-                        使用 <strong>Python pytest</strong> 搭配前端視覺化儀表板，每次部署前自動執行全部測試。
-                        Console 輸出即時顯示測試進度，讓開發者對程式碼品質有充分信心。
-                    </div>
-
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-55-12.jpg" alt="自動化測試儀表板：全面啟動"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">自動化測試儀表板：全面啟動</small>
-                        </div>
-                    </div>
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-55-26.jpg" alt="自動化測試儀表板：51 個測試全部通過"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">自動化測試儀表板：51 個測試全部通過</small>
                         </div>
                     </div>
 

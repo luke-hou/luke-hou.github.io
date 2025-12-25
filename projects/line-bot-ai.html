@@ -91,6 +91,24 @@
             font-size: 0.95rem;
             color: rgba(255, 255, 255, 0.8);
         }
+
+        .feature-section {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .feature-section:hover {
+            border-color: rgba(255, 193, 7, 0.5);
+            box-shadow: 0 0 20px rgba(255, 193, 7, 0.1);
+        }
+
+        .feature-section h2 {
+            margin-top: 0;
+        }
     </style>
 </head>
 
@@ -129,7 +147,7 @@
                     <!-- Intro -->
                     <div class="glass-card p-4 mb-5">
                         <p class="lead text-white">
-                            「我們都有忙碌的時候，但系統問題與客戶情緒是隨時可能發生的。」
+                            ⏰「我們都有忙碌的時候，但系統問題與客戶情緒是隨時可能發生的。」
                         </p>
                         <p class="text-white-50">
                             這就是為什麼我們要引入 AI。這套系統不是一個只會回話的 Chatbot，它更像是一個會觀察、會思考的「守護者」。
@@ -138,202 +156,215 @@
                     </div>
 
                     <!-- 1. Sentiment Monitor -->
-                    <h2>1. 情緒溫度計 (Sentiment Monitor)</h2>
-                    <p class="text-white-50">
-                        這是讓 AI 跟 PM 一起「看顧」客戶的功能之一。PM 每天要管理多個客戶群組，最怕的就是「不知道哪個客戶快要爆炸」。
-                        這個 AI 情緒溫度計會自動分析每個群組近期的對話氛圍，並給出 0-100 的健康分數。
-                    </p>
+                    <div class="feature-section">
+                        <h2>1. 情緒溫度計 (Sentiment Monitor)</h2>
+                        <p class="text-white-50">
+                            這是讓 AI 跟 PM 一起「看顧」客戶的功能之一。PM 每天要管理多個客戶群組，最怕的就是「不知道哪個客戶快要爆炸」。
+                            這個 AI 情緒溫度計會自動分析每個群組近期的對話氛圍，並給出 0-100 的健康分數。
+                        </p>
 
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="p-3 border border-success rounded text-center mb-3">
-                                <h4 class="text-success">🟢 健康 (75+)</h4>
-                                <small class="text-white-50">對話氣氛良好，客戶滿意度高。</small>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="p-3 border border-success rounded text-center mb-3">
+                                    <h4 class="text-success">🟢 健康 (75+)</h4>
+                                    <small class="text-white-50">對話氣氛良好，客戶滿意度高。</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="p-3 border border-warning rounded text-center mb-3">
+                                    <h4 class="text-warning">🟡 注意 (50-74)</h4>
+                                    <small class="text-white-50">有些小抱怨或疑慮，建議主動關心。</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="p-3 border border-danger rounded text-center mb-3">
+                                    <h4 class="text-danger">🔴 警告 (&lt;50)</h4>
+                                    <small class="text-white-50">偵測到負面情緒，需要立即介入處理。</small>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="p-3 border border-warning rounded text-center mb-3">
-                                <h4 class="text-warning">🟡 注意 (50-74)</h4>
-                                <small class="text-white-50">有些小抱怨或疑慮，建議主動關心。</small>
+
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_14-44-07.jpg" alt="儀表板截圖：展示客戶群組情緒溫度計"
+                                    class="img-fluid rounded shadow border border-warning mb-2 w-100">
+                                <p class="text-center text-muted small">儀表板一覽：情緒溫度計讓你即時掌握每個客戶群組的健康狀態。</p>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="p-3 border border-danger rounded text-center mb-3">
-                                <h4 class="text-danger">🔴 警告 (&lt;50)</h4>
-                                <small class="text-white-50">偵測到負面情緒，需要立即介入處理。</small>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_14-44-07.jpg" alt="儀表板截圖：展示客戶群組情緒溫度計"
-                                class="img-fluid rounded shadow border border-warning mb-2 w-100">
-                            <p class="text-center text-muted small">儀表板一覽：情緒溫度計讓你即時掌握每個客戶群組的健康狀態。</p>
+                        <div class="tech-note">
+                            <strong>🛠️ 技術細節：</strong>
+                            系統透過 <strong>Google Gemini API</strong> 分析群組近期訊息，考量用詞、語氣與上下文，產出情緒評分。
+                            這不只是單純的關鍵字比對，而是真正理解對話脈絡的 AI 分析。點擊「立即診斷」按鈕，即可獲得最新健康度報告。
                         </div>
-                    </div>
-
-                    <div class="tech-note">
-                        <strong>🛠️ 技術細節：</strong>
-                        系統透過 <strong>Google Gemini API</strong> 分析群組近期訊息，考量用詞、語氣與上下文，產出情緒評分。
-                        這不只是單純的關鍵字比對，而是真正理解對話脈絡的 AI 分析。點擊「立即診斷」按鈕，即可獲得最新健康度報告。
                     </div>
 
                     <!-- 2. Multi Model -->
-                    <h2>2. 多模型架構：三個臭皮匠</h2>
-                    <p class="text-white-50">
-                        為了應對不同的任務需求，我採用了「多模型切換」的架構。這就像是聘請了三位不同個性的助理：
-                    </p>
-                    <ul>
-                        <li class="text-info"><strong>Azure OpenAI (GPT-4)</strong>: 穩重、嚴謹。負責處理企業機密與資安要求高的分析。</li>
-                        <li class="text-success"><strong>Google Gemini (Flash)</strong>: 敏捷、快速。負責大量的日誌摘要與即時比對。</li>
-                        <li class="text-white"><strong>OpenAI</strong>: 靈活、創新。用於嘗試最新的 Prompt 實驗。</li>
-                    </ul>
+                    <div class="feature-section">
+                        <h2>2. 多模型架構：三個臭皮匠</h2>
+                        <p class="text-white-50">
+                            為了應對不同的任務需求，我採用了「多模型切換」的架構。這就像是聘請了三位不同個性的助理：
+                        </p>
+                        <ul>
+                            <li class="text-info"><strong>Azure OpenAI (GPT-4)</strong>: 穩重、嚴謹。負責處理企業機密與資安要求高的分析。</li>
+                            <li class="text-success"><strong>Google Gemini (Flash)</strong>: 敏捷、快速。負責大量的日誌摘要與即時比對。</li>
+                            <li class="text-white"><strong>OpenAI</strong>: 靈活、創新。用於嘗試最新的 Prompt 實驗。</li>
+                        </ul>
 
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12 text-center">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_16-10-41.jpg"
-                                alt="前端介面上切換不同 AI 模型的下拉選單展示"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">前端介面上切換不同 AI 模型的下拉選單展示</small>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12 text-center">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_16-10-41.jpg"
+                                    alt="前端介面上切換不同 AI 模型的下拉選單展示"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">前端介面上切換不同 AI 模型的下拉選單展示</small>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 3. Issue Discovery -->
-                    <h2>3. 主動式議題偵測 (Issue Discovery)</h2>
-                    <p class="text-white-50">
-                        AI 不只能總結過去，還能幫你「預判未來」。
-                        它會掃描那些還沒被轉成工單的對話紀錄，自動識別出「潛在的 Bug 回報」或「有價值的建議」。
-                        系統會列出一張 <strong>To-Do List</strong>，候選清單。
-                    </p>
-                    <p class="text-white-50">
-                        此處還可以讓我們批次管理這些對話(派工、設優先度等)，甚至可以一鍵開出 <strong>Jira工單</strong>，確保沒有任何重要需求被遺忘。
-                    </p>
+                    <div class="feature-section">
+                        <h2>3. 主動式議題偵測 (Issue Discovery)</h2>
+                        <p class="text-white-50">
+                            AI 不只能總結過去，還能幫你「預判未來」。
+                            它會掃描那些還沒被轉成工單的對話紀錄，自動識別出「潛在的 Bug 回報」或「有價值的建議」。
+                            系統會列出一張 <strong>To-Do List</strong>，候選清單。
+                        </p>
+                        <p class="text-white-50">
+                            此處還可以讓我們批次管理這些對話(派工、設優先度等)，甚至可以一鍵開出 <strong>Jira工單</strong>，確保沒有任何重要需求被遺忘。
+                        </p>
 
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12 text-center">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_16-13-21.jpg"
-                                alt="AI 自動偵測議題的觸發提醒介面"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">AI 自動偵測議題的觸發提醒介面</small>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12 text-center">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_16-13-21.jpg" alt="AI 自動偵測議題的觸發提醒介面"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">AI 自動偵測議題的觸發提醒介面</small>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_16-14-10.jpg" alt="AI 自動偵測出的待處理議題清單介面"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">AI 自動偵測出的待處理議題清單介面</small>
+                            </div>
                         </div>
-                        <div class="col-md-12 text-center">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_16-14-10.jpg"
-                                alt="AI 自動偵測出的待處理議題清單介面"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">AI 自動偵測出的待處理議題清單介面</small>
-                        </div>                        
                     </div>
 
                     <!-- 4. Status Report -->
-                    <h2>4. 戰情通報 (Status Report)</h2>
-                    <p class="text-white-50">
-                        PM 最怕的不是忙，而是「不知道現在有多少事情在燒」。
-                        <strong>戰情通報</strong> 功能會自動掃描所有群組，統整出未完成的任務與緊急事項。
-                    </p>
-                    <ul class="text-white-50">
-                        <li><strong>🔴 緊急任務：</strong>尚未處理且標記為重要的訊息</li>
-                        <li><strong>🟡 待追蹤：</strong>已催單但尚未回覆的項目</li>
-                        <li><strong>📊 任務分佈：</strong>依群組、負責人統計待辦數量</li>
-                    </ul>
-                    <p class="text-white-50">
-                        一鍵生成「今日戰情報告」，無論是給老闆匯報還是自己 Daily Review，都能快速掌握全局。
-                    </p>
+                    <div class="feature-section">
+                        <h2>4. 戰情通報 (Status Report)</h2>
+                        <p class="text-white-50">
+                            PM 最怕的不是忙，而是「不知道現在有多少事情在燒」。
+                            <strong>戰情通報</strong> 功能會自動掃描所有群組，統整出未完成的任務與緊急事項。
+                        </p>
+                        <ul class="text-white-50">
+                            <li><strong>🔴 緊急任務：</strong>尚未處理且標記為重要的訊息</li>
+                            <li><strong>🟡 待追蹤：</strong>已催單但尚未回覆的項目</li>
+                            <li><strong>📊 任務分佈：</strong>依群組、負責人統計待辦數量</li>
+                        </ul>
+                        <p class="text-white-50">
+                            一鍵生成「今日戰情報告」，無論是給老闆匯報還是自己 Daily Review，都能快速掌握全局。
+                        </p>
 
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12 text-center">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_16-11-53.jpg" alt="戰情通報介面：顯示緊急任務、待追蹤項目與任務分佈"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">戰情通報介面：顯示緊急任務、待追蹤項目與任務分佈</small>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12 text-center">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_16-11-53.jpg"
+                                    alt="戰情通報介面：顯示緊急任務、待追蹤項目與任務分佈"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">戰情通報介面：顯示緊急任務、待追蹤項目與任務分佈</small>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 5. Cross-Group Duplicate Detection -->
-                    <h2>5. 跨群組智慧比對 (Cross-Group Dedup)</h2>
-                    <p class="text-white-50">
-                        同一則公告被轉發到五個群組？同樣的問題每個群組都問一遍？
-                        <strong>跨群組智慧比對</strong> 會自動識別這些重複轉貼的訊息，讓你一次處理、批次清理雜訊。
-                    </p>
-                    <ul class="text-white-50">
-                        <li><strong>🔍 相似度分析：</strong>AI 比對文字內容，找出高度相似的訊息</li>
-                        <li><strong>📋 批次處理：</strong>依照訊息新舊，直接一鍵標記「已處理」或「忽略」(也可以單筆點擊旁邊的圖示單筆忽略)</li>
-                        <li><strong>🎯 來源追溯：</strong>顯示訊息來自哪些群組，方便追蹤原始出處</li>
-                    </ul>
+                    <div class="feature-section">
+                        <h2>5. 跨群組智慧比對 (Cross-Group Dedup)</h2>
+                        <p class="text-white-50">
+                            同一則公告被轉發到五個群組？同樣的問題每個群組都問一遍？
+                            <strong>跨群組智慧比對</strong> 會自動識別這些重複轉貼的訊息，讓你一次處理、批次清理雜訊。
+                        </p>
+                        <ul class="text-white-50">
+                            <li><strong>🔍 相似度分析：</strong>AI 比對文字內容，找出高度相似的訊息</li>
+                            <li><strong>📋 批次處理：</strong>依照訊息新舊，直接一鍵標記「已處理」或「忽略」(也可以單筆點擊旁邊的圖示單筆忽略)</li>
+                            <li><strong>🎯 來源追溯：</strong>顯示訊息來自哪些群組，方便追蹤原始出處</li>
+                        </ul>
 
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12 text-center">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_16-14-31.jpg" alt="跨群組智慧比對：觸發比對的起始畫面"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">跨群組智慧比對：觸發比對的起始畫面</small>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12 text-center">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_16-14-31.jpg" alt="跨群組智慧比對：觸發比對的起始畫面"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">跨群組智慧比對：觸發比對的起始畫面</small>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12 text-center">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_16-15-37.jpg" alt="跨群組智慧比對：顯示相似訊息與批次處理選項"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">跨群組智慧比對：顯示相似訊息與批次處理選項</small>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12 text-center">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_16-15-37.jpg" alt="跨群組智慧比對：顯示相似訊息與批次處理選項"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">跨群組智慧比對：顯示相似訊息與批次處理選項</small>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 6. Jira Smart Search -->
-                    <h2>6. Jira 智慧搜尋：AI 幫你查重</h2>
-                    <p class="text-white-50">
-                        開單前最怕重複。但我不想讓使用者手動去 Jira 搜尋。
-                        我實作了 <strong>Jira 智慧搜尋</strong>，AI 會自動分析你選取的訊息，提取關鍵字並搜尋歷史工單。
-                    </p>
+                    <div class="feature-section">
+                        <h2>6. Jira 智慧搜尋：AI 幫你查重</h2>
+                        <p class="text-white-50">
+                            開單前最怕重複。但我不想讓使用者手動去 Jira 搜尋。
+                            我實作了 <strong>Jira 智慧搜尋</strong>，AI 會自動分析你選取的訊息，提取關鍵字並搜尋歷史工單。
+                        </p>
 
-                    <h3>🔍 尋找類似工單</h3>
-                    <p class="text-white-50">
-                        只要勾選多筆對話紀錄後，點擊「尋找類似工單」，系統會自動完成以下流程：
-                    </p>
-                    <ul class="text-white-50">
-                        <li><strong>AI 關鍵字提取：</strong>從對話中識別出技術詞彙（例如：網路慢、中華電信、施工）</li>
-                        <li><strong>自動生成 JQL：</strong>根據關鍵字組合成 Jira Query Language 搜尋語法</li>
-                        <li><strong>搜尋結果一覽：</strong>列出相關工單（含狀態標籤：In Review / To Do / New）</li>
-                        <li><strong>一鍵跳轉：</strong>點擊任一工單即可查看詳情，快速確認是否重複</li>
-                    </ul>
+                        <h3>🔍 尋找類似工單</h3>
+                        <p class="text-white-50">
+                            只要勾選多筆對話紀錄後，點擊「尋找類似工單」，系統會自動完成以下流程：
+                        </p>
+                        <ul class="text-white-50">
+                            <li><strong>AI 關鍵字提取：</strong>從對話中識別出技術詞彙（例如：網路慢、中華電信、施工）</li>
+                            <li><strong>自動生成 JQL：</strong>根據關鍵字組合成 Jira Query Language 搜尋語法</li>
+                            <li><strong>搜尋結果一覽：</strong>列出相關工單（含狀態標籤：In Review / To Do / New）</li>
+                            <li><strong>一鍵跳轉：</strong>點擊任一工單即可查看詳情，快速確認是否重複</li>
+                        </ul>
 
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-37-48.jpg" alt="尋找類似工單按鈕與 AI 智慧摘要"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <p class="text-center text-muted small">一鍵觸發 AI 智慧搜尋，自動提取關鍵字</p>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-37-48.jpg" alt="尋找類似工單按鈕與 AI 智慧摘要"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <p class="text-center text-muted small">一鍵觸發 AI 智慧搜尋，自動提取關鍵字</p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-37-26.jpg" alt="Jira 智慧搜尋結果列表"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <p class="text-center text-muted small">搜尋結果一目了然，若找到相關工單可直接點擊查看，無需重複開單。</p>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-37-26.jpg" alt="Jira 智慧搜尋結果列表"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <p class="text-center text-muted small">搜尋結果一目了然，若找到相關工單可直接點擊查看，無需重複開單。</p>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 7. Knowledge Base -->
-                    <h2>7. 活的知識庫 (群組摘要)</h2>
-                    <p class="text-white-50">
-                        每一次精彩的技術排除，都不該隨風而逝。
-                        AI 會像個認真的實習生，自動將對話萃取成 SOP 或 FAQ 草稿。資深前輩只需要花 10 秒鐘審閱，這份智慧就能永久傳承。
-                    </p>
+                    <div class="feature-section">
+                        <h2>7. 活的知識庫 (群組摘要)</h2>
+                        <p class="text-white-50">
+                            每一次精彩的技術排除，都不該隨風而逝。
+                            AI 會像個認真的實習生，自動將對話萃取成 SOP 或 FAQ 草稿。資深前輩只需要花 10 秒鐘審閱，這份智慧就能永久傳承。
+                        </p>
 
-                    <div class="row align-items-center my-4">
-                        <div class="col-md-12">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-40-14.jpg"
-                                alt="AI 知識庫萃取：選擇多筆有價值的對話紀錄後，點選轉為知識"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">AI 知識庫萃取：選擇多筆有價值的對話紀錄後，點選轉為知識</small>
-                        </div>
-                        <div class="col-md-12">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_15-40-36.jpg"
-                                alt="AI 知識庫編輯器介面：左側為原始對話，右側為 AI 生成的 SOP 草稿"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">AI 知識庫編輯器介面：左側為原始對話，右側為 AI 生成的 SOP 草稿</small>
-                        </div>
-                        <div class="col-md-12">
-                            <img src="../images/line-ai-bot-mvp/2025-12-25_16-05-13.jpg"
-                                alt="AI 知識庫瀏覽及編輯器介面：點擊展開知識卡片，並且可以搜尋、編輯、用類別篩選。"
-                                class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                            <small class="text-white-50">AI 知識庫瀏覽及編輯器介面：點擊展開知識卡片，並且可以搜尋、編輯、用類別篩選</small>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-40-14.jpg"
+                                    alt="AI 知識庫萃取：選擇多筆有價值的對話紀錄後，點選轉為知識"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">AI 知識庫萃取：選擇多筆有價值的對話紀錄後，點選轉為知識</small>
+                            </div>
+                            <div class="col-md-12">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-40-36.jpg"
+                                    alt="AI 知識庫編輯器介面：左側為原始對話，右側為 AI 生成的 SOP 草稿"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">AI 知識庫編輯器介面：左側為原始對話，右側為 AI 生成的 SOP 草稿</small>
+                            </div>
+                            <div class="col-md-12">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_16-05-13.jpg"
+                                    alt="AI 知識庫瀏覽及編輯器介面：點擊展開知識卡片，並且可以搜尋、編輯、用類別篩選。"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">AI 知識庫瀏覽及編輯器介面：點擊展開知識卡片，並且可以搜尋、編輯、用類別篩選</small>
+                            </div>
                         </div>
                     </div>
 
