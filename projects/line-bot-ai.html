@@ -109,6 +109,92 @@
         .feature-section h2 {
             margin-top: 0;
         }
+
+        /* 浮動導航欄 */
+        .floating-nav {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            max-width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .floating-nav:hover {
+            border-color: rgba(255, 193, 7, 0.6);
+            box-shadow: 0 0 20px rgba(255, 193, 7, 0.2);
+        }
+
+        .floating-nav-title {
+            font-size: 0.75rem;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 193, 7, 0.4);
+        }
+
+        .floating-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .floating-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .floating-nav a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: block;
+            padding: 0.4rem 0.6rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .floating-nav a:hover {
+            color: #ffc107;
+            background: rgba(255, 193, 7, 0.15);
+        }
+
+        .floating-nav a.active {
+            color: #ffc107;
+            background: rgba(255, 193, 7, 0.2);
+            font-weight: 600;
+        }
+
+        .floating-nav .back-to-top {
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .floating-nav .back-to-top a {
+            color: var(--xmas-red);
+        }
+
+        .floating-nav .back-to-top a:hover {
+            color: #ff6b6b;
+            background: rgba(212, 36, 38, 0.1);
+        }
+
+        @media (max-width: 992px) {
+            .floating-nav {
+                display: none;
+            }
+        }
     </style>
 </head>
 
@@ -156,7 +242,7 @@
                     </div>
 
                     <!-- 1. Sentiment Monitor -->
-                    <div class="feature-section">
+                    <div class="feature-section" id="section-1">
                         <h2>1. 情緒溫度計 (Sentiment Monitor)</h2>
                         <p class="text-white-50">
                             這是讓 AI 跟 PM 一起「看顧」客戶的功能之一。PM 每天要管理多個客戶群組，最怕的就是「不知道哪個客戶快要爆炸」。
@@ -200,7 +286,7 @@
                     </div>
 
                     <!-- 2. Multi Model -->
-                    <div class="feature-section">
+                    <div class="feature-section" id="section-2">
                         <h2>2. 多模型架構：三個臭皮匠</h2>
                         <p class="text-white-50">
                             為了應對不同的任務需求，我採用了「多模型切換」的架構。這就像是聘請了三位不同個性的助理：
@@ -222,7 +308,7 @@
                     </div>
 
                     <!-- 3. Issue Discovery -->
-                    <div class="feature-section">
+                    <div class="feature-section" id="section-3">
                         <h2>3. 主動式議題偵測 (Issue Discovery)</h2>
                         <p class="text-white-50">
                             AI 不只能總結過去，還能幫你「預判未來」。
@@ -248,7 +334,7 @@
                     </div>
 
                     <!-- 4. Status Report -->
-                    <div class="feature-section">
+                    <div class="feature-section" id="section-4">
                         <h2>4. 戰情通報 (Status Report)</h2>
                         <p class="text-white-50">
                             PM 最怕的不是忙，而是「不知道現在有多少事情在燒」。
@@ -274,7 +360,7 @@
                     </div>
 
                     <!-- 5. Cross-Group Duplicate Detection -->
-                    <div class="feature-section">
+                    <div class="feature-section" id="section-5">
                         <h2>5. 跨群組智慧比對 (Cross-Group Dedup)</h2>
                         <p class="text-white-50">
                             同一則公告被轉發到五個群組？同樣的問題每個群組都問一遍？
@@ -303,7 +389,7 @@
                     </div>
 
                     <!-- 6. Jira Smart Search -->
-                    <div class="feature-section">
+                    <div class="feature-section" id="section-6">
                         <h2>6. Jira 智慧搜尋：AI 幫你查重</h2>
                         <p class="text-white-50">
                             開單前最怕重複。但我不想讓使用者手動去 Jira 搜尋。
@@ -339,7 +425,7 @@
                     </div>
 
                     <!-- 7. Knowledge Base -->
-                    <div class="feature-section">
+                    <div class="feature-section" id="section-7">
                         <h2>7. 活的知識庫 (群組摘要)</h2>
                         <p class="text-white-50">
                             每一次精彩的技術排除，都不該隨風而逝。
@@ -415,6 +501,63 @@
                 document.getElementById('lightboxImage').src = img.src;
                 document.getElementById('lightboxImage').alt = img.alt;
                 new bootstrap.Modal(document.getElementById('lightboxModal')).show();
+            });
+        });
+    </script>
+
+    <!-- 浮動導航欄 -->
+    <nav class="floating-nav">
+        <div class="floating-nav-title">📑 本頁導覽</div>
+        <ul>
+            <li><a href="#section-1">1. 情緒溫度計</a></li>
+            <li><a href="#section-2">2. 多模型架構</a></li>
+            <li><a href="#section-3">3. 議題偵測</a></li>
+            <li><a href="#section-4">4. 戰情通報</a></li>
+            <li><a href="#section-5">5. 跨群比對</a></li>
+            <li><a href="#section-6">6. Jira 智慧搜尋</a></li>
+            <li><a href="#section-7">7. 知識庫</a></li>
+        </ul>
+        <div class="back-to-top">
+            <a href="#top">⬆️ 回到頂端</a>
+        </div>
+    </nav>
+
+    <script>
+        // 平滑滾動
+        document.querySelectorAll('.floating-nav a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = href === '#top' ? document.body : document.querySelector(href);
+                    if (target) {
+                        window.scrollTo({
+                            top: href === '#top' ? 0 : target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // 滾動時高亮當前區塊
+        const sections = document.querySelectorAll('.feature-section[id]');
+        const navLinks = document.querySelectorAll('.floating-nav a[href^="#section"]');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
             });
         });
     </script>

@@ -109,6 +109,92 @@
         .feature-section h2 {
             margin-top: 0;
         }
+
+        /* 浮動導航欄 */
+        .floating-nav {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 36, 38, 0.4);
+            border-radius: 12px;
+            padding: 1rem;
+            max-width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .floating-nav:hover {
+            border-color: rgba(212, 36, 38, 0.7);
+            box-shadow: 0 0 20px rgba(212, 36, 38, 0.2);
+        }
+
+        .floating-nav-title {
+            font-size: 0.75rem;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(212, 36, 38, 0.5);
+        }
+
+        .floating-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .floating-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .floating-nav a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: block;
+            padding: 0.4rem 0.6rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .floating-nav a:hover {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.15);
+        }
+
+        .floating-nav a.active {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.2);
+            font-weight: 600;
+        }
+
+        .floating-nav .back-to-top {
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(212, 36, 38, 0.4);
+        }
+
+        .floating-nav .back-to-top a {
+            color: var(--xmas-gold);
+        }
+
+        .floating-nav .back-to-top a:hover {
+            color: #ffc107;
+            background: rgba(255, 193, 7, 0.1);
+        }
+
+        @media (max-width: 992px) {
+            .floating-nav {
+                display: none;
+            }
+        }
     </style>
 </head>
 
@@ -154,7 +240,7 @@
                     </div>
 
                     <!-- 1. Inline Management (FIRST) -->
-                    <div class="feature-section">
+                    <div class="feature-section" id="section-1">
                         <h2>1. Inline 輕量管理：不離開列表就能搞定一切</h2>
                         <p class="text-white-50">
                             每個訊息列表就是一張「戰情摘要表」。我不希望使用者頻繁地切換頁面或開 Modal。
@@ -207,7 +293,7 @@
                     </div>
 
                     <!-- 2. AI Generation -->
-                    <div class="feature-section">
+                    <div class="feature-section" id="section-2">
                         <h2>2. 殺手鐧：AI 自動生成工單</h2>
                         <p class="text-white-50">
                             這是讓 PM 驚呼 "Magic!" 的功能。不僅是文字摘要，我運用了 <strong>Prompt Engineering</strong> 中的「角色扮演
@@ -235,7 +321,7 @@
                     </div>
 
                     <!-- 3. Shopping Cart -->
-                    <div class="feature-section">
+                    <div class="feature-section" id="section-3">
                         <h2>3. 購物車式事件暫存區</h2>
                         <p class="text-white-50">
                             客戶的需求往往是破碎的，東講一句西講一句，散落在早上與下午的對話裡。
@@ -262,7 +348,7 @@
                     </div>
 
                     <!-- 4. AI Follow-up Assistant -->
-                    <div class="feature-section">
+                    <div class="feature-section" id="section-4">
                         <h2>4. AI 催單助手：溫暖的溝通橋樑</h2>
                         <p class="text-white-50">
                             進度卡住了？需要去催一下？但又怕催得太直接傷了感情？
@@ -295,7 +381,7 @@
                     </div>
 
                     <!-- 5. Automated Testing -->
-                    <div class="feature-section">
+                    <div class="feature-section" id="section-5">
                         <h2>5. AI 專案的品質守護：自動化測試</h2>
                         <p class="text-white-50">
                             一個 AI 專案要能穩定運作，光靠手動測試是不夠的。
@@ -406,6 +492,61 @@
                 document.getElementById('lightboxImage').src = img.src;
                 document.getElementById('lightboxImage').alt = img.alt;
                 new bootstrap.Modal(document.getElementById('lightboxModal')).show();
+            });
+        });
+    </script>
+
+    <!-- 浮動導航欄 -->
+    <nav class="floating-nav">
+        <div class="floating-nav-title">📑 本頁導覽</div>
+        <ul>
+            <li><a href="#section-1">1. Inline 管理</a></li>
+            <li><a href="#section-2">2. AI 生成工單</a></li>
+            <li><a href="#section-3">3. 購物車暫存</a></li>
+            <li><a href="#section-4">4. AI 催單助手</a></li>
+            <li><a href="#section-5">5. 自動化測試</a></li>
+        </ul>
+        <div class="back-to-top">
+            <a href="#top">⬆️ 回到頂端</a>
+        </div>
+    </nav>
+
+    <script>
+        // 平滑滾動
+        document.querySelectorAll('.floating-nav a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = href === '#top' ? document.body : document.querySelector(href);
+                    if (target) {
+                        window.scrollTo({
+                            top: href === '#top' ? 0 : target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // 滾動時高亮當前區塊
+        const sections = document.querySelectorAll('.feature-section[id]');
+        const navLinks = document.querySelectorAll('.floating-nav a[href^="#section"]');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
             });
         });
     </script>

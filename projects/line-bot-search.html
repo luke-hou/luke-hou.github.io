@@ -109,6 +109,92 @@
         .feature-section h2 {
             margin-top: 0;
         }
+
+        /* 浮動導航欄 */
+        .floating-nav {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(22, 91, 51, 0.4);
+            border-radius: 12px;
+            padding: 1rem;
+            max-width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .floating-nav:hover {
+            border-color: rgba(22, 91, 51, 0.7);
+            box-shadow: 0 0 20px rgba(22, 91, 51, 0.2);
+        }
+
+        .floating-nav-title {
+            font-size: 0.75rem;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(22, 91, 51, 0.5);
+        }
+
+        .floating-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .floating-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .floating-nav a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: block;
+            padding: 0.4rem 0.6rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .floating-nav a:hover {
+            color: #90EE90;
+            background: rgba(144, 238, 144, 0.15);
+        }
+
+        .floating-nav a.active {
+            color: #90EE90;
+            background: rgba(144, 238, 144, 0.2);
+            font-weight: 600;
+        }
+
+        .floating-nav .back-to-top {
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(22, 91, 51, 0.4);
+        }
+
+        .floating-nav .back-to-top a {
+            color: var(--xmas-red);
+        }
+
+        .floating-nav .back-to-top a:hover {
+            color: #ff6b6b;
+            background: rgba(212, 36, 38, 0.1);
+        }
+
+        @media (max-width: 992px) {
+            .floating-nav {
+                display: none;
+            }
+        }
     </style>
 </head>
 
@@ -157,7 +243,7 @@
                     </div>
 
                     <!-- 1. Dashboard & Sentiment -->
-                    <div class="feature-section">
+                    <div class="feature-section" id="section-1">
                         <h2>1. 決策者的戰情儀表板 (Dashboard)</h2>
                         <p class="text-white-50">
                             一進到系統，你看到的不是雜亂的訊息列表，而是一個讓你「一眼掌握全局」的戰情儀表板。
@@ -182,7 +268,7 @@
                     </div>
 
                     <!-- 2. Auto Backup -->
-                    <div class="feature-section">
+                    <div class="feature-section" id="section-2">
                         <h2>2. 永久保存的雲端時光機 (Auto-Backup)</h2>
                         <p class="text-white-50">
                             Line 的「檔案過期」機制是所有 PM 的惡夢。在這個系統中，我設計了一套自動化的攔截機制。
@@ -207,7 +293,7 @@
                     </div>
 
                     <!-- 3. Zero Trust Security -->
-                    <div class="feature-section">
+                    <div class="feature-section" id="section-3">
                         <h2>3. 比 Line 相簿更安全的「零信任」架構</h2>
                         <p class="text-white-50">
                             企業資料上雲，最怕的就是外洩。在這裡，我摒棄了傳統「連結即權限」的作法，採用了更嚴格的 <strong>動態簽名 (Dynamic Signed URL)</strong> 機制。
@@ -231,7 +317,7 @@
                     </div>
 
                     <!-- 4. Human Centric -->
-                    <div class="feature-section">
+                    <div class="feature-section" id="section-4">
                         <h2>4. 看見真實的人 (Human-Centric Data)</h2>
                         <p class="text-white-50">
                             很多後台系統只顯示生硬的 User ID (`U1s2f...`)，這讓數據變得很沒溫度。
@@ -305,7 +391,7 @@
                     </div>
 
                     <!-- 5. UX -->
-                    <div class="feature-section">
+                    <div class="feature-section" id="section-5">
                         <h2>5. 極致流暢的搜尋體驗</h2>
                         <p class="text-white-50">
                             為了幫使用者省下每一秒，我在搜尋功能上下足了功夫。
@@ -371,6 +457,61 @@
                 document.getElementById('lightboxImage').src = img.src;
                 document.getElementById('lightboxImage').alt = img.alt;
                 new bootstrap.Modal(document.getElementById('lightboxModal')).show();
+            });
+        });
+    </script>
+
+    <!-- 浮動導航欄 -->
+    <nav class="floating-nav">
+        <div class="floating-nav-title">📑 本頁導覽</div>
+        <ul>
+            <li><a href="#section-1">1. 戰情儀表板</a></li>
+            <li><a href="#section-2">2. 雲端時光機</a></li>
+            <li><a href="#section-3">3. 零信任架構</a></li>
+            <li><a href="#section-4">4. 人性化數據</a></li>
+            <li><a href="#section-5">5. 搜尋體驗</a></li>
+        </ul>
+        <div class="back-to-top">
+            <a href="#top">⬆️ 回到頂端</a>
+        </div>
+    </nav>
+
+    <script>
+        // 平滑滾動
+        document.querySelectorAll('.floating-nav a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = href === '#top' ? document.body : document.querySelector(href);
+                    if (target) {
+                        window.scrollTo({
+                            top: href === '#top' ? 0 : target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // 滾動時高亮當前區塊
+        const sections = document.querySelectorAll('.feature-section[id]');
+        const navLinks = document.querySelectorAll('.floating-nav a[href^="#section"]');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
             });
         });
     </script>
