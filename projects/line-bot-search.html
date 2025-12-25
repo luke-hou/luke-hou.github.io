@@ -349,7 +349,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-danger">
             <div class="container">
-                <a class="navbar-brand text-danger fw-bold" href="../index.html">🎄 Luke Hou 聖誕特輯 2025</a>
+                <a class="navbar-brand text-danger fw-bold" href="../index.html">🎄 Luke Hou 2025 聖誕特輯 💔</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -380,12 +380,12 @@
                     <!-- Intro -->
                     <div class="glass-card p-4 mb-5">
                         <p class="lead text-white">
-                            🔍「欸，上個月客戶傳的那張報價單截圖在哪？」<br>
+                            🔍「欸，上個月客戶傳的那張問題截圖在哪？」<br>
                             「檔案已過期...」
                         </p>
                         <p class="text-white-50">
                             不管是在軟體開發還是傳統產業，最珍貴的往往不是文件，而是那些散落在通訊軟體裡的「碎片化溝通」。
-                            這一篇，我想分享我是如何用 Supabase 與 Zero-Trust 架構，打造一台讓團隊隨時能回溯真相的「時光機」。
+                            這一篇，我想分享我是如何用 Vibe Coding 人機協作方式，打造一台讓團隊隨時能回溯真相的「時光機」。
                         </p>
                     </div>
 
@@ -400,7 +400,7 @@
                         <h3>📊 關鍵績效指標 (KPIs at a Glance)</h3>
                         <p class="text-white-50">
                             儀表板上還展示了其他關鍵數據：今日訊息量、活躍群組數、待處理工單、以及 Line 訊息到 Jira 的轉換率。
-                            將抽象的「感覺很忙」轉化為數字，成為你爭取資源、匯報進度的最強底氣。
+                            將抽象的「感覺很忙」轉化為數字，成為你跟老闆爭取資源、匯報進度的最強底氣。
                         </p>
 
                         <div class="row align-items-center my-4">
@@ -419,7 +419,7 @@
                         <h2>2. 永久保存的雲端時光機 (Auto-Backup)</h2>
                         <p class="text-white-50">
                             Line 的「檔案過期」機制是所有 PM 的惡夢。在這個系統中，我設計了一套自動化的攔截機制。
-                            透過 Webhook，系統會即時監聽每一則訊息。
+                            透過 Cloud Run + Webhook，系統會即時監聽每一則訊息，並存放到資料庫中，實現永久化儲存。
                         </p>
 
                         <div class="row align-items-center my-4">
@@ -441,9 +441,9 @@
 
                     <!-- 3. Zero Trust Security -->
                     <div class="feature-section" id="section-3">
-                        <h2>3. 比 Line 相簿更安全的「零信任」架構</h2>
+                        <h2>3. 比共享資料夾更安全的「零信任」架構</h2>
                         <p class="text-white-50">
-                            企業資料上雲，最怕的就是外洩。在這裡，我摒棄了傳統「連結即權限」的作法，採用了更嚴格的 <strong>動態簽名 (Dynamic Signed URL)</strong> 機制。
+                            企業資料上雲，最怕的就是外洩。在這裡採用了更嚴格的 <strong>動態簽名 (Dynamic Signed URL)</strong> 機制。
                         </p>
 
                         <h3>什麼是 Signed URL？</h3>
@@ -498,7 +498,7 @@
                         </p>
                         <p class="text-white-50">
                             點擊票號即可跳轉到 Jira 頁面，不需要再到 Jira 搜尋「這張單到底開在哪裡」。
-                            這讓 PM 可以在同一個介面追蹤對話進度與工單進度，大幅減少切換視窗的次數。
+                            這讓我們可以在同一個介面追蹤對話進度與工單進度，大幅減少切換視窗的次數。
                         </p>
 
                         <div class="row align-items-center my-4">
@@ -512,8 +512,8 @@
 
                         <h3>🔔 一鍵催單提醒 (Quick Follow-up)</h3>
                         <p class="text-white-50">
-                            有些任務需要跟催，但還要自己打一堆字很麻煩，這時候「一鍵催單」就派上用場了。
-                            針對 <strong>單一訊息</strong>，你可以直接點擊「催單」按鈕，系統會自動記錄你催過這則訊息。
+                            有時候我們需要跟催一些任務，但還要自己打一堆字超麻煩，這時候「一鍵催單」就派上用場了。
+                            針對 <strong>單一訊息</strong>，你可以直接點擊「催單」按鈕，系統會自動複製文字，並記錄你催過這則訊息。
                         </p>
                         <p class="text-white-50">
                             已催過的訊息會顯示 <strong>「已催 (Xh Xm)」</strong>，讓你一眼就知道距離上次催單過了多久。
@@ -541,7 +541,7 @@
                     <div class="feature-section" id="section-5">
                         <h2>5. 極致流暢的搜尋體驗</h2>
                         <p class="text-white-50">
-                            為了幫使用者省下每一秒，我在搜尋功能上下足了功夫。
+                            為了幫我們省下每一秒，我在搜尋功能上下足了功夫。
                             加入了 <strong>防抖 (Debounce)</strong> 設計，當你還在打字的瞬間，系統就已經開始在背景幫你過濾出結果。
                             不需要按 Enter，不需要等待旋轉圈圈，一切都是那麼自然流暢。
                         </p>

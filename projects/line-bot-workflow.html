@@ -349,7 +349,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-danger">
             <div class="container">
-                <a class="navbar-brand text-danger fw-bold" href="../index.html">🎄 Luke Hou 聖誕特輯 2025</a>
+                <a class="navbar-brand text-danger fw-bold" href="../index.html">🎄 Luke Hou 2025 聖誕特輯 💔</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -381,7 +381,7 @@
                             🤔「PM 辛苦整理需求，RD 辛苦修 Bug，為什麼大家還是覺得資訊不同步？」
                         </p>
                         <p class="text-white-50">
-                            這通常不是人的問題，是工具斷層。LINE 是流動的溝通，Jira 是結構化的執行，中間這條鴻溝，就是我這個專案要填補的。
+                            這通常不是人的問題，是工具斷層。LINE 是碎片化的流動溝通，Jira 是結構化的執行，中間這條鴻溝，就是我這個專案要填補的。
                             透過 API 串接，我們讓各種瑣事（複製貼上、找檔案、查重）自動消失。
                         </p>
                     </div>
@@ -443,8 +443,7 @@
                     <div class="feature-section" id="section-2">
                         <h2>2. 殺手鐧：AI 自動生成工單</h2>
                         <p class="text-white-50">
-                            這是讓 PM 驚呼 "Magic!" 的功能。不僅是文字摘要，我運用了 <strong>Prompt Engineering</strong> 中的「角色扮演
-                            (Role-Playing)」技巧。
+                            這是讓 PM 驚呼 "Magic!" 的功能，讓我們省下大量時間，不再手動建立工單，直接在單一管理介面快速開單，並回填工單摘要。
                         </p>
 
                         <h3>AI 如何像資深 PM 一樣思考？</h3>
@@ -455,6 +454,7 @@
                         <ul>
                             <li class="text-white-50"><strong>Summary:</strong> 自動生成簡潔有力的標題 (例如：`[iOS] 登入頁面按鈕無效`)</li>
                             <li class="text-white-50"><strong>Description:</strong> 自動拆解為「重現步驟」、「預期結果」與「實際狀況」。</li>
+                            <li class="text-white-50"><strong>原始訊息附錄:</strong> Description 下方自動附上對應的訊息紀錄，方便比對理解。</li>
                         </ul>
 
                         <div class="row align-items-center my-4">
@@ -462,34 +462,71 @@
                                 <img src="../images/line-ai-bot-mvp/2025-12-25_15-15-40.jpg"
                                     alt="AI 自動生成 Jira 工單的介面與結果預覽"
                                     class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                                <small class="text-white-50">AI 自動生成 Jira 工單的介面與結果預覽</small>
+                                <small class="text-white-50">單一訊息轉工單的介面</small>
+                            </div>
+                        </div>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12 text-center">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_21-50-25.jpg" alt="AI 自動生成 Jira 工單的觸發畫面"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">多訊息轉工單，AI 自動生成 Jira 工單的觸發畫面</small>
+                            </div>
+                        </div>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12 text-center">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_21-51-13.jpg"
+                                    alt="AI 自動生成多訊息 Jira 工單的介面與結果預覽"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">多訊息轉工單，AI 自動生成多訊息 Jira 工單的介面與結果預覽</small>
+                            </div>
+                        </div>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12 text-center">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_21-51-36.jpg"
+                                    alt="AI 自動生成多訊息: 實際產生到 Jira 工單的結果畫面"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">AI 自動生成多訊息: 實際產生到 Jira 工單的結果畫面</small>
+                            </div>
+                        </div>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12 text-center">
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_21-52-40.jpg"
+                                    alt="AI 自動生成多訊息 : 一鍵複製包含 Jira 網址跟主旨的通知訊息，讓你不用再複製來複製去。"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">一鍵複製包含 Jira 網址跟主旨的通知訊息，讓你不用再複製來複製去。</small>
                             </div>
                         </div>
                     </div>
 
                     <!-- 3. Shopping Cart -->
                     <div class="feature-section" id="section-3">
-                        <h2>3. 購物車式事件暫存區</h2>
+                        <h2>3. 併單式事件處理區</h2>
                         <p class="text-white-50">
-                            客戶的需求往往是破碎的，東講一句西講一句，散落在早上與下午的對話裡。
+                            客戶跟我司的訊息往往是跳躍的，東講一句西講一句，還夾雜其他的議題，甚至散落在早上與下午的對話裡。
                             所以我設計了一個類似「購物車」的側邊暫存區，可以把選取多條對話後，綁定為同一事件。
                         </p>
                         <div class="tech-note">
                             <strong>🛒 設計理念：</strong>
                             你可以把相關的訊息一條條「加入購物車」(Staging Area)。
-                            最後再一次打包，由 AI 幫你組織成一個完整的「事件 (Event)」，無論是要轉工單還是標記已處理，都變得井井有條。
+                            最後再一次打包，由 AI 幫你組織成一個完整的「事件 (Event)」，無論是要轉工單、標記已處理還是其他操作，都變得井井有條。
+                            <br>
+                            <br>
+                            併單式事件會出現明顯的 Tag 標記，並且自動將相關訊息上色，讓你一眼就能看出哪些訊息屬於同一事件。
+                            <br>
+                            <br>
+                            最最重要的是，我們將處理單位從單一零散訊息，轉變為對話事件併單處理，真實擊破痛點。
                         </div>
 
                         <div class="row align-items-center my-4">
                             <div class="col-md-12 text-center">
-                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-34-16.jpg" alt="購物車式事件暫存區的操作面板截圖"
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-34-16.jpg" alt="併單式事件暫存區的操作面板截圖"
                                     class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                                <small class="text-white-50">購物車式事件暫存區的操作面板截圖</small>
+                                <small class="text-white-50">併單式事件暫存區的操作面板截圖</small>
                             </div>
                             <div class="col-md-12 text-center">
-                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-21-21.jpg" alt="購物車式事件暫存區的操作面板截圖"
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_15-21-21.jpg" alt="併單式事件暫存區的操作面板截圖"
                                     class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                                <small class="text-white-50">購物車式事件暫存區的操作面板截圖</small>
+                                <small class="text-white-50">併單式事件會出現明顯的 Tag 標記，並且自動將相關訊息上色。</small>
                             </div>
                         </div>
                     </div>
@@ -531,8 +568,8 @@
                     <div class="feature-section" id="section-5">
                         <h2>5. AI 專案的品質守護：自動化測試</h2>
                         <p class="text-white-50">
-                            一個 AI 專案要能穩定運作，光靠手動測試是不夠的。
-                            我建立了一套完整的 <strong>自動化測試框架</strong>，確保每次程式碼變更都不會破壞既有功能。
+                            一個業餘的 Side Project ，在 AI 輔助爆改的頻繁迭代下，要確保能穩定運作，光靠手動測試是不夠的。
+                            我建立了一套完整的 <strong>自動化測試框架</strong>，確保每次程式碼變更都能主動驗證重要功能是否正常運作。
                         </p>
 
                         <div class="row text-center my-4">
@@ -650,7 +687,7 @@
         <ul>
             <li><a href="#section-1">1. Inline 管理</a></li>
             <li><a href="#section-2">2. AI 生成工單</a></li>
-            <li><a href="#section-3">3. 購物車暫存</a></li>
+            <li><a href="#section-3">3. 多訊息併單</a></li>
             <li><a href="#section-4">4. AI 催單助手</a></li>
             <li><a href="#section-5">5. 自動化測試</a></li>
         </ul>

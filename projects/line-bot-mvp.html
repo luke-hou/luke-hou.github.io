@@ -34,6 +34,184 @@
             --xmas-dark: #0F0F0F;
         }
 
+        /* 📊 閱讀進度條 */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--xmas-gold), var(--xmas-red));
+            z-index: 9999;
+            transition: width 0.1s ease-out;
+        }
+
+        /* 🔝 返回頂部按鈕 */
+        .back-to-top-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--xmas-gold), var(--xmas-red));
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+
+        .back-to-top-btn.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(248, 178, 41, 0.4);
+        }
+
+        /* 浮動導航欄 */
+        .floating-nav {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            max-width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .floating-nav:hover {
+            border-color: rgba(255, 193, 7, 0.6);
+            box-shadow: 0 0 20px rgba(255, 193, 7, 0.2);
+        }
+
+        .floating-nav-title {
+            font-size: 0.75rem;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 193, 7, 0.4);
+        }
+
+        .floating-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .floating-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .floating-nav a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: block;
+            padding: 0.4rem 0.6rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .floating-nav a:hover {
+            color: #ffc107;
+            background: rgba(255, 193, 7, 0.15);
+        }
+
+        .floating-nav a.active {
+            color: #ffc107;
+            background: rgba(255, 193, 7, 0.2);
+            font-weight: 600;
+        }
+
+        .floating-nav .back-to-top {
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(255, 193, 7, 0.4);
+        }
+
+        .floating-nav .back-to-top a {
+            color: var(--xmas-red);
+        }
+
+        .floating-nav .back-to-top a:hover {
+            color: #ff6b6b;
+            background: rgba(212, 36, 38, 0.1);
+        }
+
+        /* 📱 手機版底部導航 */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 193, 7, 0.3);
+            padding: 0.5rem 1rem;
+            z-index: 1000;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .mobile-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mobile-nav a {
+            display: inline-block;
+            padding: 0.5rem 0.8rem;
+            margin-right: 0.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 0.75rem;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .mobile-nav a:hover,
+        .mobile-nav a.active {
+            background: rgba(255, 193, 7, 0.3);
+            color: var(--xmas-gold);
+        }
+
+        @media (max-width: 992px) {
+            .floating-nav {
+                display: none;
+            }
+
+            .mobile-nav {
+                display: block;
+            }
+
+            .back-to-top-btn {
+                bottom: 80px;
+            }
+        }
+
+
         body {
             background-color: var(--xmas-dark);
             background-image:
@@ -161,10 +339,13 @@
 </head>
 
 <body>
+    <!-- 📊 閱讀進度條 -->
+    <div class="reading-progress" id="readingProgress"></div>
+
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-danger">
             <div class="container">
-                <a class="navbar-brand text-danger fw-bold" href="../index.html">🎄 Luke Hou 聖誕特輯 2025</a>
+                <a class="navbar-brand text-danger fw-bold" href="../index.html">🎄 Luke Hou 2025 聖誕特輯 💔</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -250,7 +431,7 @@
                     </div>
 
                     <!-- Part 1: Time Machine -->
-                    <div class="glass-card p-4 mb-5">
+                    <div class="glass-card p-4 mb-5" id="section-1">
                         <div class="d-flex align-items-center mb-3">
                             <div class="feature-icon me-3">
                                 <i class="bi bi-clock-history text-light"></i>
@@ -293,7 +474,7 @@
                     </div>
 
                     <!-- Part 2: Bridge -->
-                    <div class="glass-card p-4 mb-5">
+                    <div class="glass-card p-4 mb-5" id="section-2">
                         <div class="d-flex align-items-center mb-3">
                             <div class="feature-icon me-3"
                                 style="background: linear-gradient(135deg, var(--xmas-green), var(--xmas-dark)); box-shadow: 0 4px 15px rgba(22, 91, 51, 0.4);">
@@ -339,7 +520,7 @@
                     </div>
 
                     <!-- Part 3: AI Guardian -->
-                    <div class="glass-card p-4 mb-5">
+                    <div class="glass-card p-4 mb-5" id="section-3">
                         <div class="d-flex align-items-center mb-3">
                             <div class="feature-icon me-3" style="border-color: #D42426;">
                                 <i class="bi bi-shield-check text-light"></i>
@@ -396,7 +577,7 @@
                     <hr class="my-5 border-secondary">
 
                     <!-- PDF Slide Viewer -->
-                    <div class="glass-card p-4 mb-5 border-warning">
+                    <div class="glass-card p-4 mb-5 border-warning" id="section-4">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h3 class="h4 text-warning mb-0"><i class="bi bi-easel2-fill me-2"></i>完整簡報 (Project Deck)
                             </h3>
@@ -453,7 +634,7 @@
     </main>
 
     <!-- Developer View Section -->
-    <section class="py-5 position-relative" style="background: rgba(0,0,0,0.3);">
+    <section class="py-5 position-relative" style="background: rgba(0,0,0,0.3);" id="section-5">
         <div class="container">
             <div class="row mb-5">
                 <div class="col-12 text-center">
@@ -564,7 +745,7 @@
     </section>
 
     <!-- Final Demo Showcase -->
-    <section class="py-5" style="background-color: var(--xmas-dark);">
+    <section class="py-5" style="background-color: var(--xmas-dark);" id="section-6">
         <div class="container text-center">
             <h3 class="h4 text-warning mb-4"><i class="bi bi-images me-2"></i>實際運作畫面</h3>
             <div class="row justify-content-center">
@@ -719,6 +900,104 @@
             // Handle window resize for responsiveness
             window.addEventListener('resize', () => {
                 if (pdfDoc) renderPage(pageNum);
+            });
+        </script>
+
+        <!-- 浮動導航欄 -->
+        <nav class="floating-nav">
+            <div class="floating-nav-title">📑 本頁導覽 <span id="progressPercent"
+                    style="float:right; font-weight:600;">0%</span></div>
+            <ul>
+                <li><a href="#section-1">1. 時光機</a></li>
+                <li><a href="#section-2">2. 友誼橋梁</a></li>
+                <li><a href="#section-3">3. AI 守護者</a></li>
+                <li><a href="#section-4">4. 完整簡報</a></li>
+                <li><a href="#section-5">5. 工程師視角</a></li>
+                <li><a href="#section-6">6. 實際畫面</a></li>
+            </ul>
+            <div class="back-to-top">
+                <a href="#top">⬆️ 回到頂端</a>
+            </div>
+        </nav>
+
+        <!-- 🔝 返回頂部按鈕 -->
+        <button class="back-to-top-btn" id="backToTopBtn" title="回到頂端">
+            <i class="bi bi-arrow-up"></i>
+        </button>
+
+        <!-- 📱 手機版底部導航 -->
+        <nav class="mobile-nav" id="mobileNav">
+            <a href="#section-1">1. 時光機</a>
+            <a href="#section-2">2. 友誼橋梁</a>
+            <a href="#section-3">3. AI 守護者</a>
+            <a href="#section-4">4. 完整簡報</a>
+            <a href="#section-5">5. 工程師視角</a>
+            <a href="#section-6">6. 實際畫面</a>
+        </nav>
+
+        <script>
+            // 📊 閱讀進度條
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = (scrollTop / docHeight) * 100;
+                document.getElementById('readingProgress').style.width = progress + '%';
+                // 更新浮動導航百分比
+                const percentEl = document.getElementById('progressPercent');
+                if (percentEl) percentEl.textContent = Math.round(progress) + '%';
+            });
+
+            // 🔝 返回頂部按鈕
+            const backToTopBtn = document.getElementById('backToTopBtn');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // 浮動導航平滑滾動
+            document.querySelectorAll('.floating-nav a, .mobile-nav a').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    if (href.startsWith('#')) {
+                        e.preventDefault();
+                        const target = href === '#top' ? document.body : document.querySelector(href);
+                        if (target) {
+                            window.scrollTo({
+                                top: href === '#top' ? 0 : target.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+
+            // 滾動時高亮當前區塊
+            const sections = document.querySelectorAll('.glass-card[id]');
+            const navLinks = document.querySelectorAll('.floating-nav a[href^="#section"], .mobile-nav a[href^="#section"]');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 150;
+                    if (window.scrollY >= sectionTop) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
             });
         </script>
 </body>
