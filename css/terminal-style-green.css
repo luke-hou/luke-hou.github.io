@@ -10,24 +10,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap');
 
 /* ========================================
-   CSS Variables - Terminal Theme (Orange)
+   CSS Variables - Terminal Theme (Green)
    ======================================== */
 :root {
-    --terminal-bg: #1a1a1a;
-    --terminal-bg-secondary: #222222;
-    --terminal-bg-card: #2a2a2a;
-    --terminal-accent: #f59e0b;
-    --terminal-accent-dim: #d97706;
-    --terminal-accent-bright: #fbbf24;
+    --terminal-bg: #0a0a0a;
+    --terminal-bg-secondary: #111111;
+    --terminal-bg-card: #1a1a1a;
+    --terminal-accent: #4ade80;
+    --terminal-accent-dim: #22c55e;
+    --terminal-accent-bright: #86efac;
     /* Legacy aliases for compatibility */
-    --terminal-green: #f59e0b;
-    --terminal-green-dim: #d97706;
-    --terminal-green-bright: #fbbf24;
+    --terminal-green: #4ade80;
+    --terminal-green-dim: #22c55e;
+    --terminal-green-bright: #86efac;
     --terminal-text: #e5e5e5;
     --terminal-text-dim: #a3a3a3;
-    --terminal-border: #444444;
-    --terminal-cursor: #f59e0b;
-    --terminal-shadow: rgba(245, 158, 11, 0.15);
+    --terminal-border: #333333;
+    --terminal-cursor: #4ade80;
+    --terminal-shadow: rgba(74, 222, 128, 0.1);
 }
 
 /* ========================================
@@ -47,7 +47,7 @@
 }
 
 .terminal-page .navbar-brand {
-    color: var(--terminal-green) !important;
+    color: var(--terminal-accent) !important;
 }
 
 .terminal-page .nav-link {
@@ -55,8 +55,9 @@
     transition: color 0.2s ease;
 }
 
-.terminal-page .nav-link:hover {
-    color: var(--terminal-green) !important;
+.terminal-page .nav-link:hover,
+.terminal-page .nav-link.active {
+    color: var(--terminal-accent) !important;
 }
 
 /* ========================================
@@ -69,14 +70,14 @@
 }
 
 .terminal-prompt {
-    color: var(--terminal-green);
+    color: var(--terminal-accent);
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
 }
 
 .terminal-prompt::before {
     content: '$ ';
-    color: var(--terminal-green-dim);
+    color: var(--terminal-accent-dim);
 }
 
 .terminal-title {
@@ -94,7 +95,7 @@
     display: block;
     width: 100%;
     height: 3px;
-    background: linear-gradient(90deg, var(--terminal-green), transparent);
+    background: linear-gradient(90deg, var(--terminal-accent), transparent);
     margin-top: 0.5rem;
 }
 
@@ -142,9 +143,9 @@
 }
 
 .btn-terminal-active {
-    background-color: var(--terminal-green);
+    background-color: var(--terminal-accent);
     color: var(--terminal-bg);
-    border: 1px solid var(--terminal-green);
+    border: 1px solid var(--terminal-accent);
 }
 
 .btn-terminal-outline {
@@ -154,9 +155,9 @@
 }
 
 .btn-terminal-outline:hover {
-    background-color: var(--terminal-green);
+    background-color: var(--terminal-accent);
     color: var(--terminal-bg);
-    border-color: var(--terminal-green);
+    border-color: var(--terminal-accent);
 }
 
 /* ========================================
@@ -183,12 +184,12 @@
 }
 
 .terminal-card:hover {
-    border-color: var(--terminal-green-dim);
+    border-color: var(--terminal-accent-dim);
     box-shadow: 0 0 20px var(--terminal-shadow);
 }
 
 .terminal-card:hover::before {
-    background-color: var(--terminal-green);
+    background-color: var(--terminal-accent);
 }
 
 .terminal-card-header {
@@ -250,13 +251,13 @@
     font-family: 'Fira Code', monospace;
     font-size: 1rem;
     font-weight: 600;
-    color: var(--terminal-green);
+    color: var(--terminal-accent);
     margin-bottom: 0.5rem;
 }
 
 .terminal-card-title::before {
     content: '> ';
-    color: var(--terminal-green-dim);
+    color: var(--terminal-accent-dim);
 }
 
 .terminal-card-desc {
@@ -279,7 +280,7 @@
     font-size: 0.75rem;
     padding: 0.2rem 0.5rem;
     background-color: var(--terminal-bg-secondary);
-    color: var(--terminal-green-dim);
+    color: var(--terminal-accent-dim);
     border: 1px solid var(--terminal-border);
 }
 
@@ -287,10 +288,10 @@
 .terminal-impact {
     font-family: 'Fira Code', monospace;
     font-size: 0.75rem;
-    color: var(--terminal-green-bright);
+    color: var(--terminal-accent-bright);
     padding: 0.25rem 0.5rem;
     background-color: rgba(74, 222, 128, 0.1);
-    border: 1px solid var(--terminal-green-dim);
+    border: 1px solid var(--terminal-accent-dim);
     display: inline-block;
     margin-bottom: 0.75rem;
 }
@@ -313,13 +314,13 @@
 }
 
 .btn-terminal-primary {
-    background-color: var(--terminal-green);
+    background-color: var(--terminal-accent);
     color: var(--terminal-bg);
-    border: 1px solid var(--terminal-green);
+    border: 1px solid var(--terminal-accent);
 }
 
 .btn-terminal-primary:hover {
-    background-color: var(--terminal-green-bright);
+    background-color: var(--terminal-accent-bright);
     color: var(--terminal-bg);
 }
 
@@ -331,8 +332,8 @@
 
 .btn-terminal-secondary:hover {
     background-color: var(--terminal-bg-secondary);
-    color: var(--terminal-green);
-    border-color: var(--terminal-green-dim);
+    color: var(--terminal-accent);
+    border-color: var(--terminal-accent-dim);
 }
 
 /* ========================================

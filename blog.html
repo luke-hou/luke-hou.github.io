@@ -9,35 +9,34 @@
     <meta name="keywords" content="Luke Hou, 侯俊嘉, 部落格, 生活分享, 旅行紀錄, 技術心得, 個人成長, 旅遊, 攝影">
     <link rel="icon" href="/images/favicon.jpg" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="css/modern-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/terminal-style-red.css">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-0V2L1DQVPY');
     </script>
 </head>
 
-<body>
+<body class="terminal-page">
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container">
-                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <a class="navbar-brand" href="https://www.luke.ninja">$ luke@ninja ~</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="index.html">♾️ 首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="tutorials.html">⚡教學</a></li>
-                        <li class="nav-item"><a class="nav-link" href="podcast.html">🎙️ Podcast</a></li>
-                        <li class="nav-item"><a class="nav-link" href="portfolio.html">📚作品</a></li>
-                        <li class="nav-item"><a class="nav-link" href="blog.html">✈️分享</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html">~/home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="podcast.html">~/podcast</a></li>
+                        <li class="nav-item"><a class="nav-link" href="tutorials.html">~/tutorials</a></li>
+                        <li class="nav-item"><a class="nav-link" href="portfolio.html">~/projects</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="blog.html">~/blog</a></li>
                     </ul>
                 </div>
             </div>
@@ -45,166 +44,287 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="hero-section-modern">
+    <section class="terminal-hero">
         <div class="container">
             <div class="row">
-                <div class="col-lg-10 mx-auto text-center">
-                    <h1 class="hero-title-gradient mb-3">生活分享與旅行紀錄</h1>
-                    <p class="hero-subtitle">探索生活,分享知識 ✈️</p>
-                    <p class="text-gray mt-3">在 AI 毀滅地球前,讓我們一起探索生活中的精彩事物!</p>
+                <div class="col-lg-8">
+                    <p class="terminal-prompt">cat ~/blog/README.md</p>
+                    <h1 class="terminal-title">生活分享與旅行紀錄<span class="cursor-blink"></span></h1>
+                    <p class="terminal-subtitle">
+                        // 探索生活,分享知識 ✈️<br>
+                        // 在 AI 毀滅地球前,讓我們一起探索生活中的精彩事物!
+                    </p>
                 </div>
             </div>
-        </div>
-        <!-- Wave Divider -->
-        <div class="custom-shape-divider-bottom">
-            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
-                preserveAspectRatio="none">
-                <path
-                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-                    class="shape-fill"></path>
-            </svg>
         </div>
     </section>
 
-    <main class="container main-content-overlap">
-        <section class="mb-5">
-            <h2 class="section-title-modern mb-4">最新分享</h2>
-            <div class="row g-4">
-                <!-- SNOMED FHIR CQL Analysis -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="glass-card h-100 d-flex flex-column">
-                        <img src="images/snomed_fhir_cql_triad.png" alt="SNOMED CT, FHIR 與 CQL：醫療互通性鐵三角"
-                            class="card-img-top">
-                        <div class="p-4 d-flex flex-column flex-grow-1">
-                            <h5 class="mb-3">SNOMED CT, FHIR 與 CQL：醫療互通性鐵三角</h5>
-                            <p class="text-gray small flex-grow-1">深度解析醫療代碼與互通性的「鐵三角」。本報告探討 FHIR (結構)、SNOMED CT (語意) 與
-                                CQL (邏輯) 如何共同構建可運算的醫療知識，並內含互動式邏輯模擬器。</p>
-                            <a href="blog/SNOMED_FHIR_CQL_Analysis.html" class="btn btn-primary-modern mt-auto">閱讀更多 <i
-                                    class="fas fa-arrow-right ms-2"></i></a>
-                        </div>
-                    </div>
-                </div>
+    <main class="container py-5">
+        <div class="mb-4">
+            <p class="terminal-prompt">ls ~/blog/posts/ --sort=date</p>
+        </div>
 
-                <!-- 系統上線生存指南 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="glass-card h-100 d-flex flex-column">
-                        <img src="images/gemini-cli-workflow-setup.jpg" alt="系統上線生存指南：第一線人員的戰術手冊" class="card-img-top">
-                        <div class="p-4 d-flex flex-column flex-grow-1">
-                            <h5 class="mb-3">系統上線生存指南：第一線人員的戰術手冊</h5>
-                            <p class="text-gray small flex-grow-1">在新系統上線的混亂中，第一線人員如何有效應對、處理危機並存活下來？本篇提供一套完整的戰術手冊。</p>
-                            <a href="blog/Golive_Survival_Guide.html" class="btn btn-primary-modern mt-auto">閱讀更多 <i
-                                    class="fas fa-arrow-right ms-2"></i></a>
+        <div class="row g-4">
+            <!-- SNOMED FHIR CQL Analysis -->
+            <div class="col-md-6 col-lg-4">
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
                         </div>
+                        <span class="file-path">~/blog/snomed-fhir-cql.md</span>
                     </div>
-                </div>
-
-                <!-- AI 驅動的 Web 自動化測試策略 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="glass-card h-100 d-flex flex-column">
-                        <img src="images/vibe-ai-1.png" alt="AI 驅動的 Web 自動化測試策略" class="card-img-top">
-                        <div class="p-4 d-flex flex-column flex-grow-1">
-                            <h5 class="mb-3">AI 驅動的 Web 自動化測試策略</h5>
-                            <p class="text-gray small flex-grow-1">透過智慧體（AI Agent）模擬人類行為，自主探索、生成與執行測試案例，大幅提升測試效率與覆蓋率。
-                            </p>
-                            <a href="blog/ai_driven_web_testing.html" class="btn btn-primary-modern mt-auto">閱讀更多 <i
-                                    class="fas fa-arrow-right ms-2"></i></a>
+                    <img src="images/snomed_fhir_cql_triad.png" alt="SNOMED CT, FHIR 與 CQL：醫療互通性鐵三角"
+                        class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <div class="terminal-tags mb-2">
+                            <span class="terminal-tag">Healthcare</span>
+                            <span class="terminal-tag">FHIR</span>
                         </div>
-                    </div>
-                </div>
-
-                <!-- FHIR 深度技術解析儀表板 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="glass-card h-100 d-flex flex-column">
-                        <img src="images/FHIR_DEEP_RESREACH.jpg" alt="FHIR 深度技術解析儀表板" class="card-img-top">
-                        <div class="p-4 d-flex flex-column flex-grow-1">
-                            <h5 class="mb-3">FHIR 深度技術解析儀表板</h5>
-                            <p class="text-gray small flex-grow-1">本儀表板專為醫療資訊技術（HIT）專業人士、系統架構師與政策制定者設計。我們將對 FHIR
-                                進行從技術底層到應用實踐的全面剖析。</p>
-                            <a href="blog/FHIR-Deep-Research.html" class="btn btn-primary-modern mt-auto">閱讀更多 <i
-                                    class="fas fa-arrow-right ms-2"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Git 新手教學 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="glass-card h-100 d-flex flex-column">
-                        <img src="images/git-tutorial.jpeg" alt="Git 新手說明" class="card-img-top">
-                        <div class="p-4 d-flex flex-column flex-grow-1">
-                            <h5 class="mb-3">Git 新手教學</h5>
-                            <p class="text-gray small flex-grow-1">Git是當今軟體開發中最重要的工具之一。本篇文章將帶您了解 Git 的基本概念和常用指令。</p>
-                            <a href="blog/git_newbie.html" class="btn btn-primary-modern mt-auto">閱讀更多 <i
-                                    class="fas fa-arrow-right ms-2"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 互動式繁體中文RAG優化指南 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="glass-card h-100 d-flex flex-column">
-                        <img src="images/RAG-for-Traditional-Chinese.jpeg" alt="互動式繁體中文RAG優化指南" class="card-img-top">
-                        <div class="p-4 d-flex flex-column flex-grow-1">
-                            <h5 class="mb-3">互動式繁體中文RAG優化指南</h5>
-                            <p class="text-gray small flex-grow-1">一個旨在提升AI搜尋增強品質的深度研究。</p>
-                            <a href="blog/RAG-for-Traditional-Chinese.html" class="btn btn-primary-modern mt-auto">閱讀更多
-                                <i class="fas fa-arrow-right ms-2"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 互動式護理資訊系統(NIS)洞察報告 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="glass-card h-100 d-flex flex-column">
-                        <img src="images/NIS_Deepresearch.jpeg" alt="互動式護理資訊系統(NIS)洞察報告" class="card-img-top">
-                        <div class="p-4 d-flex flex-column flex-grow-1">
-                            <h5 class="mb-3">互動式護理資訊系統(NIS)洞察報告</h5>
-                            <p class="text-gray small flex-grow-1">從繁複的功能說明書到清晰的互動洞察，全面解析NIS的核心價值、技術架構與市場未來。</p>
-                            <a href="blog/NIS_DeepResearch.html" class="btn btn-primary-modern mt-auto">閱讀更多 <i
-                                    class="fas fa-arrow-right ms-2"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 肯亞夢幻獵遊之旅 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="glass-card h-100 d-flex flex-column">
-                        <img src="images/Safari in Kenya.jpg" alt="肯亞夢幻獵遊之旅｜互動指南 2025" class="card-img-top">
-                        <div class="p-4 d-flex flex-column flex-grow-1">
-                            <h5 class="mb-3">肯亞夢幻獵遊之旅｜互動指南 2025</h5>
-                            <p class="text-gray small flex-grow-1">
-                                本互動指南將帶您深入探索肯亞的壯麗野生動物、獨特文化與令人驚嘆的自然風光。從馬賽馬拉的動物大遷徙到安波塞利的大象天堂，這趟旅程將充滿難忘的冒險與回憶。</p>
-                            <a href="blog/Safari in Kenya.html" class="btn btn-primary-modern mt-auto">閱讀更多 <i
-                                    class="fas fa-arrow-right ms-2"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 大甲武館文化 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="glass-card h-100 d-flex flex-column">
-                        <img src="images/dajia-martial-arts-thumbnail.jpg" alt="大甲武館文化・互動導覽" class="card-img-top">
-                        <div class="p-4 d-flex flex-column flex-grow-1">
-                            <h5 class="mb-3">大甲武館文化・互動導覽</h5>
-                            <p class="text-gray small flex-grow-1">
-                                本應用程式將帶您深入探索台灣大甲獨特的武館文化。這裡不僅是武術技藝的傳承之地，更是地方信仰與社區力量的交匯點。透過互動式導覽，您將了解其深厚的歷史、與大甲媽祖遶境的共生關係，以及在現代社會中的轉型與挑戰。
-                            </p>
-                            <a href="blog/Dajia Martial Arts.html" class="btn btn-primary-modern mt-auto">閱讀更多 <i
-                                    class="fas fa-arrow-right ms-2"></i></a>
+                        <h5 class="terminal-card-title">SNOMED CT, FHIR 與 CQL</h5>
+                        <p class="terminal-card-desc flex-grow-1">深度解析醫療代碼與互通性的「鐵三角」。本報告探討 FHIR (結構)、SNOMED CT (語意) 與
+                            CQL (邏輯) 如何共同構建可運算的醫療知識。</p>
+                        <div class="terminal-actions">
+                            <a href="blog/SNOMED_FHIR_CQL_Analysis.html"
+                                class="btn btn-terminal btn-terminal-primary">cat article.md</a>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+
+            <!-- 系統上線生存指南 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/blog/golive-survival.md</span>
+                    </div>
+                    <img src="images/gemini-cli-workflow-setup.jpg" alt="系統上線生存指南：第一線人員的戰術手冊"
+                        class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <div class="terminal-tags mb-2">
+                            <span class="terminal-tag">DevOps</span>
+                            <span class="terminal-tag">Guide</span>
+                        </div>
+                        <h5 class="terminal-card-title">系統上線生存指南</h5>
+                        <p class="terminal-card-desc flex-grow-1">在新系統上線的混亂中，第一線人員如何有效應對、處理危機並存活下來？本篇提供一套完整的戰術手冊。</p>
+                        <div class="terminal-actions">
+                            <a href="blog/Golive_Survival_Guide.html" class="btn btn-terminal btn-terminal-primary">cat
+                                article.md</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI 驅動的 Web 自動化測試策略 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/blog/ai-web-testing.md</span>
+                    </div>
+                    <img src="images/vibe-ai-1.png" alt="AI 驅動的 Web 自動化測試策略" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <div class="terminal-tags mb-2">
+                            <span class="terminal-tag">AI</span>
+                            <span class="terminal-tag">Testing</span>
+                        </div>
+                        <h5 class="terminal-card-title">AI 驅動的 Web 自動化測試</h5>
+                        <p class="terminal-card-desc flex-grow-1">透過智慧體（AI Agent）模擬人類行為，自主探索、生成與執行測試案例，大幅提升測試效率與覆蓋率。</p>
+                        <div class="terminal-actions">
+                            <a href="blog/ai_driven_web_testing.html" class="btn btn-terminal btn-terminal-primary">cat
+                                article.md</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FHIR 深度技術解析儀表板 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/blog/fhir-deep-research.md</span>
+                    </div>
+                    <img src="images/FHIR_DEEP_RESREACH.jpg" alt="FHIR 深度技術解析儀表板" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <div class="terminal-tags mb-2">
+                            <span class="terminal-tag">FHIR</span>
+                            <span class="terminal-tag">Research</span>
+                        </div>
+                        <h5 class="terminal-card-title">FHIR 深度技術解析</h5>
+                        <p class="terminal-card-desc flex-grow-1">本儀表板專為醫療資訊技術（HIT）專業人士設計。我們將對 FHIR
+                            進行從技術底層到應用實踐的全面剖析。</p>
+                        <div class="terminal-actions">
+                            <a href="blog/FHIR-Deep-Research.html" class="btn btn-terminal btn-terminal-primary">cat
+                                article.md</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Git 新手教學 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/blog/git-newbie.md</span>
+                    </div>
+                    <img src="images/git-tutorial.jpeg" alt="Git 新手說明" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <div class="terminal-tags mb-2">
+                            <span class="terminal-tag">Git</span>
+                            <span class="terminal-tag">Tutorial</span>
+                        </div>
+                        <h5 class="terminal-card-title">Git 新手教學</h5>
+                        <p class="terminal-card-desc flex-grow-1">Git是當今軟體開發中最重要的工具之一。本篇文章將帶您了解 Git 的基本概念和常用指令。</p>
+                        <div class="terminal-actions">
+                            <a href="blog/git_newbie.html" class="btn btn-terminal btn-terminal-primary">cat
+                                article.md</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 互動式繁體中文RAG優化指南 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/blog/rag-zh-tw.md</span>
+                    </div>
+                    <img src="images/RAG-for-Traditional-Chinese.jpeg" alt="互動式繁體中文RAG優化指南" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <div class="terminal-tags mb-2">
+                            <span class="terminal-tag">RAG</span>
+                            <span class="terminal-tag">NLP</span>
+                        </div>
+                        <h5 class="terminal-card-title">互動式繁體中文 RAG 優化</h5>
+                        <p class="terminal-card-desc flex-grow-1">一個旨在提升AI搜尋增強品質的深度研究。</p>
+                        <div class="terminal-actions">
+                            <a href="blog/RAG-for-Traditional-Chinese.html"
+                                class="btn btn-terminal btn-terminal-primary">cat article.md</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 互動式護理資訊系統(NIS)洞察報告 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/blog/nis-research.md</span>
+                    </div>
+                    <img src="images/NIS_Deepresearch.jpeg" alt="互動式護理資訊系統(NIS)洞察報告" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <div class="terminal-tags mb-2">
+                            <span class="terminal-tag">NIS</span>
+                            <span class="terminal-tag">Healthcare</span>
+                        </div>
+                        <h5 class="terminal-card-title">護理資訊系統(NIS)洞察報告</h5>
+                        <p class="terminal-card-desc flex-grow-1">從繁複的功能說明書到清晰的互動洞察，全面解析NIS的核心價值、技術架構與市場未來。</p>
+                        <div class="terminal-actions">
+                            <a href="blog/NIS_DeepResearch.html" class="btn btn-terminal btn-terminal-primary">cat
+                                article.md</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 肯亞夢幻獵遊之旅 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/blog/kenya-safari.md</span>
+                    </div>
+                    <img src="images/Safari in Kenya.jpg" alt="肯亞夢幻獵遊之旅｜互動指南 2025" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <div class="terminal-tags mb-2">
+                            <span class="terminal-tag">Travel</span>
+                            <span class="terminal-tag">Kenya</span>
+                        </div>
+                        <h5 class="terminal-card-title">肯亞夢幻獵遊之旅</h5>
+                        <p class="terminal-card-desc flex-grow-1">
+                            從馬賽馬拉的動物大遷徙到安波塞利的大象天堂，這趟旅程將充滿難忘的冒險與回憶。</p>
+                        <div class="terminal-actions">
+                            <a href="blog/Safari in Kenya.html" class="btn btn-terminal btn-terminal-primary">cat
+                                article.md</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 大甲武館文化 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/blog/dajia-martial-arts.md</span>
+                    </div>
+                    <img src="images/dajia-martial-arts-thumbnail.jpg" alt="大甲武館文化・互動導覽" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <div class="terminal-tags mb-2">
+                            <span class="terminal-tag">Culture</span>
+                            <span class="terminal-tag">Taiwan</span>
+                        </div>
+                        <h5 class="terminal-card-title">大甲武館文化・互動導覽</h5>
+                        <p class="terminal-card-desc flex-grow-1">
+                            透過互動式導覽，您將了解其深厚的歷史、與大甲媽祖遶境的共生關係，以及在現代社會中的轉型與挑戰。
+                        </p>
+                        <div class="terminal-actions">
+                            <a href="blog/Dajia Martial Arts.html" class="btn btn-terminal btn-terminal-primary">cat
+                                article.md</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <footer class="bg-dark mt-5 py-4">
+    <footer class="terminal-footer">
         <div class="container text-center">
-            <p class="text-gray mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
+            <p class="mb-0">// © 2025 Luke Hou. All rights reserved.</p>
+            <p class="mb-0" style="font-size: 0.75rem; margin-top: 0.5rem;">$ exit 0</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/main.js"></script>
 </body>
 
 </html>
