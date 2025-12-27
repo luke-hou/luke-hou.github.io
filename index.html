@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/modern-style.css">
+    <!-- Google Fonts: JetBrains Mono (Added for Tech feel) -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Google tag (gtag.js) -->
@@ -59,25 +61,19 @@
 
     <!-- Hero Section -->
     <section class="hero-section text-center position-relative">
-        <!-- Animated Background Elements -->
-        <div class="hero-bg-animation">
-            <div class="blob blob-1"></div>
-            <div class="blob blob-2"></div>
-            <div class="blob blob-3"></div>
-        </div>
-
         <div class="container position-relative z-2">
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-8" data-aos="zoom-in" data-aos-duration="1000">
-                    <div class="profile-wrapper mb-4">
-                        <img src="images/index.jpg" class="profile-img-glow" alt="Luke Hou" width="180">
+                    <div class="profile-img-container mb-4">
+                        <img src="images/index.jpg" class="profile-img-glow" alt="Luke Hou">
                     </div>
                     <h1 class="hero-title mb-2">Luke Hou</h1>
-                    <div class="h3 text-light mb-4" style="min-height: 40px;">
+                    <div class="typed-text-wrapper mb-4">
                         <span id="typed-text"></span>
                     </div>
 
-                    <p class="lead text-light opacity-75 mb-5" data-aos="fade-up" data-aos-delay="200">
+                    <p class="lead text-secondary opacity-75 mb-5" data-aos="fade-up" data-aos-delay="200"
+                        style="max-width: 600px; margin: 0 auto;">
                         運用 AI 與自動化工具，釋放團隊潛能。
                     </p>
                     <div class="d-flex justify-content-center gap-3" data-aos="fade-up" data-aos-delay="400">
@@ -93,15 +89,8 @@
             </div>
         </div>
 
-        <!-- Wave Divider -->
-        <div class="custom-shape-divider-bottom">
-            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
-                preserveAspectRatio="none">
-                <path
-                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-                    class="shape-fill"></path>
-            </svg>
-        </div>
+        <!-- Wave Divider (Removed for cleaner look, or keep if preferred - keeping standard faint divider if needed, but removing SVG for now as per plan to reduce noise) -->
+        <!-- <div class="custom-shape-divider-bottom"> ... </div> -->
     </section>
 
     <main class="container" style="margin-top: -50px; position: relative; z-index: 2;">
@@ -110,68 +99,69 @@
         <section class="mb-5">
             <h2 class="section-title-modern" data-aos="fade-up">核心專業能力</h2>
             <div class="row g-4">
-                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                     <div class="glass-card text-center" data-tilt>
-                        <div class="icon-box mx-auto text-danger">
-                            <i class="fas fa-exchange-alt fa-2x"></i>
+                        <div class="icon-box">
+                            <i class="fas fa-exchange-alt fa-2x text-danger"></i>
                         </div>
                         <h5>HIS 系統轉置</h5>
-                        <p class="text-gray small">參與醫學中心級 HIS 轉置，從 UAT 到維運，確保核心業務無縫轉移。</p>
+                        <p class="text-secondary small">參與醫學中心級 HIS 轉置，從 UAT 到維運，確保核心業務無縫轉移。</p>
                     </div>
                 </div>
-                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
                     <div class="glass-card text-center" data-tilt>
-                        <div class="icon-box mx-auto text-primary">
-                            <i class="fas fa-laptop-medical fa-2x"></i>
+                        <div class="icon-box">
+                            <i class="fas fa-laptop-medical fa-2x text-primary"></i>
                         </div>
                         <h5>系統開發與維運</h5>
-                        <p class="text-gray small">具備 HIS 開發、優化與維運能力，豐富的跨部門協作與系統整合經驗。</p>
+                        <p class="text-secondary small">具備 HIS 開發、優化與維運能力，豐富的跨部門協作與系統整合經驗。</p>
                     </div>
                 </div>
-                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
                     <div class="glass-card text-center" data-tilt>
-                        <div class="icon-box mx-auto text-success">
-                            <i class="fas fa-shield-alt fa-2x"></i>
+                        <div class="icon-box">
+                            <i class="fas fa-shield-alt fa-2x text-success"></i>
                         </div>
                         <h5>品質保證 (SQA)</h5>
-                        <p class="text-gray small">建立全面測試策略，從功能、效能到安全，嚴格把關系統品質。</p>
+                        <p class="text-secondary small">建立全面測試策略，從功能、效能到安全，嚴格把關系統品質。</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Productivity & Tech Highlights -->
+        <!-- Productivity & Tech Highlights -->
         <section class="mb-5" data-aos="fade-left">
-            <div class="glass-card p-5">
+            <div class="glass-card p-4 p-md-5">
                 <div class="row align-items-center">
                     <div class="col-lg-5 mb-4 mb-lg-0">
-                        <h2 class="fw-bold mb-4"
-                            style="background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
+                        <h2 class="fw-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300"
+                            style="background: var(--brand-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
                             生產力與<br>技術亮點
                         </h2>
-                        <p class="text-gray">不只是寫程式，更注重如何用科技解決真實問題。從自動化工作流到大型醫療系統，我追求極致的效率與品質。</p>
+                        <p class="text-secondary">不只是寫程式，更注重如何用科技解決真實問題。從自動化工作流到大型醫療系統，我追求極致的效率與品質。</p>
                     </div>
                     <div class="col-lg-7">
                         <div class="list-group list-group-flush">
-                            <div class="list-group-item d-flex gap-3 bg-transparent">
-                                <i class="fas fa-robot text-info fa-2x mt-1"></i>
+                            <div class="list-group-item d-flex gap-3 align-items-center">
+                                <i class="fas fa-robot text-info fa-2x"></i>
                                 <div>
                                     <h5 class="mb-1">n8n AI 自動化工作流</h5>
-                                    <p class="mb-0 text-gray small">導入 n8n 建立 AI 驅動的自動化流程，串聯開發、測試與監控環節。</p>
+                                    <p class="mb-0 text-secondary small">導入 n8n 建立 AI 驅動的自動化流程，串聯開發、測試與監控環節。</p>
                                 </div>
                             </div>
-                            <div class="list-group-item d-flex gap-3 bg-transparent">
-                                <i class="fas fa-bolt text-warning fa-2x mt-1"></i>
+                            <div class="list-group-item d-flex gap-3 align-items-center">
+                                <i class="fas fa-bolt text-warning fa-2x"></i>
                                 <div>
                                     <h5 class="mb-1">醫療資訊系統背景</h5>
-                                    <p class="mb-0 text-gray small">十數年經驗，涵蓋系統分析、開發、維運與品保測試 (QA)。</p>
+                                    <p class="mb-0 text-secondary small">十數年經驗，涵蓋系統分析、開發、維運與品保測試 (QA)。</p>
                                 </div>
                             </div>
-                            <div class="list-group-item d-flex gap-3 bg-transparent">
-                                <i class="fas fa-sitemap text-success fa-2x mt-1"></i>
+                            <div class="list-group-item d-flex gap-3 align-items-center">
+                                <i class="fas fa-sitemap text-success fa-2x"></i>
                                 <div>
                                     <h5 class="mb-1">全方位專案能力</h5>
-                                    <p class="mb-0 text-gray small">從 BA 到 PM，以系統負責人視角貫穿全局，確保需求精準實現。</p>
+                                    <p class="mb-0 text-secondary small">從 BA 到 PM，以系統負責人視角貫穿全局，確保需求精準實現。</p>
                                 </div>
                             </div>
                         </div>
@@ -192,7 +182,7 @@
                         源自於深厚的開發與系統維運經驗。如同資深船長方能擔任「引水人」，指引船隻安全入港。"</p>
                 </blockquote>
                 <hr class="w-25 mx-auto my-4 border-secondary">
-                <p class="text-gray">
+                <p class="text-secondary">
                     我將多年積累的技術洞察力應用於 QA 工作，從源頭預防風險、規劃最佳路徑，確保每一個專案都能精準、高效地達成目標。
                 </p>
             </div>
@@ -230,10 +220,9 @@
                     <div class="glass-card h-100 d-flex flex-column" data-tilt>
                         <h5 class="card-title mb-4"><i class="fas fa-rocket me-2 text-danger"></i>代表專案</h5>
                         <div class="list-group list-group-flush flex-grow-1">
-                            <a href="projects/golive-jira-automation.html"
+                            <a href="projects/line-bot-mvp.html"
                                 class="list-group-item list-group-item-action bg-transparent border-0 ps-0">
-                                <i class="fas fa-angle-right me-2 text-secondary"></i>Go-Live 利器：Sheet to
-                                Jira 自動化
+                                <i class="fas fa-angle-right me-2 text-secondary"></i>Line Bot MVP：有溫度的 LineBot AI 協作時光機
                             </a>
                             <a href="projects/vibe-coding-task-management.html"
                                 class="list-group-item list-group-item-action bg-transparent border-0 ps-0">
