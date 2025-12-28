@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - 找不到頁面 | Luke Hou</title>
+    <meta name="description" content="抱歉，您要找的頁面不存在。">
+    <link rel="icon" href="/images/favicon.jpg" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/terminal-style.css">
+    <style>
+        /* 404 頁面專用樣式 */
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--terminal-bg);
+        }
+
+        .error-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .error-content {
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .error-code {
+            font-size: 8rem;
+            font-weight: 700;
+            color: var(--terminal-green);
+            text-shadow: 0 0 20px var(--terminal-green-dim);
+            margin-bottom: 0;
+            line-height: 1;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .error-terminal {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--terminal-green-dim);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: left;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .error-terminal .prompt {
+            color: var(--terminal-green);
+        }
+
+        .error-terminal .command {
+            color: #fff;
+        }
+
+        .error-terminal .output {
+            color: #ff6b6b;
+            margin-top: 0.5rem;
+        }
+
+        .error-actions {
+            margin-top: 2rem;
+        }
+
+        .error-actions .btn {
+            margin: 0.5rem;
+        }
+
+        .glitch {
+            animation: glitch 1s linear infinite;
+        }
+
+        @keyframes glitch {
+
+            2%,
+            64% {
+                transform: translate(2px, 0) skew(0deg);
+            }
+
+            4%,
+            60% {
+                transform: translate(-2px, 0) skew(0deg);
+            }
+
+            62% {
+                transform: translate(0, 0) skew(5deg);
+            }
+        }
+
+        .cursor-blink::after {
+            content: '█';
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="terminal-page">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">$ luke@ninja ~</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="index.html">~/home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="podcast.html">~/podcast</a></li>
+                        <li class="nav-item"><a class="nav-link" href="tutorials.html">~/tutorials</a></li>
+                        <li class="nav-item"><a class="nav-link" href="portfolio.html">~/projects</a></li>
+                        <li class="nav-item"><a class="nav-link" href="blog.html">~/blog</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="error-container">
+        <div class="error-content">
+            <h1 class="error-code glitch">404</h1>
+
+            <div class="error-terminal">
+                <div class="prompt">$ <span class="command">cat requested_page.html</span></div>
+                <div class="output">cat: requested_page.html: No such file or directory</div>
+                <div class="prompt" style="margin-top: 1rem;">$ <span class="cursor-blink"></span></div>
+            </div>
+
+            <h2 class="text-light mb-3">找不到頁面</h2>
+            <p class="text-secondary">
+                抱歉，您要找的頁面可能已被移除、更名，或暫時無法使用。
+            </p>
+
+            <div class="error-actions">
+                <a href="index.html" class="btn btn-terminal btn-terminal-primary">
+                    <i class="fas fa-home me-2"></i>回到首頁
+                </a>
+                <a href="portfolio.html" class="btn btn-terminal btn-terminal-secondary">
+                    <i class="fas fa-folder me-2"></i>瀏覽作品
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="terminal-footer">
+        <div class="container text-center">
+            <p class="mb-0">// © 2025 Luke Hou. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

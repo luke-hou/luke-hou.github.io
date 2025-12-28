@@ -1,0 +1,8 @@
+# robots.txt for luke.ninja
+# 引導搜尋引擎爬蟲正確索引網站內容
+
+User-agent: *
+Allow: /
+
+# 指向 XML 格式的網站地圖
+Sitemap: https://luke.ninja/sitemap.xml
