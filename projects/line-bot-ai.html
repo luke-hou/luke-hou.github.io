@@ -470,9 +470,9 @@
 
                         <div class="row align-items-center my-4">
                             <div class="col-md-12 text-center">
-                                <img src="../images/line-ai-bot-mvp/2025-12-25_16-10-41.jpg" alt="AI 智慧分析中心介面：四大功能一目了然"
+                                <img src="../assets/screenshots/ai-analysis-center.png" alt="AI 智慧分析中心介面：五大模式一目了然"
                                     class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                                <small class="text-white-50">AI 智慧分析中心介面：選擇日期、群組與模型，一鍵啟動分析</small>
+                                <small class="text-white-50">AI 智慧分析中心介面：選擇日期、群組與 AI 引擎，五大分析模式即選即用</small>
                             </div>
                         </div>
                     </div>
@@ -529,21 +529,37 @@
                         </div>
                     </div>
 
-                    <!-- 4.5 AI Summary Browser / Knowledge Base -->
-                    <div class="feature-section" id="section-4-5">
-                        <h2>4.5 AI 智慧迭代知識庫 (Knowledge Base)</h2>
+                    <!-- AI Smart Summary Browser / Knowledge Base -->
+                    <div class="feature-section" id="section-4b">
+                        <h2>AI 智慧摘要瀏覽器 (Summary Browser)</h2>
                         <p class="text-white-50">
                             「群組摘要」功能產出的不只是一份報告，而是一個 <strong>可累積、可查詢的知識庫</strong>。
-                            所有 AI 自動生成的 Q&A 都會被儲存下來，形成團隊的「共同記憶」。除了每天一份的單獨摘要，還會自動持續迭代以群組為單位的單一知識庫，確保有一份最真實、最完整的知識來源。
+                            所有 AI 自動生成的 Q&A 都會被儲存下來，形成團隊的「共同記憶」。我們還實作了強大的 <strong>全文搜尋 + 關鍵字高亮</strong>
+                            功能，讓您在海量摘要中快速定位答案。
                         </p>
 
                         <div class="row g-3 mb-4">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="p-3 border border-secondary rounded h-100">
-                                    <h5 class="text-white"><i class="bi bi-folder2-open me-2"></i>分類樹狀瀏覽</h5>
-                                    <p class="text-white-50 small mb-0">左側列表自動依「戰情通報」與「群組摘要」分類，點擊即可查看詳細內容。</p>
+                                    <h5 class="text-warning"><i class="bi bi-search me-2"></i>全文搜尋</h5>
+                                    <p class="text-white-50 small mb-0">輸入關鍵字即時篩選，顯示匹配筆數與命中位置（如 L14, L23）。</p>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="p-3 border border-secondary rounded h-100">
+                                    <h5 class="text-warning"><i class="bi bi-highlighter me-2"></i>搜尋高亮定位</h5>
+                                    <p class="text-white-50 small mb-0">右側內容區自動 <strong>高亮顯示</strong> 搜尋關鍵字，快速掃視重點。</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="p-3 border border-secondary rounded h-100">
+                                    <h5 class="text-warning"><i class="bi bi-folder2-open me-2"></i>分類樹狀瀏覽</h5>
+                                    <p class="text-white-50 small mb-0">左側列表按群組/日期分類，點擊「摘要」展開該日期完整 Q&A 內容。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
                             <div class="col-md-6">
                                 <div class="p-3 border border-secondary rounded h-100">
                                     <h5 class="text-white"><i class="bi bi-journal-richtext me-2"></i>Master Q&A 知識庫
@@ -552,20 +568,21 @@
                                     </p>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="p-3 border border-secondary rounded h-100">
+                                    <h5 class="text-white"><i class="bi bi-clipboard-check me-2"></i>複製 / 刪除管理
+                                    </h5>
+                                    <p class="text-white-50 small mb-0">一鍵複製全文分享，過時摘要可隨時刪除，保持知識庫精簡可維護。
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-
-                        <ul class="text-white-50">
-                            <li><strong>📋 複製全文：</strong>一鍵複製整份摘要，方便貼到文件或 Email 分享</li>
-                            <li><strong>🗑️ 刪除管理：</strong>過時的摘要可隨時刪除，保持知識庫精簡</li>
-                            <li><strong>🔍 搜尋定位：</strong>在大量摘要中快速找到需要的內容</li>
-                        </ul>
 
                         <div class="row align-items-center my-4">
                             <div class="col-md-12 text-center">
-                                <img src="../images/line-ai-bot-mvp/2025-12-25_16-12-06.jpg"
-                                    alt="AI 智慧摘要瀏覽器：展示 Master Q&A 知識庫結構"
-                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
-                                <small class="text-white-50">AI 智慧摘要瀏覽器：左側分類樹狀列表，右側顯示結構化 Q&A 知識庫</small>
+                                <img src="../assets/screenshots/ai-summary-browser.png" alt="AI 智慧摘要瀏覽器：搜尋高亮與分類樹狀結構"
+                                    class="img-fluid rounded shadow-lg border border-2 border-info mb-2 d-block mx-auto">
+                                <small class="text-white-50">AI 智慧摘要瀏覽器：搜尋輸入「列印」後自動高亮，左側顯示匹配筆數，右側 Q&A 關鍵字高亮標注</small>
                             </div>
                         </div>
                     </div>
@@ -635,6 +652,45 @@
                         </div>
                     </div>
 
+                    <!-- 6.5 AI Priority Assessment -->
+                    <div class="feature-section" id="section-9">
+                        <h2>6.5 AI 優先度鑑定：批次智慧分類</h2>
+                        <p class="text-white-50">
+                            面對大量未分類的訊息，逐一判斷優先度是件苦差事。
+                            <strong>AI 優先度鑑定</strong>功能會自動分析所有「未設優先度」且「非 Done/Ignore」的訊息，
+                            一次性給出 High / Normal 的建議，並附上理由說明。
+                        </p>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <div class="glass-card p-3">
+                                    <h5 class="text-warning"><i class="bi bi-lightning-charge-fill me-2"></i>一鍵啟動分析</h5>
+                                    <p class="text-white-50 small mb-0">選擇日期範圍與群組後，點擊「開始分析」，AI 將快速評估所有未分類訊息的緊急程度。</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="glass-card p-3">
+                                    <h5 class="text-warning"><i class="bi bi-check2-square me-2"></i>批次套用選取項目</h5>
+                                    <p class="text-white-50 small mb-0">AI 建議結果可預覽、可修改，確認無誤後「套用選取項目」一次性寫入系統，大幅節省分類時間。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-6 text-center">
+                                <img src="../assets/screenshots/ai-priority-start.png" alt="AI 優先度鑑定：一鍵啟動分析介面"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">AI 優先度鑑定：分析未分類訊息，一鍵啟動</small>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <img src="../assets/screenshots/ai-priority-result.png" alt="AI 優先度鑑定結果：顯示 AI 建議與理由"
+                                    class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
+                                <small class="text-white-50">AI 優先度鑑定結果：批次顯示建議與理由，可選擇性套用</small>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- 7. Knowledge Base -->
                     <div class="feature-section" id="section-7">
                         <h2>7. 知識庫萃取 (群組摘要)</h2>
@@ -653,6 +709,14 @@
                         </div>
                         <div class="row align-items-center my-4">
                             <div class="col-md-12 text-center">
+                                <img src="../assets/screenshots/kb-extraction-modal.png"
+                                    alt="知識庫萃取 Modal：左側來源對話預覽，右側 AI 生成內容可編輯"
+                                    class="img-fluid rounded shadow-lg border border-2 border-success mb-2 d-block mx-auto">
+                                <small class="text-white-50">知識庫萃取 Modal：左側預覽來源對話，右側 AI 生成 Q&A 可編輯，支援圖片上傳與 AI 辨識</small>
+                            </div>
+                        </div>
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-12 text-center">
                                 <img src="../images/line-ai-bot-mvp/2025-12-25_15-40-36.jpg"
                                     alt="AI 知識庫編輯器介面：左側為原始對話，右側為 AI 生成的 SOP 草稿"
                                     class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
@@ -661,7 +725,7 @@
                         </div>
                         <div class="row align-items-center my-4">
                             <div class="col-md-12 text-center">
-                                <img src="../images/line-ai-bot-mvp/2025-12-25_16-05-13.jpg"
+                                <img src="../images/line-ai-bot-mvp/2025-12-25_16-05-133.jpg"
                                     alt="AI 知識庫瀏覽及編輯器介面：點擊展開知識卡片，並且可以搜尋、編輯、用類別篩選。"
                                     class="img-fluid rounded shadow-lg border border-2 border-warning mb-2 d-block mx-auto">
                                 <small class="text-white-50">AI 知識庫瀏覽及編輯器介面：點擊展開知識卡片，並且可以搜尋、編輯、用類別篩選</small>
@@ -870,8 +934,10 @@
             <li><a href="#section-2">2. AI 分析中心</a></li>
             <li><a href="#section-3">3. 議題偵測</a></li>
             <li><a href="#section-4">4. 戰情通報</a></li>
+            <li><a href="#section-4b">摘要瀏覽器</a></li>
             <li><a href="#section-5">5. 跨群比對</a></li>
-            <li><a href="#section-6">6. Jira 智慧搜尋</a></li>
+            <li><a href="#section-6">6. Jira 搜尋</a></li>
+            <li><a href="#section-9">6.5 優先度鑑定</a></li>
             <li><a href="#section-7">7. 知識庫萃取</a></li>
             <li><a href="#section-7-5">7.5 圖文閱讀</a></li>
             <li><a href="#section-8">🎄 系列總結</a></li>
@@ -932,8 +998,10 @@
         <a href="#section-2">2. AI 分析中心</a>
         <a href="#section-3">3. 議題偵測</a>
         <a href="#section-4">4. 戰情通報</a>
+        <a href="#section-4b">摘要瀏覽器</a>
         <a href="#section-5">5. 跨群比對</a>
         <a href="#section-6">6. Jira 搜尋</a>
+        <a href="#section-9">6.5 優先度鑑定</a>
         <a href="#section-7">7. 知識庫</a>
         <a href="#section-7-5">7.5 圖文閱讀</a>
         <a href="#section-8">🎄 總結</a>
