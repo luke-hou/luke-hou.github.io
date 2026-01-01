@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>給電腦工作者超效率神器：AutoHotkey 自動化工具介紹</title>
+    <meta name="description" content="不需要懂程式，只要 3 分鐘，解決每天重複輸入日期的困擾。專為非技術背景的電腦工作者設計的效率指南。">
+    <style>
+        :root {
+            --primary: #f59e0b;
+            /* Amber for warmth/energy */
+            --primary-hover: #d97706;
+            --bg: #1e293b;
+            /* Slate 800 */
+            --card-bg: #334155;
+            /* Slate 700 */
+            --text: #f8fafc;
+            --text-muted: #cbd5e1;
+            --code-bg: #0f172a;
+            /* Slate 900 */
+            --accent: #10b981;
+            /* Emerald */
+            --step-bg: #475569;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Microsoft JhengHei", "Segoe UI", sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 1s ease;
+        }
+
+        .tag {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+            font-weight: 800;
+            line-height: 1.3;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* Step Cards */
+        .step-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .step-badge {
+            position: absolute;
+            top: -15px;
+            left: 30px;
+            background: var(--primary);
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+            margin-top: 5px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: var(--text-muted);
+        }
+
+        a.btn-link {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: 0.2s;
+            margin-top: 15px;
+        }
+
+        a.btn-link:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Instruction List */
+        .instruction-list {
+            list-style: none;
+            counter-reset: my-counter;
+            margin-top: 25px;
+        }
+
+        .instruction-list li {
+            position: relative;
+            padding-left: 45px;
+            margin-bottom: 18px;
+            color: var(--text);
+        }
+
+        .instruction-list li::before {
+            counter-increment: my-counter;
+            content: counter(my-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            background: var(--step-bg);
+            color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .instruction-list li strong {
+            color: #fff;
+        }
+
+        /* Code Window */
+        .code-window {
+            background-color: var(--code-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 25px;
+            border: 1px solid #475569;
+            position: relative;
+        }
+
+        .window-header {
+            background: #0f172a;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+        }
+
+        .window-title {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-family: monospace;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        pre {
+            padding: 25px;
+            overflow-x: auto;
+            color: #e2e8f0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .keyword {
+            color: #c678dd;
+        }
+
+        .string {
+            color: #98c379;
+        }
+
+        .comment {
+            color: #64748b;
+            font-style: italic;
+        }
+
+        .function {
+            color: #61afef;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.2s;
+            z-index: 10;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary);
+        }
+
+        /* Demo Box */
+        .demo-section {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .demo-box {
+            flex: 1;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .demo-key {
+            font-family: monospace;
+            background: #10b981;
+            color: #064e3b;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+
+        .demo-val {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #fff;
+            margin-top: 15px;
+            display: block;
+        }
+
+        /* Navigation */
+        .top-nav {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .top-nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .top-nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Tips */
+        .tips {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 5px solid #3b82f6;
+            padding: 30px;
+            border-radius: 0 12px 12px 0;
+            color: #cbd5e1;
+            margin-bottom: 50px;
+        }
+
+        .tips h3 {
+            color: #60a5fa;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .tips ul li {
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            color: #64748b;
+            margin-top: 50px;
+            padding-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <nav class="top-nav">
+            <a href="../blog.html">← 回部落格</a>
+            <a href="../index.html">/ 回首頁</a>
+        </nav>
+        <header>
+            <span class="tag">給電腦工作者的效率指南</span>
+            <h1>拒絕重複作業，把時間留給重要的事</h1>
+            <p class="subtitle">寫規格書、填 Jira 單、回信件... 你每天重複打了幾次今天的日期？<br>不需要懂程式，只要 5 分鐘，讓電腦幫你自動完成這些瑣事。</p>
+        </header>
+
+        <!-- 步驟 1 -->
+        <div class="step-card">
+            <div class="step-badge">STEP 1</div>
+            <h2>安裝你的「隱形秘書」</h2>
+            <p><strong>AutoHotkey</strong> 就像是一個住在你電腦裡的小秘書。它雖然沒有介面，但它隨時聽候你的指令，當你按下特定的按鍵，它就會幫你執行一連串動作。</p>
+
+            <ol class="instruction-list">
+                <li>首先，我們需要下載這個免費的小工具： <br><a href="https://www.autohotkey.com/" target="_blank" class="btn-link">前往
+                        AutoHotkey 官網下載</a></li>
+                <li>進去後，勇敢地按綠色的 <strong>Download</strong> 按鈕。</li>
+                <li><strong>請注意：</strong> 選擇下載 <strong>v2.0</strong> 版本 (这是目前最強大且主流的版本)。</li>
+                <li>下載下來的檔案 (Installer)，就像安裝 LINE 一樣，一直按 Next 裝到底就好。</li>
+            </ol>
+        </div>
+
+        <!-- 步驟 2 -->
+        <div class="step-card">
+            <div class="step-badge">STEP 2</div>
+            <h2>建立指令清單 (魔法檔案)</h2>
+            <p>軟體裝好了，現在我們要告訴秘書該做什麼。這就像是在寫一張便利貼給它看。</p>
+
+            <ol class="instruction-list">
+                <li>回到你的 <strong>電腦桌面</strong>。</li>
+                <li>在空白處按 <strong>滑鼠右鍵</strong>。</li>
+                <li>選單裡找到 <strong>新增 (New)</strong> → <strong>AutoHotkey Script</strong>。</li>
+                <li>把新產生的檔案改名叫做： <code>MyMagic.ahk</code> (注意副檔名要是 .ahk 喔)。</li>
+                <li>在這個檔案上按右鍵，選擇 <strong>Edit Script</strong> (編輯腳本)，會跳出記事本，這就是我們的指令清單。</li>
+            </ol>
+        </div>
+
+        <!-- 步驟 3 -->
+        <div class="step-card">
+            <div class="step-badge">STEP 3</div>
+            <h2>輸入你的魔法指令</h2>
+            <p>別擔心，你<strong>完全不需要</strong>寫程式。只要把下面的內容全部複製，貼上到剛剛打開的記事本裡，取代原本內容，然後存檔 (Ctrl+S) 就好了！</p>
+
+            <div class="code-window">
+                <div class="window-header">
+                    <span class="window-title">MyMagic.ahk - 你的魔法清單</span>
+                    <button class="copy-btn" onclick="copyCode()">一鍵複製所有內容</button>
+                </div>
+                <pre id="codeBlock"><code><span class="comment">#Requires AutoHotkey v2.0</span>
+<span class="comment">; 這是給電腦看的備註，告訴它用最新的版本來跑</span>
+
+<span class="comment">; ===========================================</span>
+<span class="comment">; 魔法 1：不管是 Jira 還是 Excel，秒速輸入今天日期</span>
+<span class="comment">; 當你打 "dd" 兩個字，電腦會自動變成 "2025-01-01"</span>
+<span class="comment">; ===========================================</span>
+<span class="keyword">::dd::</span>
+{
+    <span class="function">Send</span> FormatTime(, <span class="string">"yyyy-MM-dd"</span>)
+}
+
+<span class="comment">; ===========================================</span>
+<span class="comment">; 魔法 2：會議記錄好幫手，快速壓上現在時間</span>
+<span class="comment">; 當你打 "tt" 兩個字，電腦會自動變成 "14:30"</span>
+<span class="comment">; ===========================================</span>
+<span class="keyword">::tt::</span>
+{
+    <span class="function">Send</span> FormatTime(, <span class="string">"HH:mm"</span>)
+}
+
+<span class="comment">; ===========================================</span>
+<span class="comment">; 魔法 3：再也不用重打 Email (自行修改下行引號內的文字)</span>
+<span class="comment">; 當你打 "mail" 加上空白鍵，自動幫你輸入信箱</span>
+<span class="comment">; ===========================================</span>
+<span class="keyword">::mail::</span>
+{
+    <span class="function">Send</span> <span class="string">"yourname@company.com"</span>
+}
+</code></pre>
+                <div
+                    style="padding: 15px 25px; background: #1e293b; border-top: 1px solid #334155; color: #94a3b8; font-size: 0.9rem;">
+                    💡 小撇步：如果你想改觸發的關鍵字，只要把 <code>::dd::</code> 中間的 dd 改掉就好！
+                </div>
+            </div>
+        </div>
+
+        <!-- 步驟 4 -->
+        <div class="step-card">
+            <div class="step-badge">STEP 4</div>
+            <h2>見證奇蹟的時刻</h2>
+            <p>最後一步，讓我們喚醒這位隱形秘書。</p>
+
+            <ol class="instruction-list">
+                <li>回到桌面，對著剛剛的 <code>MyMagic.ahk</code> 檔案 <strong>點兩下滑鼠左鍵</strong>。</li>
+                <li>看一下畫面右下角的工作列，有沒有出現一個 <strong>綠色的 H 圖示</strong>？有的話，恭喜你成功了！</li>
+                <li>現在，打開任何地方（Line、Word、瀏覽器網址列都可以）。</li>
+                <li><strong>切換到英文輸入法</strong>，試試看下面的操作：</li>
+            </ol>
+
+            <div class="demo-section">
+                <div class="demo-box">
+                    <p>輸入 <span class="demo-key">dd</span> 後按空白鍵</p>
+                    <span class="demo-val" id="demo-date">2025-01-01</span>
+                </div>
+                <div class="demo-box">
+                    <p>輸入 <span class="demo-key">tt</span> 後按空白鍵</p>
+                    <span class="demo-val" id="demo-time">10:00</span>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: #94a3b8;">
+                ( 你的 Email 也可以試試看打 <code>mail</code> 喔！ )
+            </p>
+        </div>
+
+        <!-- 注意事項 -->
+        <div class="tips">
+            <h3>💡 常見疑問 Q&A</h3>
+            <ul style="margin-top: 10px; padding-left: 20px; line-height: 1.8;">
+                <li><strong>Q: 為什麼我打 dd 沒反應？</strong><br>A: 請檢查是不是在 <strong>中文輸入法</strong> 模式？如果是中文模式，電腦會以為你要打「ㄉㄉ」。請按
+                    Shift 切換成英文再試一次。</li>
+                <li><strong>Q: 這個檔案要一直開著嗎？</strong><br>A: 對的！只要右下角的綠色 H
+                    圖示在，秘書就在。如果你重開機，記得要再去點兩下那個檔案喔！(進階技巧：可以把它放到「啟動」資料夾，開機就會自動執行)。</li>
+                <li><strong>Q: 我想加新的功能怎麼辦？</strong><br>A: 在檔案上按右鍵選 <strong>Edit
+                        Script</strong>，依照上面的格式依樣畫葫蘆，存檔後，記得去右下角綠色 H 圖示按右鍵選 <strong>Reload Script</strong>，新功能才會生效喔！</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>© 2025 AutoHotkey for you. Efficiency is Key.</p>
+        </footer>
+    </div>
+
+    <script>
+        // 取得當前時間並更新範例展示
+        function updateDemo() {
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = String(now.getMonth() + 1).padStart(2, '0');
+            const d = String(now.getDate()).padStart(2, '0');
+            const h = String(now.getHours()).padStart(2, '0');
+            const min = String(now.getMinutes()).padStart(2, '0');
+
+            document.getElementById('demo-date').textContent = `${y}-${m}-${d}`;
+            document.getElementById('demo-time').textContent = `${h}:${min}`;
+        }
+        updateDemo();
+
+        // 複製功能
+        function copyCode() {
+            const code = document.getElementById('codeBlock').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = "已複製成功！";
+                btn.style.background = "#10b981"; // Green
+
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = "rgba(255,255,255,0.1)";
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+
+</html>
