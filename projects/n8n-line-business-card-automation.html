@@ -4,81 +4,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>專案: n8n + AI 打造 LINE 名片管理機器人 - Luke的作品</title>
-    <meta name="description" content="展示如何利用 n8n、AI 與 LINE Bot，將名片數位化流程全自動，並建立智慧化的人脈搜尋引擎。">
-    <meta name="keywords" content="n8n, AI, LINE Bot, Google Gemini, 自動化, CRM, Luke Hou, 侯俊嘉">
+    <title>專案: n8n + AI 打造 LINE 名片管理機器人 - Luke Hou</title>
+    <meta name="description" content="利用 n8n 串接 Google Gemini Vision 與 LINE Bot，打造全自動化的名片 OCR 與人脈管理系統。技術實作詳解。">
+    <meta name="keywords" content="n8n, Gemini Pro Vision, LINE Bot, Automation, OCR, CRM, Luke Hou">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../css/style.css">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-0V2L1DQVPY');
+    <!-- Mermaid JS -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
     </script>
     <style>
+        :root {
+            --primary-accent: #f59e0b;
+            /* Amber/Orange for n8n/Automation vibe */
+            --secondary-accent: #10b981;
+            /* Green for LINE */
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, "Microsoft JhengHei", sans-serif;
+            background-color: #0f172a;
+            /* Slate 900 */
+        }
+
         .project-hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/n8n-line-business-card-automation/n8n-card-bot-workflow.jpg') no-repeat center center;
+            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.8)), url('../images/n8n-card-hero.png') no-repeat center center;
             background-size: cover;
-            padding: 4rem 0;
+            padding: 6rem 0;
             color: white;
+            border-bottom: 1px solid #1e293b;
         }
 
-        .project-hero h1 {
-            font-weight: 700;
-        }
-
-        .summary-card {
-            position: sticky;
-            top: 20px;
-        }
-
-        .tech-badge {
+        .hero-tag {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+            padding: 5px 15px;
+            border-radius: 20px;
             font-size: 0.9rem;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(245, 158, 11, 0.3);
         }
 
-        .gallery-img {
-            cursor: pointer;
-            transition: transform 0.2s;
+        .feature-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 2rem;
+            height: 100%;
+            transition: transform 0.2s, border-color 0.2s;
         }
 
-        .gallery-img:hover {
-            transform: scale(1.05);
-        }
-
-        .gallery-item {
-            background-color: #212529;
-            border: 1px solid #495057;
-            border-radius: 0.5rem;
-            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-            transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
-            overflow: hidden;
-            /* Ensures the rounded corners are applied to the image */
-            margin-bottom: 1.5rem;
-            /* Add some space between items */
-        }
-
-        .gallery-item:hover {
-            box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.15);
+        .feature-card:hover {
             transform: translateY(-5px);
+            border-color: var(--primary-accent);
         }
 
-        .gallery-item .gallery-img {
-            border-bottom: 1px solid #495057;
-            border-radius: 0;
-            /* Reset border-radius as the container handles it */
+        .section-title {
+            color: #f8fafc;
+            border-left: 5px solid var(--primary-accent);
+            padding-left: 15px;
+            margin-bottom: 2rem;
         }
 
-        .gallery-item .caption {
-            padding: 1rem;
-            text-align: center;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #f8f9fa;
+        pre {
+            background: #020617;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 1.5rem;
+            color: #e2e8f0;
         }
 
         .floating-toggle-btn {
@@ -92,30 +89,54 @@
             padding: 1rem 0.5rem;
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
-            box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.3);
+            background-color: var(--primary-accent);
+            color: #000;
+            border: none;
+            font-weight: bold;
+        }
+
+        .floating-toggle-btn:hover {
+            background-color: #d97706;
+            color: #fff;
+        }
+
+        .mermaid-container {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            text-align: center;
+            margin-bottom: 30px;
         }
     </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-0V2L1DQVPY');
+    </script>
 </head>
 
 <body>
-    <a href="n8n-line-business-card-automation-business.html" class="btn btn-primary floating-toggle-btn"
-        title="切換至商業視角說明">
-        <i class="bi bi-briefcase-fill"></i> 商業視角說明
+    <a href="n8n-line-business-card-automation-business.html" class="btn floating-toggle-btn" title="切換至商業視角">
+        <i class="bi bi-briefcase-fill"></i> Business View
     </a>
+
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent fixed-top" style="backdrop-filter: blur(10px);">
             <div class="container">
-                <a class="navbar-brand" href="../index.html">Luke Hou</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand font-monospace" href="../index.html">> Luke Hou_</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
+                    <ul class="navbar-nav ms-auto small fw-bold text-uppercase">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">Tutorials</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">Portfolio</a></li>
                     </ul>
                 </div>
             </div>
@@ -123,226 +144,169 @@
     </header>
 
     <main>
-        <section class="project-hero text-center">
+        <!-- Hero Section -->
+        <section class="project-hero text-center d-flex align-items-center">
             <div class="container">
-                <h1 class="display-4">用 LINE + AI 打造你的個人 CRM：n8n 名片王</h1>
-                <p class="lead">「拍照即建檔，AI 自動分析，讓你的人脈活起來。告別手動輸入，迎向智慧人脈管理。」</p>
-            </div>
-        </section>
-
-        <section class="container mt-5">
-            <div class="row">
-                <!-- Main Content -->
-                <div class="col-lg-8">
-                    <div class="card border-0 bg-transparent">
-                        <div class="card-body">
-                            <!-- Challenge & Solution Summary -->
-                            <div class="row g-4 mb-5">
-                                <div class="col-md-6">
-                                    <div class="glass-card h-100 p-4" style="border-left: 4px solid #ef4444;">
-                                        <h3 class="h4 text-danger mb-3"><i class="bi bi-fire me-2"></i>The Challenge
-                                        </h3>
-                                        <p class="text-gray">
-                                            「交換名片後，資料往往躺在抽屜裡『睡覺』。手動輸入 CRM 耗時費力（每張 3-5 分鐘），且缺乏後續的價值標註，導致人脈無法轉化為資產。」
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="glass-card h-100 p-4" style="border-left: 4px solid #22c55e;">
-                                        <h3 class="h4 text-success mb-3"><i class="bi bi-check-circle-fill me-2"></i>The
-                                            Solution</h3>
-                                        <p class="text-gray">
-                                            「整合 LINE Bot 與 Google Gemini Pro Vision。拍照即觸發 n8n 工作流，自動完成 OCR 辨識、AI 價值評分與
-                                            Google Sheets 建檔，並支援 LINE 自然語言搜尋，將建檔時間縮短至 5 秒。」
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <h2 class="card-title h3 mb-3"><i class="bi bi-card-text me-2"></i>項目概述</h2>
-                            <p>在商務社交場合，交換名片是日常，但後續的整理與建檔卻是件麻煩事。傳統手動輸入不僅耗時，資料也難以活化利用。為了解決這個痛點，我利用 n8n 打造了一個自動化名片管理系統，串接
-                                LINE Bot、Google Gemini AI 與 Google Sheets，將繁瑣的名片管理流程變成一個簡單的 LINE 互動。</p>
-                            <p>現在，使用者只需將名片拍照並傳送到指定的 LINE 機器人，系統便會自動完成 OCR 辨識、資料結構化、AI
-                                分析摘要、雲端建檔及圖片備份。這不僅是一個名片掃描工具，更是一個輕量級的個人智慧 CRM 系統。</p>
-
-                            <hr class="my-4">
-
-                            <h2 class="h3 mb-3"><i class="bi bi-lightbulb-fill me-2"></i>核心做法與亮點</h2>
-                            <ol class="list-group list-group-numbered">
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">AI 智慧辨識與分析</div>
-                                        整合 Google
-                                        Gemini，不僅能精準提取名片上的姓名、職稱、公司等資訊，更能扮演專業秘書，為聯絡人進行潛在價值評分並生成專業背景摘要，讓我們快速回憶起對方的價值與背景。
-                                    </div>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">LINE Bot 自然語言搜尋</div>
-                                        所有聯絡人資料儲存於 Google Sheets。我串接了 AI Agent，讓使用者可直接在 LINE 中下達自然語言指令（如：「幫我找做水電的人」），AI
-                                        即會自動搜尋並回傳格式化、易於閱讀的結果。
-                                    </div>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">全自動化歸檔與備份</div>
-                                        n8n 工作流會自動將結構化資料存入 Google Sheets，同時將原始名片圖檔以「公司＋職稱＋姓名」的格式命名，備份至 Google Drive
-                                        指定資料夾，確保資料永不遺失且易於追溯。
-                                    </div>
-                                </li>
-                            </ol>
-
-                            <hr class="my-4">
-
-                            <div class="gallery-container">
-                                <h2 class="h3 mb-3"><i class="bi bi-kanban me-2"></i>成果展示</h2>
-                                <p class="text-muted">以下為此工作流的實際運行截圖：</p>
-                                <div class="row g-4">
-                                    <div class="col-12">
-                                        <div class="gallery-item">
-                                            <img src="../images/n8n-line-business-card-automation/n8n-card-bot-workflow.jpg"
-                                                alt="n8n 核心工作流" class="img-fluid gallery-img" data-bs-toggle="modal"
-                                                data-bs-target="#imageModal">
-                                            <div class="caption">n8n 核心工作流</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="gallery-item">
-                                            <img src="../images/n8n-line-business-card-automation/n8n-card-bot-line-demo.jpg"
-                                                alt="LINE Bot 互動與 AI 分析" class="img-fluid gallery-img"
-                                                data-bs-toggle="modal" data-bs-target="#imageModal">
-                                            <div class="caption">LINE Bot 互動與 AI 分析</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="gallery-item">
-                                            <img src="../images/n8n-line-business-card-automation/n8n-card-bot-line-search.jpg"
-                                                alt="自然語言搜尋人脈" class="img-fluid gallery-img" data-bs-toggle="modal"
-                                                data-bs-target="#imageModal">
-                                            <div class="caption">自然語言搜尋人脈</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="gallery-item">
-                                            <img src="../images/n8n-line-business-card-automation/n8n-card-bot-sheet-output.png"
-                                                alt="Google Sheets 自動建檔" class="img-fluid gallery-img"
-                                                data-bs-toggle="modal" data-bs-target="#imageModal">
-                                            <div class="caption">Google Sheets 自動建檔</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="gallery-item">
-                                            <img src="../images/n8n-line-business-card-automation/n8n-card-bot-drive-backup.png"
-                                                alt="Google Drive 圖片備份" class="img-fluid gallery-img"
-                                                data-bs-toggle="modal" data-bs-target="#imageModal">
-                                            <div class="caption">Google Drive 圖片備份</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sidebar -->
-                <div class="col-lg-4">
-                    <div class="card shadow-sm summary-card">
-                        <div class="card-body">
-                            <h3 class="card-title h5 border-bottom pb-2 mb-3"><i
-                                    class="bi bi-bar-chart-line-fill me-2"></i>價值與影響</h3>
-                            <ul class="list-unstyled">
-                                <li class="mb-3 d-flex">
-                                    <i class="bi bi-clock-history h4 text-primary me-3"></i>
-                                    <div>
-                                        <strong class="d-block">效率極大化</strong>
-                                        <small class="text-muted">從拍照到建檔全程自動化，將每張名片處理時間從數分鐘縮短至數秒，徹底解決手動輸入的麻煩。</small>
-                                    </div>
-                                </li>
-                                <li class="mb-3 d-flex">
-                                    <i class="bi bi-lightbulb h4 text-primary me-3"></i>
-                                    <div>
-                                        <strong class="d-block">智慧化人脈管理</strong>
-                                        <small class="text-muted">AI
-                                            的評分與摘要功能，讓人脈不再只是姓名電話，而是帶有背景與價值的「活資料」，搜尋與篩選更具洞察力。</small>
-                                    </div>
-                                </li>
-                                <li class="mb-3 d-flex">
-                                    <i class="bi bi-search h4 text-primary me-3"></i>
-                                    <div>
-                                        <strong class="d-block">資料即時取用</strong>
-                                        <small class="text-muted">透過熟悉的 LINE
-                                            介面，隨時隨地用語音或文字就能查詢所需人脈，讓我們的人脈庫真正成為隨身的得力助手。</small>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="card-footer">
-                            <h3 class="h5 mt-2"><i class="bi bi-gear-fill me-2"></i>使用的技術</h3>
-                            <div>
-                                <span class="badge bg-primary text-white tech-badge">n8n</span>
-                                <span class="badge bg-secondary tech-badge">Google Gemini</span>
-                                <span class="badge bg-success text-white tech-badge">LINE Bot</span>
-                                <span class="badge bg-info text-dark tech-badge">Google Sheets</span>
-                                <span class="badge bg-warning text-dark tech-badge">Google Drive</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-grid mt-3">
-                        <a href="../portfolio.html" class="btn btn-outline-primary"><i
-                                class="bi bi-arrow-left-circle me-2"></i>返回作品</a>
-                    </div>
+                <span class="hero-tag"><i class="bi bi-robot me-2"></i>n8n + Gemini Vision + LINE</span>
+                <h1 class="display-3 fw-bold mb-4">名片拍了就「活」了</h1>
+                <p class="lead text-light opacity-75 mb-5 mx-auto" style="max-width: 800px;">
+                    將 LINE 變成您的 AI 秘書。透過 Webhook 接收影像，利用多模態 AI (Multimodal AI) 進行 OCR 與價值分析，
+                    並自動結構化存入 Google Sheets，打造開口就能搜的個人 CRM。
+                </p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="#tutorial" class="btn btn-outline-light px-4 py-2 rounded-pill">實作細節</a>
+                    <a href="#gallery"
+                        class="btn btn-warning px-4 py-2 rounded-pill border-0 text-dark fw-bold">成果展示</a>
                 </div>
             </div>
         </section>
+
+        <div class="container py-5">
+
+            <!-- Architecture Diagram -->
+            <section id="architecture" class="mb-5">
+                <h2 class="section-title h3">System Architecture</h2>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="mermaid-container">
+                            <pre class="mermaid">
+graph LR
+    User((User)) -- "1. Send Photo" --> LINE[LINE Bot]
+    LINE -- "Webhook (Image Binary)" --> n8n[n8n Workflow]
+    
+    subgraph Processing [AI Processing]
+        n8n -- Image --> Gemini[Gemini Pro Vision]
+        Gemini -- "JSON (Name, Title, Tags...)" --> n8n
+    end
+    
+    subgraph Storage [Cloud Storage]
+        n8n -- Row Data --> Sheet[Google Sheets]
+        n8n -- File Backup --> Drive[Google Drive]
+    end
+    
+    n8n -- "Reply 'Saved!'" --> LINE
+    
+    style n8n fill:#f59e0b,color:#000,stroke:#fff
+    style Gemini fill:#3b82f6,color:#fff
+    style LINE fill:#10b981,color:#000
+    style Sheet fill:#10b981,color:#000
+</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-4 mt-2">
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <h4 class="h5 mb-3 text-white"><i class="bi bi-eye text-primary me-2"></i>Multimodal OCR
+                            </h4>
+                            <p class="text-secondary small">不只是文字辨識，Gemini 能理解名片排版，準確區分「公司名稱」與「職稱」，甚至根據 logo 推測產業。</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <h4 class="h5 mb-3 text-white"><i class="bi bi-chat-dots text-success me-2"></i>Natural
+                                Language Search</h4>
+                            <p class="text-secondary small">利用 AI Agent 查詢 Sheet，支援模糊搜尋。例如：「找上週認識做太陽能的那位」，即可調出資料。</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <h4 class="h5 mb-3 text-white"><i class="bi bi-hdd-network text-warning me-2"></i>Automated
+                                Backup</h4>
+                            <p class="text-secondary small">原始圖片以 `company_name_title.jpg` 格式自動更名並歸檔，解決實體名片難以檢索的問題。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Project Gallery (Crutial: Restoring Images) -->
+            <section id="gallery" class="mb-5">
+                <h2 class="section-title h3">Project Gallery</h2>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="feature-card p-3 h-100">
+                            <h5 class="h6 text-warning mb-3">1. n8n Workflow Design</h5>
+                            <img src="../images/n8n-line-business-card-automation/n8n-card-bot-workflow.jpg"
+                                class="img-fluid rounded border border-secondary" alt="n8n 核心工作流" data-bs-toggle="modal"
+                                data-bs-target="#imageModal">
+                            <p class="small text-secondary mt-2">完整的自動化流程：Webhook 接收 -> AI 處理 -> 雙重儲存 (Sheet/Drive)。</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card p-3 h-100">
+                            <h5 class="h6 text-success mb-3">2. LINE Bot Interaction</h5>
+                            <img src="../images/n8n-line-business-card-automation/n8n-card-bot-line-demo.jpg"
+                                class="img-fluid rounded border border-secondary" alt="LINE Bot 互動"
+                                data-bs-toggle="modal" data-bs-target="#imageModal">
+                            <p class="small text-secondary mt-2">使用者體驗極簡化：拍照上傳，AI 自動回覆建檔結果。</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card p-3 h-100">
+                            <h5 class="h6 text-info mb-3">3. Natural Language Search</h5>
+                            <img src="../images/n8n-line-business-card-automation/n8n-card-bot-line-search.jpg"
+                                class="img-fluid rounded border border-secondary" alt="自然語言搜尋" data-bs-toggle="modal"
+                                data-bs-target="#imageModal">
+                            <p class="small text-secondary mt-2">支援口語查詢，讓資料庫「活」起來。</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card p-3 h-100">
+                            <h5 class="h6 text-success mb-3">4. Structured Data (Sheets)</h5>
+                            <img src="../images/n8n-line-business-card-automation/n8n-card-bot-sheet-output.png"
+                                class="img-fluid rounded border border-secondary" alt="Google Sheets Output"
+                                data-bs-toggle="modal" data-bs-target="#imageModal">
+                            <p class="small text-secondary mt-2">資料自動分欄位填入，無需手動複製貼上。</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card p-3 h-100">
+                            <h5 class="h6 text-warning mb-3">5. Cloud Backup (Drive)</h5>
+                            <img src="../images/n8n-line-business-card-automation/n8n-card-bot-drive-backup.png"
+                                class="img-fluid rounded border border-secondary" alt="Google Drive Backup"
+                                data-bs-toggle="modal" data-bs-target="#imageModal">
+                            <p class="small text-secondary mt-2">圖檔自動更名備份，方便未來查證。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tech Stack -->
+            <section class="mb-5">
+                <h2 class="section-title h3">Tech Stack</h2>
+                <div class="d-flex flex-wrap gap-3">
+                    <span class="badge bg-secondary fs-6 p-2">n8n (Workflow Automation)</span>
+                    <span class="badge bg-secondary fs-6 p-2">Google Gemini Pro Vision (Multimodal AI)</span>
+                    <span class="badge bg-secondary fs-6 p-2">LINE Messaging API</span>
+                    <span class="badge bg-secondary fs-6 p-2">Google Sheets / Drive API</span>
+                </div>
+            </section>
+
+        </div>
     </main>
-
-    <!-- LinkedIn Discussion Section -->
-    <section class="bg-body-tertiary py-5 border-top border-secondary-subtle">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <i class="bi bi-linkedin" style="font-size: 3rem; color: #0077b5;"></i>
-                    <h2 class="h3 mt-3 mb-3">💬 想要討論或分享你的想法？</h2>
-                    <p class="text-muted mb-4">
-                        歡迎到我的 LinkedIn 文章留言，與我和其他讀者一起交流討論！
-                        無論是對這個案例的看法、你的實作經驗，或是任何問題，都歡迎分享。
-                    </p>
-                    <a href="https://www.linkedin.com/posts/junjia-hou_ai-automation-linebot-activity-7375168409749086209-phi-?utm_source=share&utm_medium=member_desktop&rcm=ACoAABIG390B3PtuoWttOVVAfWMw9172dduGwSA"
-                        class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer">
-                        <i class="bi bi-linkedin me-2"></i>前往 LinkedIn 討論
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-dark mt-5 py-4 border-top border-secondary-subtle">
-        <div class="container text-center">
-            <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
-        </div>
-    </footer>
 
     <!-- Image Modal -->
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <img src="" id="modalImage" alt="Project Image">
+            <div class="modal-content bg-dark">
+                <div class="modal-body text-center p-0">
+                    <img src="" id="modalImage" class="img-fluid" alt="Enlarged Image">
                 </div>
             </div>
         </div>
     </div>
+
+    <footer class="bg-black py-4 border-top border-secondary text-center text-secondary small">
+        <p>&copy; 2025 Luke Hou. Developer Portfolio.</p>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
             const modalImage = document.getElementById('modalImage');
-
-            document.querySelectorAll('.gallery-img').forEach(img => {
+            document.querySelectorAll('img[data-bs-target="#imageModal"]').forEach(img => {
+                img.style.cursor = 'pointer';
                 img.addEventListener('click', function () {
                     modalImage.src = this.src;
                     imageModal.show();

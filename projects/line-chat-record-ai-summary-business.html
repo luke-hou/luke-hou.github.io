@@ -4,63 +4,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>案例研究：AI 驅動的智慧溝通與任務摘要 - Luke Hou 作品</title>
-    <meta name="description" content="一個將團隊從雜亂的 Line 對話中解放的真實案例。看我如何利用 AI 將每日數百則的對話，自動轉化為結構化的重點摘要與待辦清單，讓資訊不再遺漏，決策更加精準。">
-    <meta name="keywords" content="商業案例, 流程優化, AI, 自動化, n8n, GPT, 溝通效率, Luke Hou, 侯俊嘉">
+    <title>案例研究：AI 驅動的企業溝通效率革命 - Luke Hou</title>
+    <meta name="description" content="如何利用地端 AI 技術，在確保商業機密絕對安全的前提下，將雜亂的通訊軟體訊息轉化為結構化的決策資產。">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-0V2L1DQVPY');
-    </script>
     <style>
-        .hero-section {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/RAG-for-Traditional-Chinese.jpeg') no-repeat center center;
-            background-size: cover;
-            padding: 5rem 0;
-            color: white;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
 
-        .hero-section h1 {
-            font-weight: 700;
+        :root {
+            --bs-body-font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            --primary-color: #0f172a;
+            /* Slate 900 */
+            --accent-color: #2563eb;
+            /* Blue 600 */
         }
 
         body {
-            background-color: #f0f2f5;
-        }
-
-        .impact-card {
             background-color: #ffffff;
-            border: 1px solid #dee2e6;
-            border-radius: .5rem;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            color: #334155;
+            line-height: 1.8;
         }
 
-        .impact-card .icon {
-            font-size: 2.5rem;
-            color: #0d6efd;
+        .hero-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(241, 245, 249, 0.9) 100%), url('../images/line-chat-hero.png') no-repeat center center;
+            background-size: cover;
+            padding: 5rem 0;
+            border-bottom: 1px solid #e2e8f0;
         }
 
-        .gallery-img {
-            cursor: pointer;
+        .hero-badge {
+            background-color: #eff6ff;
+            color: #2563eb;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 30px;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: var(--primary-color);
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid #f1f5f9;
+            height: 100%;
             transition: transform 0.2s;
         }
 
-        .gallery-img:hover {
-            transform: scale(1.05);
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
-        .img-bordered {
-            border: 1px solid #dee2e6;
-            padding: 5px;
-            border-radius: 0.375rem;
+        .stat-value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #2563eb, #0891b2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-padding {
+            padding: 5rem 0;
         }
 
         .floating-toggle-btn {
@@ -74,276 +93,235 @@
             padding: 1rem 0.5rem;
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
-            box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: -4px 4px 15px rgba(0, 0, 0, 0.1);
+            background: #1e293b;
+            color: white;
+            border: none;
+        }
+
+        .floating-toggle-btn:hover {
+            background: #0f172a;
+            color: white;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: #dbeafe;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
         }
     </style>
 </head>
 
 <body>
-    <a href="line-chat-record-ai-summary.html" class="btn btn-dark floating-toggle-btn" title="切換至技術視角說明">
-        <i class="bi bi-code-slash"></i> 技術視角說明
+    <a href="line-chat-record-ai-summary.html" class="btn floating-toggle-btn" title="切換至技術視角">
+        <i class="bi bi-code-slash"></i> Technical View
     </a>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="../index.html">♾️ 首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../blog.html">✈️分享</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
 
-    <main>
-        <section class="hero-section text-center">
-            <div class="container">
-                <h1 class="display-4">從雜亂到清晰：地端 AI 如何重塑 Line 群組溝通並確保隱私</h1>
-                <p class="lead col-lg-8 mx-auto">一個利用<strong>地端 AI</strong> 將 Line
-                    對話自動轉化為每日摘要的解決方案，不僅將團隊從資訊焦慮中解放，更<strong>確保了對話內容的絕對機密</strong>。</p>
-            </div>
-        </section>
-
-        <section class="container mt-5 py-5">
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-
-                    <!-- Challenge & Solution Summary -->
-                    <div class="row g-4 mb-5">
-                        <div class="col-md-6">
-                            <div class="impact-card h-100 p-4" style="border-left: 4px solid #ef4444;">
-                                <h3 class="h4 text-danger mb-3"><i class="bi bi-fire me-2"></i>The Challenge</h3>
-                                <p class="text-secondary">
-                                    「Line 群組是現代團隊的溝通利器，但也是資訊黑洞。重要決策常被淹沒在海量訊息中，且人工整理摘要既耗時又無法保證品質，導致資訊不同步。」
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="impact-card h-100 p-4" style="border-left: 4px solid #22c55e;">
-                                <h3 class="h4 text-success mb-3"><i class="bi bi-check-circle-fill me-2"></i>The
-                                    Solution</h3>
-                                <p class="text-secondary">
-                                    「打造一位 7x24 小時的『AI 智慧助理』。它能自動讀取對話，利用<strong>地端 AI</strong>
-                                    精準提煉重點與待辦事項，並每日準時寄送結構化日報。這將團隊從低價值的整理工作中解放，同時確保了商業機密的絕對安全。」
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 1. The Challenge -->
-                    <div class="text-center mb-5">
-                        <h2 class="h1 mb-3"><i class="bi bi-exclamation-octagon-fill text-danger me-2"></i>痛點：被群組訊息淹沒的絕望
-                        </h2>
-                        <p class="lead text-muted">Line 群組是現代團隊不可或缺的工具，但它也帶來了新的挑戰。當群組跟對話量暴增，重要資訊就如同漂浮在汪洋中的瓶中信，難以捕捉。</p>
-                    </div>
-                    <div class="row text-center mb-5">
-                        <div class="col-md-4">
-                            <h4><i class="bi bi-eye-slash-fill me-2"></i>資訊遺漏</h4>
-                            <p>重要的決策、待辦事項、客戶回饋，很容易在快速滾動的訊息中被忽略，導致專案延誤或錯誤。</p>
-                        </div>
-                        <div class="col-md-4">
-                            <h4><i class="bi bi-clock-fill me-2"></i>時間浪費</h4>
-                            <p>每天需花費大量時間回溯對話，手動整理摘要，這項工作既耗時又缺乏價值。</p>
-                        </div>
-                        <div class="col-md-4">
-                            <h4><i class="bi bi-person-exclamation-fill me-2"></i>溝通不同步</h4>
-                            <p>不是每個人都有時間看完所有訊息，導致團隊成員間資訊不對稱，影響協作效率與決策品質。</p>
-                        </div>
-                    </div>
-
-                    <div class="alert alert-success mt-4" role="alert">
-                        <h4 class="alert-heading"><i class="bi bi-shield-check me-2"></i>核心優勢：確保資料隱私與在地化理解</h4>
-                        <p>如果使用雲端 AI 服務，處理包含敏感資訊的對話紀錄始終存在著資料外洩的風險。為了解決這個根本問題，此方案改為<strong>使用完全在地端部署的 AI 模型，特別整合了聯發科優化的
-                                <a href="https://www.mediatek.com/technology/ai" target="_blank"
-                                    class="alert-link">Breeze-7B</a>
-                                模型</strong>。這不僅確保了資料的絕對私密，更能<strong>精準理解台灣的在地用語、慣例和溝通情境</strong>，讓摘要結果更貼近真實的對話原意。</p>
-                        <hr>
-                        <p class="mb-0">這意味著所有的對話資料都在您自己的環境中進行處理，<strong>絕對不會上傳到外部雲端 AI
-                                服務</strong>。這不僅符合最嚴格的隱私法規與企業資安要求，也讓團隊可以安心地利用 AI 提升效率，無需擔心機密外洩。</p>
-                    </div>
-
-                    <hr class="my-5">
-
-                    <!-- 2. The Solution -->
-                    <div class="text-center mb-5">
-                        <h2 class="h1 mb-3"><i class="bi bi-shield-check text-primary me-2"></i>解決方案：一個確保隱私的 7x24 小時地端
-                            AI 智慧助理</h2>
-                        <p class="lead text-muted">我意識到這個普遍存在的問題後，主動設計並開發了一個「AI 智慧助理」。它透過 n8n
-                            自動化平台，串連雲端儲存、<strong>地端大型語言模型 (On-Premise LLM)</strong>
-                            與電子郵件，打造一個<strong>確保資料隱私</strong>的全自動資訊處理流程。</p>
-                    </div>
-
-                    <!-- Gallery -->
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="workflow-tab" data-bs-toggle="tab"
-                                data-bs-target="#workflow" type="button" role="tab" aria-controls="workflow"
-                                aria-selected="true">自動化流程藍圖</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="input-tab" data-bs-toggle="tab" data-bs-target="#input"
-                                type="button" role="tab" aria-controls="input" aria-selected="false">混亂的輸入</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="output-tab" data-bs-toggle="tab" data-bs-target="#output"
-                                type="button" role="tab" aria-controls="output" aria-selected="false">清晰的產出</button>
-                        </li>
-                    </ul>
-                    <div class="tab-content border border-top-0 p-3 rounded-bottom mb-5">
-                        <div class="tab-pane active" id="workflow" role="tabpanel" aria-labelledby="workflow-tab">
-                            <h5 class="mt-2">自動化流程藍圖 (地端模型)</h5>
-                            <p>這就是 AI 助理的大腦。它自動監控、讀取、並<strong>使用地端的 Ollama
-                                    模型</strong>進行理解與摘要，最後自動派送。整個過程無需人工干預，且確保對話紀錄的機密性。</p>
-                            <img src="../images/LineChatRecord_AI_Summary_workflow.jpg" alt="使用地端 Ollama 模型的 n8n 工作流"
-                                class="img-fluid rounded gallery-img img-bordered">
-                        </div>
-                        <div class="tab-pane" id="input" role="tabpanel" aria-labelledby="input-tab">
-                            <h5 class="mt-2">唯一的輸入：原始對話紀錄</h5>
-                            <p>唯一要做的，就是將 Line 的對話紀錄（一個純文字檔）丟到指定的雲端資料夾。</p>
-                            <img src="../images/line-chat-record-raw-input-example.jpg" alt="Line 上傳對話紀錄文字檔範例"
-                                class="img-fluid rounded img-bordered">
-                        </div>
-                        <div class="tab-pane" id="output" role="tabpanel" aria-labelledby="output-tab">
-                            <h5 class="mt-2">每日的清晰產出：HTML 郵件摘要</h5>
-                            <p>AI 助理會自動將摘要整理成一份精美、易讀的 HTML 報告，包含「重點摘要」和「待辦事項」，每日準時送到團隊成員的信箱。</p>
-                            <img src="../images/LineChatRecord_AI_Summary_output.jpg" alt="HTML 郵件輸出"
-                                class="img-fluid rounded gallery-img img-bordered">
-                        </div>
-                    </div>
-
-                    <hr class="my-5">
-
-                    <!-- 3. The Impact -->
-                    <div class="text-center mb-5">
-                        <h2 class="h1 mb-3"><i class="bi bi-gem text-success me-2"></i>影響：創造可量化的商業價值</h2>
-                        <p class="lead text-muted">這個解決方案不僅提升了效率，更為溝通品質與決策能力帶來了實質的商業效益。</p>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="impact-card text-center h-100">
-                                <div class="icon"><i class="bi bi-person-check-fill"></i></div>
-                                <h4 class="mt-3">釋放高價值人力</h4>
-                                <p class="display-6 fw-bold">100%</p>
-                                <p class="text-muted">將每日近半小時的整理時間降至零，更能專注於策略規劃、客戶溝通等更具價值的任務。</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="impact-card text-center h-100">
-                                <div class="icon"><i class="bi bi-card-checklist"></i></div>
-                                <h4 class="mt-3">提升任務準確性</h4>
-                                <p class="display-6 fw-bold">60%+</p>
-                                <p class="text-muted">透過 AI 自動生成待辦清單，有效減少因人工遺漏而導致的任務延誤或錯誤，提升專案執行力。</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="impact-card text-center h-100">
-                                <div class="icon"><i class="bi bi-lightbulb-fill"></i></div>
-                                <h4 class="mt-3">加速資訊獲取</h4>
-                                <p class="display-6 fw-bold">2x</p>
-                                <p class="text-muted">能快速掌握每日進展與關鍵議題，無需人工整理提取，讓解讀大量訊息的速度加倍。</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr class="my-5">
-
-                    <!-- 4. My Role & Skills -->
-                    <div class="mb-5">
-                        <h2 class="text-center h1 mb-4">我的角色與貢獻</h2>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><i
-                                    class="bi bi-search me-2 text-primary"></i><strong>商業痛點洞察:</strong>
-                                敏銳地識別出團隊在日常溝通中普遍存在的效率瓶頸，並將其轉化為一個可透過技術解決的商業問題。</li>
-                            <li class="list-group-item"><i class="bi bi-lightbulb me-2 text-primary"></i><strong>AI
-                                    解決方案設計:</strong> 提出將大型語言模型（LLM）應用於工作流程的想法，並設計出從資料輸入到價值產出的完整 AI 應用藍圖。</li>
-                            <li class="list-group-item"><i
-                                    class="bi bi-diagram-3-fill me-2 text-primary"></i><strong>端到端流程建構:</strong>
-                                獨立完成整個自動化流程的開發、測試與部署，串連多個系統，確保方案穩定可靠。</li>
-                            <li class="list-group-item"><i
-                                    class="bi bi-graph-up-arrow me-2 text-primary"></i><strong>價值導向思維:</strong>
-                                始終從「為團隊創造價值」的角度出發，專注於解決方案能否帶來實際的效率提升與溝通改善。</li>
-                        </ul>
-                    </div>
-
-                    <!-- 5. Tech Stack -->
-                    <div class="text-center mb-5">
-                        <h3 class="h4 mb-3">使用的技術</h3>
-                        <div>
-                            <span class="badge text-bg-primary fs-6 me-2">n8n</span>
-                            <span class="badge text-bg-info fs-6 me-2">Ollama (地端模型)</span>
-                            <span class="badge text-bg-success fs-6 me-2">Google Drive</span>
-                            <span class="badge text-bg-danger fs-6 me-2">Gmail</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- LinkedIn Discussion Section -->
-    <section class="bg-light py-5 border-top">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <i class="bi bi-linkedin" style="font-size: 3rem; color: #0077b5;"></i>
-                    <h2 class="h3 mt-3 mb-3">💬 想要討論或分享你的想法？</h2>
-                    <p class="text-muted mb-4">
-                        歡迎到我的 LinkedIn 文章留言，與我和其他讀者一起交流討論！
-                        無論是對這個案例的看法、你的實作經驗，或是任何問題，都歡迎分享。
+            <a class="navbar-brand fw-bold" href="../index.html">Luke Hou</a>
+            <div class="ms-auto">
+                <a href="../portfolio.html" class="btn btn-sm btn-outline-secondary rounded-pill px-4">Portfolio</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <span class="hero-badge">Business Case Study</span>
+                    <h1 class="display-4 mb-4">將雜亂的溝通訊息<br>轉化為<span class="text-primary">決策資產</span></h1>
+                    <p class="lead text-secondary mb-5">
+                        透過安全的<strong>內部部署 (On-Premise) AI</strong> 技術，解決通訊軟體資訊破碎化問題。
+                        在確保<strong>商業機密零外洩</strong>的前提下，實現團隊溝通的自動化摘要與任務追蹤。
                     </p>
-                    <a href="https://www.linkedin.com/posts/junjia-hou_ai-automation-line-activity-7390388993550409728-P6qE?utm_source=share&utm_medium=member_desktop&rcm=ACoAABIG390B3PtuoWttOVVAfWMw9172dduGwSA"
-                        class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer">
-                        <i class="bi bi-linkedin me-2"></i>前往 LinkedIn 討論
-                    </a>
+                    <div class="d-flex gap-3">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-shield-check text-success fs-4 me-2"></i>
+                            <span class="fw-bold text-dark">Enterprise Grade Privacy</span>
+                        </div>
+                        <div class="d-flex align-items-center ms-4">
+                            <i class="bi bi-lightning-charge text-warning fs-4 me-2"></i>
+                            <span class="fw-bold text-dark">10x Efficiency</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block text-center">
+                    <img src="../images/line-chat-hero.png" alt="Secure AI Dashboard"
+                        class="img-fluid rounded-4 shadow-lg" style="transform: perspective(1000px) rotateY(-5deg);">
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-white mt-5 py-4 border-top">
-        <div class="container text-center">
-            <a href="../portfolio.html" class="btn btn-outline-primary mb-3"><i
-                    class="bi bi-arrow-left-circle me-2"></i>返回作品</a>
-            <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Image Modal -->
-    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-0">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- Stats -->
+    <section class="section-padding bg-white">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <div class="stat-value">100%</div>
+                        <h3 class="h5">Data Privacy</h3>
+                        <p class="text-muted small">資料完全在地端處理，無任何雲端 API 傳輸，符合最高資安標準。</p>
+                    </div>
                 </div>
-                <div class="modal-body text-center">
-                    <img src="" class="img-fluid" id="modalImage" alt="Project Image">
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <div class="stat-value">5hr+</div>
+                        <h3 class="h5">Weekly Time Saved</h3>
+                        <p class="text-muted small">每位專案經理每週節省的整理時間，釋放高價值人力資源。</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <div class="stat-value">0</div>
+                        <h3 class="h5">Information Missed</h3>
+                        <p class="text-muted small">AI 自動擷取關鍵待辦事項，確保沒有重要決策被訊息洪流淹沒。</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Problem & Solution -->
+    <section class="section-padding bg-light">
+        <div class="container">
+            <div class="row align-items-center mb-5">
+                <div class="col-lg-6 pe-lg-5">
+                    <div class="feature-icon"><i class="bi bi-exclamation-triangle"></i></div>
+                    <h2 class="mb-4">溝通的兩難：效率 vs 混亂</h2>
+                    <p class="text-secondary mb-4">
+                        Line 與 Slack 等即時通訊軟體雖然加速了溝通，但也帶來了嚴重的副作用：<strong>資訊碎片化</strong>。
+                        重要決策散落在成千上萬條的對話中，回溯困難，且容易造成團隊認知不同步。
+                    </p>
+                    <p class="text-secondary">
+                        傳統的解決方案是人工整理日報，這不僅昂貴（占用高薪 PM 的時間），而且容易出錯。
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="bg-white p-5 rounded-4 shadow-sm border">
+                        <h4 class="mb-4 fw-bold">傳統人工整理的隱形成本</h4>
+                        <ul class="list-unstyled">
+                            <li class="mb-3 d-flex align-items-start">
+                                <i class="bi bi-x-circle text-danger me-3 mt-1"></i>
+                                <div>
+                                    <strong>人力成本高昂</strong>
+                                    <p class="small text-muted mb-0">每日耗費 30-60 分鐘/人。</p>
+                                </div>
+                            </li>
+                            <li class="mb-3 d-flex align-items-start">
+                                <i class="bi bi-x-circle text-danger me-3 mt-1"></i>
+                                <div>
+                                    <strong>主觀偏誤</strong>
+                                    <p class="small text-muted mb-0">人工篩選可能遺漏關鍵細節。</p>
+                                </div>
+                            </li>
+                            <li class="mb-3 d-flex align-items-start">
+                                <i class="bi bi-x-circle text-danger me-3 mt-1"></i>
+                                <div>
+                                    <strong>資安風險</strong>
+                                    <p class="small text-muted mb-0">若使用外部免費 AI 工具整理，有洩密風險。</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row align-items-center mt-5">
+                <div class="col-lg-6 order-lg-2 ps-lg-5">
+                    <div class="feature-icon bg-indigo-100 text-indigo-600"
+                        style="background-color: #e0e7ff; color: #4338ca;"><i class="bi bi-robot"></i></div>
+                    <h2 class="mb-4">我們的解決方案：安全的地端 AI 引擎</h2>
+                    <p class="text-secondary mb-4">
+                        我們構建了一套自動化工作流，利用<strong>地端運行的 AI 模型 (Local LLM)</strong> 來扮演虛擬秘書。
+                        它能 24 小時監控對話紀錄，自動提煉重點，並生成結構化的日報。
+                    </p>
+                    <a href="line-chat-record-ai-summary.html"
+                        class="btn btn-outline-primary rounded-pill px-4">查看技術實作細節 <i
+                            class="bi bi-arrow-right ms-2"></i></a>
+                </div>
+                <div class="col-lg-6 order-lg-1">
+                    <img src="../images/LineChatRecord_AI_Summary_output.jpg"
+                        class="img-fluid rounded-4 shadow-lg border" alt="Solution Output">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table (Business) -->
+    <section class="section-padding bg-white">
+        <div class="container">
+            <h2 class="text-center mb-5">為什麼選擇「地端 AI」方案？</h2>
+            <div class="table-responsive">
+                <table class="table table-hover border align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" class="py-3 ps-4">評估維度</th>
+                            <th scope="col" class="py-3 text-primary fw-bold">地端 AI (本方案)</th>
+                            <th scope="col" class="py-3 text-muted">公有雲 AI (ChatGPT 等)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="ps-4 fw-bold">資料隱私風險</td>
+                            <td>
+                                <span
+                                    class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3">極低
+                                    (Zero Trust)</span>
+                                <div class="small text-muted mt-1">資料從未離開公司內部網路</div>
+                            </td>
+                            <td>
+                                <span
+                                    class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-3">高</span>
+                                <div class="small text-muted mt-1">資料需上傳至第三方伺服器</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ps-4 fw-bold">長期營運成本</td>
+                            <td>
+                                <span
+                                    class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3">固定
+                                    (硬體攤提)</span>
+                            </td>
+                            <td>
+                                <span
+                                    class="badge bg-warning-subtle text-warning border border-warning-subtle rounded-pill px-3">浮動
+                                    (按量計費)</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ps-4 fw-bold">知識庫客製化</td>
+                            <td>
+                                <span class="d-block">可針對企業術語微調 (Fine-tuning)</span>
+                            </td>
+                            <td>
+                                <span class="d-block">受限於通用模型能力</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white border-top py-5">
+        <div class="container text-center text-secondary">
+            <p class="mb-0">© 2025 Luke Hou. Business Case Study.</p>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
-            const modalImage = document.getElementById('modalImage');
-
-            document.querySelectorAll('.gallery-img').forEach(img => {
-                img.addEventListener('click', function () {
-                    modalImage.src = this.src;
-                    imageModal.show();
-                });
-            });
-        });
-    </script>
 </body>
 
 </html>

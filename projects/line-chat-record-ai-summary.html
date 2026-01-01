@@ -4,56 +4,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>專案: Line 對話紀錄 AI 摘要 - Luke的作品</title>
-    <meta name="description" content="此 n8n 工作流自動讀取 Line 對話紀錄，利用 AI 生成每日重點摘要、待辦事項，並以精美的 HTML 格式寄送到指定信箱，大幅節省人工整理時間。">
-    <meta name="keywords" content="n8n, AI, GPT, Google Drive, Gmail, 自動化, Line, 對話紀錄, Luke Hou, 侯俊嘉">
+    <title>專案: Line 對話紀錄地端 AI 自動摘要 - Luke的作品</title>
+    <meta name="description" content="利用 n8n 串接 Ollama 地端模型，自動監控並摘要 Line 對話紀錄。一個確保隱私、零外洩的自動化工作流實作教學。">
+    <meta name="keywords" content="n8n, Ollama, Local AI, Privacy, Automation, Line Chat, Luke Hou">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../css/style.css">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-0V2L1DQVPY');
+    <!-- Mermaid JS -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
     </script>
     <style>
+        :root {
+            --primary-accent: #10b981;
+            /* Emerald Green for "Safe/Local" */
+            --secondary-accent: #3b82f6;
+            /* Blue for Tech */
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, "Microsoft JhengHei", sans-serif;
+            background-color: #0f172a;
+            /* Slate 900 */
+        }
+
         .project-hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../images/RAG-for-Traditional-Chinese.jpeg') no-repeat center center;
+            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.8)), url('../images/line-chat-hero.png') no-repeat center center;
             background-size: cover;
-            padding: 4rem 0;
+            padding: 6rem 0;
             color: white;
+            border-bottom: 1px solid #1e293b;
         }
 
-        .project-hero h1 {
-            font-weight: 700;
-        }
-
-        .summary-card {
-            position: sticky;
-            top: 20px;
-        }
-
-        .tech-badge {
+        .hero-tag {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            padding: 5px 15px;
+            border-radius: 20px;
             font-size: 0.9rem;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
-        .gallery-img {
-            cursor: pointer;
-            transition: transform 0.2s;
+        .feature-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 2rem;
+            height: 100%;
+            transition: transform 0.2s, border-color 0.2s;
         }
 
-        .gallery-img:hover {
-            transform: scale(1.05);
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-accent);
         }
 
-        .img-bordered {
-            border: 1px solid var(--bs-border-color);
-            padding: 5px;
-            border-radius: 0.375rem;
+        .section-title {
+            color: #f8fafc;
+            border-left: 5px solid var(--primary-accent);
+            padding-left: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .tech-stack-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Custom Scrollbar for Code blocks if needed */
+        pre {
+            background: #020617;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 1.5rem;
+            color: #e2e8f0;
         }
 
         .floating-toggle-btn {
@@ -67,29 +96,52 @@
             padding: 1rem 0.5rem;
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
-            box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.3);
+            background-color: var(--primary-accent);
+            border: none;
+        }
+
+        .floating-toggle-btn:hover {
+            background-color: #059669;
+            color: white;
+        }
+
+        .mermaid-container {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            text-align: center;
+            margin-bottom: 30px;
         }
     </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-0V2L1DQVPY');
+    </script>
 </head>
 
 <body>
-    <a href="line-chat-record-ai-summary-business.html" class="btn btn-primary floating-toggle-btn" title="切換至商業視角說明">
-        <i class="bi bi-briefcase-fill"></i> 商業視角說明
+    <a href="line-chat-record-ai-summary-business.html" class="btn btn-primary floating-toggle-btn" title="切換至商業視角">
+        <i class="bi bi-briefcase-fill"></i> Business View
     </a>
+
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent fixed-top" style="backdrop-filter: blur(10px);">
             <div class="container">
-                <a class="navbar-brand" href="../index.html">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand font-monospace" href="../index.html">> Luke Hou_</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="../index.html">♾️ 首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">⚡教學</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">📚作品</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../blog.html">✈️分享</a></li>
+                    <ul class="navbar-nav ms-auto small fw-bold text-uppercase">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">Tutorials</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">Portfolio</a></li>
                     </ul>
                 </div>
             </div>
@@ -97,432 +149,214 @@
     </header>
 
     <main>
-        <section class="project-hero text-center">
+        <!-- Hero Section -->
+        <section class="project-hero text-center d-flex align-items-center">
             <div class="container">
-                <h1 class="display-4">Line 對話紀錄地端 AI 自動摘要</h1>
-                <p class="lead">從散亂的對話到結構化的每日報告，實現全自動監控、<strong>使用地端 AI
-                        摘要</strong>、郵件派送的智慧工作流，<strong>確保資料絕不外洩</strong>。</p>
+                <span class="hero-tag"><i class="bi bi-shield-lock-fill me-2"></i>100% Local AI Processing</span>
+                <h1 class="display-3 fw-bold mb-4">Line 對話紀錄地端自動化摘要</h1>
+                <p class="lead text-light opacity-75 mb-5 mx-auto" style="max-width: 800px;">
+                    一個基於 <strong>n8n + Ollama</strong> 的隱私優先架構。從 Google Drive 自動觸發，
+                    經由本地 LLM 分析，到結構化報告派送，實現資料絕不外流的智慧工作流。
+                </p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="#tutorial" class="btn btn-outline-light px-4 py-2 rounded-pill">察看實作教學</a>
+                    <a href="#architecture"
+                        class="btn btn-primary px-4 py-2 rounded-pill bg-emerald-600 border-0">系統架構圖</a>
+                </div>
             </div>
         </section>
 
-        <section class="container mt-5">
-            <div class="row">
-                <!-- Main Content -->
-                <div class="col-lg-8">
-                    <div class="card bg-transparent border-0">
-                        <div class="card-body px-0">
+        <div class="container py-5">
 
-                            <!-- Challenge & Solution Summary -->
-                            <div class="row g-4 mb-5">
-                                <div class="col-md-6">
-                                    <div class="glass-card h-100 p-4" style="border-left: 4px solid #ef4444;">
-                                        <h3 class="h4 text-danger mb-3"><i class="bi bi-fire me-2"></i>The Challenge
-                                        </h3>
-                                        <p class="text-gray">
-                                            「Line 群組訊息量大且雜亂，人工整理每日摘要耗時費力（每天 30-60 分鐘），且容易遺漏關鍵決策或待辦事項。」
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="glass-card h-100 p-4" style="border-left: 4px solid #22c55e;">
-                                        <h3 class="h4 text-success mb-3"><i class="bi bi-check-circle-fill me-2"></i>The
-                                            Solution</h3>
-                                        <p class="text-gray">
-                                            「構建一個 n8n 自動化工作流，監控 Google Drive 中的對話紀錄，並串接<strong>地端 AI 模型
-                                                (Ollama)</strong> 進行摘要生成。這不僅實現了全自動化的日報產出，更確保了敏感對話資料絕不外洩。」
-                                        </p>
-                                    </div>
+            <!-- Architecture Diagram -->
+            <section id="architecture" class="mb-5">
+                <h2 class="section-title h3">Privacy-First Architecture</h2>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="mermaid-container">
+                            <pre class="mermaid">
+graph LR
+    subgraph Cloud [External Cloud]
+        User((User)) -- "Upload txt" --> Drive[Google Drive]
+        Drive -- "File Created Trigger" --> n8n
+        n8n -- "Send HTML Email" --> Gmail[Gmail]
+        Gmail -- "Report" --> User
+    end
+
+    subgraph Local [Secure Local Network]
+        n8n[n8n Workflow Engine] -- "Raw Text" --> Pre[Data Pre-processing]
+        Pre -- "Recent Context" --> Agent[AI Agent]
+        Agent -- "Prompt" --> Ollama["<br>🦙 Ollama Server<br>(Breeze-7B-Instruct)"]
+        Ollama -- "Summary & Action Items" --> Agent
+        Agent -- "HTML Output" --> n8n
+    end
+
+    style Local fill:#0f172a,stroke:#10b981,stroke-width:2px,color:#fff
+    style Cloud fill:#1e293b,stroke:#3b82f6,stroke-dasharray: 5 5,color:#cbd5e1
+    style Ollama fill:#10b981,color:#000
+</pre>
+                            <p class="text-muted small mt-2">Data Flow Diagram: 敏感資料處理完全限制在 Local 區域內，僅最終結果透過 Gmail 發送。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="feature-card">
+                            <h4 class="h5 mb-3 text-white">為什麼選擇此架構？</h4>
+                            <ul class="list-unstyled text-secondary">
+                                <li class="mb-3"><i
+                                        class="bi bi-check-circle-fill text-success me-2"></i><strong>零雲端洩漏：</strong>
+                                    原始對話紀錄不會傳送給 OpenAI 或 Claude，避免商業機密外洩。</li>
+                                <li class="mb-3"><i
+                                        class="bi bi-check-circle-fill text-success me-2"></i><strong>成本可控：</strong>
+                                    使用地端運算資源，無 API 呼叫費用。</li>
+                                <li class="mb-3"><i
+                                        class="bi bi-check-circle-fill text-success me-2"></i><strong>高度客製：</strong>
+                                    可替換任何 Ollama 支援的模型 (Llama3, Mistral, Breeze-7B)。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Project Gallery -->
+            <section class="mb-5">
+                <h2 class="section-title h3">Project Gallery</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="feature-card p-3">
+                            <h5 class="h6 text-primary mb-3">1. Raw Input (.txt)</h5>
+                            <img src="../images/line-chat-record-raw-input-example.jpg"
+                                class="img-fluid rounded border border-secondary" alt="Raw Chat Log">
+                            <p class="small text-secondary mt-2">未經處理的 Line 對話紀錄純文字檔。</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card p-3">
+                            <h5 class="h6 text-primary mb-3">2. n8n Workflow</h5>
+                            <img src="../images/LineChatRecord_AI_Summary_workflow.jpg"
+                                class="img-fluid rounded border border-secondary" alt="n8n Workflow">
+                            <p class="small text-secondary mt-2">自動化流程圖：監控、下載、AI 分析、發送。</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card p-3">
+                            <h5 class="h6 text-primary mb-3">3. HTML Output</h5>
+                            <img src="../images/LineChatRecord_AI_Summary_output.jpg"
+                                class="img-fluid rounded border border-secondary" alt="Final Email HTML">
+                            <p class="small text-secondary mt-2">AI 生成的結構化 HTML 日報郵件。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Implementation Guide -->
+            <section id="tutorial" class="mb-5">
+                <h2 class="section-title h3">Developer Implementation Guide</h2>
+                <p class="text-secondary mb-4">以下是構建此工作流的技術細節步驟。</p>
+
+                <div class="accordion" id="techAccordion">
+                    <!-- Step 1 -->
+                    <div class="accordion-item bg-dark border-secondary">
+                        <h2 class="accordion-header" id="h1">
+                            <button class="accordion-button bg-dark text-white" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#c1">
+                                <span class="badge bg-primary me-3">Step 1</span> 搭建 Ollama 本地服務
+                            </button>
+                        </h2>
+                        <div id="c1" class="accordion-collapse collapse show" data-bs-parent="#techAccordion">
+                            <div class="accordion-body text-secondary">
+                                <p>首先確保本地環境已安裝 Ollama 並且模型正在運行。</p>
+                                <pre><code># 1. 下載並安裝 Ollama (https://ollama.com)
+
+# 2. 拉取繁體中文優化模型 (MediaTek Breeze-7B)
+ollama pull ycchen/breeze-7b-instruct-v1_0
+
+# 3. 測試運行
+ollama run ycchen/breeze-7b-instruct-v1_0 "你好，請自我介紹"</code></pre>
+                                <div class="alert alert-info border-0 bg-opacity-10 bg-info small">
+                                    <i class="bi bi-info-circle me-2"></i><strong>Tip:</strong> 若 n8n 跑在 Docker
+                                    中，需確保能存取宿主機的 <code>http://host.docker.internal:11434</code>。
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                            <h2 class="card-title h3 mb-3"><i
-                                    class="bi bi-exclamation-triangle-fill me-2"></i>專案緣起：混亂的群組對話地獄</h2>
-                            <p>在快節奏的專案中，LINE 群組是快速溝通的利器，但也是資訊的黑洞。無數個群組，每天數百則訊息，涵蓋了決策、問題、待辦事項，如果沒有專人整理，重要資訊很快就會被淹沒。</p>
-                            <p>手動整理耗時費力，且容易出錯。人工處理每天至少要花 30-60 分鐘回顧、複製、貼上重點，才能整理出一份勉強可讀的日報。這個過程不僅枯燥，也佔用了處理更重要事務的時間。</p>
-                            <p>為了解決這個痛點，我利用 n8n 和大型語言模型（LLM）打造了這個自動化工作流，目標是：</p>
-                            <ul>
-                                <li><b>低人工介入：</b> 只要上傳對話紀錄到雲端硬碟，從檔案監控到郵件寄送，全程自動化。</li>
-                                <li><b>高品質摘要：</b> AI 自動提煉重點、整理待辦事項，產出結構化報告並發送郵件。</li>
-                                <li><b>即時性：</b> 檔案上傳後，流程自動觸發，確保資訊傳遞的及時性。</li>
-                            </ul>
-                            <p>這個工作流不僅解決了單一專案的問題，更能輕易地複製到任何需要整理對話紀錄的團隊，最大化溝通效率。</p>
-
-                            <div class="alert alert-success mt-4" role="alert">
-                                <h4 class="alert-heading"><i class="bi bi-shield-check me-2"></i>資安壁壘：透過地端 AI
-                                    確保資料隱私與在地化理解</h4>
-                                <p>如果將包含敏感資訊的對話紀錄傳送給外部 LLM 服務，存在著隱私外洩的風險。為了解決此問題，這個工作流改為串接<strong>在本地運行的
-                                        Ollama，並特別選用聯發科優化的 <a href="https://www.mediatek.com/technology/ai"
-                                            target="_blank" class="alert-link">Breeze-7B</a>
-                                        模型</strong>。它更能理解台灣的在地用語和溝通情境，讓摘要結果更精準、更貼近真實對話的原意。</p>
-                                <hr>
-                                <p class="mb-0">這代表所有的 AI 運算都在您自己的機器上完成，<strong>對話紀錄不會餵給外部
-                                        AI</strong>。這不僅解決了隱私問題，也讓此解決方案能真正應用於處理機密資訊的商業環境中。</p>
-                            </div>
-
-                            <hr class="my-4">
-
-                            <h2 class="h3 mb-3"><i class="bi bi-arrows-fullscreen me-2"></i>理念核心：一個監控、處理、本地生成、派送的隱私安全閉環
-                            </h2>
-                            <p>此 n8n 工作流的核心思想是「監控、處理、生成、派送」，並將最關鍵的「生成」步驟保留在本地端，將繁瑣的文書工作轉化為一個兼具效率與安全性的自動化系統。</p>
-
-                            <ol>
-                                <li><b>雲端監控 (Google Drive Trigger):</b> 工作流的起點是一個 Google Drive 觸發器。它會持續監控指定的雲端資料夾，一旦有新的
-                                    Line 對話紀錄（.txt 檔案）被上傳，便立即啟動整個流程。</li>
-                                <li><b>檔案處理 (Download & Extract):</b> 觸發後，工作流會自動下載該文字檔，並從中提取純文字內容，為後續的 AI 分析做準備。</li>
-                                <li><b>智慧預處理 (Code Node):</b> 為了讓 AI
-                                    能更精準地摘要，這個節點扮演了關鍵角色。它會讀取對話紀錄，自動找出最近的日期，並往前抓取三天的對話內容。這確保了 AI
-                                    摘要的範圍是最新且相關的，避免了不必要的資訊干擾。</li>
-                                <li><b>地端 AI 核心 (AI Agent + Ollama):</b> 這是工作流的大腦，也是資安防護的重點。預處理後的文字被送到一個 AI
-                                    Agent，但其背後連接的不再是雲端 LLM，而是<strong>在本地運行的 Ollama Chat Model</strong>。透過精心設計的
-                                    Prompt，我們指示 AI 扮演一位「專業的專案助理」，在確保資料不出本地網路的前提下，將對話紀錄整理成包含【本日重點摘要】、【本日待辦事項】和【對話事項】的
-                                    HTML 格式報告。</li>
-                                <li><b>郵件派送 (Gmail Node):</b> AI 生成精美的 HTML 報告後，此節點會自動將其作為郵件內容，寄送給預設的收件人列表（如專案經理、團隊主管等）。
-                                </li>
-                                <li><b>檔案刪除 (Delete File):</b> 為確保對話檔案不被保留，郵件成功寄出後，工作流會將原始的對話紀錄檔案從雲端刪除，完成整個閉環。</li>
-                                <li><b>即時通知 (Telegram Node):</b> 流程成功結束或發生任何錯誤時，都會透過 Telegram 發送通知給我，確保我能隨時掌握系統的運行狀態。
-                                </li>
-                            </ol>
-
-                            <hr class="my-4">
-
-                            <h2 class="h3 mb-3"><i class="bi bi-kanban me-2"></i>工作流展示</h2>
-                            <p class="text-muted">點擊下方頁籤，查看此工作流的實際運行示意：</p>
-
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="workflow-tab" data-bs-toggle="tab"
-                                        data-bs-target="#workflow" type="button" role="tab" aria-controls="workflow"
-                                        aria-selected="true">n8n 工作流</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="input-tab" data-bs-toggle="tab" data-bs-target="#input"
-                                        type="button" role="tab" aria-controls="input" aria-selected="false">輸入
-                                        (純文字)</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="output-tab" data-bs-toggle="tab"
-                                        data-bs-target="#output" type="button" role="tab" aria-controls="output"
-                                        aria-selected="false">輸出 (HTML 郵件)</button>
-                                </li>
-                            </ul>
-
-                            <!-- Tab panes -->
-                            <div class="tab-content border border-top-0 p-3 rounded-bottom mb-4">
-                                <div class="tab-pane active" id="workflow" role="tabpanel"
-                                    aria-labelledby="workflow-tab">
-                                    <h5 class="mt-2">n8n 整體工作流 (Ollama 地端模型版本)</h5>
-                                    <p>從監控 Google Drive、下載檔案、<strong>透過 Ollama 在本地進行 AI 摘要</strong>、寄送
-                                        Gmail，到最後的檔案刪除與通知，所有步驟清晰可見，且 AI 處理全都在本地完成。</p>
+                    <!-- Step 2 -->
+                    <div class="accordion-item bg-dark border-secondary">
+                        <h2 class="accordion-header" id="h2">
+                            <button class="accordion-button collapsed bg-dark text-white" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#c2">
+                                <span class="badge bg-primary me-3">Step 2</span> n8n Workflow 設定
+                            </button>
+                        </h2>
+                        <div id="c2" class="accordion-collapse collapse" data-bs-parent="#techAccordion">
+                            <div class="accordion-body text-secondary">
+                                <p>核心節點配置邏輯：</p>
+                                <ol>
+                                    <li class="mb-2"><strong>Google Drive Trigger:</strong> 事件設為
+                                        <code>File Created</code>，指定監控資料夾。
+                                    </li>
+                                    <li class="mb-2"><strong>Code Node:</strong> 用於預處理純文字，篩選近 3 日對話，減少 Token 使用量。</li>
+                                    <li class="mb-2"><strong>AI Agent:</strong>
+                                        <ul>
+                                            <li>Model 輸入連接 <strong>Ollama Chat Model</strong> 節點。</li>
+                                            <li>Prompt 設定角色為「專案經理」，要求輸出 HTML 格式。</li>
+                                        </ul>
+                                    </li>
+                                </ol>
+                                <div class="text-center mt-3">
                                     <img src="../images/LineChatRecord_AI_Summary_workflow.jpg"
-                                        alt="使用 Ollama 地端模型的 n8n 工作流"
-                                        class="img-fluid rounded gallery-img img-bordered">
-                                </div>
-                                <div class="tab-pane" id="input" role="tabpanel" aria-labelledby="input-tab">
-                                    <h5 class="mt-2">輸入源：Line 對話紀錄 (.txt)</h5>
-                                    <p>使用者只需將從 Line 匯出的純文字對話紀錄上傳到指定的 Google Drive 資料夾即可。</p>
-                                    <img src="../images/line-chat-record-raw-input-example.jpg" alt="Line 原始對話紀錄文字檔範例"
-                                        class="img-fluid rounded img-bordered">
-                                </div>
-                                <div class="tab-pane" id="output" role="tabpanel" aria-labelledby="output-tab">
-                                    <h5 class="mt-2">產出成果：結構化的 HTML 郵件 </h5>
-                                    <p>AI 自動將雜亂的對話整理成專業、易讀的日報，包含重點摘要與待辦事項，直接寄送到你的信箱。(已用假資料取代)</p>
-                                    <img src="../images/LineChatRecord_AI_Summary_output.jpg" alt="HTML 郵件輸出"
-                                        class="img-fluid rounded gallery-img img-bordered">
+                                        class="img-fluid rounded border border-secondary" alt="Workflow Screenshot">
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
-                    <hr class="my-5">
-
-                    <section id="tutorial" class="mt-5">
-                        <h2 class="h3 mb-4"><i class="bi bi-mortarboard-fill me-2"></i>從 0 到 1：建立你的地端 AI 對話摘要工作流</h2>
-                        <p class="text-muted">本教學將引導你完成這個 n8n 工作流的關鍵步驟。你需要 n8n 環境、在本機安裝並運行 <a href="https://ollama.com/"
-                                target="_blank">Ollama</a>，並準備好 Google Drive、Gmail 的 API 權限。</p>
-
-                        <div class="accordion" id="n8n-tutorial-accordion">
-
-                            <!-- Step 1: Google Drive Trigger -->
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        <strong>步驟 1：設定雲端監控 (Google Drive Trigger)</strong>
-                                    </button>
-                                </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse show"
-                                    aria-labelledby="headingOne" data-bs-parent="#n8n-tutorial-accordion">
-                                    <div class="accordion-body">
-                                        <p>設定一個監聽 Google Drive 新檔案的觸發器。</p>
-                                        <ol>
-                                            <li>在 n8n 畫布中，新增一個 <strong>Google Drive Trigger</strong> 節點。</li>
-                                            <li>在 <strong>Authentication</strong> 中連結你的 Google 帳號。</li>
-                                            <li>將 <strong>Event</strong> 設定為 <strong>File Created</strong>。</li>
-                                            <li>在 <strong>Folder to Watch</strong> 中，選擇你要監控的 Google Drive 資料夾。</li>
-                                        </ol>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Step 2: Download & Extract -->
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingTwo">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        <strong>步驟 2：下載與提取內容</strong>
-                                    </button>
-                                </h2>
-                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                                    data-bs-parent="#n8n-tutorial-accordion">
-                                    <div class="accordion-body">
-                                        <p>目的是取得檔案的純文字內容。</p>
-                                        <ol>
-                                            <li>新增一個 <strong>Google Drive</strong> 節點，<strong>Operation</strong> 選擇
-                                                <strong>Download</strong>，並從上一步獲取 <strong>File ID</strong>。
-                                            </li>
-                                            <li>接著，新增一個 <strong>Extract from File</strong> 節點，它會自動讀取前一個節點下載的檔案內容並提取純文字。
-                                            </li>
-                                        </ol>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Step 3: Code Node -->
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingThree">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseThree" aria-expanded="false"
-                                        aria-controls="collapseThree">
-                                        <strong>步驟 3：預處理對話 (Code Node)</strong>
-                                    </button>
-                                </h2>
-                                <div id="collapseThree" class="accordion-collapse collapse"
-                                    aria-labelledby="headingThree" data-bs-parent="#n8n-tutorial-accordion">
-                                    <div class="accordion-body">
-                                        <p>用程式碼篩選出近三日的對話，讓 AI 更專注於最新內容。</p>
-                                        <ol>
-                                            <li>新增一個 <strong>Code</strong> 節點。</li>
-                                            <li>貼入篩選日期的 JavaScript 程式碼。</li>
-                                        </ol>
-                                        <pre><code class="language-javascript">
-// 程式碼目的是找出最近日期並往前抓取三天對話
-const rawText = $input.item.json.data;
-// ... (其餘程式碼省略，直接請 AI 生成就好。)
-return [{ json: { processedText: outputLines.join('
-') } }];
-                                        </code></pre>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Step 4: AI Agent with Ollama -->
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingFour">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseFour" aria-expanded="false"
-                                        aria-controls="collapseFour">
-                                        <strong>步驟 4：設定地端 AI 大腦 (AI Agent + Ollama)</strong>
-                                    </button>
-                                </h2>
-                                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
-                                    data-bs-parent="#n8n-tutorial-accordion">
-                                    <div class="accordion-body">
-                                        <p>這是本工作流的核心。我們將用 <strong>Ollama Chat Model</strong> 來驅動 AI Agent，確保資料的私密性。</p>
-                                        <p><strong>事前準備：</strong>請先在您的電腦或伺服器上<a href="https://ollama.com/download"
-                                                target="_blank">安裝 Ollama</a>，並透過指令
-                                            <code>ollama pull ycchen/breeze-7b-instruct-v1_0</code> 下載我們將要使用的繁體中文優化模型。
-                                        </p>
-                                        <ol>
-                                            <li>新增一個 <strong>AI Agent</strong> 節點。</li>
-                                            <li>新增一個 <strong>Ollama Chat Model</strong> 節點，並將其連接到 AI Agent 的 "Language
-                                                Model" 輸入端。</li>
-                                            <li>在 Ollama 節點中，設定 <strong>Base URL</strong> (通常是
-                                                <code>http://localhost:11434</code>) 並在 <strong>Model</strong> 欄位填入
-                                                <code>ycchen/breeze-7b-instruct-v1_0:latest</code>。
-                                            </li>
-                                            <li>在 AI Agent 節點中，將 <strong>Input</strong> 設定為上一步 Code 節點輸出的
-                                                <code>processedText</code>。
-                                            </li>
-                                            <li>在 <strong>Prompt</strong> 區域，貼入與舊版相同的指令即可。AI 的角色、任務、規則和輸出格式定義保持不變。</li>
-                                        </ol>
-                                        <pre><code class="language-text">
-角色： 你是一位專業的 IT 專案助理...
-任務： 根據下方提供的 [對話紀錄]...
-...
-
-[對話紀錄]
-{{ $input.item.json.processedText }}
-                                        </code></pre>
-                                        <p class="mt-2">現在，AI 的所有思考與生成過程都會在你的本地機器上完成！</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Step 5: Gmail -->
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingFive">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseFive" aria-expanded="false"
-                                        aria-controls="collapseFive">
-                                        <strong>步驟 5：自動寄送報告 (Gmail)</strong>
-                                    </button>
-                                </h2>
-                                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
-                                    data-bs-parent="#n8n-tutorial-accordion">
-                                    <div class="accordion-body">
-                                        <p>將 AI 在本地生成的報告寄出。</p>
-                                        <ol>
-                                            <li>新增一個 <strong>Gmail</strong> 節點，設定 API 憑證。</li>
-                                            <li>設定收件人、主旨。</li>
-                                            <li>在 <strong>Message</strong> 欄位，使用表達式 <code>={{ $json.output }}</code> 來引用
-                                                AI Agent 節點生成的 HTML 內容。</li>
-                                        </ol>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Step 6: Move & Notify -->
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingSix">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                                        <strong>步驟 6：檔案刪除與通知</strong>
-                                    </button>
-                                </h2>
-                                <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix"
-                                    data-bs-parent="#n8n-tutorial-accordion">
-                                    <div class="accordion-body">
-                                        <p>完成最後的整理與監控工作。</p>
-                                        <ol>
-                                            <li>新增 <strong>Google Drive</strong> 節點將處理完的檔案刪除。</li>
-                                            <li>(可選) 新增 <strong>Telegram</strong> 節點，用於發送成功或失敗的通知。</li>
-                                        </ol>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </section>
                 </div>
+            </section>
 
-                <!-- Sidebar -->
-                <div class="col-lg-4">
-
-                    <div class="card shadow-sm summary-card bg-body-tertiary">
-                        <div class="card-body">
-                            <h3 class="card-title h5 border-bottom pb-2 mb-3"><i
-                                    class="bi bi-trophy-fill me-2"></i>成果與反思：讓 AI 成為你的專屬、安全的助理</h3>
-                            <p class="text-muted small fst-italic">這個專案的價值在於將先進的 AI 技術以安全、私密的方式應用於解決日常的繁瑣工作。</p>
-                            <ul class="list-unstyled mt-3">
-                                <li class="mb-3 d-flex">
-                                    <i class="bi bi-shield-check h4 text-success me-3"></i>
-                                    <div>
-                                        <strong class="d-block">確保絕對的資料隱私</strong>
-                                        <small class="text-muted">透過整合 Ollama，所有語意處理都在本地完成，敏感的對話紀錄無需上傳外部
-                                            AI，徹底解決了資料外洩的風險。</small>
-                                    </div>
-                                </li>
-                                <li class="mb-3 d-flex">
-                                    <i class="bi bi-clock-history h4 text-primary me-3"></i>
-                                    <div>
-                                        <strong class="d-block">釋放高價值人力</strong>
-                                        <small class="text-muted">從將近半小時的整理工作中解放，更能專注於溝通、決策等更具價值的事務。</small>
-                                    </div>
-                                </li>
-                                <li class="mb-3 d-flex">
-                                    <i class="bi bi-lightbulb-fill h4 text-primary me-3"></i>
-                                    <div>
-                                        <strong class="d-block">提升資訊品質</strong>
-                                        <small class="text-muted">AI
-                                            能客觀、一致地提煉重點與待辦事項，避免人工整理時可能出現的遺漏或偏見，產出標準化的高品質報告。</small>
-                                    </div>
-                                </li>
-                                <li class="mb-3 d-flex">
-                                    <i class="bi bi-diagram-3-fill h4 text-primary me-3"></i>
-                                    <div>
-                                        <strong class="d-block">可擴展的自動化框架</strong>
-                                        <small class="text-muted">此工作流的模組化設計使其極易擴展。未來可以輕易接入 Notion、Slack 等其他平台，或替換不同的本地
-                                            AI 模型。</small>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="card-footer">
-                            <h3 class="h5 mt-2"><i class="bi bi-gear-fill me-2"></i>使用的技術</h3>
-                            <div>
-                                <span class="badge text-bg-info tech-badge">n8n</span>
-                                <span class="badge text-bg-danger tech-badge">Ollama</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-grid mt-3">
-                        <a href="../portfolio.html" class="btn btn-outline-primary"><i
-                                class="bi bi-arrow-left-circle me-2"></i>返回作品</a>
-                    </div>
-
+            <!-- Comparison Table -->
+            <section class="mb-5">
+                <h2 class="section-title h3">Tech Stack Comparison</h2>
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover border-secondary">
+                        <thead>
+                            <tr class="text-primary">
+                                <th scope="col">Feature</th>
+                                <th scope="col">Local AI (此方案)</th>
+                                <th scope="col">Cloud AI (OpenAI API)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Privacy</strong></td>
+                                <td class="text-success"><i class="bi bi-shield-lock-fill"></i> High (Air-gapped
+                                    capable)</td>
+                                <td class="text-warning"><i class="bi bi-cloud-upload"></i> Medium (Data leaves
+                                    premises)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Cost</strong></td>
+                                <td class="text-success">Fixed (Your Hardware)</td>
+                                <td>Variable (Per Token)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Latency</strong></td>
+                                <td>Dependent on GPU (e.g. RTX 3060+)</td>
+                                <td>Dependent on API Traffic</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-        </section>
+            </section>
+
+        </div>
     </main>
 
-    <!-- LinkedIn Discussion Section -->
-    <section class="bg-body-tertiary py-5 border-top border-secondary-subtle">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <i class="bi bi-linkedin" style="font-size: 3rem; color: #0077b5;"></i>
-                    <h2 class="h3 mt-3 mb-3">💬 想要討論或分享你的想法？</h2>
-                    <p class="text-muted mb-4">
-                        歡迎到我的 LinkedIn 文章留言，與我和其他讀者一起交流討論！
-                        無論是對這個案例的看法、你的實作經驗，或是任何問題，都歡迎分享。
-                    </p>
-                    <a href="https://www.linkedin.com/posts/junjia-hou_ai-automation-line-activity-7390388993550409728-P6qE?utm_source=share&utm_medium=member_desktop&rcm=ACoAABIG390B3PtuoWttOVVAfWMw9172dduGwSA"
-                        class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer">
-                        <i class="bi bi-linkedin me-2"></i>前往 LinkedIn 討論
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-dark mt-5 py-4 border-top border-secondary-subtle">
-        <div class="container text-center">
-            <a href="../portfolio.html" class="btn btn-outline-light mb-3"><i
-                    class="bi bi-arrow-left-circle me-2"></i>返回作品</a>
-            <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
-        </div>
+    <footer class="bg-black py-4 border-top border-secondary text-center text-secondary small">
+        <p>&copy; 2025 Luke Hou. Developer Portfolio.</p>
     </footer>
 
-    <!-- Image Modal -->
-    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content bg-dark">
-                <div class="modal-header border-0">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <img src="" class="img-fluid" id="modalImage" alt="Project Image">
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
-            const modalImage = document.getElementById('modalImage');
-
-            document.querySelectorAll('.gallery-img').forEach(img => {
-                img.addEventListener('click', function () {
-                    modalImage.src = this.src;
-                    imageModal.show();
-                });
-            });
-        });
-    </script>
 </body>
 
 </html>
