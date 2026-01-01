@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>醫療 AI 治理技術白皮書 | Medical AI Governance Professional Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f1f5f9;
+            /* slate-100 */
+            color: #334155;
+            /* slate-700 */
+        }
+
+        .mono-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 350px;
+            width: 100%;
+        }
+
+        .pro-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            transition: all 0.2s;
+        }
+
+        .pro-card:hover {
+            border-color: #94a3b8;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .tech-grid {
+            background-image: linear-gradient(#e2e8f0 1px, transparent 1px), linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .active-tab {
+            border-bottom: 2px solid #0f172a;
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        .inactive-tab {
+            border-bottom: 2px solid transparent;
+            color: #64748b;
+        }
+
+        .inactive-tab:hover {
+            color: #334155;
+            border-bottom: 2px solid #cbd5e1;
+        }
+    </style>
+    <!-- Chosen Palette: "Clinical Engineering" - Slate (Structure), Indigo (Tech), Emerald (Success/Safe), Rose (Risk). -->
+    <!-- Application Structure Plan:
+         1. Executive Dashboard: High-level risk & readiness summary.
+         2. Technical Deep Dive (Tabs):
+            - Data Engineering: De-identification, Lineage.
+            - Model Engineering: XAI, Drift Detection, Retraining.
+            - System Integration: API standards, Logging, UX for clinicians.
+         3. Maturity Assessment: Interactive Radar Chart for vendors to self-assess.
+         4. Compliance Checklist: A detailed list of requirements for PMs and R&D leads.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+
+<body class="flex flex-col min-h-screen">
+
+    <!-- Top Bar -->
+    <nav class="bg-slate-900 text-slate-200 sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-6 h-16 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="bg-indigo-500 w-8 h-8 rounded flex items-center justify-center text-white font-bold">Ai
+                </div>
+                <div>
+                    <h1 class="font-bold text-white tracking-wide">MED-TECH <span class="text-indigo-400">INSIGHT</span>
+                    </h1>
+                    <p class="text-[10px] text-slate-400 uppercase tracking-widest">For Professional Developers & CIOs
+                    </p>
+                </div>
+            </div>
+            <div class="hidden md:flex gap-6 text-sm font-medium">
+                <a href="../blog.html" class="hover:text-white transition-colors">← 回部落格</a>
+                <a href="#matrix" class="hover:text-white transition-colors">技術合規矩陣</a>
+                <a href="#mlops" class="hover:text-white transition-colors">臨床 MLOps</a>
+                <a href="#assessment" class="hover:text-white transition-colors">成熟度評估</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header / Executive Summary -->
+    <header class="bg-white border-b border-slate-200 py-12 tech-grid">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="lg:w-3/5">
+                    <span
+                        class="inline-block py-1 px-3 rounded bg-indigo-50 text-indigo-700 text-xs font-bold mb-4 border border-indigo-100">AI
+                        BASIC ACT 2026</span>
+                    <h2 class="text-3xl md:text-5xl font-black text-slate-900 mb-6 leading-tight">
+                        醫療 AI 治理技術白皮書<br>
+                        <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-600">從合規到工程實踐</span>
+                    </h2>
+                    <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-3xl">
+                        本指南專為醫療資訊廠商 (HIS/PACS) 與醫院資訊部門設計。
+                        深入解析《人工智慧基本法》對系統架構、資料治理 (Data Governance) 與軟體開發生命週期 (SDLC) 的具體技術要求。
+                        協助您在滿足法規的同時，構建具備韌性與可解釋性的醫療 AI 系統。
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <div
+                            class="flex items-center gap-2 px-4 py-2 bg-slate-100 rounded text-sm font-medium text-slate-700">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            QMS/ISO 13485
+                        </div>
+                        <div
+                            class="flex items-center gap-2 px-4 py-2 bg-slate-100 rounded text-sm font-medium text-slate-700">
+                            <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+                            XAI Integration
+                        </div>
+                        <div
+                            class="flex items-center gap-2 px-4 py-2 bg-slate-100 rounded text-sm font-medium text-slate-700">
+                            <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                            Adversarial Defense
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-2/5 w-full">
+                    <div class="pro-card p-6 rounded-xl">
+                        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4">合規成本結構預測</h3>
+                        <div class="chart-wrapper" style="height: 250px;">
+                            <canvas id="costChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 max-w-7xl py-16 space-y-20">
+
+        <!-- Module 1: Technical Compliance Matrix (Deep Dive) -->
+        <section id="matrix">
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-slate-900 flex items-center gap-3">
+                    <span
+                        class="bg-slate-800 text-white w-8 h-8 flex items-center justify-center rounded text-sm">01</span>
+                    技術合規矩陣 (Technical Compliance Spec)
+                </h3>
+                <p class="text-slate-500 mt-2 ml-11">將法條轉化為具體的系統功能需求 (Functional Requirements)</p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex border-b border-slate-200 mb-6 overflow-x-auto">
+                <button onclick="switchTab('data-eng')" id="tab-data-eng"
+                    class="active-tab px-6 py-3 text-sm transition-all whitespace-nowrap">資料工程 (Data Ops)</button>
+                <button onclick="switchTab('model-eng')" id="tab-model-eng"
+                    class="inactive-tab px-6 py-3 text-sm transition-all whitespace-nowrap">模型與演算法 (Model Ops)</button>
+                <button onclick="switchTab('sys-int')" id="tab-sys-int"
+                    class="inactive-tab px-6 py-3 text-sm transition-all whitespace-nowrap">系統整合 (Integration)</button>
+            </div>
+
+            <!-- Content Area -->
+            <div id="tech-content" class="min-h-[400px]">
+                <!-- Injected via JS -->
+            </div>
+        </section>
+
+        <!-- Module 2: Clinical MLOps & PMS -->
+        <section id="mlops" class="bg-slate-900 rounded-2xl p-8 md:p-12 text-slate-300 relative overflow-hidden">
+            <!-- Background element -->
+            <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-indigo-900/20 to-transparent"></div>
+
+            <div class="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="bg-indigo-600 w-8 h-8 flex items-center justify-center rounded text-sm">02</span>
+                        臨床 MLOps 與上市後監測 (PMS)
+                    </h3>
+                    <p class="mb-6 leading-relaxed">
+                        醫療 AI 的挑戰始於上線之後。不同醫院的設備參數（如 CT/MRI 顯影差異）、病患人口結構改變，皆可能導致模型效能衰退。
+                        法規要求建立<strong>持續監控機制</strong>。
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div
+                                class="w-12 h-12 rounded bg-slate-800 border border-slate-700 flex items-center justify-center text-xl shrink-0">
+                                📉</div>
+                            <div>
+                                <h4 class="text-white font-bold text-lg">資料漂移 (Data Drift) 偵測</h4>
+                                <p class="text-sm text-slate-400 mt-1">
+                                    監控輸入數據的分佈變化 (Distribution Shift)。例如：當醫院更換新型 X 光機時，影像對比度的改變可能導致舊模型誤判率飆升。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div
+                                class="w-12 h-12 rounded bg-slate-800 border border-slate-700 flex items-center justify-center text-xl shrink-0">
+                                🛡️</div>
+                            <div>
+                                <h4 class="text-white font-bold text-lg">對抗式攻擊 (Adversarial) 防禦</h4>
+                                <p class="text-sm text-slate-400 mt-1">
+                                    針對惡意擾動（如在醫療影像中加入人眼不可見的噪聲導致誤診）的防禦機制，需納入資安壓力測試 (Penetration Test)。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div
+                                class="w-12 h-12 rounded bg-slate-800 border border-slate-700 flex items-center justify-center text-xl shrink-0">
+                                📦</div>
+                            <div>
+                                <h4 class="text-white font-bold text-lg">SBOM 供應鏈安全</h4>
+                                <p class="text-sm text-slate-400 mt-1">
+                                    需維護軟體物料清單 (Software Bill of Materials)。若使用的開源 AI 框架 (如 PyTorch 特定版本) 發現漏洞，需能在 24
+                                    小時內完成影響評估。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visualization of Drift -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700 shadow-2xl">
+                    <h4 class="text-white text-sm font-bold mb-4 flex justify-between">
+                        <span>Model Performance Monitor</span>
+                        <span class="text-rose-400 animate-pulse">● Drift Detected</span>
+                    </h4>
+                    <div class="chart-wrapper" style="height: 300px;">
+                        <canvas id="driftChart"></canvas>
+                    </div>
+                    <div class="mt-4 flex gap-2 text-xs font-mono text-slate-400">
+                        <div class="px-2 py-1 bg-slate-700 rounded border border-rose-500/50 text-rose-300">Alert:
+                            Accuracy < 90%</div>
+                                <div class="px-2 py-1 bg-slate-700 rounded">Trigger: Retraining Pipeline</div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <!-- Module 3: Maturity Assessment -->
+        <section id="assessment">
+            <div class="flex flex-col md:flex-row gap-12 items-start">
+                <div class="md:w-1/3">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-3">
+                        <span
+                            class="bg-slate-800 text-white w-8 h-8 flex items-center justify-center rounded text-sm">03</span>
+                        廠商合規成熟度自評
+                    </h3>
+                    <p class="text-slate-600 mb-6">
+                        依據 ISO 42001 (AIMS) 與 AI 基本法精神，針對五大維度進行自我檢視。請拖動右側滑桿模擬不同狀態。
+                    </p>
+
+                    <div class="space-y-4 bg-white p-6 rounded-xl border border-slate-200">
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-slate-500 uppercase flex justify-between">
+                                資料治理 (Data Gov) <span id="val-1">3</span>
+                            </label>
+                            <input type="range" min="1" max="5" value="3"
+                                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                                oninput="updateRadar(0, this.value)">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-slate-500 uppercase flex justify-between">
+                                可解釋性 (Explainability) <span id="val-2">2</span>
+                            </label>
+                            <input type="range" min="1" max="5" value="2"
+                                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                                oninput="updateRadar(1, this.value)">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-slate-500 uppercase flex justify-between">
+                                資安防護 (Cybersec) <span id="val-3">4</span>
+                            </label>
+                            <input type="range" min="1" max="5" value="4"
+                                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                                oninput="updateRadar(2, this.value)">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-slate-500 uppercase flex justify-between">
+                                風險管理 (Risk Mgmt) <span id="val-4">3</span>
+                            </label>
+                            <input type="range" min="1" max="5" value="3"
+                                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                                oninput="updateRadar(3, this.value)">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-xs font-bold text-slate-500 uppercase flex justify-between">
+                                流程監控 (PMS) <span id="val-5">2</span>
+                            </label>
+                            <input type="range" min="1" max="5" value="2"
+                                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                                oninput="updateRadar(4, this.value)">
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="md:w-2/3 w-full bg-white p-4 rounded-xl border border-slate-200 flex items-center justify-center">
+                    <div class="chart-wrapper" style="height: 400px; max-width: 500px;">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-50 border-t border-slate-200 py-12">
+        <div class="container mx-auto px-6 text-center text-slate-500 text-sm">
+            <p class="mb-2 font-bold text-slate-700">Medical AI Governance Professional Guide v2.0</p>
+            <p class="max-w-2xl mx-auto">
+                本文件僅供技術與管理架構參考。具體合規審查請參閱衛福部 (TFDA) 最新公告之《人工智慧/機器學習技術之醫療器材查驗登記技術指引》及國科會相關子法。
+            </p>
+            <div class="mt-8 font-mono text-xs text-slate-400">
+                SYSTEM_ID: MED-AI-GOV-2026-PRO<br>
+                STATUS: RELEASE
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS Logic -->
+    <script>
+        // --- Tab Data (Deep Technical Specs) ---
+        const tabContent = {
+            'data-eng': `
+                <div class="grid md:grid-cols-2 gap-8 animate-fade-in">
+                    <div class="pro-card p-6 rounded-lg border-l-4 border-indigo-500">
+                        <h4 class="text-lg font-bold text-slate-800 mb-4">去識別化與隱私工程 (De-ID)</h4>
+                        <ul class="space-y-3 text-sm text-slate-600">
+                            <li class="flex gap-2"><span class="text-indigo-500 font-bold">➢</span> <strong>標準：</strong> 需符合 HIPAA Safe Harbor 或 Expert Determination 方法。</li>
+                            <li class="flex gap-2"><span class="text-indigo-500 font-bold">➢</span> <strong>影像處理：</strong> DICOM Tag 清洗外，需針對 Pixel Data 進行臉部/文字模糊化 (Defacing/Text Scrubbing)。</li>
+                            <li class="flex gap-2"><span class="text-indigo-500 font-bold">➢</span> <strong>重識別風險評估：</strong> 需計算 k-anonymity (k-匿名性) 指標，確保 k >= 3 (建議值)。</li>
+                        </ul>
+                    </div>
+                    <div class="pro-card p-6 rounded-lg border-l-4 border-indigo-500">
+                        <h4 class="text-lg font-bold text-slate-800 mb-4">資料系譜 (Data Lineage)</h4>
+                        <ul class="space-y-3 text-sm text-slate-600">
+                            <li class="flex gap-2"><span class="text-indigo-500 font-bold">➢</span> <strong>版本控制：</strong> 訓練資料集 (Training Set) 需有 Hash ID (如 SHA-256)，確保模型可回溯至特定版本的數據快照 (Snapshot)。</li>
+                            <li class="flex gap-2"><span class="text-indigo-500 font-bold">➢</span> <strong>標註歷程：</strong> 需記錄標註醫師 (Annotator) 的資歷與標註一致性 (Inter-rater reliability) 數據。</li>
+                        </ul>
+                    </div>
+                </div>
+            `,
+            'model-eng': `
+                <div class="grid md:grid-cols-2 gap-8 animate-fade-in">
+                    <div class="pro-card p-6 rounded-lg border-l-4 border-purple-500">
+                        <h4 class="text-lg font-bold text-slate-800 mb-4">可解釋性 (XAI) 實作</h4>
+                        <ul class="space-y-3 text-sm text-slate-600">
+                            <li class="flex gap-2"><span class="text-purple-500 font-bold">➢</span> <strong>Local Interpretability：</strong> 針對單筆預測，需提供 Heatmap (如 Grad-CAM) 或 Feature Importance (如 SHAP values)，指出 AI 關注的病灶區域。</li>
+                            <li class="flex gap-2"><span class="text-purple-500 font-bold">➢</span> <strong>信心水準 (Confidence Score)：</strong> UI 必須顯示模型的信心指數 (如 85%)，並設定閾值 (Threshold)，低於閾值需強制轉人工判讀。</li>
+                        </ul>
+                    </div>
+                    <div class="pro-card p-6 rounded-lg border-l-4 border-purple-500">
+                        <h4 class="text-lg font-bold text-slate-800 mb-4">模型確效 (Validation)</h4>
+                        <ul class="space-y-3 text-sm text-slate-600">
+                            <li class="flex gap-2"><span class="text-purple-500 font-bold">➢</span> <strong>多中心驗證：</strong> 必須包含不同層級醫院 (醫學中心 vs 地區醫院) 的 RWD (真實世界數據) 驗證報告。</li>
+                            <li class="flex gap-2"><span class="text-purple-500 font-bold">➢</span> <strong>公平性檢測：</strong> 需輸出 Confusion Matrix by Subgroups (依性別、年齡分組的混淆矩陣)，證明無顯著偏差。</li>
+                        </ul>
+                    </div>
+                </div>
+            `,
+            'sys-int': `
+                <div class="grid md:grid-cols-2 gap-8 animate-fade-in">
+                    <div class="pro-card p-6 rounded-lg border-l-4 border-cyan-500">
+                        <h4 class="text-lg font-bold text-slate-800 mb-4">系統整合與介面 (UX/UI)</h4>
+                        <ul class="space-y-3 text-sm text-slate-600">
+                            <li class="flex gap-2"><span class="text-cyan-500 font-bold">➢</span> <strong>人機協作流程：</strong> 系統不得設計為「預設勾選 AI 建議」(No Default Opt-in)，必須由醫師主動確認。</li>
+                            <li class="flex gap-2"><span class="text-cyan-500 font-bold">➢</span> <strong>警示與標示：</strong> AI 生成內容需有浮水印或明顯邊框標示 (AI Generated Label)。</li>
+                        </ul>
+                    </div>
+                    <div class="pro-card p-6 rounded-lg border-l-4 border-cyan-500">
+                        <h4 class="text-lg font-bold text-slate-800 mb-4">稽核與日誌 (Audit Logs)</h4>
+                        <ul class="space-y-3 text-sm text-slate-600">
+                            <li class="flex gap-2"><span class="text-cyan-500 font-bold">➢</span> <strong>不可否認性：</strong> 需完整記錄「輸入影像 ID + 模型版本 + 輸出結果 + 醫師最終決策」之四合一 Log，並防止竄改。</li>
+                            <li class="flex gap-2"><span class="text-cyan-500 font-bold">➢</span> <strong>API 標準：</strong> 建議採用 FHIR 標準進行 AI 推論結果的資料交換。</li>
+                        </ul>
+                    </div>
+                </div>
+            `
+        };
+
+        function switchTab(tabId) {
+            // Update UI
+            document.getElementById('tech-content').innerHTML = tabContent[tabId];
+
+            // Update Buttons
+            ['data-eng', 'model-eng', 'sys-int'].forEach(id => {
+                const btn = document.getElementById(`tab-${id}`);
+                if (id === tabId) {
+                    btn.className = "active-tab px-6 py-3 text-sm transition-all whitespace-nowrap";
+                } else {
+                    btn.className = "inactive-tab px-6 py-3 text-sm transition-all whitespace-nowrap";
+                }
+            });
+        }
+
+        // --- Charts ---
+
+        // 1. Cost Chart (Executive)
+        const costCtx = document.getElementById('costChart').getContext('2d');
+        new Chart(costCtx, {
+            type: 'bar',
+            data: {
+                labels: ['資料治理', '模型開發', '合規驗證 (QMS)', '上市後監測 (PMS)'],
+                datasets: [
+                    {
+                        label: '傳統軟體開發成本',
+                        data: [20, 50, 20, 10],
+                        backgroundColor: '#cbd5e1'
+                    },
+                    {
+                        label: 'AI 基本法新增成本',
+                        data: [40, 30, 60, 50], // Huge jump in PMS and Compliance
+                        backgroundColor: '#6366f1' // Indigo
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { stacked: true },
+                    y: { stacked: true, title: { display: true, text: '相對成本權重' } }
+                },
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+
+        // 2. Drift Chart (MLOps)
+        const driftCtx = document.getElementById('driftChart').getContext('2d');
+        new Chart(driftCtx, {
+            type: 'line',
+            data: {
+                labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Q1(Next)', 'Q2(Next)'],
+                datasets: [
+                    {
+                        label: 'Model Accuracy (Baseline: 95%)',
+                        data: [96, 95.5, 94.8, 92.0, 88.5, 85.0],
+                        borderColor: '#22d3ee', // Cyan
+                        backgroundColor: 'rgba(34, 211, 238, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Threshold (90%)',
+                        data: [90, 90, 90, 90, 90, 90],
+                        borderColor: '#f43f5e', // Rose
+                        borderDash: [5, 5],
+                        borderWidth: 2,
+                        pointRadius: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { min: 80, max: 100, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+                    x: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }
+                },
+                plugins: {
+                    legend: { labels: { color: '#e2e8f0' } }
+                }
+            }
+        });
+
+        // 3. Radar Chart (Assessment)
+        let radarChart;
+        function initRadar() {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            radarChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['資料治理', '可解釋性', '資安防護', '風險管理', 'PMS 監控'],
+                    datasets: [{
+                        label: '目前評估狀態',
+                        data: [3, 2, 4, 3, 2],
+                        backgroundColor: 'rgba(79, 70, 229, 0.2)',
+                        borderColor: '#4f46e5',
+                        pointBackgroundColor: '#4f46e5',
+                        pointHoverBorderColor: '#fff'
+                    }, {
+                        label: '法規目標值',
+                        data: [4, 4, 5, 4, 5], // Target
+                        borderColor: '#10b981', // Emerald
+                        borderDash: [5, 5],
+                        fill: false,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: '#e2e8f0' },
+                            grid: { color: '#e2e8f0' },
+                            suggestedMin: 0,
+                            suggestedMax: 5,
+                            ticks: { stepSize: 1, display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateRadar(index, value) {
+            radarChart.data.datasets[0].data[index] = value;
+            radarChart.update();
+            // Update number display
+            document.getElementById(`val-${index + 1}`).innerText = value;
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            switchTab('data-eng');
+            initRadar();
+        });
+
+    </script>
+</body>
+
+</html>
