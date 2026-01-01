@@ -160,6 +160,12 @@
 
   <!-- 部落格文章 -->
   <url>
+    <loc>https://luke.ninja/blog/Medical-AI-General-Guide.html</loc>
+    <lastmod>2026-01-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://luke.ninja/blog/Medical-AI-Professional-Guide.html</loc>
     <lastmod>2026-01-01</lastmod>
     <changefreq>yearly</changefreq>

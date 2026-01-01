@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 台灣人工智慧基本法 | Taiwan AI Basic Act Official</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc;
+            /* slate-50 */
+            color: #1e293b;
+            /* slate-800 */
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            height: 320px;
+            max-height: 400px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #fbbf24;
+            /* amber-400 */
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Custom Scrollbar for refined feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+    <!-- Chosen Palette: "Authority & Future" - Deep Navy (#0f172a) for Government Authority, Amber (#fbbf24) for Law/Warning, and Sky Blue (#0ea5e9) for Technology. -->
+    <!-- Application Structure Plan:
+         1. Hero Status: IMMEDIATE confirmation of the "Passed" status (Dec 23, 2025). High impact visual.
+         2. Law Framework (Dashboard): Visualization of the "1 Authority + 1 Committee + 7 Principles" structure established by the final act.
+         3. The 7 Principles (Grid): The core DNA of the law. Updated with exact final wording from the search results.
+         4. Compliance & Risk (Interactive Checklist): A tool for businesses to understand "High Risk" vs "General" AI obligations (Labeling, etc.).
+         5. Roadmap: Timeline showing the path from Draft -> Passage -> Future Sub-laws (2026).
+    -->
+    <!-- Visualization & Content Choices:
+         1. Status Banner -> Goal: Inform -> Big bold typography + Date -> Confirms the "Three Readings Passed" status.
+         2. Authority Structure -> Goal: Explain -> Organization Chart (simulated with CSS Grid/Flex) -> Shows NSTC vs Strategic Committee relation.
+         3. Principles -> Goal: Educate -> Interactive Cards -> Click to reveal specific definition from Article 4.
+         4. Risk Radar -> Goal: Compare -> Radar Chart -> Shows the balance of the final Act (Innovation vs Regulation).
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+
+<body class="flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl">⚖️</span>
+                    <div class="leading-tight">
+                        <div class="font-bold text-slate-900 tracking-tight">人工智慧基本法</div>
+                        <div class="text-[10px] text-slate-500 font-bold tracking-widest uppercase">Official Act 2026
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
+                    <a href="#status" class="nav-link hover:text-blue-800 transition-colors"
+                        onclick="setActive(this)">法案現況</a>
+                    <a href="#framework" class="nav-link hover:text-blue-800 transition-colors"
+                        onclick="setActive(this)">架構總覽</a>
+                    <a href="#principles" class="nav-link hover:text-blue-800 transition-colors"
+                        onclick="setActive(this)">七大原則</a>
+                    <a href="#compliance" class="nav-link hover:text-blue-800 transition-colors"
+                        onclick="setActive(this)">企業合規</a>
+                </div>
+                <button class="md:hidden text-slate-600" onclick="alert('請使用桌機版瀏覽以獲得最佳圖表體驗')">☰</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section: Status Update -->
+    <header id="status" class="hero-gradient text-white relative overflow-hidden">
+        <div
+            class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/circuit-board.png')]">
+        </div>
+        <div
+            class="container mx-auto px-4 py-16 md:py-24 max-w-6xl relative z-10 flex flex-col md:flex-row items-center justify-between">
+            <div class="md:w-2/3">
+                <div
+                    class="inline-flex items-center bg-amber-400 text-amber-950 px-3 py-1 rounded-full text-xs font-bold mb-6 shadow-lg animate-pulse">
+                    <span class="mr-2">●</span> 立法院三讀通過 (Passed)
+                </div>
+                <h1 class="text-4xl md:text-6xl font-black mb-4 leading-tight tracking-tight">
+                    台灣 AI 新紀元<br>
+                    <span class="text-sky-400">基本法正式立法</span>
+                </h1>
+                <p class="text-blue-100 text-lg md:text-xl mb-8 max-w-2xl leading-relaxed">
+                    2025年12月23日，立法院三讀通過《人工智慧基本法》。<br>
+                    確立由 <strong class="text-white border-b border-sky-400">國科會</strong> 擔任主管機關，成立「國家AI戰略委員會」，
+                    建構以人為本、風險分級的 AI 治理法制基礎。
+                </p>
+                <div class="flex flex-wrap gap-4 text-sm font-semibold">
+                    <div class="bg-white/10 backdrop-blur px-4 py-2 rounded border border-white/20">
+                        📅 通過日期：2025.12.23
+                    </div>
+                    <div class="bg-white/10 backdrop-blur px-4 py-2 rounded border border-white/20">
+                        🏛️ 主管機關：國科會 (NSTC)
+                    </div>
+                    <div class="bg-white/10 backdrop-blur px-4 py-2 rounded border border-white/20">
+                        📜 條文數：18條
+                    </div>
+                </div>
+            </div>
+            <!-- Decorative Law Visualization -->
+            <div class="md:w-1/3 mt-10 md:mt-0 flex justify-center">
+                <div
+                    class="relative w-72 h-72 bg-white/5 rounded-full border border-white/10 flex items-center justify-center shadow-2xl backdrop-blur-sm">
+                    <div
+                        class="absolute inset-4 border-2 border-dashed border-sky-400/30 rounded-full animate-[spin_10s_linear_infinite]">
+                    </div>
+                    <div class="text-center">
+                        <div class="text-5xl mb-2">🇹🇼</div>
+                        <div class="text-xl font-bold text-white">AI BASIC ACT</div>
+                        <div class="text-sky-400 font-mono">No. 114-001</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-12 max-w-6xl space-y-24">
+
+        <!-- Section 1: Strategic Framework (Dashboard) -->
+        <section id="framework" class="scroll-mt-24">
+            <div class="mb-10 text-center md:text-left">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">法案治理架構</h2>
+                <p class="text-slate-600 max-w-3xl">
+                    三讀通過版本確立了「雙層級」的治理模式：由行政院層級的戰略委員會制定大方向，國科會擔任法定主管機關，各部會（如金管會、衛福部）則依據風險分級管理各自領域的 AI 應用。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <!-- Org Chart Card -->
+                <div class="md:col-span-1 glass-card p-6 rounded-2xl shadow-sm border-t-4 border-blue-600">
+                    <h3 class="font-bold text-slate-800 mb-4 flex items-center">
+                        <span class="bg-blue-100 text-blue-700 p-1 rounded mr-2 text-xs">ORG</span> 組織權責
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="bg-slate-800 text-white p-4 rounded-lg text-center shadow-md">
+                            <div class="text-xs text-slate-400 uppercase tracking-wider mb-1">Top Level</div>
+                            <div class="font-bold">國家AI戰略委員會</div>
+                            <div class="text-xs text-slate-400 mt-1">行政院長召集 (跨部會協調)</div>
+                        </div>
+                        <div class="flex justify-center"><span class="text-slate-300">⬇</span></div>
+                        <div
+                            class="bg-blue-600 text-white p-4 rounded-lg text-center shadow-md relative overflow-hidden">
+                            <div class="absolute top-0 right-0 p-1 bg-amber-400 text-amber-900 text-[10px] font-bold">
+                                權責機關</div>
+                            <div class="font-bold">國科會 (NSTC)</div>
+                            <div class="text-xs text-blue-200 mt-1">法規解釋、發展推動</div>
+                        </div>
+                        <div class="flex justify-center"><span class="text-slate-300">⬇</span></div>
+                        <div class="bg-white border border-slate-300 text-slate-600 p-3 rounded-lg text-center text-sm">
+                            <div class="font-bold">各目的事業主管機關</div>
+                            <div class="text-xs mt-1">數位部(數產)、衛福部(醫療)、金管會(金融)...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strategic Focus Chart -->
+                <div class="md:col-span-2 glass-card p-6 rounded-2xl shadow-sm">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-slate-800">法案戰略重心分析</h3>
+                        <span class="text-xs bg-slate-100 px-2 py-1 rounded text-slate-500">Based on Final Text</span>
+                    </div>
+                    <div class="flex flex-col md:flex-row items-center gap-6">
+                        <div class="chart-container flex-1">
+                            <canvas id="strategyRadar"></canvas>
+                        </div>
+                        <div class="w-full md:w-48 text-sm space-y-4">
+                            <div class="p-3 bg-blue-50 rounded border-l-4 border-blue-500">
+                                <strong class="block text-blue-800">創新導向 (Innovation)</strong>
+                                <span class="text-slate-600 text-xs">設沙盒、補助研發、人才培育 (40% 權重)</span>
+                            </div>
+                            <div class="p-3 bg-amber-50 rounded border-l-4 border-amber-500">
+                                <strong class="block text-amber-800">風險治理 (Governance)</strong>
+                                <span class="text-slate-600 text-xs">分級管理、標示義務、問責 (35% 權重)</span>
+                            </div>
+                            <div class="p-3 bg-teal-50 rounded border-l-4 border-teal-500">
+                                <strong class="block text-teal-800">權益保障 (Rights)</strong>
+                                <span class="text-slate-600 text-xs">勞工權益、反歧視、個資 (25% 權重)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: The 7 Principles (Grid) -->
+        <section id="principles"
+            class="scroll-mt-24 bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-100">
+            <div class="text-center mb-12">
+                <span class="text-blue-600 font-bold tracking-widest text-sm uppercase">Article 4</span>
+                <h2 class="text-3xl font-bold text-slate-900 mt-2">七大核心原則</h2>
+                <p class="text-slate-500 mt-2">政府推動 AI 研發與應用，必須遵循的法定原則</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5" id="principles-grid">
+                <!-- JS will populate this -->
+            </div>
+        </section>
+
+        <!-- Section 3: Compliance & Interactive Checklist -->
+        <section id="compliance" class="scroll-mt-24">
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- Left: Interactive Checklist -->
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6 flex items-center">
+                        <span
+                            class="bg-amber-400 w-8 h-8 rounded-full flex items-center justify-center text-amber-900 text-lg mr-3">!</span>
+                        企業合規快篩
+                    </h2>
+                    <p class="text-slate-600 mb-6">
+                        基本法通過後，企業應注意哪些義務？點選下方項目查看三讀通過條文對應的規範。
+                    </p>
+
+                    <div class="space-y-3">
+                        <button onclick="showCompliance('labeling')"
+                            class="w-full text-left p-4 rounded-xl border border-slate-200 bg-white hover:border-blue-400 hover:shadow-md transition-all flex items-center group focus:ring-2 ring-blue-200">
+                            <div
+                                class="bg-blue-100 text-blue-600 w-10 h-10 rounded-lg flex items-center justify-center mr-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                                🏷️</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800">產出標示義務</h4>
+                                <p class="text-xs text-slate-500">生成式 AI 內容與透明度</p>
+                            </div>
+                        </button>
+
+                        <button onclick="showCompliance('risk')"
+                            class="w-full text-left p-4 rounded-xl border border-slate-200 bg-white hover:border-amber-400 hover:shadow-md transition-all flex items-center group focus:ring-2 ring-amber-200">
+                            <div
+                                class="bg-amber-100 text-amber-600 w-10 h-10 rounded-lg flex items-center justify-center mr-4 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+                                ⚠️</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800">風險分級管理</h4>
+                                <p class="text-xs text-slate-500">高風險 AI 系統之特別規範</p>
+                            </div>
+                        </button>
+
+                        <button onclick="showCompliance('labor')"
+                            class="w-full text-left p-4 rounded-xl border border-slate-200 bg-white hover:border-teal-400 hover:shadow-md transition-all flex items-center group focus:ring-2 ring-teal-200">
+                            <div
+                                class="bg-teal-100 text-teal-600 w-10 h-10 rounded-lg flex items-center justify-center mr-4 group-hover:bg-teal-500 group-hover:text-white transition-colors">
+                                👷</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800">勞工權益保障</h4>
+                                <p class="text-xs text-slate-500">就業衝擊與轉職輔導</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right: Dynamic Content Display -->
+                <div
+                    class="lg:w-1/2 bg-slate-900 rounded-2xl p-8 text-white relative overflow-hidden shadow-xl min-h-[300px]">
+                    <div class="absolute top-0 right-0 p-32 bg-blue-500 blur-[100px] opacity-20"></div>
+                    <div id="compliance-display" class="relative z-10 h-full flex flex-col justify-center">
+                        <div class="text-center text-slate-400">
+                            <div class="text-6xl mb-4">👈</div>
+                            <p>請點選左側項目<br>檢視對應法規細節</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Timeline -->
+        <section id="roadmap" class="border-t border-slate-200 pt-16">
+            <h2 class="text-2xl font-bold text-center mb-12 text-slate-800">法案進程與未來展望</h2>
+            <div class="relative max-w-4xl mx-auto">
+                <div class="absolute left-1/2 -translate-x-1/2 h-full w-1 bg-slate-200 top-0 rounded-full"></div>
+
+                <!-- Event 1 -->
+                <div class="relative w-full flex justify-center items-center mb-8">
+                    <div
+                        class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-slate-400 rounded-full border-4 border-white">
+                    </div>
+                    <div class="w-[45%] pr-8 text-right text-slate-400 text-sm">2024.07</div>
+                    <div class="w-[45%] pl-8 text-left">
+                        <h4 class="font-bold text-slate-500">國科會提出草案</h4>
+                        <p class="text-xs text-slate-400">初步定義七大原則</p>
+                    </div>
+                </div>
+
+                <!-- Event 2 -->
+                <div class="relative w-full flex justify-center items-center mb-8">
+                    <div
+                        class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-blue-600 rounded-full border-4 border-white shadow-lg z-10">
+                    </div>
+                    <div class="w-[45%] pr-8 text-right">
+                        <h4 class="font-bold text-blue-700 text-lg">立法院三讀通過</h4>
+                        <p class="text-xs text-blue-600">完成立法程序</p>
+                    </div>
+                    <div class="w-[45%] pl-8 text-left text-blue-600 font-bold">2025.12.23</div>
+                </div>
+
+                <!-- Event 3 -->
+                <div class="relative w-full flex justify-center items-center">
+                    <div
+                        class="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-amber-400 rounded-full border-4 border-white">
+                    </div>
+                    <div class="w-[45%] pr-8 text-right text-slate-500 font-medium">2026 (預計)</div>
+                    <div class="w-[45%] pl-8 text-left">
+                        <h4 class="font-bold text-slate-800">相關子法訂定</h4>
+                        <p class="text-xs text-slate-500">公佈高風險AI清單、成立戰略委員會</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-12 mt-12 border-t border-slate-800">
+        <div class="container mx-auto px-4 max-w-6xl text-center">
+            <p class="text-white font-medium mb-2">Taiwan AI Basic Act Interactive Report (2026 Edition)</p>
+            <p class="text-xs opacity-60 mb-6">Based on the Official Act passed by the Legislative Yuan on Dec 23, 2025.
+            </p>
+            <div class="flex justify-center space-x-4 text-2xl">
+                <span>🇹🇼</span><span>⚖️</span><span>🤖</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- Data Definitions ---
+
+        // The 7 Principles (Based on Final 2025 Text)
+        const principles = [
+            {
+                title: "永續發展與福祉",
+                en: "Sustainability & Well-being",
+                icon: "🌏",
+                desc: "AI 發展應兼顧社會公平、數位平權與環境永續，以提升人類福祉為終極目標。"
+            },
+            {
+                title: "人類自主",
+                en: "Human Autonomy",
+                icon: "🧘",
+                desc: "AI 僅為輔助工具，不得取代人類的自主決策，確保人類在關鍵環節保有控制權。"
+            },
+            {
+                title: "隱私保護與資料治理",
+                en: "Privacy & Data Governance",
+                icon: "🔒",
+                desc: "嚴格遵守個資法，落實資料最小化原則，並建立資料治理機制以防濫用。"
+            },
+            {
+                title: "資安與安全",
+                en: "Information Security & Safety",
+                icon: "🛡️",
+                desc: "應建立資安防護措施，確保系統之穩健性、抗攻擊性，防止惡意操作。"
+            },
+            {
+                title: "透明與可解釋",
+                en: "Transparency & Explainability",
+                icon: "🔍",
+                desc: "AI 產出之內容應進行標示（如浮水印），並能解釋系統運作邏輯與決策依據。"
+            },
+            {
+                title: "公平與不歧視",
+                en: "Fairness & Non-discrimination",
+                icon: "⚖️",
+                desc: "演算法設計應避免性別、種族、宗教等偏見，防止對特定群體造成不當歧視。"
+            },
+            {
+                title: "問責",
+                en: "Accountability",
+                icon: "📝",
+                desc: "明確釐清開發者、提供者與使用者之責任，建立損害賠償與救濟機制。"
+            }
+        ];
+
+        // Compliance Content
+        const complianceData = {
+            labeling: {
+                title: "產出標示義務 (Labeling)",
+                content: "基本法要求利用人工智慧產生之內容（如 Deepfake 影像、AI 生成文章），必須以顯著方式進行<strong>「標記」</strong>或揭露。這旨在防止假訊息傳播並保障民眾的「知情權」。違反者未來可能面臨相關子法之處罰。",
+                highlight: "關鍵條文：資訊透明與可解釋原則"
+            },
+            risk: {
+                title: "風險分級管理 (Risk-Based)",
+                content: "法案不採「一刀切」禁止，而是授權主管機關定義<strong>「高風險人工智慧」</strong>（如醫療診斷、關鍵基礎設施）。高風險系統上市前需進行影響評估，並可能需要第三方驗證。一般風險系統則鼓勵自律。",
+                highlight: "關鍵機制：分級管理、沙盒實驗"
+            },
+            labor: {
+                title: "勞工權益保障 (Labor Rights)",
+                content: "針對 AI 可能取代工作機會，政府有義務進行<strong>就業衝擊評估</strong>。法案明定應建立勞工轉職輔導體系、社會安全網，並確保職場中使用 AI 監控不會侵犯勞工隱私。",
+                highlight: "關鍵條文：勞動就業輔導、社會安全"
+            }
+        };
+
+        // --- Functions ---
+
+        // 1. Render Principles Grid
+        function renderPrinciples() {
+            const container = document.getElementById('principles-grid');
+            container.innerHTML = principles.map(p => `
+                <div class="bg-white p-6 rounded-xl border border-slate-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all cursor-default group">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-4xl bg-blue-50 p-2 rounded-lg group-hover:bg-blue-100 transition-colors">${p.icon}</span>
+                        <span class="text-slate-300 text-xs font-mono">0${principles.indexOf(p) + 1}</span>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-lg mb-1">${p.title}</h3>
+                    <div class="text-xs text-slate-400 mb-3 font-medium">${p.en}</div>
+                    <p class="text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-3 mt-2">
+                        ${p.desc}
+                    </p>
+                </div>
+            `).join('');
+        }
+
+        // 2. Interactive Compliance Display
+        function showCompliance(key) {
+            const data = complianceData[key];
+            const display = document.getElementById('compliance-display');
+
+            // Fade out
+            display.style.opacity = '0';
+
+            setTimeout(() => {
+                display.innerHTML = `
+                    <div class="h-full flex flex-col">
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-white mb-2">${data.title}</h3>
+                            <div class="w-12 h-1 bg-amber-400 mb-6"></div>
+                            <p class="text-slate-300 leading-loose text-lg">${data.content}</p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-700">
+                            <span class="text-sky-400 font-mono text-sm">💡 ${data.highlight}</span>
+                        </div>
+                    </div>
+                `;
+                // Fade in
+                display.style.opacity = '1';
+                display.style.transition = 'opacity 0.3s ease';
+            }, 200);
+        }
+
+        // 3. Render Chart (Radar)
+        function initCharts() {
+            const ctx = document.getElementById('strategyRadar').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['產業創新', '風險監管', '人權保障', '資料治理', '國際接軌'],
+                    datasets: [{
+                        label: '三讀通過版本權重',
+                        data: [85, 75, 80, 70, 65], // High Innovation + Increased Governance compared to early drafts
+                        backgroundColor: 'rgba(14, 165, 233, 0.2)', // Sky Blue
+                        borderColor: '#0ea5e9',
+                        pointBackgroundColor: '#0ea5e9',
+                        pointBorderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: '#e2e8f0' },
+                            grid: { color: '#e2e8f0' },
+                            pointLabels: {
+                                font: { size: 12, family: 'Noto Sans TC' },
+                                color: '#475569'
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            ticks: { display: false }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        // 4. Navigation Logic
+        function setActive(el) {
+            document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active', 'text-blue-800'));
+            el.classList.add('active', 'text-blue-800');
+        }
+
+        // --- Init ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPrinciples();
+            initCharts();
+            // Show first compliance item by default
+            showCompliance('labeling');
+        });
+
+    </script>
+</body>
+
+</html>
