@@ -124,6 +124,64 @@
 }
 
 /* ========================================
+   Sniper Scope Effect
+   ======================================== */
+#sniper-scope-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    /* Let clicks pass through */
+    z-index: 99999;
+
+    /* Default state: hidden */
+    opacity: 0;
+    transition: opacity 0.2s ease;
+
+    /* The Scope Gradient */
+    /* --scope-x and --scope-y will be set by JS */
+    --scope-x: 50vw;
+    --scope-y: 50vh;
+    --scope-size: 150px;
+
+    background: radial-gradient(circle var(--scope-size) at var(--scope-x) var(--scope-y),
+            transparent 0%,
+            transparent 95%,
+            rgba(0, 0, 0, 0.8) 100%);
+}
+
+#sniper-scope-overlay.active {
+    opacity: 1;
+}
+
+/* Optional: Crosshair in the center */
+#sniper-scope-overlay.active::before,
+#sniper-scope-overlay.active::after {
+    content: '';
+    position: fixed;
+    top: var(--scope-y);
+    left: var(--scope-x);
+    background-color: rgba(255, 0, 0, 0.5);
+    /* Red crosshair */
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+/* Horizontal line */
+#sniper-scope-overlay.active::before {
+    width: var(--scope-size);
+    height: 1px;
+}
+
+/* Vertical line */
+#sniper-scope-overlay.active::after {
+    width: 1px;
+    height: var(--scope-size);
+}
+
+/* ========================================
    Filter Buttons - Terminal Style
    ======================================== */
 .terminal-filters {
