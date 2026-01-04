@@ -7,12 +7,18 @@
     <title>SNOMED CT, FHIR 與 CQL：醫療互通性鐵三角深度分析</title>
     <meta name="description" content="分析 SNOMED CT 在台灣推動智慧醫療與國際接軌中的關鍵角色。FHIR 提供標準容器，SNOMED CT 提供精確內容，CQL 提供可執行的邏輯。">
     <!-- Schema.org Article JSON-LD -->
+    <meta name="keywords" content="SNOMED CT, FHIR, CQL, 醫療互通性, TW Core IG, 台灣核心實作指引, 次世代數位醫療平台, 電子病歷交換, 臨床決策支援">
+    <meta property="og:title" content="SNOMED CT, FHIR 與 CQL：醫療互通性鐵三角深度分析">
+    <meta property="og:description" content="深度解析台灣「次世代數位醫療平台」的核心技術架構：為什麼我們需要 FHIR R4 容器、SNOMED CT 語意與 CQL 邏輯？">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://luke-hou.github.io/images/snomed-fhir-cover.jpg">
+    <!-- Schema.org Article JSON-LD -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "TechArticle",
         "headline": "SNOMED CT, FHIR 與 CQL：醫療互通性鐵三角深度分析",
-        "description": "分析 SNOMED CT 在台灣推動智慧醫療與國際接軌中的關鍵角色。探討 FHIR、SNOMED CT 與 CQL 的互通性鐵三角。",
+        "description": "分析 SNOMED CT 在台灣「次世代數位醫療平台」中的關鍵角色。探討 FHIR R4、SNOMED CT 與 CQL 的互通性鐵三角架構。",
         "author": {
             "@type": "Person",
             "name": "Luke Hou (侯俊嘉)",
@@ -20,8 +26,10 @@
         },
         "publisher": {"@type": "Person", "name": "Luke Hou"},
         "datePublished": "2025-01-01",
-        "keywords": ["SNOMED CT", "FHIR", "CQL", "醫療互通性", "HL7"],
-        "inLanguage": "zh-TW"
+        "dateModified": "2026-01-04",
+        "keywords": ["SNOMED CT", "FHIR", "CQL", "醫療互通性", "TW Core IG"],
+        "inLanguage": "zh-TW",
+        "proficiencyLevel": "Expert"
     }
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -540,10 +548,10 @@
         <!-- SECTION 5: ROADMAP -->
         <section id="roadmap" class="hidden fade-in">
             <div class="mb-6">
-                <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-purple-600 pl-4">台灣 SNOMED CT 發展路徑 (接軌 TW
-                    Core IG)</h2>
+                <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-purple-600 pl-4">台灣 SNOMED CT 發展路徑
+                    (2025-2030)</h2>
                 <p class="mt-2 text-slate-600">
-                    這不僅是技術的升級，更是台灣醫療資訊基礎建設的十年大計。從加入國際組織到 TW Core IG 的實質落地。
+                    配合衛福部「次世代數位醫療平台」計畫，台灣將持續穩固 FHIR R4 (TW Core IG) 基礎，並推進至全人健康照護資料庫。
                 </p>
             </div>
             <div class="bg-white p-4 rounded-lg shadow-md mb-6">
@@ -724,14 +732,14 @@
             const trace = {
                 x: ['2023', '2024', '2025', '2026', '2028', '2030'],
                 y: [1, 2, 3, 4, 5, 5.5],
-                text: ['加入 SNOMED Int.', '成立 NRC', 'TW Core IG 落地', 'FHIR 交換平台試辦', '次世代健保整合', '全人精準健康'],
+                text: ['加入 SNOMED Int.', '成立 NRC', 'TW Core IG (FHIR R4)', '次世代平台上線', 'AI 輔助給付', '全人精準健康'],
                 mode: 'markers+text',
                 textposition: 'top center',
                 marker: { size: 25, color: ['#94a3b8', '#94a3b8', '#3b82f6', '#0d9488', '#0d9488', '#7c3aed'] },
                 type: 'scatter'
             };
             Plotly.newPlot('roadmapChart', [trace], {
-                title: '台灣醫療資訊標準化進程',
+                title: '台灣醫療資訊標準化進程 (Healthy Taiwan)',
                 xaxis: { range: ['2023', '2031'] },
                 yaxis: { showgrid: false, zeroline: false, showticklabels: false, range: [0, 6] },
                 margin: { l: 20, r: 20, t: 40, b: 20 }

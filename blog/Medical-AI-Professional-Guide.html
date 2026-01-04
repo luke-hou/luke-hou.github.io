@@ -10,6 +10,28 @@
     <link
         href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap"
         rel="stylesheet">
+    <!-- SEO & Metadata Enhancement -->
+    <meta name="description"
+        content="針對醫療器材軟體(SaMD)廠商的《人工智慧基本法》技術實務指南。涵蓋2026最新生成式AI醫材審查指引、衛福部三大AI中心(驗證/落地/給付)、去識別化標準、XAI可解釋性與臨床MLOps監控機制。">
+    <meta name="keywords" content="智慧醫療器材, SaMD, 生成式AI, 查驗登記, TFDA指引, AI基本法, 臨床AI取證中心, 負責任AI執行中心, 健保給付, MLOps, 2026新法">
+    <meta property="og:title" content="醫療 AI 治理技術白皮書 2026 | Medical AI Governance Pro Guide">
+    <meta property="og:description" content="專為 HIS/PACS 廠商設計的合規實戰指南：從 AI 基本法到生成式 AI 醫材審查指引。">
+    <meta property="og:type" content="article">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "醫療 AI 治理技術白皮書 | Medical AI Governance Professional Guide",
+      "datePublished": "2025-12-25",
+      "dateModified": "2026-01-04",
+      "author": {
+        "@type": "Person",
+        "name": "Luke Hou"
+      },
+      "description": "深入解析2026《人工智慧基本法》與TFDA生成式AI指引對醫療軟體開發的技術衝擊。",
+      "proficiencyLevel": "Expert"
+    }
+    </script>
     <style>
         body {
             font-family: 'Noto Sans TC', sans-serif;
@@ -113,9 +135,15 @@
                             class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-cyan-600">從合規到工程實踐</span>
                     </h2>
                     <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-3xl">
-                        本指南專為醫療資訊廠商 (HIS/PACS) 與醫院資訊部門設計。
-                        深入解析《人工智慧基本法》對系統架構、資料治理 (Data Governance) 與軟體開發生命週期 (SDLC) 的具體技術要求。
                         協助您在滿足法規的同時，構建具備韌性與可解釋性的醫療 AI 系統。
+                        <br><br>
+                        <span
+                            class="text-sm font-bold text-indigo-700 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                            🚀 2026 最新動態：
+                        </span>
+                        <span class="text-sm">
+                            衛福部已於 2025 年底成立<strong>「負責人AI執行中心」、「臨床AI取證驗證中心」及「AI影響性研究中心」</strong>，加速 AI 醫材從驗證到健保給付的最後一哩路。
+                        </span>
                     </p>
                     <div class="flex flex-wrap gap-4">
                         <div
@@ -367,6 +395,17 @@
                             <li class="flex gap-2"><span class="text-purple-500 font-bold">➢</span> <strong>多中心驗證：</strong> 必須包含不同層級醫院 (醫學中心 vs 地區醫院) 的 RWD (真實世界數據) 驗證報告。</li>
                             <li class="flex gap-2"><span class="text-purple-500 font-bold">➢</span> <strong>公平性檢測：</strong> 需輸出 Confusion Matrix by Subgroups (依性別、年齡分組的混淆矩陣)，證明無顯著偏差。</li>
                         </ul>
+                    </div>
+                </div>
+                <!-- 2026 GenAI Special Note -->
+                <div class="mt-6 bg-amber-50 border border-amber-200 rounded-lg p-4 flex gap-4">
+                    <div class="text-2xl">⚠️</div>
+                    <div>
+                        <h5 class="font-bold text-amber-800 text-sm mb-1">2026 生成式 AI (GenAI) 特別規範預警</h5>
+                        <p class="text-xs text-amber-700 leading-relaxed">
+                            因應 GenAI 幻覺 (Hallucination) 風險，TFDA 預計於 2026 上半年發布專屬指引。
+                            不同於傳統判讀型 AI，生成式模型（如自動撰寫病歷摘要）需額外建立<strong>「事實查核機制 (Fact-Checking Layer)」</strong>與<strong>「引用來源標註 (Citation)」</strong>功能，並納入 Human-in-the-loop 強制複核流程。
+                        </p>
                     </div>
                 </div>
             `,
