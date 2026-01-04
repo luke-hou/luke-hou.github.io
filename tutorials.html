@@ -26,10 +26,171 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/terminal-style.css">
+    <style>
+        /* Terminal Floating Nav (Desktop) */
+        .terminal-floating-nav {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            background: rgba(13, 17, 23, 0.95);
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 1rem;
+            max-width: 250px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            display: none;
+            box-shadow: -5px 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (min-width: 1400px) {
+            .terminal-floating-nav {
+                display: block;
+            }
+        }
+
+        .terminal-nav-header {
+            color: var(--bs-success);
+            /* Terminal Green */
+            border-bottom: 1px solid #333;
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .terminal-tree {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .terminal-tree-item {
+            margin-bottom: 0.25rem;
+        }
+
+        .terminal-tree-link {
+            color: #888;
+            text-decoration: none;
+            display: block;
+            padding: 2px 0;
+            transition: color 0.2s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .terminal-tree-link:hover,
+        .terminal-tree-link.active {
+            color: var(--bs-success);
+            text-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+        }
+
+        .terminal-tree-link.active::before {
+            content: '> ';
+            color: var(--bs-warning);
+        }
+
+        .terminal-sub-tree {
+            list-style: none;
+            padding-left: 1.2rem;
+            border-left: 1px solid #333;
+            margin-left: 0.5rem;
+            display: none;
+            /* Auto-collapse */
+        }
+
+        .terminal-sub-tree.expanded {
+            display: block;
+        }
+
+        /* Reading Progress */
+        .terminal-progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--bs-success);
+            z-index: 9999;
+            width: 0%;
+            box-shadow: 0 0 10px var(--bs-success);
+        }
+
+        /* Back to Top (Terminal Style) */
+        .terminal-back-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            background: #000;
+            border: 1px solid var(--bs-success);
+            color: var(--bs-success);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .terminal-back-top:hover {
+            background: var(--bs-success);
+            color: #000;
+        }
+
+        .terminal-back-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Mobile Nav (Bottom) */
+        .terminal-mobile-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(13, 17, 23, 0.98);
+            border-top: 1px solid #333;
+            padding: 0.5rem;
+            z-index: 1000;
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            gap: 10px;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (min-width: 1400px) {
+            .terminal-mobile-nav {
+                display: none;
+            }
+        }
+
+        .terminal-mobile-link {
+            color: #888;
+            border: 1px solid #444;
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+        }
+
+        .terminal-mobile-link.active {
+            border-color: var(--bs-success);
+            color: var(--bs-success);
+            background: rgba(40, 167, 69, 0.1);
+        }
+    </style>
     <!-- Google tag (gtag.js) -->
 </head>
 
 <body class="terminal-page">
+    <div class="terminal-progress-bar" id="readingProgress"></div>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container">
@@ -85,7 +246,7 @@
                     <h2 class="terminal-title" style="font-size: 1.5rem;">PM x Gemini CLI <del>邪術</del>協作術</h2>
                 </div>
                 <a href="#quick-links" class="btn btn-terminal-secondary btn-sm">
-                    <i class="fas fa-arrow-up me-1"></i>cd ..
+                    <i class="fas fa-arrow-up me-1"></i>top
                 </a>
             </div>
             <p class="terminal-subtitle mb-4">
@@ -123,7 +284,7 @@
 
             <div class="row g-4">
                 <!-- 教學項目 1 -->
-                <div class="col-md-6">
+                <div class="col-md-6" id="pm-ep1">
                     <div class="terminal-card h-100 d-flex flex-column">
                         <div class="terminal-card-header">
                             <div class="window-controls">
@@ -151,7 +312,7 @@
                 </div>
 
                 <!-- 教學項目 2 -->
-                <div class="col-md-6">
+                <div class="col-md-6" id="pm-ep2">
                     <div class="terminal-card h-100 d-flex flex-column">
                         <div class="terminal-card-header">
                             <div class="window-controls">
@@ -179,7 +340,7 @@
                 </div>
 
                 <!-- 教學項目 3 -->
-                <div class="col-md-6">
+                <div class="col-md-6" id="pm-ep3">
                     <div class="terminal-card h-100 d-flex flex-column">
                         <div class="terminal-card-header">
                             <div class="window-controls">
@@ -207,7 +368,7 @@
                 </div>
 
                 <!-- 教學項目 4 -->
-                <div class="col-md-6">
+                <div class="col-md-6" id="pm-ep4">
                     <div class="terminal-card h-100 d-flex flex-column">
                         <div class="terminal-card-header">
                             <div class="window-controls">
@@ -235,7 +396,7 @@
                 </div>
 
                 <!-- 教學項目 5 -->
-                <div class="col-md-6">
+                <div class="col-md-6" id="pm-ep5">
                     <div class="terminal-card h-100 d-flex flex-column">
                         <div class="terminal-card-header">
                             <div class="window-controls">
@@ -263,7 +424,7 @@
                 </div>
 
                 <!-- 教學項目：番外篇 -->
-                <div class="col-md-6">
+                <div class="col-md-6" id="pm-special">
                     <div class="terminal-card h-100 d-flex flex-column">
                         <div class="terminal-card-header">
                             <div class="window-controls">
@@ -301,7 +462,7 @@
                     <h2 class="terminal-title" style="font-size: 1.5rem;">n8n RAG 系列：基礎 (Supabase 雲端整合)</h2>
                 </div>
                 <a href="#quick-links" class="btn btn-terminal-secondary btn-sm">
-                    <i class="fas fa-arrow-up me-1"></i>cd ..
+                    <i class="fas fa-arrow-up me-1"></i>top
                 </a>
             </div>
             <p class="terminal-subtitle mb-4">
@@ -311,7 +472,7 @@
 
             <div class="row g-4">
                 <!-- n8n 教學 1 -->
-                <div class="col-md-6">
+                <div class="col-md-6" id="basic-ep1">
                     <div class="terminal-card h-100 d-flex flex-column">
                         <div class="terminal-card-header">
                             <div class="window-controls">
@@ -335,7 +496,7 @@
                 </div>
 
                 <!-- n8n 教學 2 -->
-                <div class="col-md-6">
+                <div class="col-md-6" id="basic-ep2">
                     <div class="terminal-card h-100 d-flex flex-column">
                         <div class="terminal-card-header">
                             <div class="window-controls">
@@ -362,7 +523,7 @@
                 <!-- n8n 教學 3 -->
 
                 <!-- n8n 教學 3 -->
-                <div class="col-md-6">
+                <div class="col-md-6" id="basic-ep3">
                     <div class="terminal-card h-100 d-flex flex-column">
                         <div class="terminal-card-header">
                             <div class="window-controls">
@@ -388,7 +549,7 @@
 
 
                 <!-- n8n 教學 4 -->
-                <div class="col-md-6">
+                <div class="col-md-6" id="basic-ep4">
                     <div class="terminal-card h-100 d-flex flex-column">
                         <div class="terminal-card-header">
                             <div class="window-controls">
@@ -398,7 +559,8 @@
                             </div>
                             <span class="file-path">~/tutorials/n8n-04.md</span>
                         </div>
-                        <img src="n8n_tutorials/4/image.png" alt="n8n教學四：RAG - 建立n8n工作流嵌入(Embedding)向量資料庫" class="terminal-card-image">
+                        <img src="n8n_tutorials/4/image.png" alt="n8n教學四：RAG - 建立n8n工作流嵌入(Embedding)向量資料庫"
+                            class="terminal-card-image">
                         <div class="terminal-card-body d-flex flex-column flex-grow-1">
                             <h5 class="terminal-card-title">n8n 教學 (四)：RAG - 建立工作流嵌入(Embedding)向量資料庫</h5>
                             <p class="terminal-card-desc flex-grow-1">本篇教學將教您如何建立 n8n 工作流，將大量資料高效地匯入向量資料庫，並處理重複資料。</p>
@@ -411,7 +573,7 @@
                 </div>
 
                 <!-- n8n 教學 5 -->
-                <div class="col-md-6">
+                <div class="col-md-6" id="basic-ep5">
                     <div class="terminal-card h-100 d-flex flex-column">
                         <div class="terminal-card-header">
                             <div class="window-controls">
@@ -421,7 +583,8 @@
                             </div>
                             <span class="file-path">~/tutorials/n8n-05.md</span>
                         </div>
-                        <img src="n8n_tutorials/5/image.png" alt="n8n教學五：RAG - 讓AI參考向量資料庫回答" class="terminal-card-image">
+                        <img src="n8n_tutorials/5/image.png" alt="n8n教學五：RAG - 讓AI參考向量資料庫回答"
+                            class="terminal-card-image">
                         <div class="terminal-card-body d-flex flex-column flex-grow-1">
                             <h5 class="terminal-card-title">n8n 教學 (五)：RAG - 讓AI參考向量資料庫回答</h5>
                             <p class="terminal-card-desc flex-grow-1">本篇教學將展示如何配置 n8n，讓 AI
@@ -435,7 +598,7 @@
                 </div>
 
                 <!-- n8n 教學：Google Credential (EP) -->
-                <div class="col-md-6">
+                <div class="col-md-6" id="basic-ep-google">
                     <div class="terminal-card h-100 d-flex flex-column">
                         <div class="terminal-card-header">
                             <div class="window-controls">
@@ -476,7 +639,7 @@
                     <h2 class="terminal-title" style="font-size: 1.5rem;">n8n RAG 系列：進階 (在地化部署 Qdrant)</h2>
                 </div>
                 <a href="#quick-links" class="btn btn-terminal-secondary btn-sm">
-                    <i class="fas fa-arrow-up me-1"></i>cd ..
+                    <i class="fas fa-arrow-up me-1"></i>top
                 </a>
             </div>
             <p class="terminal-subtitle mb-4">
@@ -486,7 +649,7 @@
 
             <div class="row g-4">
                 <!-- n8n 教學 6 -->
-                <div class="col-md-6">
+                <div class="col-md-6" id="adv-ep6">
                     <div class="terminal-card h-100 d-flex flex-column">
                         <div class="terminal-card-header">
                             <div class="window-controls">
@@ -510,7 +673,7 @@
                 </div>
 
                 <!-- n8n 教學 7 -->
-                <div class="col-md-6">
+                <div class="col-md-6" id="adv-ep7">
                     <div class="terminal-card h-100 d-flex flex-column">
                         <div class="terminal-card-header">
                             <div class="window-controls">
@@ -535,7 +698,7 @@
                 </div>
 
                 <!-- n8n 教學 8 -->
-                <div class="col-md-6">
+                <div class="col-md-6" id="adv-ep8">
                     <div class="terminal-card h-100 d-flex flex-column">
                         <div class="terminal-card-header">
                             <div class="window-controls">
@@ -559,7 +722,7 @@
                 </div>
 
                 <!-- n8n 教學 9 -->
-                <div class="col-md-6">
+                <div class="col-md-6" id="adv-ep9">
                     <div class="terminal-card h-100 d-flex flex-column">
                         <div class="terminal-card-header">
                             <div class="window-controls">
@@ -583,7 +746,7 @@
                 </div>
 
                 <!-- n8n 教學 10 -->
-                <div class="col-md-6">
+                <div class="col-md-6" id="adv-ep10">
                     <div class="terminal-card h-100 d-flex flex-column">
                         <div class="terminal-card-header">
                             <div class="window-controls">
@@ -618,6 +781,169 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Back to Top -->
+    <button class="terminal-back-top" id="backToTopBtn">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Desktop Floating Nav -->
+    <nav class="terminal-floating-nav">
+        <div class="terminal-nav-header">./navigation</div>
+        <ul class="terminal-tree">
+            <!-- PM Series -->
+            <li class="terminal-tree-item">
+                <a href="#gemini-pm-series" class="terminal-tree-link">PM x Gemini CLI</a>
+                <ul class="terminal-sub-tree">
+                    <li><a href="#pm-ep1" class="terminal-tree-link">|-- Ep.1 環境設定</a></li>
+                    <li><a href="#pm-ep2" class="terminal-tree-link">|-- Ep.2 基本指令</a></li>
+                    <li><a href="#pm-ep3" class="terminal-tree-link">|-- Ep.3 產品探索</a></li>
+                    <li><a href="#pm-ep4" class="terminal-tree-link">|-- Ep.4 規格撰寫</a></li>
+                    <li><a href="#pm-ep5" class="terminal-tree-link">|-- Ep.5 敏捷實踐</a></li>
+                    <li><a href="#pm-special" class="terminal-tree-link">L-- 番外：Git 版控</a></li>
+                </ul>
+            </li>
+            <!-- n8n Basic Series -->
+            <li class="terminal-tree-item">
+                <a href="#basic-series" class="terminal-tree-link">n8n RAG 基礎</a>
+                <ul class="terminal-sub-tree">
+                    <li><a href="#basic-ep1" class="terminal-tree-link">|-- Ep.1 安裝設置</a></li>
+                    <li><a href="#basic-ep2" class="terminal-tree-link">|-- Ep.2 Supabase</a></li>
+                    <li><a href="#basic-ep3" class="terminal-tree-link">|-- Ep.3 Gemini API</a></li>
+                    <li><a href="#basic-ep4" class="terminal-tree-link">|-- Ep.4 Embedding</a></li>
+                    <li><a href="#basic-ep5" class="terminal-tree-link">|-- Ep.5 向量問答</a></li>
+                    <li><a href="#basic-ep-google" class="terminal-tree-link">L-- EP：Google 憑證</a></li>
+                </ul>
+            </li>
+            <!-- n8n Advanced Series -->
+            <li class="terminal-tree-item">
+                <a href="#advanced-series" class="terminal-tree-link">n8n RAG 進階</a>
+                <ul class="terminal-sub-tree">
+                    <li><a href="#adv-ep6" class="terminal-tree-link">|-- Ep.6 Qdrant</a></li>
+                    <li><a href="#adv-ep7" class="terminal-tree-link">|-- Ep.7 建立向量庫</a></li>
+                    <li><a href="#adv-ep8" class="terminal-tree-link">|-- Ep.8 整合 n8n</a></li>
+                    <li><a href="#adv-ep9" class="terminal-tree-link">|-- Ep.9 改造 Chat</a></li>
+                    <li><a href="#adv-ep10" class="terminal-tree-link">L-- Ep.10 快照還原</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Mobile Bottom Nav -->
+    <nav class="terminal-mobile-nav">
+        <a href="#gemini-pm-series" class="terminal-mobile-link">[ PM x Gemini ]</a>
+        <a href="#basic-series" class="terminal-mobile-link">[ n8n 基礎 ]</a>
+        <a href="#advanced-series" class="terminal-mobile-link">[ n8n 進階 ]</a>
+    </nav>
+
+    <script>
+        // Tutorial Page Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const progressBar = document.getElementById('readingProgress');
+            const backToTopBtn = document.getElementById('backToTopBtn');
+            const navLinks = document.querySelectorAll('.terminal-tree-link');
+            const mobileLinks = document.querySelectorAll('.terminal-mobile-link');
+            // Track all IDs that are targets
+            const targets = Array.from(navLinks).map(link => link.getAttribute('href').substring(1));
+            const sections = targets.map(id => document.getElementById(id)).filter(el => el);
+
+            // Scroll Handler
+            window.addEventListener('scroll', () => {
+                // 1. Progress Bar
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                progressBar.style.width = scrollPercent + '%';
+
+                // 2. Back to Top
+                if (scrollTop > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+
+                // 3. Scroll Spy (Highlighting)
+                let currentId = '';
+
+                // Find visible section
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 200; // Offset
+                    if (scrollTop >= sectionTop) {
+                        currentId = section.getAttribute('id');
+                    }
+                });
+
+                // Also check for main series headers
+                const seriesIds = ['gemini-pm-series', 'basic-series', 'advanced-series'];
+                seriesIds.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el && scrollTop >= el.offsetTop - 200) {
+                        // If we are at the series header, we might want to highlight the series link
+                        // But if a specific episode is active, let that override or coexist
+                    }
+                });
+
+                // Update UI classes
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    const href = link.getAttribute('href').substring(1);
+
+                    if (href === currentId) {
+                        link.classList.add('active');
+                        // Expand parent if it's a sub-item
+                        const parentSubTree = link.closest('.terminal-sub-tree');
+                        if (parentSubTree) {
+                            parentSubTree.classList.add('expanded');
+                        }
+                    } else {
+                        // logic to collapse others if needed? 
+                        // For now let's keep it simple: expand active, maybe don't auto-collapse strictly 
+                        // to avoid jumpy UI. Or clear 'expanded' from all non-active parents?
+                    }
+                });
+
+                // Fix: Only expand the tree that contains the active item, collapse others
+                document.querySelectorAll('.terminal-sub-tree').forEach(tree => {
+                    if (!tree.contains(document.querySelector('.terminal-tree-link.active'))) {
+                        tree.classList.remove('expanded');
+                    } else {
+                        tree.classList.add('expanded');
+                    }
+                });
+
+                // Mobile Nav Highlight
+                // Mobile nav only tracks series
+                let currentSeries = '';
+                if (currentId.startsWith('pm')) currentSeries = 'gemini-pm-series';
+                else if (currentId.startsWith('basic')) currentSeries = 'basic-series';
+                else if (currentId.startsWith('adv')) currentSeries = 'advanced-series';
+
+                // If we are scroll past series header but before first ep, default to series
+                seriesIds.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el && scrollTop >= el.offsetTop - 300) {
+                        // Only update if we haven't found a more specific inner ID or just to ensure series is active
+                        // Ideally, mapping episode to series is safer
+                    }
+                });
+
+                mobileLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + currentSeries) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // Back to Top
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Smooth Scroll Fix for Anchors
+            // Note: CSS html { scroll-behavior: smooth; } handles this mostly, 
+            // but we can add offset logic via JS if needed. 
+        });
+    </script>
 </body>
 
 </html>
