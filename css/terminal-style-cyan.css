@@ -1,7 +1,7 @@
 /*
  * Terminal Style - Homepage
  * Inspired by hugo-theme-terminal
- * Theme Color: Cyan/Cyberpunk - 首頁專屬科技感配色
+ * Theme Color: Professional Navy Blue + Gold - 專業形象配色
  */
 
 /* ========================================
@@ -10,32 +10,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap');
 
 /* ========================================
-   CSS Variables - Terminal Theme (Cyan/Cyberpunk)
+   CSS Variables - Terminal Theme (Professional Navy + Gold)
    ======================================== */
 :root {
-    --terminal-bg: #0a0a0f;
-    --terminal-bg-secondary: #12121a;
-    --terminal-bg-card: #1a1a24;
-    /* 青色/賽博龐克主色調 */
-    --terminal-accent: #00d4ff;
-    --terminal-accent-dim: #00a8cc;
-    --terminal-accent-bright: #66e5ff;
-    /* 輔助色 - 紫色霓虹 */
-    --terminal-purple: #a855f7;
-    --terminal-purple-dim: #7c3aed;
-    /* 輔助色 - 粉紅霓虹 */
-    --terminal-pink: #f472b6;
+    --terminal-bg: #0d1117;
+    --terminal-bg-secondary: #161b22;
+    --terminal-bg-card: #1c2128;
+    /* 專業深藍主色調 */
+    --terminal-accent: #58a6ff;
+    --terminal-accent-dim: #388bfd;
+    --terminal-accent-bright: #79c0ff;
+    /* 輔助色 - 金色/橙色 (專業、穩重) */
+    --terminal-purple: #d29922;
+    --terminal-purple-dim: #bb8009;
+    /* 輔助色 - 綠色 (成功指標) */
+    --terminal-pink: #3fb950;
     /* Legacy aliases for compatibility */
-    --terminal-green: #00d4ff;
-    --terminal-green-dim: #00a8cc;
-    --terminal-green-bright: #66e5ff;
-    --terminal-text: #e5e5e5;
-    --terminal-text-dim: #a3a3a3;
-    --terminal-border: #2a2a3a;
-    --terminal-cursor: #00d4ff;
-    --terminal-shadow: rgba(0, 212, 255, 0.15);
-    /* 漸變 */
-    --terminal-gradient: linear-gradient(135deg, #00d4ff 0%, #a855f7 100%);
+    --terminal-green: #58a6ff;
+    --terminal-green-dim: #388bfd;
+    --terminal-green-bright: #79c0ff;
+    --terminal-text: #e6edf3;
+    --terminal-text-dim: #8b949e;
+    --terminal-border: #30363d;
+    --terminal-cursor: #58a6ff;
+    --terminal-shadow: rgba(88, 166, 255, 0.12);
+    /* 漸變 - 專業藍金 */
+    --terminal-gradient: linear-gradient(135deg, #58a6ff 0%, #d29922 100%);
 }
 
 /* ========================================
