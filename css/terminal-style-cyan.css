@@ -1,0 +1,413 @@
+/*
+ * Terminal Style - Homepage
+ * Inspired by hugo-theme-terminal
+ * Theme Color: Cyan/Cyberpunk - 首頁專屬科技感配色
+ */
+
+/* ========================================
+   Font Import
+   ======================================== */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap');
+
+/* ========================================
+   CSS Variables - Terminal Theme (Cyan/Cyberpunk)
+   ======================================== */
+:root {
+    --terminal-bg: #0a0a0f;
+    --terminal-bg-secondary: #12121a;
+    --terminal-bg-card: #1a1a24;
+    /* 青色/賽博龐克主色調 */
+    --terminal-accent: #00d4ff;
+    --terminal-accent-dim: #00a8cc;
+    --terminal-accent-bright: #66e5ff;
+    /* 輔助色 - 紫色霓虹 */
+    --terminal-purple: #a855f7;
+    --terminal-purple-dim: #7c3aed;
+    /* 輔助色 - 粉紅霓虹 */
+    --terminal-pink: #f472b6;
+    /* Legacy aliases for compatibility */
+    --terminal-green: #00d4ff;
+    --terminal-green-dim: #00a8cc;
+    --terminal-green-bright: #66e5ff;
+    --terminal-text: #e5e5e5;
+    --terminal-text-dim: #a3a3a3;
+    --terminal-border: #2a2a3a;
+    --terminal-cursor: #00d4ff;
+    --terminal-shadow: rgba(0, 212, 255, 0.15);
+    /* 漸變 */
+    --terminal-gradient: linear-gradient(135deg, #00d4ff 0%, #a855f7 100%);
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+.terminal-page {
+    font-family: 'Fira Code', monospace;
+    background-color: var(--terminal-bg);
+    color: var(--terminal-text);
+    min-height: 100vh;
+}
+
+.terminal-page .navbar {
+    background-color: var(--terminal-bg) !important;
+    border-bottom: 1px solid var(--terminal-border) !important;
+    font-family: 'Fira Code', monospace;
+}
+
+.terminal-page .navbar-brand {
+    color: var(--terminal-accent) !important;
+}
+
+.terminal-page .nav-link {
+    color: var(--terminal-text-dim) !important;
+    transition: color 0.2s ease;
+}
+
+.terminal-page .nav-link:hover,
+.terminal-page .nav-link.active {
+    color: var(--terminal-accent) !important;
+}
+
+/* ========================================
+   Hero Section - Terminal Style
+   ======================================== */
+.terminal-hero {
+    background-color: var(--terminal-bg);
+    padding: 4rem 0 3rem;
+    border-bottom: 1px solid var(--terminal-border);
+    position: relative;
+}
+
+/* 賽博龐克網格背景 */
+.terminal-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+}
+
+.terminal-prompt {
+    color: var(--terminal-accent);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.terminal-prompt::before {
+    content: '$ ';
+    color: var(--terminal-accent-dim);
+}
+
+.terminal-title {
+    font-family: 'Fira Code', monospace;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--terminal-text);
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+}
+
+.terminal-title::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: var(--terminal-gradient);
+    margin-top: 0.5rem;
+}
+
+.terminal-subtitle {
+    color: var(--terminal-text-dim);
+    font-size: 0.95rem;
+    max-width: 600px;
+}
+
+/* Cursor blink animation */
+.cursor-blink::after {
+    content: '_';
+    animation: blink 1s step-end infinite;
+    color: var(--terminal-cursor);
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* ========================================
+   Filter Buttons - Terminal Style
+   ======================================== */
+.terminal-filters {
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--terminal-border);
+}
+
+.terminal-filters .btn {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    border-radius: 0;
+    padding: 0.5rem 1rem;
+    margin: 0.25rem;
+    transition: all 0.2s ease;
+}
+
+.btn-terminal-active {
+    background-color: var(--terminal-accent);
+    color: var(--terminal-bg);
+    border: 1px solid var(--terminal-accent);
+}
+
+.btn-terminal-outline {
+    background-color: transparent;
+    color: var(--terminal-text-dim);
+    border: 1px solid var(--terminal-border);
+}
+
+.btn-terminal-outline:hover {
+    background-color: var(--terminal-accent);
+    color: var(--terminal-bg);
+    border-color: var(--terminal-accent);
+}
+
+/* ========================================
+   Project Card - Terminal Style
+   ======================================== */
+.terminal-card {
+    background-color: var(--terminal-bg-card);
+    border: 1px solid var(--terminal-border);
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.terminal-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background-color: var(--terminal-border);
+    transition: background-color 0.3s ease;
+}
+
+.terminal-card:hover {
+    border-color: var(--terminal-accent-dim);
+    box-shadow: 0 0 25px var(--terminal-shadow);
+}
+
+.terminal-card:hover::before {
+    background: var(--terminal-gradient);
+}
+
+.terminal-card-header {
+    padding: 0.75rem 1rem;
+    background-color: var(--terminal-bg-secondary);
+    border-bottom: 1px solid var(--terminal-border);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.terminal-card-header .window-controls {
+    display: flex;
+    gap: 6px;
+}
+
+.terminal-card-header .window-controls span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.terminal-card-header .window-controls .close {
+    background-color: #ff5f56;
+}
+
+.terminal-card-header .window-controls .minimize {
+    background-color: #ffbd2e;
+}
+
+.terminal-card-header .window-controls .maximize {
+    background-color: #27c93f;
+}
+
+.terminal-card-header .file-path {
+    color: var(--terminal-text-dim);
+    font-size: 0.8rem;
+    margin-left: auto;
+}
+
+.terminal-card-body {
+    padding: 1rem;
+}
+
+.terminal-card-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--terminal-border);
+    filter: grayscale(30%);
+    transition: filter 0.3s ease;
+}
+
+.terminal-card:hover .terminal-card-image {
+    filter: grayscale(0%);
+}
+
+.terminal-card-title {
+    font-family: 'Fira Code', monospace;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--terminal-accent);
+    margin-bottom: 0.5rem;
+}
+
+.terminal-card-title::before {
+    content: '> ';
+    color: var(--terminal-accent-dim);
+}
+
+.terminal-card-desc {
+    color: var(--terminal-text-dim);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+/* Tags */
+.terminal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.terminal-tag {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+    background-color: var(--terminal-bg-secondary);
+    color: var(--terminal-accent-dim);
+    border: 1px solid var(--terminal-border);
+}
+
+/* Impact Badge */
+.terminal-impact {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    color: var(--terminal-accent-bright);
+    padding: 0.25rem 0.5rem;
+    background-color: rgba(0, 212, 255, 0.1);
+    border: 1px solid var(--terminal-accent-dim);
+    display: inline-block;
+    margin-bottom: 0.75rem;
+}
+
+/* Special Impact - Purple */
+.terminal-impact-purple {
+    color: var(--terminal-purple);
+    background-color: rgba(168, 85, 247, 0.1);
+    border-color: var(--terminal-purple-dim);
+}
+
+/* Action Buttons */
+.terminal-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: auto;
+}
+
+.btn-terminal {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 0;
+    flex: 1;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.btn-terminal-primary {
+    background-color: var(--terminal-accent);
+    color: var(--terminal-bg);
+    border: 1px solid var(--terminal-accent);
+}
+
+.btn-terminal-primary:hover {
+    background-color: var(--terminal-accent-bright);
+    color: var(--terminal-bg);
+    box-shadow: 0 0 15px var(--terminal-shadow);
+}
+
+.btn-terminal-secondary {
+    background-color: transparent;
+    color: var(--terminal-text-dim);
+    border: 1px solid var(--terminal-border);
+}
+
+.btn-terminal-secondary:hover {
+    background-color: var(--terminal-bg-secondary);
+    color: var(--terminal-accent);
+    border-color: var(--terminal-accent-dim);
+}
+
+/* ========================================
+   Footer - Terminal Style
+   ======================================== */
+.terminal-footer {
+    background-color: var(--terminal-bg);
+    border-top: 1px solid var(--terminal-border);
+    padding: 2rem 0;
+    font-family: 'Fira Code', monospace;
+}
+
+.terminal-footer p {
+    color: var(--terminal-text-dim);
+    font-size: 0.85rem;
+}
+
+/* ========================================
+   Highlight Accent - Purple Variant
+   ======================================== */
+.accent-purple {
+    color: var(--terminal-purple) !important;
+}
+
+.accent-purple-bg {
+    background-color: rgba(168, 85, 247, 0.1) !important;
+    border-color: var(--terminal-purple-dim) !important;
+}
+
+/* ========================================
+   Responsive Adjustments
+   ======================================== */
+@media (max-width: 768px) {
+    .terminal-title {
+        font-size: 1.5rem;
+    }
+
+    .terminal-card-image {
+        height: 150px;
+    }
+
+    .terminal-actions {
+        flex-direction: column;
+    }
+}

@@ -4,23 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luke Hou 侯俊嘉 - 個人網站</title>
-    <meta name="description" content="Luke Hou 侯俊嘉的個人網站，分享個人專案、作品、n8n自動化教學，以及提升工作效率的工具。">
-    <meta name="keywords" content="Luke Hou, 侯俊嘉, 個人網站, 作品, n8n教學, 自動化, 效率工具, 個人專案, 部落格, n8n, Vibe Coding, AI, HIS, BA">
+    <title>Luke Hou 侯俊嘉 - AI Builder | 用 AI 動手做</title>
+    <meta name="description" content="Luke Hou 侯俊嘉 - AI 時代的實踐者。運用 AI 與自動化工具，從想法到上線，打造真實可用的解決方案。">
+    <meta name="keywords"
+        content="Luke Hou, 侯俊嘉, AI Builder, Vibe Coding, n8n, 自動化, Gemini CLI, LINE Bot, AI Agent, 個人專案">
     <link rel="icon" href="/images/favicon.jpg" type="image/png">
     <!-- SEO: Canonical URL 設定 -->
     <link rel="canonical" href="https://luke.ninja/">
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://luke.ninja/">
-    <meta property="og:title" content="Luke Hou 侯俊嘉 - 個人網站">
-    <meta property="og:description" content="Luke Hou 侯俊嘉的個人網站，分享個人專案、作品、n8n自動化教學，以及提升工作效率的工具。">
+    <meta property="og:title" content="Luke Hou 侯俊嘉 - AI Builder | 用 AI 動手做">
+    <meta property="og:description" content="Luke Hou 侯俊嘉 - AI 時代的實踐者。運用 AI 與自動化工具，從想法到上線。">
     <meta property="og:image" content="https://luke.ninja/images/index.jpg">
     <meta property="og:site_name" content="Luke Hou">
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Luke Hou 侯俊嘉 - 個人網站">
-    <meta name="twitter:description" content="Luke Hou 侯俊嘉的個人網站，分享個人專案、作品、n8n自動化教學，以及提升工作效率的工具。">
+    <meta name="twitter:title" content="Luke Hou 侯俊嘉 - AI Builder | 用 AI 動手做">
+    <meta name="twitter:description" content="Luke Hou 侯俊嘉 - AI 時代的實踐者。運用 AI 與自動化工具，從想法到上線。">
     <meta name="twitter:image" content="https://luke.ninja/images/index.jpg">
     <!-- Schema.org Person JSON-LD -->
     <script type="application/ld+json">
@@ -30,59 +31,143 @@
         "name": "Luke Hou (侯俊嘉)",
         "url": "https://luke.ninja",
         "image": "https://luke.ninja/images/index.jpg",
-        "jobTitle": "AI Engineer / Product Manager",
-        "description": "分享個人專案、作品、n8n自動化教學，以及提升工作效率的工具。",
+        "jobTitle": "AI Builder / Product Manager",
+        "description": "AI 時代的實踐者。運用 AI 與自動化工具，從想法到上線，打造真實可用的解決方案。",
         "sameAs": [
             "https://www.linkedin.com/in/junjia-hou/"
         ],
-        "knowsAbout": ["AI", "n8n", "自動化", "產品管理", "Vibe Coding", "Line Bot", "Jira"]
+        "knowsAbout": ["AI", "n8n", "Vibe Coding", "Gemini CLI", "LINE Bot", "自動化", "產品管理"]
     }
     </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/modern-style.css">
-    <!-- Google Fonts: JetBrains Mono (Added for Tech feel) -->
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <!-- AOS Animation Library -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/terminal-style-cyan.css">
+    <style>
+        /* 首頁專屬樣式 */
+        .hero-profile {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--terminal-accent);
+            object-fit: cover;
+            filter: grayscale(20%);
+            transition: all 0.3s ease;
+        }
+
+        .hero-profile:hover {
+            filter: grayscale(0%);
+            box-shadow: 0 0 30px var(--terminal-shadow);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--terminal-bg-secondary);
+            border: 1px solid var(--terminal-border);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            border-color: var(--terminal-accent);
+            box-shadow: 0 0 15px var(--terminal-shadow);
+        }
+
+        .stat-number {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--terminal-accent);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--terminal-text-dim);
+            margin-top: 0.25rem;
+        }
+
+        .featured-project-image {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .skill-icon {
+            font-size: 2rem;
+            color: var(--terminal-accent);
+            margin-bottom: 0.75rem;
+        }
+
+        .about-section {
+            background: var(--terminal-bg-secondary);
+            border: 1px solid var(--terminal-border);
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .about-toggle {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .about-toggle:hover {
+            color: var(--terminal-accent);
+        }
+
+        .about-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .about-content.expanded {
+            max-height: 500px;
+        }
+
+        .typed-wrapper {
+            min-height: 1.5rem;
+            margin: 0.5rem 0 1rem;
+        }
+
+        #typed-text {
+            color: var(--terminal-accent);
+            background: rgba(74, 222, 128, 0.1);
+            padding: 0.25rem 0.5rem;
+            border: 1px solid var(--terminal-accent-dim);
+        }
+    </style>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0V2L1DQVPY"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-0V2L1DQVPY');
     </script>
 </head>
 
-<body>
+<body class="terminal-page">
     <header>
-        <nav class="navbar navbar-expand-lg fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container">
-                <a class="navbar-brand fw-bold" href="index.html">Luke Hou 侯俊嘉</a>
+                <a class="navbar-brand" href="index.html">$ luke@ninja ~</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.html">♾️ 首頁</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="tutorials.html">⚡教學</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="podcast.html">🎙️ Podcast</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="portfolio.html">📚作品</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="blog.html">✈️分享</a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link active" href="index.html">~/home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="tutorials.html">~/tutorials</a></li>
+                        <li class="nav-item"><a class="nav-link" href="podcast.html">~/podcast</a></li>
+                        <li class="nav-item"><a class="nav-link" href="portfolio.html">~/projects</a></li>
+                        <li class="nav-item"><a class="nav-link" href="blog.html">~/blog</a></li>
                     </ul>
                 </div>
             </div>
@@ -90,208 +175,470 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="hero-section text-center position-relative">
-        <div class="container position-relative z-2">
-            <div class="row justify-content-center align-items-center">
-                <div class="col-lg-8" data-aos="zoom-in" data-aos-duration="1000">
-                    <div class="profile-img-container mb-4">
-                        <img src="images/index.jpg" class="profile-img-glow" alt="Luke Hou">
+    <section class="terminal-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <p class="terminal-prompt">whoami</p>
+                    <div class="d-flex align-items-center gap-4 mb-3">
+                        <img src="images/index.jpg" class="hero-profile" alt="Luke Hou">
+                        <div>
+                            <h1 class="terminal-title mb-2">Luke Hou<span class="cursor-blink"></span></h1>
+                            <div class="typed-wrapper">
+                                <span id="typed-text"></span>
+                            </div>
+                        </div>
                     </div>
-                    <h1 class="hero-title mb-2">Luke Hou</h1>
-                    <div class="typed-text-wrapper mb-4">
-                        <span id="typed-text"></span>
-                    </div>
-
-                    <p class="lead text-secondary opacity-75 mb-5" data-aos="fade-up" data-aos-delay="200"
-                        style="max-width: 600px; margin: 0 auto;">
-                        運用 AI 與自動化工具，釋放團隊潛能。
+                    <p class="terminal-subtitle mb-4">
+                        // 用 AI 動手做，從想法到上線<br>
+                        // 不只是 Prompt Engineer，更是 AI Builder
                     </p>
-                    <div class="d-flex justify-content-center gap-3" data-aos="fade-up" data-aos-delay="400">
+                    <div class="d-flex gap-3 flex-wrap">
                         <a href="https://www.linkedin.com/in/junjia-hou/" target="_blank"
-                            class="btn btn-primary-modern">
-                            <i class="fab fa-linkedin me-2"></i>Connect on LinkedIn
+                            class="btn btn-terminal btn-terminal-primary">
+                            <i class="fab fa-linkedin me-2"></i>Connect
                         </a>
-                        <a href="#featured-content" class="btn btn-outline-modern">
-                            探索專案 <i class="fas fa-arrow-down ms-2"></i>
+                        <a href="#featured-projects" class="btn btn-terminal btn-terminal-secondary">
+                            <i class="fas fa-rocket me-2"></i>探索專案
+                        </a>
+                        <a href="portfolio.html" class="btn btn-terminal btn-terminal-secondary">
+                            <i class="fas fa-folder-open me-2"></i>所有作品
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Wave Divider (Removed for cleaner look, or keep if preferred - keeping standard faint divider if needed, but removing SVG for now as per plan to reduce noise) -->
-        <!-- <div class="custom-shape-divider-bottom"> ... </div> -->
     </section>
 
-    <main class="container" style="margin-top: -50px; position: relative; z-index: 2;">
+    <main class="container py-5">
 
-        <!-- Core Competencies -->
+        <!-- 成就儀表板 -->
         <section class="mb-5">
-            <h2 class="section-title-modern" data-aos="fade-up">核心專業能力</h2>
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="glass-card text-center" data-tilt>
-                        <div class="icon-box">
-                            <i class="fas fa-exchange-alt fa-2x text-danger"></i>
-                        </div>
-                        <h5>HIS 系統轉置</h5>
-                        <p class="text-secondary small">參與醫學中心級 HIS 轉置，從 UAT 到維運，確保核心業務無縫轉移。</p>
+            <div class="terminal-card">
+                <div class="terminal-card-header">
+                    <div class="window-controls">
+                        <span class="close"></span>
+                        <span class="minimize"></span>
+                        <span class="maximize"></span>
                     </div>
+                    <span class="file-path">~/achievements/stats.json</span>
                 </div>
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="glass-card text-center" data-tilt>
-                        <div class="icon-box">
-                            <i class="fas fa-laptop-medical fa-2x text-primary"></i>
+                <div class="terminal-card-body">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-number" data-target="17">0</span>
+                            <span class="stat-label">完成專案</span>
                         </div>
-                        <h5>系統開發與維運</h5>
-                        <p class="text-secondary small">具備 HIS 開發、優化與維運能力，豐富的跨部門協作與系統整合經驗。</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                    <div class="glass-card text-center" data-tilt>
-                        <div class="icon-box">
-                            <i class="fas fa-shield-alt fa-2x text-success"></i>
+                        <div class="stat-item">
+                            <span class="stat-number" data-target="6">0</span>
+                            <span class="stat-label">教學系列</span>
                         </div>
-                        <h5>品質保證 (SQA)</h5>
-                        <p class="text-secondary small">建立全面測試策略，從功能、效能到安全，嚴格把關系統品質。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Productivity & Tech Highlights -->
-        <!-- Productivity & Tech Highlights -->
-        <section class="mb-5" data-aos="fade-left">
-            <div class="glass-card p-4 p-md-5">
-                <div class="row align-items-center">
-                    <div class="col-lg-5 mb-4 mb-lg-0">
-                        <h2 class="fw-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300"
-                            style="background: var(--brand-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
-                            生產力與<br>技術亮點
-                        </h2>
-                        <p class="text-secondary">不只是寫程式，更注重如何用科技解決真實問題。從自動化工作流到大型醫療系統，我追求極致的效率與品質。</p>
-                    </div>
-                    <div class="col-lg-7">
-                        <div class="list-group list-group-flush">
-                            <div class="list-group-item d-flex gap-3 align-items-center">
-                                <i class="fas fa-robot text-info fa-2x"></i>
-                                <div>
-                                    <h5 class="mb-1">n8n AI 自動化工作流</h5>
-                                    <p class="mb-0 text-secondary small">導入 n8n 建立 AI 驅動的自動化流程，串聯開發、測試與監控環節。</p>
-                                </div>
-                            </div>
-                            <div class="list-group-item d-flex gap-3 align-items-center">
-                                <i class="fas fa-bolt text-warning fa-2x"></i>
-                                <div>
-                                    <h5 class="mb-1">醫療資訊系統背景</h5>
-                                    <p class="mb-0 text-secondary small">十數年經驗，涵蓋系統分析、開發、維運與品保測試 (QA)。</p>
-                                </div>
-                            </div>
-                            <div class="list-group-item d-flex gap-3 align-items-center">
-                                <i class="fas fa-sitemap text-success fa-2x"></i>
-                                <div>
-                                    <h5 class="mb-1">全方位專案能力</h5>
-                                    <p class="mb-0 text-secondary small">從 RD 到 SA，以系統負責人視角貫穿全局，確保需求精準實現。</p>
-                                </div>
-                            </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-target="100">0</span>
+                            <span class="stat-label">+ 自動化流程</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-target="2000">0</span>
+                            <span class="stat-label">+ 工時節省</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">3x</span>
+                            <span class="stat-label">效率提升</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Professional Philosophy -->
-        <section class="mb-5" data-aos="zoom-in">
-            <div class="glass-card text-center position-relative overflow-hidden">
-                <div
-                    style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: var(--primary-gradient); filter: blur(80px); opacity: 0.3;">
+        <!-- AI 時代核心能力 -->
+        <section class="mb-5">
+            <p class="terminal-prompt mb-3">cat ~/skills/ai-builder.md</p>
+            <h2 class="terminal-title" style="font-size: 1.5rem;">AI 時代核心能力</h2>
+            <div class="row g-4 mt-3">
+                <div class="col-md-4">
+                    <div class="terminal-card h-100">
+                        <div class="terminal-card-header">
+                            <div class="window-controls">
+                                <span class="close"></span>
+                                <span class="minimize"></span>
+                                <span class="maximize"></span>
+                            </div>
+                            <span class="file-path">workflow.py</span>
+                        </div>
+                        <div class="terminal-card-body text-center">
+                            <i class="fas fa-robot skill-icon"></i>
+                            <h5 class="terminal-card-title">AI 工作流自動化</h5>
+                            <p class="terminal-card-desc">運用 n8n + AI Agent 打造端到端自動化流程，從資料擷取到報表生成全自動。</p>
+                        </div>
+                    </div>
                 </div>
-                <h4 class="mb-4"><i class="fas fa-compass me-2 text-info"></i>我的專業理念</h4>
-                <blockquote class="blockquote">
-                    <p class="fs-5 fst-italic text-light">"最卓越的品質保證 (QA)
-                        源自於深厚的開發與系統維運經驗。如同資深船長方能擔任「引水人」，指引船隻安全入港。"</p>
-                </blockquote>
-                <hr class="w-25 mx-auto my-4 border-secondary">
-                <p class="text-secondary">
-                    我將多年積累的技術洞察力應用於 QA 工作，從源頭預防風險、規劃最佳路徑，確保每一個專案都能精準、高效地達成目標。
-                </p>
+                <div class="col-md-4">
+                    <div class="terminal-card h-100">
+                        <div class="terminal-card-header">
+                            <div class="window-controls">
+                                <span class="close"></span>
+                                <span class="minimize"></span>
+                                <span class="maximize"></span>
+                            </div>
+                            <span class="file-path">vibe-coding.md</span>
+                        </div>
+                        <div class="terminal-card-body text-center">
+                            <i class="fas fa-code skill-icon"></i>
+                            <h5 class="terminal-card-title">Vibe Coding 實踐者</h5>
+                            <p class="terminal-card-desc">透過 Gemini CLI / Claude 協作開發，將想法快速轉化為可運行的完整產品。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="terminal-card h-100">
+                        <div class="terminal-card-header">
+                            <div class="window-controls">
+                                <span class="close"></span>
+                                <span class="minimize"></span>
+                                <span class="maximize"></span>
+                            </div>
+                            <span class="file-path">integrations.json</span>
+                        </div>
+                        <div class="terminal-card-body text-center">
+                            <i class="fas fa-diagram-project skill-icon"></i>
+                            <h5 class="terminal-card-title">多系統整合</h5>
+                            <p class="terminal-card-desc">串接 Jira、Gmail、LINE、Notion 等多系統，實現數據驅動的智慧工作流。</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Featured Content -->
-        <section id="featured-content" class="mb-5">
-            <h2 class="section-title-modern" data-aos="fade-up">精選內容</h2>
-            <div class="row g-4">
-                <!-- Featured Tutorials -->
-                <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
-                    <div class="glass-card h-100 d-flex flex-column" data-tilt>
-                        <h5 class="card-title mb-4"><i class="fas fa-graduation-cap me-2 text-warning"></i>精選教學</h5>
-                        <div class="list-group list-group-flush flex-grow-1">
-                            <a href="tutorials.html#gemini-pm-series"
-                                class="list-group-item list-group-item-action bg-transparent border-0 ps-0">
-                                <i class="fas fa-angle-right me-2 text-secondary"></i>PM x Gemini CLI 協作術
-                            </a>
-                            <a href="tutorials.html#basic-series"
-                                class="list-group-item list-group-item-action bg-transparent border-0 ps-0">
-                                <i class="fas fa-angle-right me-2 text-secondary"></i>n8n 系列：基礎 (Supabase
-                                雲端整合)
-                            </a>
-                            <a href="tutorials.html#advanced-series"
-                                class="list-group-item list-group-item-action bg-transparent border-0 ps-0">
-                                <i class="fas fa-angle-right me-2 text-secondary"></i>n8n 系列：進階 (在地化部署
-                                Qdrant)
-                            </a>
+        <!-- 精選專案 -->
+        <section id="featured-projects" class="mb-5">
+            <p class="terminal-prompt mb-3">ls ~/projects --featured --sort=impact</p>
+            <h2 class="terminal-title" style="font-size: 1.5rem;">精選專案</h2>
+            <div class="row g-4 mt-3">
+                <!-- Line Bot MVP -->
+                <div class="col-lg-6">
+                    <div class="terminal-card h-100">
+                        <div class="terminal-card-header">
+                            <div class="window-controls">
+                                <span class="close"></span>
+                                <span class="minimize"></span>
+                                <span class="maximize"></span>
+                            </div>
+                            <span class="file-path">~/projects/line-bot-mvp</span>
                         </div>
-                        <a href="tutorials.html" class="btn btn-outline-modern btn-sm mt-3 align-self-start">查看所有教學</a>
+                        <img src="images/line-ai-bot-mvp/2025-12-24_23-54-29.jpg" alt="Line Bot MVP"
+                            class="terminal-card-image featured-project-image">
+                        <div class="terminal-card-body">
+                            <span class="terminal-impact">🚀 Full Product - Vibe Coding</span>
+                            <h5 class="terminal-card-title">LineBot AI 協作時光機</h5>
+                            <p class="terminal-card-desc">不再被訊息淹沒。結合備份、搜尋、情緒偵測與自動化協作的完整 LINE Bot 解決方案。</p>
+                            <div class="terminal-tags">
+                                <span class="terminal-tag">Python</span>
+                                <span class="terminal-tag">FastAPI</span>
+                                <span class="terminal-tag">Supabase</span>
+                                <span class="terminal-tag">AI Agent</span>
+                            </div>
+                            <div class="terminal-actions">
+                                <a href="projects/line-bot-mvp.html" class="btn btn-terminal btn-terminal-primary">cat
+                                    README.md</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- Featured Projects -->
-                <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
-                    <div class="glass-card h-100 d-flex flex-column" data-tilt>
-                        <h5 class="card-title mb-4"><i class="fas fa-rocket me-2 text-danger"></i>代表專案</h5>
-                        <div class="list-group list-group-flush flex-grow-1">
-                            <a href="projects/line-bot-mvp.html"
-                                class="list-group-item list-group-item-action bg-transparent border-0 ps-0">
-                                <i class="fas fa-angle-right me-2 text-secondary"></i>Line Bot MVP：有溫度的 LineBot AI 協作時光機
-                            </a>
-                            <a href="projects/vibe-coding-task-management.html"
-                                class="list-group-item list-group-item-action bg-transparent border-0 ps-0">
-                                <i class="fas fa-angle-right me-2 text-secondary"></i>vibeTask：AI 驅動的賽博龐克任務管理系統
-                            </a>
-                            <a href="projects/n8n-line-business-card-automation.html"
-                                class="list-group-item list-group-item-action bg-transparent border-0 ps-0">
-                                <i class="fas fa-angle-right me-2 text-secondary"></i>n8n 自動化：用 LINE + AI 打造你的個人 CRM
-                            </a>
+                <!-- vibeTask -->
+                <div class="col-lg-6">
+                    <div class="terminal-card h-100">
+                        <div class="terminal-card-header">
+                            <div class="window-controls">
+                                <span class="close"></span>
+                                <span class="minimize"></span>
+                                <span class="maximize"></span>
+                            </div>
+                            <span class="file-path">~/projects/vibe-task</span>
                         </div>
-                        <a href="portfolio.html" class="btn btn-outline-modern btn-sm mt-3 align-self-start">查看所有專案</a>
+                        <img src="images/vibe-task-ai/2025-11-27.jpg" alt="vibeTask"
+                            class="terminal-card-image featured-project-image">
+                        <div class="terminal-card-body">
+                            <span class="terminal-impact">📅 效率提升 60% - Gemini CLI</span>
+                            <h5 class="terminal-card-title">vibeTask: AI 賽博龐克任務管理</h5>
+                            <p class="terminal-card-desc">整合 Google Gemini，主動分析任務優先級，提供科學排程建議的桌面應用程式。</p>
+                            <div class="terminal-tags">
+                                <span class="terminal-tag">Python</span>
+                                <span class="terminal-tag">PyQt</span>
+                                <span class="terminal-tag">Gemini</span>
+                                <span class="terminal-tag">SQLite</span>
+                            </div>
+                            <div class="terminal-actions">
+                                <a href="projects/vibe-coding-task-management.html"
+                                    class="btn btn-terminal btn-terminal-primary">cat README.md</a>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <!-- PRD AI Generation -->
+                <div class="col-lg-6">
+                    <div class="terminal-card h-100">
+                        <div class="terminal-card-header">
+                            <div class="window-controls">
+                                <span class="close"></span>
+                                <span class="minimize"></span>
+                                <span class="maximize"></span>
+                            </div>
+                            <span class="file-path">~/projects/prd-ai-gen</span>
+                        </div>
+                        <img src="images/prd-ai-test-case-generation-flow-5.jpg" alt="PRD AI Generation"
+                            class="terminal-card-image featured-project-image">
+                        <div class="terminal-card-body">
+                            <span class="terminal-impact">🚀 PRD 時間 -80% - Multi-Agent</span>
+                            <h5 class="terminal-card-title">從一句話到完整 PRD：多智能體生成</h5>
+                            <p class="terminal-card-desc">結合多 AI 代理與 RAG，將需求轉化為完整 Confluence 文件初稿。</p>
+                            <div class="terminal-tags">
+                                <span class="terminal-tag">n8n</span>
+                                <span class="terminal-tag">AI Agent</span>
+                                <span class="terminal-tag">RAG</span>
+                                <span class="terminal-tag">Confluence</span>
+                            </div>
+                            <div class="terminal-actions">
+                                <a href="projects/prd-ai-generation.html"
+                                    class="btn btn-terminal btn-terminal-primary">cat README.md</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- QA Report Automation -->
+                <div class="col-lg-6">
+                    <div class="terminal-card h-100">
+                        <div class="terminal-card-header">
+                            <div class="window-controls">
+                                <span class="close"></span>
+                                <span class="minimize"></span>
+                                <span class="maximize"></span>
+                            </div>
+                            <span class="file-path">~/projects/qa-report</span>
+                        </div>
+                        <img src="images/qa-report-automation-flow-1.png" alt="QA Report Automation"
+                            class="terminal-card-image featured-project-image">
+                        <div class="terminal-card-body">
+                            <span class="terminal-impact">🕒 2小時→5分鐘 - n8n + AI</span>
+                            <h5 class="terminal-card-title">n8n + AI：QA 週報自動生成</h5>
+                            <p class="terminal-card-desc">整合多系統數據，AI 驅動報告生成，週報製作全自動化。</p>
+                            <div class="terminal-tags">
+                                <span class="terminal-tag">n8n</span>
+                                <span class="terminal-tag">AI</span>
+                                <span class="terminal-tag">Jira</span>
+                                <span class="terminal-tag">Gmail</span>
+                            </div>
+                            <div class="terminal-actions">
+                                <a href="projects/qa-report-automation.html"
+                                    class="btn btn-terminal btn-terminal-primary">cat README.md</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="portfolio.html" class="btn btn-terminal btn-terminal-outline">
+                    <i class="fas fa-folder-open me-2"></i>查看所有 17+ 專案
+                </a>
+            </div>
+        </section>
+
+        <!-- 精選教學 -->
+        <section class="mb-5">
+            <p class="terminal-prompt mb-3">ls ~/tutorials --featured</p>
+            <h2 class="terminal-title" style="font-size: 1.5rem;">精選教學系列</h2>
+            <div class="row g-4 mt-3">
+                <div class="col-md-6">
+                    <div class="terminal-card h-100">
+                        <div class="terminal-card-header">
+                            <div class="window-controls">
+                                <span class="close"></span>
+                                <span class="minimize"></span>
+                                <span class="maximize"></span>
+                            </div>
+                            <span class="file-path">~/tutorials/pm-gemini-cli/</span>
+                        </div>
+                        <div class="terminal-card-body">
+                            <span class="terminal-impact">📚 5 集 + 番外 + Podcast</span>
+                            <h5 class="terminal-card-title">PM x Gemini CLI 協作術</h5>
+                            <p class="terminal-card-desc">專為產品經理設計，探索如何運用 Gemini CLI 工具高效整理回饋、分析數據、撰寫 PRD。</p>
+                            <div class="terminal-actions">
+                                <a href="tutorials.html#gemini-pm-series"
+                                    class="btn btn-terminal btn-terminal-primary">cd series/</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="terminal-card h-100">
+                        <div class="terminal-card-header">
+                            <div class="window-controls">
+                                <span class="close"></span>
+                                <span class="minimize"></span>
+                                <span class="maximize"></span>
+                            </div>
+                            <span class="file-path">~/tutorials/n8n-rag/</span>
+                        </div>
+                        <div class="terminal-card-body">
+                            <span class="terminal-impact">📚 10 集完整教學</span>
+                            <h5 class="terminal-card-title">n8n RAG 系列：從基礎到進階</h5>
+                            <p class="terminal-card-desc">完整學習 n8n 自動化工作流，整合 Supabase/Qdrant 向量資料庫，打造私有 RAG 應用。</p>
+                            <div class="terminal-actions">
+                                <a href="tutorials.html#basic-series" class="btn btn-terminal btn-terminal-primary">cd
+                                    series/</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="tutorials.html" class="btn btn-terminal btn-terminal-outline">
+                    <i class="fas fa-book me-2"></i>查看所有教學
+                </a>
+            </div>
+        </section>
+
+        <!-- 專業背景：AI + 醫療資訊雙軌展示 -->
+        <section class="mb-5">
+            <p class="terminal-prompt mb-3">cat ~/about/professional-background.md</p>
+            <h2 class="terminal-title" style="font-size: 1.5rem;">專業背景</h2>
+            <p class="terminal-subtitle mb-4">// AI 創新 × 醫療資訊系統實務 — 不只是 Prompt，更有真實落地經驗</p>
+            <div class="row g-4 mt-3">
+                <!-- 左側：AI 創新 -->
+                <div class="col-md-6">
+                    <div class="terminal-card h-100" style="border-left: 3px solid var(--terminal-accent);">
+                        <div class="terminal-card-header">
+                            <div class="window-controls">
+                                <span class="close"></span>
+                                <span class="minimize"></span>
+                                <span class="maximize"></span>
+                            </div>
+                            <span class="file-path">~/skills/ai-innovation.md</span>
+                        </div>
+                        <div class="terminal-card-body">
+                            <h5 class="terminal-card-title"><i class="fas fa-robot me-2"></i>AI 時代創新者</h5>
+                            <ul class="terminal-card-desc" style="padding-left: 1.2rem;">
+                                <li>運用 <strong>Gemini CLI / Claude</strong> 進行 Vibe Coding 協作開發</li>
+                                <li>建立 <strong>100+ n8n 自動化流程</strong>，整合 Jira、Gmail、LINE 等多系統</li>
+                                <li>實踐 <strong>Multi-Agent AI</strong> 架構，自動生成 PRD、測試案例</li>
+                                <li>完成 <strong>17+ 個人專案</strong>，從想法到上線全程自主實現</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- 右側：醫療資訊 -->
+                <div class="col-md-6">
+                    <div class="terminal-card h-100" style="border-left: 3px solid var(--terminal-purple);">
+                        <div class="terminal-card-header">
+                            <div class="window-controls">
+                                <span class="close"></span>
+                                <span class="minimize"></span>
+                                <span class="maximize"></span>
+                            </div>
+                            <span class="file-path">~/experience/healthcare-it.md</span>
+                        </div>
+                        <div class="terminal-card-body">
+                            <h5 class="terminal-card-title" style="color: var(--terminal-purple);"><i
+                                    class="fas fa-laptop-medical me-2"></i>醫療資訊系統實務</h5>
+                            <ul class="terminal-card-desc" style="padding-left: 1.2rem;">
+                                <li><strong>10+ 年 HIS 系統</strong>開發、維運與品保測試 (SQA) 經驗</li>
+                                <li>參與<strong>醫學中心級 HIS 系統轉置</strong>，UAT 到維運全程參與</li>
+                                <li>熟悉 <strong>FHIR、HL7</strong> 醫療資訊標準與互通性規範</li>
+                                <li>專注<strong>醫療 AI 治理</strong>與《人工智慧基本法》合規研究</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 專業理念 -->
+            <div class="terminal-card mt-4"
+                style="background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(168, 85, 247, 0.05));">
+                <div class="terminal-card-body text-center">
+                    <blockquote style="font-size: 1rem; font-style: italic; color: var(--terminal-text);">
+                        "最卓越的品質保證 (QA) 源自於深厚的開發與系統維運經驗。<br>
+                        如同資深船長方能擔任「引水人」，指引船隻安全入港。"
+                    </blockquote>
+                    <p class="terminal-card-desc mb-0">— 我的專業理念</p>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <footer class="bg-dark mt-5 py-5 border-top border-secondary-subtle position-relative">
+    <footer class="terminal-footer">
         <div class="container text-center">
-            <div class="mb-4">
-                <a href="https://www.linkedin.com/in/junjia-hou/" class="text-secondary me-3 fs-4 hover-white"><i
-                        class="fab fa-linkedin"></i></a>
-                <a href="mailto:your-email@example.com" class="text-secondary fs-4 hover-white"><i
-                        class="fas fa-envelope"></i></a>
+            <div class="mb-3">
+                <a href="https://www.linkedin.com/in/junjia-hou/" class="btn btn-terminal btn-terminal-secondary me-2">
+                    <i class="fab fa-linkedin me-1"></i>LinkedIn
+                </a>
+                <a href="mailto:your-email@example.com" class="btn btn-terminal btn-terminal-secondary">
+                    <i class="fas fa-envelope me-1"></i>Email
+                </a>
             </div>
-            <p class="text-muted mb-0">&copy; 2025 Luke Hou. All rights reserved.</p>
+            <p class="mb-0">// © 2025 Luke Hou. All rights reserved.</p>
+            <p class="mb-0" style="font-size: 0.75rem; margin-top: 0.5rem;">$ exit 0</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- AOS Animation Library -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <!-- Typed.js -->
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
-    <!-- Vanilla Tilt -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    <script>
+        // Typed.js 初始化
+        document.addEventListener('DOMContentLoaded', function () {
+            new Typed('#typed-text', {
+                strings: [
+                    'AI Builder',
+                    'HIS QA Lead',
+                    'Vibe Coding 實踐者',
+                    'n8n 自動化專家',
+                    '醫療資訊系統專家'
+                ],
+                typeSpeed: 50,
+                backSpeed: 30,
+                backDelay: 2000,
+                loop: true,
+                showCursor: false
+            });
 
-    <script src="js/main.js"></script>
+            // 數字動畫
+            const statNumbers = document.querySelectorAll('.stat-number[data-target]');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = parseInt(entry.target.getAttribute('data-target'));
+                        animateNumber(entry.target, target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            statNumbers.forEach(num => observer.observe(num));
+        });
+
+        // 數字動畫函數
+        function animateNumber(element, target) {
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 30);
+        }
+
+        // 關於我區塊展開/收合
+        function toggleAbout() {
+            const content = document.getElementById('aboutContent');
+            const icon = document.getElementById('aboutIcon');
+            content.classList.toggle('expanded');
+            icon.classList.toggle('fa-chevron-down');
+            icon.classList.toggle('fa-chevron-up');
+        }
+    </script>
 </body>
 
 </html>
