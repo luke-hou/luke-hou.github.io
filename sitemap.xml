@@ -3,31 +3,31 @@
   <!-- 主要頁面 -->
   <url>
     <loc>https://luke.ninja/</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://luke.ninja/portfolio.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luke.ninja/tutorials.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://luke.ninja/blog.html</loc>
-    <lastmod>2026-01-01</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luke.ninja/podcast.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -35,93 +35,177 @@
   <!-- 專案頁面 -->
   <url>
     <loc>https://luke.ninja/projects/line-bot-mvp.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://luke.ninja/projects/line-bot-search.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luke.ninja/projects/line-bot-workflow.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luke.ninja/projects/line-bot-ai.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luke.ninja/projects/vibe-coding-task-management.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luke.ninja/projects/kuromi-his-search.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luke.ninja/projects/prd-ai-generation.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luke.ninja/projects/n8n-line-business-card-automation.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luke.ninja/projects/golive-jira-automation.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://luke.ninja/projects/gmail-telegram-digest.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/projects/qa-report-automation.html</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/projects/nhi-notice-automation.html</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/projects/prd-ai-test-case-generation.html</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/projects/vibe-ai-video-summary.html</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/projects/n8n-ai-release-notes-automation.html</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/projects/n8n-line-bot-jira-automation.html</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/projects/n8n-ai-excel-automation.html</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/projects/notion-ai-summary.html</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/projects/line-chat-record-ai-summary.html</loc>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
-  <!-- n8n 教學系列 -->
+  <!-- n8n 教學系列 (1-10) -->
   <url>
     <loc>https://luke.ninja/n8n_tutorials/n8n-tutorial-1.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://luke.ninja/n8n_tutorials/n8n-tutorial-2.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://luke.ninja/n8n_tutorials/n8n-tutorial-3.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://luke.ninja/n8n_tutorials/n8n-tutorial-4.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://luke.ninja/n8n_tutorials/n8n-tutorial-5.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/n8n_tutorials/n8n-tutorial-6.html</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/n8n_tutorials/n8n-tutorial-7.html</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/n8n_tutorials/n8n-tutorial-8.html</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/n8n_tutorials/n8n-tutorial-9.html</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/n8n_tutorials/n8n-tutorial-10.html</loc>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -129,31 +213,43 @@
   <!-- Gemini CLI 教學系列 -->
   <url>
     <loc>https://luke.ninja/tutorials/gemini-cli-tutorial-1.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://luke.ninja/tutorials/gemini-cli-tutorial-2.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://luke.ninja/tutorials/gemini-cli-tutorial-3.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://luke.ninja/tutorials/gemini-cli-tutorial-4.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://luke.ninja/tutorials/gemini-cli-tutorial-5.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/tutorials/gemini-cli-special-git-for-pm.html</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/tutorials/n8n-google-credential.html</loc>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -161,49 +257,67 @@
   <!-- 部落格文章 -->
   <url>
     <loc>https://luke.ninja/blog/Medical-AI-General-Guide.html</loc>
-    <lastmod>2026-01-01</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luke.ninja/blog/Medical-AI-Professional-Guide.html</loc>
-    <lastmod>2026-01-01</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luke.ninja/blog/AutoHotKey.htm</loc>
-    <lastmod>2026-01-01</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luke.ninja/blog/Golive_Survival_Guide.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luke.ninja/blog/ai_driven_web_testing.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luke.ninja/blog/SNOMED_FHIR_CQL_Analysis.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luke.ninja/blog/FHIR-Deep-Research.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://luke.ninja/blog/git_newbie.html</loc>
-    <lastmod>2025-12-28</lastmod>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/blog/Safari_in_Kenya_DeepResearch.html</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/blog/NIS_DeepResearch.html</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/blog/RAG-for-Traditional-Chinese.html</loc>
+    <lastmod>2026-01-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
