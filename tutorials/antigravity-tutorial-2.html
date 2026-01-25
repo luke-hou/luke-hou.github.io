@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Antigravity IDE 教學 (二)：Agent Skills 核心概念與安裝</title>
+    <meta name="description"
+        content="Google Antigravity IDE 教學系列第二篇，深入解析 Agent Skills 的運作原理，學會如何撰寫 SKILL.md，擴充 AI Agent 的能力。">
+    <meta name="keywords" content="Google Antigravity, Agent Skills, SKILL.md, AI Agent, Agentic Workflow, 技能安裝">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .tutorial-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.5rem auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .tutorial-content figure {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .tutorial-content figure img {
+            margin: 0 auto;
+        }
+
+        .step {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            background-color: #f8f9fa;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .step:hover {
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+        }
+
+        .step h3 {
+            font-size: 1.75rem;
+            color: #0d6efd;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .step h3 .step-icon {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        code {
+            background-color: #e9ecef;
+            padding: .2rem .4rem;
+            border-radius: .2rem;
+            font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: .875em;
+        }
+
+        pre {
+            background-color: #212529;
+            color: #f8f9fa;
+            padding: 1rem;
+            border-radius: .3rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: inherit;
+            font-size: 1em;
+        }
+
+        .tutorial-intro,
+        .tutorial-summary {
+            background-color: #e9f7ff;
+            border-left: 5px solid #0d6efd;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .alert-skill {
+            background-color: #e2e3e5;
+            border-color: #d6d8db;
+            color: #383d41;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <article class="blog-post">
+                    <h1 class="mb-3 display-5 border-bottom pb-3">Google Antigravity IDE 教學 (二)：Agent Skills 核心概念與安裝
+                    </h1>
+                    <p class="text-muted mb-4">發布日期：2026年1月</p>
+
+                    <div class="tutorial-intro">
+                        <h4>如何讓 Agent 更聰明？</h4>
+                        <p>在上一篇教學中，我們見識了 Agent 執行基本任務的能力。但如果 Agent 遇到它不懂的領域怎麼辦？例如：它不知道你們公司的部署流程，也不知道如何查詢內部資料庫。</p>
+                        <p>這時候，我們就需要使用 <strong>Agent Skills</strong> 來教會它。</p>
+                    </div>
+
+                    <div class="tutorial-content">
+                        <section class="step-by-step">
+                            <div class="step">
+                                <h3><i class="fas fa-brain step-icon"></i>概念：什麼是 Agent Skill？</h3>
+                                <p>Agent Skill 本質上是一份「操作手冊」，讓 AI 在遇到特定問題時，知道該去哪裡找答案，或者該執行什麼腳本。</p>
+                                <p>一個標準的 Skill 通常包含兩個核心部分：</p>
+                                <ul>
+                                    <li><strong>SKILL.md：</strong> 這是技能的靈魂。它包含了一個 YAML 檔頭 (定義技能名稱與描述) 以及詳細的 Markdown
+                                        說明文件。</li>
+                                    <li><strong>工具腳本 (Scripts)：</strong> 供 Agent 呼叫的 Python 或 Shell 腳本 (非必須，視技能複雜度而定)。
+                                    </li>
+                                </ul>
+                                <div class="alert alert-skill" role="alert">
+                                    <i class="fas fa-lightbulb me-2"></i><strong>比喻：</strong> 如果 Agent 是一個新進員工，Agent
+                                    Skill 就是你交給他的 SOP 標準作業程序書。
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-folder-open step-icon"></i>步驟一：Skill 的安裝位置</h3>
+                                <p>Agent Skills 存放於專案根目錄下的 <code>.agent/skills</code> 資料夾中。Antigravity IDE 會自動掃描這個目錄。
+                                </p>
+                                <pre><code>my-project/
+├── .agent/
+│   └── skills/
+│       ├── daily_report/       <-- 技能 A
+│       │   └── SKILL.md
+│       └── db_migration/       <-- 技能 B
+│           ├── SKILL.md
+│           └── migrate.py
+├── src/
+└── README.md</code></pre>
+                                <p>當您想要「安裝」一個新技能時，只需要將該技能的資料夾複製到 <code>.agent/skills</code> 即可。</p>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-file-code step-icon"></i>步驟二：解剖 SKILL.md</h3>
+                                <p>讓我們來看一個最簡單的 <code>SKILL.md</code> 範例。假設我們要教 Agent 如何生成「每日工作日報」。</p>
+                                <pre><code>---
+name: generate_daily_report
+description: 當使用者要求總結今日工作或撰寫日報時使用此技能。
+---
+
+# Generate Daily Report
+
+## 目的
+根據 git log 與當前的任務狀態，生成一份Markdown格式的日報。
+
+## 執行步驟
+1. 讀取今天的 git commit 紀錄。
+2. 檢查 task.md 的完成項目。
+3. 彙整成以下格式：
+   - 今日完成事項
+   - 遭遇困難
+   - 明日計畫</code></pre>
+                                <p><strong>關鍵點解析：</strong></p>
+                                <ul>
+                                    <li><code>name</code>：技能的唯一識別碼。</li>
+                                    <li><code>description</code>：這是最重要的部分！AI 會根據這段描述來判斷「何時」該啟動這個技能。描述越精確，Agent 越不會誤用。
+                                    </li>
+                                    <li><code>Markdown Body</code>：詳細的操作指引。您可以像寫給人類看一樣，用自然語言條列出步驟。</li>
+                                </ul>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-dna step-icon"></i>SKILL.md 結構解密</h3>
+                                <p>一個標準的 Skill 由三個核心部分組成，我們可以把它想像成一個「三明治」結構：</p>
+
+                                <figure>
+                                    <img src="../images/skill_anatomy_diagram.png" alt="Skill Anatomy Diagram"
+                                        class="img-fluid border rounded shadow-sm">
+                                    <figcaption class="text-muted mt-2">圖 1: Skill Anatomy (技能解剖圖) - 三明治結構</figcaption>
+                                </figure>
+
+                                <h5><i class="fas fa-mug-hot text-warning me-2"></i>小試身手：工程術語翻譯機 (Jargon Simplifier)
+                                </h5>
+                                <p>在進入複雜的專案前，我們先看一個 PM 必備的神技。這是一個能把「工程師的報錯訊息」翻譯成「人話」的迷你 Skill：</p>
+                                <pre><code class="language-markdown">---
+name: jargon_simplifier
+description: 當使用者貼上看不懂的 Error Log 或工程術語時使用。
+---
+# Role
+你是一位擅長溝通的技術 PM，負責向非技術人員解釋系統狀況。
+
+# Instructions
+1. 讀取使用者提供的錯誤訊息 (e.g., "502 Bad Gateway", "CORS Error")。
+2. 用最白話的比喻解釋發生了什麼事 (例如：用「餐廳廚房忙不過來」解釋 502)。
+3. 提供一個「建議行動」(例如：「請工程師檢查 Nginx 設定」)。</code></pre>
+                                <p>就是這麼簡單！存檔後，下次當你看到一堆紅字報錯，只要貼給 Agent，它就會告訴你發生了什麼事，讓你不再被術語呼攏。</p>
+                            </div>
+                            <div class="step">
+                                <h3><i class="fas fa-check-circle step-icon"></i>步驟三：驗證技能是否生效</h3>
+                                <p>安裝完技能後，您可以透過以下方式驗證：</p>
+                                <ol>
+                                    <li>打開 Manager Surface (<code>Ctrl + M</code>)。</li>
+                                    <li>在右側的 "Skills" 面板中，應該能看到新安裝的 <code>generate_daily_report</code>。</li>
+                                    <li>試著對 Agent 說：「幫我寫一份今天的日報。」</li>
+                                    <li>觀察 Agent 的思考過程，它應該會顯示 <code>Using skill: generate_daily_report</code>。</li>
+                                </ol>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="tutorial-summary">
+                        <h4>本章總結</h4>
+                        <p>恭喜您！您已經掌握了擴充 Antigravity 能力的關鍵鑰匙。Agent Skill 讓 AI 不再受限於預訓練的知識，而是能隨著您的專案需求不斷進化。</p>
+                        <p>聽起來很抽象嗎？沒關係，在下一篇教學中，我們將會<strong>實際動手寫一個 Skill</strong>，教導 Agent 如何自動閱讀程式碼並生成專案文件！</p>
+                        <p class="text-end">
+                            <a href="antigravity-tutorial-1.html" class="btn btn-outline-secondary me-2"><i
+                                    class="fas fa-arrow-left ms-2"></i>上一篇</a>
+                            <a href="antigravity-tutorial-3.html" class="btn btn-outline-primary">下一篇：實戰開發 - 打造自動化文件助理
+                                <i class="fas fa-arrow-right ms-2"></i></a>
+                        </p>
+                    </div>
+                </article>
+
+                <div class="mt-5 text-center">
+                    <a href="../tutorials.html#antigravity-series" class="btn btn-primary btn-lg"><i
+                            class="fas fa-list me-2"></i>返回 教學列表</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2026 侯俊嘉(Luke Hou). All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+
+</html>

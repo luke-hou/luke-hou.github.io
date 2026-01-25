@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Antigravity IDE 教學 (三)：實戰開發 - 打造自動化文件助理</title>
+    <meta name="description" content="Google Antigravity IDE 教學系列最終章，手把手帶您實作一個可以自動讀取程式碼並撰寫 README 文件的 AI Agent Skill">
+    <meta name="keywords" content="Google Antigravity, Agent Skill 實戰, 自動化文件, AI 寫文件, SKILL.md 範例, Antigravity 教學">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .tutorial-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.5rem auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .tutorial-content figure {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .tutorial-content figure img {
+            margin: 0 auto;
+        }
+
+        .step {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            background-color: #f8f9fa;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .step:hover {
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+        }
+
+        .step h3 {
+            font-size: 1.75rem;
+            color: #0d6efd;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .step h3 .step-icon {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        code {
+            background-color: #e9ecef;
+            padding: .2rem .4rem;
+            border-radius: .2rem;
+            font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: .875em;
+        }
+
+        pre {
+            background-color: #212529;
+            color: #f8f9fa;
+            padding: 1rem;
+            border-radius: .3rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: inherit;
+            font-size: 1em;
+        }
+
+        .tutorial-intro,
+        .tutorial-summary {
+            background-color: #e9f7ff;
+            border-left: 5px solid #0d6efd;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <article class="blog-post">
+                    <h1 class="mb-3 display-5 border-bottom pb-3">Google Antigravity IDE 教學 (三)：實戰開發 - 打造自動化文件助理</h1>
+                    <p class="text-muted mb-4">發布日期：2026年1月</p>
+
+                    <div class="tutorial-intro">
+                        <h4>實戰開始！</h4>
+                        <p>工程師最討厭的兩件事：一是別人的程式碼沒有文件，二是自己要寫文件。今天，我們就利用 Google Antigravity 的 Agent
+                            Skill，打造一個「自動化文件助理」，徹底解決這個痛點。</p>
+                        <p><strong>目標：</strong> 建立一個技能，讓 Agent 能一鍵掃描專案，並生成專業的 <code>README.md</code>。</p>
+                    </div>
+
+                    <div class="tutorial-content">
+                        <section class="step-by-step">
+                            <div class="step">
+                                <h3><i class="fas fa-folder-plus step-icon"></i>步驟一：建立技能目錄</h3>
+                                <p>首先，在您的專案中建立技能資料夾結構：</p>
+                                <pre><code>mkdir -p .agent/skills/auto_documenter</code></pre>
+                                <p>接下來，我們將在這個資料夾內建立 <code>SKILL.md</code>。</p>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-pencil-alt step-icon"></i>步驟二：撰寫 SKILL.md</h3>
+                                <p>這是本教學的核心。請將以下內容複製到 <code>.agent/skills/auto_documenter/SKILL.md</code>：</p>
+                                <pre><code class="language-markdown">---
+name: auto_documenter
+description: 當使用者要求為專案撰寫文件、README 或解釋專案結構時使用此技能。
+---
+
+# Auto Documenter
+
+## 角色設定
+你是一位資深的技術文件工程師 (Technical Writer)，擅長將複雜的程式碼邏輯轉化為清晰易懂的技術文件。
+
+## 任務指令
+請依照下列步驟執行：
+
+1.  **專案結構掃描**：
+    - 使用 `list_dir` 工具列出根目錄下的檔案與資料夾（排除 `.git`, `node_modules` 等雜訊）。
+    - 判斷專案類型（例如：Python Flask, Node.js Express, React 等）。
+# Role
+你是一位擁有 10 年經驗的資深產品經理 (PM)，擅長釐清需求邊界並撰寫 User Stories。
+
+# Instructions
+1. **Analyze (分析)**: 
+   - 讀取使用者提供的輸入內容 (會議筆記、對話記錄)。
+   - 識別核心功能 (Core Features) 與使用情境 (Scenarios)。
+
+2. **Structure (結構化)**:
+   - 產生一份符合 Markdown 格式的 PRD，必須包含：
+     - **Background**: 為什麼要做這個？解決什麼問題？
+     - **User Stories**: 使用 "As a... I want to... So that..." 格式。
+     - **Acceptance Criteria**: 使用 Gherkin (Given/When/Then) 語法。
+
+3. **Tone (語氣)**:
+   - 保持專業、精簡、無廢話。</code></pre>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-magic step-icon"></i>步驟三：召喚你的助理</h3>
+                                <p>技能存檔後，回到 Antigravity IDE：</p>
+                                <ol>
+                                    <li>開啟 Manager Surface (<code>Ctrl + M</code>)。</li>
+                                    <li>確認 Skills 列表已顯示 <code>spec_architect</code>。</li>
+                                    <li>在對話框輸入：<strong>「把這份會議記錄整理成 PRD。內容是關於一個新的『深色模式』功能...」</strong></li>
+                                </ol>
+                                <p>Agent 會自動觸發 <code>spec_architect</code> 技能，幾秒鐘後，您將看到類似以下的產出：</p>
+
+                                <figure>
+                                    <img src="../images/prd_preview_dark_mode.png" alt="PRD Preview in Dark Mode"
+                                        class="img-fluid border rounded shadow-sm">
+                                    <figcaption class="text-muted mt-2">圖 1: Agent 自動生成的 PRD 預覽畫面</figcaption>
+                                </figure>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-stethoscope step-icon"></i>故障排除 (Troubleshooting)</h3>
+                                <p>如果 Agent 說「我不知道怎麼做」或是「沒有相關技能」，請檢查以下幾點：</p>
+                                <ul class="list-group list-group-flush mb-3">
+                                    <li class="list-group-item"><i
+                                            class="fas fa-check-circle text-success me-2"></i><strong>路徑正確嗎？</strong> 確保
+                                        SKILL.md 位於 <code>.agent/skills/</code> 下的第一層或第二層目錄。</li>
+                                    <li class="list-group-item"><i
+                                            class="fas fa-check-circle text-success me-2"></i><strong>Indexing
+                                            完成了嗎？</strong> 新增檔案後，有時候需要幾秒鐘讓 Index 刷新。</li>
+                                    <li class="list-group-item"><i
+                                            class="fas fa-check-circle text-success me-2"></i><strong>描述夠清楚嗎？</strong>
+                                        檢查 <code>metadata</code> 中的 <code>description</code>，這是一切的關鍵。</li>
+                                </ul>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-level-up-alt step-icon"></i>進階挑戰</h3>
+                                <p>這只是一個開始。您可以嘗試以下改進：</p>
+                                <ul>
+                                    <li><strong>增加範本檔案：</strong> 在技能資料夾中放入 <code>template.md</code>，讓 Agent
+                                        嚴格遵守公司規定的文件格式。</li>
+                                    <li><strong>自動生成 API 文件：</strong> 修改指令，讓它專門讀取 <code>routes</code> 資料夾，生成 Swagger 或
+                                        Postman 格式的文件。</li>
+                                </ul>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="tutorial-summary">
+                        <h4>系列結語</h4>
+                        <p>恭喜您完成了 <a href="../tutorials.html#antigravity-series">Google Antigravity IDE 教學系列</a>！</p>
+                        <p>從環境建置到實戰開發，您已經跨越了從「使用 AI」到「打造 AI Agent」的鴻溝。Agentic Coding 的世界廣闊無垠，期待您能運用今天學到的 Agent
+                            Skills，創造出更多令人驚豔的自動化工作流！</p>
+                        <p class="text-end">
+                            <a href="antigravity-tutorial-2.html" class="btn btn-outline-secondary me-2"><i
+                                    class="fas fa-arrow-left ms-2"></i>上一篇</a>
+                            <a href="antigravity-tutorial-4.html" class="btn btn-outline-primary">下一篇：建立 Agentic
+                                Workflows <i class="fas fa-arrow-right ms-2"></i></a>
+                        </p>
+                    </div>
+                </article>
+
+                <div class="mt-5 text-center">
+                    <a href="../tutorials.html#antigravity-series" class="btn btn-primary btn-lg"><i
+                            class="fas fa-list me-2"></i>返回 教學列表</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-light mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2026 侯俊嘉(Luke Hou). All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+
+</html>
