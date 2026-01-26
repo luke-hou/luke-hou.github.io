@@ -149,6 +149,8 @@
                         </ul>
                     </div>
 
+
+
                     <div class="alert alert-gemini alert-dismissible fade show" role="alert">
                         <strong><i class="fas fa-robot me-2"></i>核心概念：</strong> 與傳統 IDE 不同，Antigravity 的核心在於對 AI Agent
                         下達「任務 (Task)」而非單純的編寫代碼。請準備好轉換您的開發思維！
@@ -261,6 +263,42 @@
                                         </ul>
                                     </li>
                                 </ul>
+
+                                <h5 class="mt-4">3. Custom Rules (自定義規則)</h5>
+                                <p>Antigravity 允許您設定「規則」來引導 Agent 的行為。這就像是給您的 AI 助手一份「員工守則」。</p>
+                                <p><strong>如何開啟設定：</strong> 點擊 Agent Manager 右上角的 <code>...</code> 選單，選擇
+                                    <strong>Customizations</strong>。
+                                </p>
+                                <figure>
+                                    <img src="../images/antigravity_rules_menu.png" alt="Opening Customizations Menu"
+                                        class="img-fluid border rounded shadow-sm" style="max-width: 300px;">
+                                    <figcaption class="text-muted mt-2">圖 4-1: 透過選單進入 Customizations</figcaption>
+                                </figure>
+                                <ul>
+                                    <li><strong>Global Rules (全域規則)：</strong> 適用於所有專案。例如：「一律使用繁體中文回應」、「程式碼必須加上註解」。</li>
+                                    <li><strong>Workspace Rules (工作區規則)：</strong> 僅適用於當前專案。例如：「在此專案中使用 TailwindCSS」、「依循
+                                        Google Java Style Guide」。</li>
+                                </ul>
+                                <figure>
+                                    <img src="../images/antigravity_rules_settings.png" alt="Antigravity Rules Settings"
+                                        class="img-fluid border rounded shadow-sm">
+                                    <figcaption class="text-muted mt-2">圖 4: 設定 Custom Rules 讓 Agent 更懂你的需求</figcaption>
+                                </figure>
+
+                                <h5 class="mt-4">4. MCP Store (擴充功能商店)</h5>
+                                <p>想讓您的 Agent 能力更強大嗎？<strong>MCP (Model Context Protocol)</strong> 是 Antigravity
+                                    支援的一種開放標準，允許 Agent 連接外部工具與資料源。</p>
+                                <p>點擊左側邊欄的 <strong>MCP Store</strong> 圖示，您可以一鍵安裝各類官方與社群開發的擴充功能，例如：</p>
+                                <ul>
+                                    <li><strong>Cloud Run / Firebase：</strong> 讓 Agent 直接幫您部署應用程式。</li>
+                                    <li><strong>BigQuery / PostgreSQL：</strong> 讓 Agent 能查詢資料庫並進行分析。</li>
+                                    <li><strong>Linear / JIRA：</strong> 讓 Agent 讀取工單並更新狀態。</li>
+                                </ul>
+                                <figure>
+                                    <img src="../images/antigravity_mcp_store.png" alt="Antigravity MCP Store"
+                                        class="img-fluid border rounded shadow-sm" style="max-width: 400px;">
+                                    <figcaption class="text-muted mt-2">圖 4-2: MCP Store 充滿了無限可能</figcaption>
+                                </figure>
 
 
 
@@ -444,6 +482,39 @@
                                 <figcaption class="text-muted mt-2">圖 4: 支援多模型切換，適應不同任務需求</figcaption>
                             </figure>
                         </section>
+                        </section>
+                    </div>
+
+                    <div class="mt-4 p-4 bg-white border border-info rounded shadow-sm mb-5">
+                        <h5 class="text-info border-bottom pb-2 mb-3"><i class="fas fa-bullhorn me-2"></i> ✨ Latest
+                            Updates (Changelog)</h5>
+                        <p class="mb-2">Google Antigravity 持續進化中，以下是近期重大更新摘要 (Updated: 2026/01)：</p>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h6 class="fw-bold"><i class="fas fa-flag-checkered text-warning me-1"></i> Public
+                                    Preview</h6>
+                                <p class="small text-muted mb-1">2025/11/20 正式啟動</p>
+                                <p class="small">開啟 Agent-First IDE 時代，整合編輯器與 Agent Manager。</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 class="fw-bold"><i class="fas fa-shield-alt text-success me-1"></i> Core Features
+                                </h6>
+                                <p class="small">新增 <strong>Agent Skills</strong> (自定義技能)、<strong>Secure Mode</strong>
+                                    (安全執行模式) 與 Knowledge Management。</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 class="fw-bold"><i class="fas fa-microchip text-primary me-1"></i> Model Support
+                                </h6>
+                                <p class="small">全面支援 <strong>Gemini 3 Pro</strong> (Free during preview)、<strong>Claude
+                                        Sonnet 3.5/4.5</strong> 及 OpenAI GPT-OSS。</p>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-end">
+                            <a href="https://antigravity.google/changelog" target="_blank"
+                                class="btn btn-sm btn-outline-info">
+                                查看完整官方 Changelog <i class="fas fa-external-link-alt ms-1"></i>
+                            </a>
+                        </div>
                     </div>
 
                     <div class="tutorial-summary">

@@ -241,103 +241,105 @@ description: 自動分析用戶回饋 CSV 並產出洞察報告
                             </div>
 
                             <div class="step">
-                                <h3><i class="fas fa-users step-icon"></i>實戰二：打造發布團隊 (The Release Team)</h3>
-                                <p>現在我們來玩大的。我們要串聯多個 Skills，打造一個自動化發布團隊。</p>
+                                <h3><i class="fas fa-users step-icon"></i>實戰二：打造醫療資訊商機研究團隊 (Medical Info Research Team)
+                                </h3>
+                                <p>現在我們來玩大的。我們要串聯多個 Skills，打造一個自動化商業研究團隊，從資料蒐集到簡報製作一氣呵成。</p>
 
                                 <h5 class="mt-4">1. 準備兩位專家</h5>
-                                <p>還記得怎麼建立 Skill 嗎？我們需要兩位專家 (請自行建立對應的 <code>SKILL.md</code>)，這兩位專家的協作是本次自動化的核心關鍵。</p>
+                                <p>我們需要兩位專家 (請自行建立對應的 <code>SKILL.md</code>)：</p>
 
                                 <div class="card mb-3">
                                     <div class="card-header bg-light">
-                                        <strong><i class="fas fa-file-code me-2"></i>專家 1: Ticket Miner
-                                            (價值挖掘工兵)</strong>
+                                        <strong><i class="fas fa-search-dollar me-2"></i>專家 1: Market Researcher
+                                            (市場情報員)</strong>
                                     </div>
                                     <div class="card-body">
-                                        <p class="card-text text-muted small">負責讀取 JIRA/Trello，將生硬的技術描述轉化為「用戶價值」。</p>
+                                        <p class="card-text text-muted small">負責網路搜尋，並將發現的商機資訊結構化存檔 (Search & Archive)。
+                                        </p>
                                         <details>
                                             <summary class="btn btn-sm btn-outline-secondary mb-2">點擊展開完整 SKILL.md 源碼
                                             </summary>
                                             <pre><code class="language-markdown">---
-name: ticket_miner
-description: 從原始工單中提取用戶價值，忽略技術細節。
+name: market_researcher
+description: 搜尋指定領域的最新商機，並保存為 Raw Data。
 ---
 # Role
-你是一位「產品價值挖掘師」。你的眼中看不到程式碼，只看得到「這對使用者有什麼好處」。
+你是一位敏銳的市場分析師，擅長從網路海量資訊中過濾出高價值的商業機會。
 
 # Instructions
-對於輸入的每一張工單 (Ticket)：
-1.  **忽略**：Refactor, DB schema change, bug fix details, optimization (除非影響速度)。
-2.  **轉化**：
-    -   "Fix login timeout" -> "讓登入更順暢，不用再空等"
-    -   "Update payment API" -> "支付流程更安全穩定"
-3.  **輸出格式**：JSON
-    {
-       "ticket_id": "...",
-       "user_value": "..."
-    }</code></pre>
+1.  **Search**: 使用 `search_web` 搜尋目標關鍵字 (e.g., "台灣醫療資訊系統 商機 2025")。
+2.  **Filter**: 找出排名前 5 的高相關性新聞或報告。
+3.  **Archive**: 將標題、連結、摘要整理為 JSON 格式。
+4.  **Save**: 寫入檔案 `raw_data/market_scan.json`。</code></pre>
                                         </details>
                                     </div>
                                 </div>
 
                                 <div class="card mb-3">
                                     <div class="card-header bg-light">
-                                        <strong><i class="fas fa-pen-nib me-2"></i>專家 2: Copy Writer (文案寫手)</strong>
+                                        <strong><i class="fas fa-chart-pie me-2"></i>專家 2: Slide Generator
+                                            (簡報製作師)</strong>
                                     </div>
                                     <div class="card-body">
-                                        <p class="card-text text-muted small">負責將內容改寫為吸睛的行銷文案，讓公告不再像機器人寫的。</p>
+                                        <p class="card-text text-muted small">讀取分析報告，自動生成 HTML 格式的投影片 (Present)。</p>
                                         <details>
                                             <summary class="btn btn-sm btn-outline-secondary mb-2">點擊展開完整 SKILL.md 源碼
                                             </summary>
                                             <pre><code class="language-markdown">---
-name: copy_writer
-description: 將生硬的價值點改寫為充滿熱情的發布公告。
+name: slide_generator
+description: 將文字報告轉換為 HTML Reveal.js 投影片。
 ---
 # Role
-你是一位熱情洋溢的社群小編，擅長用 Emoji 和輕鬆的語氣與使用者對話。
+你是一位簡報設計專家，擅長將複雜資訊視覺化。
 
 # Instructions
-1.  讀取 `value_summary.json`。
-2.  根據價值點撰寫一篇 Release Note。
-3.  **Tone & Style**:
-    -   標題要吸睛 (e.g., "🎉 大更新來了！", "🚀 速度飛起來！")。
-    -   使用條列式呈現更新重點。
-    -   結尾加上感謝與呼籲 (Call to Action)。</code></pre>
+1.  讀取 `analysis_report.md`。
+2.  提取關鍵洞察 (Insights)。
+3.  生成一個單頁 HTML 檔案 `presentation.html`，使用 Reveal.js 框架。
+4.  **Slide Structure**:
+    -   Title Slide: 報告主題
+    -   Agenda: 大綱
+    -   Key Findings: 3-5 個重點 (Bullet points)
+    -   Conclusion: 建議策略</code></pre>
                                         </details>
                                     </div>
                                 </div>
 
-                                <h5 class="mt-4">2. 制定協作流程</h5>
-                                <p>建立 <code>.agent/workflows/release_prep.md</code>：</p>
+                                <h5 class="mt-4">2. 制定協作流程 (The Workflow)</h5>
+                                <p>建立 <code>.agent/workflows/medical_research.md</code>，定義這條價值生產線：</p>
                                 <pre><code class="language-markdown">---
-description: 準備發布公告的標準流程
+description: 醫療資訊系統商機研究流程
 ---
-1. 收集工單 (Collect Tickets)
-   - 讀取 `sprint_export.csv`。
+1. 搜尋商機 (Search & Archive)
+   - 執行 `market_researcher` 針對 "台灣醫療資訊系統" 進行調研。
+   - 產出 `raw_data/market_scan.json`。
 
-2. 挖掘價值 (Mine Value)
-   - 對每一張 Ticket，執行 `ticket_miner`。
-   - 彙整為 `value_summary.json`。
+2. 深度分析 (Deep Analyze)
+   - (可以使用內建能力或通用 Agent) 讀取 raw data。
+   - 分析市場缺口與潛在競品。
+   - 產出 `analysis_report.md`。
 
-3. 撰寫文案 (Draft Copy - Synergy Moment)
-   - 讀取 `value_summary.json`。
-   - 執行 `copy_writer` 產生最終公告內容。
-   - 儲存為 `Release_v1.0.md`。</code></pre>
+3. 成果展示 (Present)
+   - 執行 `slide_generator`。
+   - 讀取分析報告，產出 `presentation.html`。</code></pre>
 
                                 <h5 class="mt-4">3. 見證奇蹟 (Synergy)</h5>
-                                <p>當你運行這個 Workflow 時，你會看到 Agent 自動在不同角色間切換：</p>
+                                <p>當你運行這個 Workflow 時，你會看到 Agent 自動完成從蒐集資料到做簡報的所有工作：</p>
                                 <figure>
                                     <div
                                         style="width: 100%; height: auto; background-color: #212529; color: #0f0; font-family: monospace; padding: 1rem; border-radius: 8px; overflow: hidden;">
-                                        > Executing workflow: release_prep<br>
-                                        [v] Step 1: Loaded 5 tickets.<br>
-                                        [v] Step 2: Mining Value...<br>
-                                        &nbsp;&nbsp;&nbsp;> Agent (Miner): "Refactor DB" -> "Faster Login"<br>
-                                        &nbsp;&nbsp;&nbsp;> Agent (Miner): "Fix UI bug" -> "Smoother Animation"<br>
-                                        <span style="color: yellow;">[!] Triggering copy_writer skill...</span><br>
-                                        &nbsp;&nbsp;&nbsp;> Agent (Writer): Writing catchy headlines...<br>
-                                        [v] Step 3: Release_v1.0.md created.<br>
+                                        > Executing workflow: medical_research<br>
+                                        [v] Step 1: Market Research...<br>
+                                        &nbsp;&nbsp;&nbsp;> Agent (Researcher): Found 5 opportunities in Taiwan HIS
+                                        market.<br>
+                                        &nbsp;&nbsp;&nbsp;> Agent (Researcher): Saved to raw_data/market_scan.json<br>
+                                        [v] Step 2: Analyzing Data...<br>
+                                        &nbsp;&nbsp;&nbsp;> Agent (Analyst): Identifying market gaps... Done.<br>
+                                        <span style="color: yellow;">[!] Triggering slide_generator skill...</span><br>
+                                        &nbsp;&nbsp;&nbsp;> Agent (Designer): Generating HTML slides...<br>
+                                        [v] Step 3: presentation.html created.<br>
                                     </div>
-                                    <figcaption class="text-muted mt-2">圖 5: 技術規格 -> 用戶價值 -> 行銷文案的自動轉化</figcaption>
+                                    <figcaption class="text-muted mt-2">圖 5: 從網路搜尋到投影片生成的全自動化流程</figcaption>
                                 </figure>
                             </div>
 
@@ -347,12 +349,12 @@ description: 準備發布公告的標準流程
                                 <ul>
                                     <li>按下 <strong><code>Cmd/Ctrl + E</code></strong> 開啟 Agent Manager。</li>
                                     <li>切換到 <strong>"Active Tasks"</strong> 分頁。</li>
-                                    <li>您會看到 <code>release_prep</code> 正在執行，並即時顯示當前步驟。</li>
+                                    <li>您會看到 <code>medical_research</code> 正在執行，並即時顯示當前步驟。</li>
                                 </ul>
                                 <figure>
                                     <img src="../images/manager_active_tasks.png" alt="Manager Active Tasks"
                                         class="img-fluid border rounded shadow-sm">
-                                    <figcaption class="text-muted mt-2">圖 6: 在 Agent Manager 監控多個並行流程</figcaption>
+                                    <figcaption class="text-muted mt-2">圖 6: 在 Agent Manager 監控流程執行狀況</figcaption>
                                 </figure>
                             </div>
                         </section>
