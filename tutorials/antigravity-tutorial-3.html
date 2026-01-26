@@ -228,6 +228,15 @@ description: 自動分析用戶回饋 CSV 並產出洞察報告
                                             class="img-fluid border rounded shadow-sm">
                                         <figcaption class="text-muted small mt-2">圖 4.5: 一句話生成複雜的自動化流程</figcaption>
                                     </figure>
+                                    <p class="mt-3">當您實際執行這個 Deep Research Workflow 時，Agent
+                                        會自動進行聯網搜尋、整理素材，最後產出專業的分析報告（如下圖）：</p>
+                                    <figure class="mt-3">
+                                        <img src="../images/antigravity_deep_research_result.png"
+                                            alt="Deep Research Workflow Execution Result"
+                                            class="img-fluid border rounded shadow-sm">
+                                        <figcaption class="text-muted small mt-2">圖 4.6: Deep Research 實際執行結果與產出報告
+                                        </figcaption>
+                                    </figure>
                                 </div>
                             </div>
 
@@ -236,11 +245,66 @@ description: 自動分析用戶回饋 CSV 並產出洞察報告
                                 <p>現在我們來玩大的。我們要串聯多個 Skills，打造一個自動化發布團隊。</p>
 
                                 <h5 class="mt-4">1. 準備兩位專家</h5>
-                                <p>還記得怎麼建立 Skill 嗎？我們需要兩位專家 (請自行建立對應的 <code>SKILL.md</code>)：</p>
-                                <ul>
-                                    <li><strong>ticket_miner</strong>: 負責讀取 JIRA/Trello，將生硬的技術描述轉化為「用戶價值」。</li>
-                                    <li><strong>copy_writer</strong>: 負責將內容改寫為吸睛的行銷文案。</li>
-                                </ul>
+                                <p>還記得怎麼建立 Skill 嗎？我們需要兩位專家 (請自行建立對應的 <code>SKILL.md</code>)，這兩位專家的協作是本次自動化的核心關鍵。</p>
+
+                                <div class="card mb-3">
+                                    <div class="card-header bg-light">
+                                        <strong><i class="fas fa-file-code me-2"></i>專家 1: Ticket Miner
+                                            (價值挖掘工兵)</strong>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text text-muted small">負責讀取 JIRA/Trello，將生硬的技術描述轉化為「用戶價值」。</p>
+                                        <details>
+                                            <summary class="btn btn-sm btn-outline-secondary mb-2">點擊展開完整 SKILL.md 源碼
+                                            </summary>
+                                            <pre><code class="language-markdown">---
+name: ticket_miner
+description: 從原始工單中提取用戶價值，忽略技術細節。
+---
+# Role
+你是一位「產品價值挖掘師」。你的眼中看不到程式碼，只看得到「這對使用者有什麼好處」。
+
+# Instructions
+對於輸入的每一張工單 (Ticket)：
+1.  **忽略**：Refactor, DB schema change, bug fix details, optimization (除非影響速度)。
+2.  **轉化**：
+    -   "Fix login timeout" -> "讓登入更順暢，不用再空等"
+    -   "Update payment API" -> "支付流程更安全穩定"
+3.  **輸出格式**：JSON
+    {
+       "ticket_id": "...",
+       "user_value": "..."
+    }</code></pre>
+                                        </details>
+                                    </div>
+                                </div>
+
+                                <div class="card mb-3">
+                                    <div class="card-header bg-light">
+                                        <strong><i class="fas fa-pen-nib me-2"></i>專家 2: Copy Writer (文案寫手)</strong>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text text-muted small">負責將內容改寫為吸睛的行銷文案，讓公告不再像機器人寫的。</p>
+                                        <details>
+                                            <summary class="btn btn-sm btn-outline-secondary mb-2">點擊展開完整 SKILL.md 源碼
+                                            </summary>
+                                            <pre><code class="language-markdown">---
+name: copy_writer
+description: 將生硬的價值點改寫為充滿熱情的發布公告。
+---
+# Role
+你是一位熱情洋溢的社群小編，擅長用 Emoji 和輕鬆的語氣與使用者對話。
+
+# Instructions
+1.  讀取 `value_summary.json`。
+2.  根據價值點撰寫一篇 Release Note。
+3.  **Tone & Style**:
+    -   標題要吸睛 (e.g., "🎉 大更新來了！", "🚀 速度飛起來！")。
+    -   使用條列式呈現更新重點。
+    -   結尾加上感謝與呼籲 (Call to Action)。</code></pre>
+                                        </details>
+                                    </div>
+                                </div>
 
                                 <h5 class="mt-4">2. 制定協作流程</h5>
                                 <p>建立 <code>.agent/workflows/release_prep.md</code>：</p>
