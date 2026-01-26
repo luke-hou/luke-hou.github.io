@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Antigravity IDE 教學 (二)：Agent Skills 核心概念與安裝</title>
+    <title>Google Antigravity IDE 教學 (二)：Agent Skills 實戰 - 從概念到進階應用</title>
     <meta name="description"
         content="Google Antigravity IDE 教學系列第二篇，深入解析 Agent Skills 的運作原理，學會如何撰寫 SKILL.md，擴充 AI Agent 的能力。">
     <meta name="keywords" content="Google Antigravity, Agent Skills, SKILL.md, AI Agent, Agentic Workflow, 技能安裝">
@@ -121,7 +121,8 @@
         <div class="row">
             <div class="col-lg-10 mx-auto">
                 <article class="blog-post">
-                    <h1 class="mb-3 display-5 border-bottom pb-3">Google Antigravity IDE 教學 (二)：Agent Skills 核心概念與安裝
+                    <h1 class="mb-3 display-5 border-bottom pb-3">Google Antigravity IDE 教學 (二)：Agent Skills 實戰 -
+                        從概念到進階應用
                     </h1>
                     <p class="text-muted mb-4">發布日期：2026年1月</p>
 
@@ -135,8 +136,8 @@
                         <section class="step-by-step">
                             <div class="step">
                                 <h3><i class="fas fa-brain step-icon"></i>概念：什麼是 Agent Skill？</h3>
-                                <p>Agent Skill 本質上是一份「操作手冊」，讓 AI 在遇到特定問題時，知道該去哪裡找答案，或者該執行什麼腳本。</p>
-                                <p>一個標準的 Skill 通常包含兩個核心部分：</p>
+                                <p>Agent Skill 本質上是一份「操作手冊」，讓 AI 在遇到特定問題或情境時，能夠自動感知並知道該如何處理，例如：該去哪裡找答案，或者該執行什麼腳本。</p>
+                                <p>一個標準的 Skill 通常包含以下核心部分：</p>
                                 <ul>
                                     <li><strong>SKILL.md：</strong> 這是技能的靈魂。它包含了一個 YAML 檔頭 (定義技能名稱與描述) 以及詳細的 Markdown
                                         說明文件。</li>
@@ -164,6 +165,17 @@
 ├── src/
 └── README.md</code></pre>
                                 <p>當您想要「安裝」一個新技能時，只需要將該技能的資料夾複製到 <code>.agent/skills</code> 即可。</p>
+
+                                <div class="alert alert-info-custom mt-3" role="alert">
+                                    <i class="fas fa-search me-2"></i><strong>找不到資料夾？</strong>
+                                    <p class="mb-0 mt-2">對於 PM 或非工程背景的使用者，請注意 <code>.agent</code> 開頭的資料夾通常被視為「隱藏設定檔」。
+                                    </p>
+                                    <ul class="mb-0">
+                                        <li>在左側檔案總管 (Explorer) 中，請確保您已展開專案根目錄。</li>
+                                        <li>若真的找不到，可以直接在 Agent Manager 中對 Agent 說：「開啟 skills 資料夾」，它會自動幫您在編輯器中列出或導航到該位置。
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
 
                             <div class="step">
@@ -220,28 +232,117 @@ description: 當使用者貼上看不懂的 Error Log 或工程術語時使用�
 2. 用最白話的比喻解釋發生了什麼事 (例如：用「餐廳廚房忙不過來」解釋 502)。
 3. 提供一個「建議行動」(例如：「請工程師檢查 Nginx 設定」)。</code></pre>
                                 <p>就是這麼簡單！存檔後，下次當你看到一堆紅字報錯，只要貼給 Agent，它就會告訴你發生了什麼事，讓你不再被術語呼攏。</p>
+
+                                <div class="mt-4 p-3 bg-light rounded border-start border-4 border-success">
+                                    <h6 class="text-success"><i class="fas fa-magic me-2"></i>Zero Code: 讓 Agent 幫你寫
+                                        Skill</h6>
+                                    <p class="mb-2">覺得寫 YAML 和 Markdown 太麻煩？其實你可以直接用講的！</p>
+                                    <p>試著在 Agent Manager 中輸入：</p>
+                                    <pre class="bg-white border text-dark"><code>請幫我建立一個名為 "jargon_simplifier" 的技能。
+功能是：當我貼上錯誤訊息時，請扮演技術 PM，用非技術人員聽得懂的比喻來解釋它。</code></pre>
+                                    <p class="mb-0">Agent 會自動生成符合格式的 <code>SKILL.md</code> 並幫您存到正確的位置。這就是 Agentic Coding
+                                        的魅力！</p>
+                                    <figure class="mt-3">
+                                        <img src="../images/antigravity_skill_creation_agent.png"
+                                            alt="Agent creating skill automatically"
+                                            class="img-fluid border rounded shadow-sm">
+                                        <figcaption class="text-muted small mt-2">圖 2: 一句話叫 Agent 幫你寫 Skill，完全不用動手
+                                        </figcaption>
+                                    </figure>
+                                </div>
                             </div>
                             <div class="step">
                                 <h3><i class="fas fa-check-circle step-icon"></i>步驟三：驗證技能是否生效</h3>
-                                <p>安裝完技能後，您可以透過以下方式驗證：</p>
+                                <p>在測試之前，請確保您已完成技能安裝。對於非工程師，我們建議採用以下兩種方式之一：</p>
+                                <div class="alert alert-light border">
+                                    <strong><i class="fas fa-star text-warning me-2"></i>方法一 (推薦)：</strong> 參考上方的 Zero
+                                    Code 區塊，直接請 Agent 幫您建立。
+                                    <figure class="mt-3 text-center">
+                                        <img src="../images/antigravity_skill_file_explorer.png"
+                                            alt="File Explorer showing created skill"
+                                            class="img-fluid border rounded shadow-sm" style="max-width: 80%;">
+                                        <figcaption class="text-muted small mt-2">圖 3: Agent 自動建立後，您應該能在資料夾中看到它
+                                        </figcaption>
+                                    </figure>
+                                </div>
+                                <div class="alert alert-light border">
+                                    <strong><i class="fas fa-wrench text-secondary me-2"></i>方法二 (手動)：</strong>
+                                    <ol class="mb-0 small">
+                                        <li>在 IDE 左側檔案列表找到 <code>.agent/skills</code> 資料夾。</li>
+                                        <li>按右鍵選擇 "New Folder"，命名為 <code>jargon_simplifier</code>。</li>
+                                        <li>在該資料夾內建立新檔案 <code>SKILL.md</code>。</li>
+                                        <li>將上方的 Markdown 內容複製貼上並儲存。</li>
+                                    </ol>
+                                    <figure class="mt-3 text-center">
+                                        <img src="../images/antigravity_skill_manual_creation.png"
+                                            alt="Manual creation of SKILL.md in IDE"
+                                            class="img-fluid border rounded shadow-sm" style="max-width: 80%;">
+                                        <figcaption class="text-muted small mt-2">圖 4: 手動建立 SKILL.md 的畫面示範
+                                        </figcaption>
+                                    </figure>
+                                </div>
+                                <p class="mt-4">安裝完成後，我們可以來測試看看：</p>
                                 <ol>
-                                    <li>打開 Manager Surface (<code>Ctrl + M</code>)。</li>
-                                    <li>在右側的 "Skills" 面板中，應該能看到新安裝的 <code>generate_daily_report</code>。</li>
-                                    <li>試著對 Agent 說：「幫我寫一份今天的日報。」</li>
-                                    <li>觀察 Agent 的思考過程，它應該會顯示 <code>Using skill: generate_daily_report</code>。</li>
+                                    <li>打開 Agent Manager (<code>Cmd/Ctrl + E</code>)。</li>
+                                    <li>隨意貼上一段報錯訊息，例如：<code>502 Bad Gateway</code> 或 <code>CORS policy blocked</code>。
+                                    </li>
+                                    <li>觀察 Agent 的思考過程，它應該會顯示 <code>Using skill: jargon_simplifier</code>。</li>
+                                    <li>Agent 隨後會用「餐廳廚房」等淺顯易懂的比喻來解釋這個錯誤，這證明了它已成功掛載了這項技能。</li>
                                 </ol>
+                            </div>
+
+                            <div class="step">
+                                <h3><i class="fas fa-level-up-alt step-icon"></i>進階挑戰：實戰規格書架構師 (Spec Architect)</h3>
+                                <p>既然您已經學會了基礎，現在讓我們來挑戰一個更複雜的真實案例：打造一個能幫 PM 自動撰寫 PRD 的助手。</p>
+                                <p>這次我們不再手把手教您建立資料夾，請試著運用剛剛學到的技巧 (Zero Code 或 手動建立)，安裝以下技能：</p>
+
+                                <div class="card bg-light mb-3">
+                                    <div class="card-header"><strong>SKILL.md (內容範本)</strong></div>
+                                    <div class="card-body">
+                                        <pre><code class="language-markdown">---
+name: spec_architect
+description: 當使用者要求整理會議記錄、需求筆記，或撰寫產品規格書 (PRD) 時使用此技能。
+---
+
+# Role
+你是一位擁有 10 年經驗的資深產品經理 (PM)，擅長釐清需求邊界並撰寫 User Stories。
+
+# Instructions
+1. **Analyze (分析)**: 
+   - 讀取使用者提供的輸入內容 (會議筆記、對話記錄)。
+   - 識別核心功能 (Core Features) 與使用情境 (Scenarios)。
+
+2. **Structure (結構化)**:
+   - 產生一份符合 Markdown 格式的 PRD，必須包含：
+     - **Background**: 為什麼要做這個？解決什麼問題？
+     - **User Stories**: 使用 "As a... I want to... So that..." 格式。
+     - **Acceptance Criteria**: 使用 Gherkin (Given/When/Then) 語法。
+
+3. **Tone (語氣)**:
+   - 保持專業、精簡、無廢話。</code></pre>
+                                    </div>
+                                </div>
+
+                                <p><strong>試煉任務：</strong> 安裝完成後，請對 Agent 說：</p>
+                                <blockquote class="blockquote border-start border-4 border-primary ps-3">
+                                    <p>「把這份會議記錄整理成 PRD。內容是關於一個新的『深色模式』功能...」</p>
+                                </blockquote>
+                                <p>如果 Agent 成功吐出了一份結構完整的 PRD，恭喜您！您已經是一位合格的 Agent 導師了。</p>
                             </div>
                         </section>
                     </div>
 
                     <div class="tutorial-summary">
                         <h4>本章總結</h4>
-                        <p>恭喜您！您已經掌握了擴充 Antigravity 能力的關鍵鑰匙。Agent Skill 讓 AI 不再受限於預訓練的知識，而是能隨著您的專案需求不斷進化。</p>
-                        <p>聽起來很抽象嗎？沒關係，在下一篇教學中，我們將會<strong>實際動手寫一個 Skill</strong>，教導 Agent 如何自動閱讀程式碼並生成專案文件！</p>
+                        <p>恭喜您！您已經掌握了從基礎到進階的 Agent Skill 開發技巧。從簡單的名詞解釋到複雜的文件生成，Agent 的能力邊界完全取決於您的想像力與 Prompt Engineering
+                            功力。</p>
+                        <p>在下一篇教學中，我們將進入更激動人心的領域：<strong>Agentic Workflows</strong>。我們將學習如何串聯多個步驟，讓 Agent 自動完成一整套複雜的工作流！
+                        </p>
                         <p class="text-end">
                             <a href="antigravity-tutorial-1.html" class="btn btn-outline-secondary me-2"><i
                                     class="fas fa-arrow-left ms-2"></i>上一篇</a>
-                            <a href="antigravity-tutorial-3.html" class="btn btn-outline-primary">下一篇：實戰開發 - 打造自動化文件助理
+                            <a href="antigravity-tutorial-3.html" class="btn btn-outline-primary">下一篇：Agentic Workflows
+                                - 打造自動化團隊
                                 <i class="fas fa-arrow-right ms-2"></i></a>
                         </p>
                     </div>

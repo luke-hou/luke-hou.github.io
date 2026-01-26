@@ -256,31 +256,31 @@
 
   <!-- Google Antigravity 系列 -->
   <url>
-    <loc>https://luke.ninja/antigravity_tutorials/antigravity-tutorial-1.html</loc>
+    <loc>https://luke.ninja/tutorials/antigravity-tutorial-1.html</loc>
+    <lastmod>2026-01-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/tutorials/antigravity-tutorial-2.html</loc>
+    <lastmod>2026-01-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/tutorials/antigravity-tutorial-3.html</loc>
+    <lastmod>2026-01-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://luke.ninja/tutorials/antigravity-tutorial-4.html</loc>
     <lastmod>2026-01-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://luke.ninja/antigravity_tutorials/antigravity-tutorial-2.html</loc>
-    <lastmod>2026-01-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luke.ninja/antigravity_tutorials/antigravity-tutorial-3.html</loc>
-    <lastmod>2026-01-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luke.ninja/antigravity_tutorials/antigravity-tutorial-4.html</loc>
-    <lastmod>2026-01-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://luke.ninja/antigravity_tutorials/antigravity-tutorial-5.html</loc>
+    <loc>https://luke.ninja/tutorials/antigravity-tutorial-5.html</loc>
     <lastmod>2026-01-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

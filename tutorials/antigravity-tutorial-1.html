@@ -185,12 +185,11 @@
                                     Settings。</p>
 
                                 <h5 class="mt-4">1. Project Indexing (專案索引)</h5>
-                                <p>這是 Antigravity 的「大腦」來源。請確保您的專案資料夾被正確索引。</p>
+                                <p>這是 Antigravity 的「大腦」來源。Antigravity 會自動對您的專案進行索引，以便 Agent 理解程式碼結構。</p>
                                 <ul>
-                                    <li>前往 <strong>Features > Indexing</strong>。</li>
-                                    <li>將 <strong>"Deep Semantic Indexing"</strong> 開啟。這會讓 AI 不只做關鍵字搜尋，而是真正理解程式碼的語意。
-                                    </li>
-                                    <li><strong>注意：</strong> 首次開啟大型專案時，索引可能需要幾分鐘，請耐心等待右下角的狀態列顯示 "Index Ready"。</li>
+                                    <li>Antigravity 會在背景建立專案的語意索引 (Semantic Index)。</li>
+                                    <li>這讓 AI 不只做關鍵字搜尋，而是真正理解程式碼的依賴關係與邏輯。</li>
+                                    <li><strong>注意：</strong> 首次開啟大型專案時，索引可能需要幾分鐘，請耐心等待狀態列顯示就緒。</li>
                                 </ul>
                                 <img src="../images/antigravity_indexing_status.png"
                                     alt="Indexing Status with green checkmark"
@@ -198,71 +197,158 @@
                                 <figcaption class="text-muted mt-2">圖 2: Indexing 完成後會顯示綠色勾勾</figcaption>
                                 </figure>
 
-                                <h5 class="mt-4">2. Auto-Approval Levels (自動授權等級)</h5>
-                                <p>為了在「安全性」與「自動化」之間取得平衡，您可以設定 Agent 的權限等級：</p>
+                                <h5 class="mt-4">2. 快速設定面板 (Quick Settings)</h5>
+                                <p>點擊 IDE 右下角的狀態列或齒輪圖示，會彈出快速設定面板（如下圖）。這裡分為 <strong>Agent</strong> 與 <strong>Tab</strong>
+                                    兩大區塊：</p>
+
+                                <figure>
+                                    <img src="../images/antigravity_settings_panel.png" alt="Antigravity Settings Panel"
+                                        class="img-fluid border rounded shadow-sm">
+                                    <figcaption class="text-muted mt-2">圖 3: Antigravity 快速設定面板</figcaption>
+                                </figure>
+
+                                <h6 class="mt-3 text-primary"><i class="fas fa-robot me-2"></i>Agent 設定 (代理程式行為)</h6>
+                                <p>這區塊控制主要 Agent 的自主權與行為模式：</p>
                                 <ul>
-                                    <li><strong>Safe Mode (預設)：</strong> 任何修改檔案、執行終端機指令的動作，都需要人類點擊 "Approve"。適合新手。</li>
-                                    <li><strong>Collaborative Mode：</strong> 允許 Agent 自動修改檔案與執行讀取類指令 (如 <code>ls</code>,
-                                        <code>cat</code>)，但破壞性指令 (如 <code>rm</code>, <code>deploy</code>)
-                                        仍需審核。<strong>推薦設定！</strong>
+                                    <li><strong>Agent Auto-Fix Lints (自動修復程式碼問題)：</strong>
+                                        <ul>
+                                            <li><code>On</code>：Agent 偵測到簡單的 Linter 錯誤（如縮排錯誤、未使用的變數）時，會自動嘗試修復。</li>
+                                            <li><code>Off</code>：關閉自動修復功能。</li>
+                                        </ul>
                                     </li>
-                                    <li><strong>Autonomous Mode：</strong> Agent 擁有完全權限。僅建議在測試環境或沙盒中使用。</li>
+                                    <li><strong>Auto Execution (自動執行指令)：</strong>
+                                        <ul>
+                                            <li><code>Always Continue</code>：Agent 可以自動執行終端機指令（如 <code>ls</code>,
+                                                <code>npm install</code>），不需詢問。
+                                            </li>
+                                            <li><code>Request Review</code>：Agent 想執行指令前，必須先獲得您的批准。（預設推薦）</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Review Policy (實作計畫審查)：</strong>
+                                        <ul>
+                                            <li><code>Always Continue</code>：Agent 產生的 Implementation Plan 會直接執行，不等待審查。
+                                            </li>
+                                            <li><code>Request Review</code>：Agent 必須先提交計畫讓您看過，您點擊 "Approve" 後才會開始寫 Code。
+                                            </li>
+                                        </ul>
+                                    </li>
                                 </ul>
-                                <figure>
-                                    <img src="../images/antigravity_auto_approval.png" alt="Auto-Approval Settings"
-                                        class="img-fluid border rounded shadow-sm">
-                                    <figcaption class="text-muted mt-2">圖 3: 建議開啟 Collaborative Mode 以獲得流暢體驗
-                                    </figcaption>
-                                </figure>
 
-                                <h5 class="mt-4">3. .antigravityignore</h5>
-                                <p>就像 `.gitignore` 一樣，您可以在專案根目錄建立 `.antigravityignore` 檔案，告訴 Agent
-                                    哪些檔案或資料夾是「絕對禁區」（例如金鑰檔案、敏感個資）。</p>
-                            </div>
-
-                            <div class="step">
-                                <h3><i class="fas fa-columns step-icon"></i>步驟四：認識雙介面 (Editor vs. Manager)</h3>
-                                <p>Antigravity 最大的特色在於它擁有兩種核心檢視模式，分別對應不同的工作層級：</p>
-
-                                <h5 class="mt-4">1. Editor View (編輯器視角)</h5>
-                                <p>這是您熟悉的程式碼編輯介面，適合進行具體的程式碼修改與閱讀。在這邊，您可以像使用 VS Code 一樣操作檔案，但多了一個強大的 AI
-                                    側邊欄，隨時準備協助您修改當前檔案。</p>
-
-                                <h5 class="mt-4">2. Manager Surface (管理者介面)</h5>
-                                <p>這就是 Antigravity 的靈魂所在。按下 <kbd>Ctrl</kbd> + <kbd>M</kbd> (或點擊頂部切換鈕) 進入此模式。</p>
+                                <h6 class="mt-3 text-primary"><i class="fas fa-keyboard me-2"></i>Tab 設定 (智慧補全)</h6>
+                                <p>這區塊控制編輯器中的 "Ghost Text" 自動補全體驗：</p>
                                 <ul>
-                                    <li><strong>任務看板 (Task Board)：</strong> 這裡顯示了 Agent 正在執行的任務狀態 (Planning, Executing,
-                                        Verifying)。</li>
-                                    <li><strong>Artifacts (產出物)：</strong> Agent 生成的計畫書、圖表、預覽連結都會匯總於此。</li>
-                                    <li><strong>人類介入 (Human in the loop)：</strong> 您可以在此審核 Agent 的實作計畫 (Implementation
-                                        Plan)，批准或退回修改。</li>
+                                    <li><strong>Tab Gitignore Access：</strong>
+                                        <ul>
+                                            <li><code>Off</code>：智慧補全模型<strong>不會</strong>讀取被 gitignore 排除的檔案（保護敏感資料）。
+                                            </li>
+                                            <li><code>On</code>：允許讀取，能增加補全的上下文準確度，但需注意隱私。</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Tab Speed：</strong>
+                                        <ul>
+                                            <li><code>Fast</code>：使用較輕量的模型，延遲極低，適合快速打字。</li>
+                                            <li><code>Smart</code> (若有)：使用較強模型，補全品質較高但稍慢。</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Tab to Import：</strong>
+                                        <ul>
+                                            <li><code>On</code>：當補全建議使用了尚未 import 的套件時，按下 Tab 會自動幫您補上 import 語句。</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Tab to Jump：</strong>
+                                        <ul>
+                                            <li><code>On</code>：允許使用 Tab 鍵在建議的程式碼片段 placeholder 之間跳轉。</li>
+                                        </ul>
+                                    </li>
                                 </ul>
-                                <figure>
-                                    <img src="../images/antigravity_manager_surface.png" alt="Manager Surface Dashboard"
-                                        class="img-fluid border rounded shadow-sm">
-                                    <figcaption class="text-muted mt-2">圖 1: Manager Surface - AI Agent 的指揮中心
-                                    </figcaption>
-                                </figure>
-                            </div>
 
-                            <div class="step">
-                                <h3><i class="fas fa-play-circle step-icon"></i>步驟五：發布您的第一個任務</h3>
-                                <p>讓我們來試試看 Agent 的能力。在 Manager Surface 中，點擊 <strong>"New Task"</strong>：</p>
-                                <pre><code>任務：請幫我建立一個簡單的 Python "Hello World" 網頁伺服器，並寫一份 README 說明如何執行。</code></pre>
-                                <p>您會看到 Agent 開始思考：</p>
-                                <ol>
-                                    <li><strong>Planning：</strong> 它會生成一份計畫，列出需要建立 `server.py` 和 `README.md`。</li>
-                                    <li><strong>Approval：</strong> 您點擊 "Approve" 同意計畫。</li>
-                                    <li><strong>Execution：</strong> Agent 自動建立檔案並寫入程式碼。</li>
-                                    <li><strong>Verification：</strong> Agent 嘗試在終端機執行伺服器，確認沒有報錯。</li>
-                                </ol>
-                                <p>這就是 Agentic Workflow 的基本雛形！</p>
-                            </div>
+
+
+                                <div class="step">
+                                    <h3><i class="fas fa-columns step-icon"></i>步驟四：認識雙介面 (Editor vs. Agent Manager)
+                                    </h3>
+                                    <p>Antigravity 最大的特色在於它擁有兩種核心檢視模式，分別對應不同的工作層級：</p>
+
+                                    <h5 class="mt-4">1. Editor View (編輯器視角)</h5>
+                                    <p>這是您熟悉的程式碼編輯介面，適合進行具體的程式碼修改與閱讀。在這邊，您可以像使用 VS Code 一樣操作檔案，但多了一個強大的 AI
+                                        側邊欄，隨時準備協助您修改當前檔案。</p>
+
+                                    <h5 class="mt-4">2. Agent Manager (代理程式管理員)</h5>
+                                    <p>這就是 Antigravity 的靈魂所在。按下 <kbd>Cmd/Ctrl</kbd> + <kbd>E</kbd> (或點擊右上方的 Open Agent
+                                        Manager 按鈕) 進入此模式。這是一個以「任務 (Task)」為核心的控制台，介面採用高效的<strong>三欄式佈局 (Three-Column
+                                            Layout)</strong>：</p>
+                                    <ul>
+                                        <li><strong>左側：導覽面板 (Navigation)：</strong>
+                                            <ul>
+                                                <li><strong>Inbox：</strong> 查看所有歷史對話與任務。</li>
+                                                <li><strong>Workspaces：</strong> 管理您的專案工作區。</li>
+                                                <li><strong>Playground：</strong> 快速測試 Prompt 或進行非專案相關的對話。</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>中間：主控台 (Task Stream)：</strong> Agent 執行任務的核心區域。
+                                            <ul>
+                                                <li>顯示當前任務進度、執行的指令以及 Agent 的思考過程。</li>
+                                                <li>底部輸入框可隨時下達新指令或補充需求。</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>右側：上下文預覽 (Context Panel)：</strong>
+                                            <ul>
+                                                <li>即時預覽 Agent 正在編輯的檔案內容、Diff 差異或 Markdown 渲染結果。</li>
+                                                <li>讓您在同一畫面就能完成「指令 -> 執行 -> 審核」的完整迴圈。</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <figure>
+                                        <img src="../images/antigravity_agent_manager_task_view.png"
+                                            alt="Agent Manager Dashboard" class="img-fluid border rounded shadow-sm">
+                                        <figcaption class="text-muted mt-2">圖 1: Agent Manager 三欄式介面 - 導覽、執行、審閱一目瞭然
+                                        </figcaption>
+                                    </figure>
+
+                                    <div class="mt-4 p-3 bg-light rounded border-start border-4 border-info">
+                                        <h6 class="text-info"><i class="fas fa-lightbulb me-2"></i>Agent Manager 實戰應用場景
+                                        </h6>
+                                        <p class="mb-2">根據官方建議，您可以這樣運用 Agent Manager：</p>
+                                        <ul>
+                                            <li><strong>Playground (草稿區)：</strong>
+                                                <br>不確定問題如何描述？先在 Playground 與 Agent 聊聊。這裡像是一個沙盒，等到對話內容成熟後，可以一鍵
+                                                <strong>"Open Workspace"</strong> 將對話轉為正式專案任務，甚至直接生成檔案。
+                                            </li>
+                                            <li><strong>Editor Synergy (無縫協作)：</strong>
+                                                <br>雖然在 Agent Manager 可以看預覽，但您可以隨時點擊 <strong>"Open Editor"</strong>
+                                                切換回編輯器。
+                                                <br><em>進階技巧：</em> 在編輯器中，您可以直接在程式碼裡寫下註解或偽代碼 (Pseudo-code)，然後切回 Agent
+                                                Manager 告訴 Agent：「請實作我剛剛寫的註解」，Agent 會讀取檔案上下文並精準補完程式碼。
+                                            </li>
+                                            <li><strong>Browser Automation (瀏覽器自動化)：</strong>
+                                                <br>需要測試網頁嗎？直接在 Agent Manager 下令：「打開 localhost:8000 並嘗試登入」。
+                                                <br>Antigravity 會啟動專屬的 <strong>Browser
+                                                    Sub-agent</strong>，它能像人類一樣點擊按鈕、輸入文字、甚至截圖回報。這對於驗收測試 (Acceptance
+                                                Testing) 特別有用。
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="step">
+                                    <h3><i class="fas fa-play-circle step-icon"></i>步驟五：發布您的第一個任務</h3>
+                                    <p>讓我們來試試看 Agent 的能力。在 Agent Manager 中，點擊 <strong>"New Task"</strong>：</p>
+                                    <pre><code>任務：請幫我建立一個簡單的 Python "Hello World" 網頁伺服器，並寫一份 README 說明如何執行。</code></pre>
+                                    <p>您會看到 Agent 開始思考：</p>
+                                    <ol>
+                                        <li><strong>Planning：</strong> 它會生成一份計畫，列出需要建立 `server.py` 和 `README.md`。</li>
+                                        <li><strong>Approval：</strong> 您點擊 "Approve" 同意計畫。</li>
+                                        <li><strong>Execution：</strong> Agent 自動建立檔案並寫入程式碼。</li>
+                                        <li><strong>Verification：</strong> Agent 嘗試在終端機執行伺服器，確認沒有報錯。</li>
+                                    </ol>
+                                    <p>這就是 Agentic Workflow 的基本雛形！</p>
+                                </div>
                         </section>
 
                         <section class="mb-5">
-                            <h3><i class="fas fa-toolbox text-primary me-2"></i>內建能力：MCP 工具箱 (Built-in MCPs)</h3>
-                            <p>Antigravity 的強大之處在於它實作了 <strong>Model Context Protocol (MCP)</strong>。這讓 Agent
+                            <h3><i class="fas fa-toolbox text-primary me-2"></i>內建能力：工具與技能 (Tools & Skills)</h3>
+                            <p>Antigravity 的強大之處在於它內建了多種 <strong>Tools (工具)</strong> 與 <strong>Skills (技能)</strong>。這讓
+                                Agent
                                 不再是封閉在聊天室裡的機器人，而是擁有「雙手」的工程師。</p>
 
                             <img src="../images/antigravity_builtin_mcps.png" alt="Built-in MCP Capabilities"
@@ -316,15 +402,15 @@
 
                             <h5 class="mt-4"><i class="fas fa-toggle-on text-success me-2"></i>1. 操作模式切換 (Mode
                                 Switching)</h5>
-                            <p>Antigravity 提供了兩種互動模式，您可以透過下方的狀態列或快捷鍵 <code>Cmd/Ctrl + P</code> 進行切換：</p>
+                            <p>Antigravity 提供了兩種互動模式，您可以在代理程式側邊面板中進行切換：</p>
                             <ul>
-                                <li><strong>Chat Mode (聊天模式)</strong>：
+                                <li><strong>Fast Mode (快速模式 / Chat)</strong>：
                                     <ul>
                                         <li>類似 ChatGPT 的問答體驗。</li>
                                         <li><strong>適用時機</strong>：詢問語法、解釋程式碼、或進行簡單的一問一答。</li>
                                     </ul>
                                 </li>
-                                <li><strong>Plan Mode (計畫模式 / Agentic Mode)</strong>：
+                                <li><strong>Planning Mode (規劃模式 / Agentic)</strong>：
                                     <ul>
                                         <li>這是 Antigravity 的靈魂。AI 不會直接寫 Code，而是先產出一份
                                             <code>implementation_plan.md</code>。
@@ -335,34 +421,28 @@
                                 </li>
                             </ul>
 
+
                             <h5 class="mt-4"><i class="fas fa-microchip text-danger me-2"></i>2. 模型選擇 (Model Selection)
                             </h5>
-                            <p>您可以根據任務的難易度，選擇不同的「大腦」：</p>
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-hover">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th>模型 (Model)</th>
-                                            <th>特性</th>
-                                            <th>PM 應用場景</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><strong>Gemini 3 Pro</strong></td>
-                                            <td><span class="badge bg-warning text-dark">高智商</span> <span
-                                                    class="badge bg-info text-dark">慢思維</span></td>
-                                            <td>撰寫 PRD、分析複雜客訴、規劃大型功能架構。它能處理大量的 Context (上下文)，適合需要深度推理的任務。</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Gemini 3 Flash</strong></td>
-                                            <td><span class="badge bg-success">速度快</span> <span
-                                                    class="badge bg-secondary">低延遲</span></td>
-                                            <td>翻譯文件、簡單的 Bug 修復、快速查詢指令。當您需要「秒回」的體驗時使用。</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <p>在 Agent 聊天輸入框的右下方，您可以自由切換 AI 大腦。Antigravity 內建了多種頂尖模型：</p>
+                            <ul>
+                                <li><strong>Google Gemini 3 系列：</strong>
+                                    <ul>
+                                        <li><code>Gemini 3 Pro</code>：推理能力最強，適合複雜的架構規劃與 Refactoring。</li>
+                                        <li><code>Gemini 3 Flash</code>：速度極快，適合簡單的 Bug Fix 或解釋程式碼。</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Claude Sonnet / Opus：</strong> 複雜任務(研究、重構程式、Code Review) 的首選，但 Opus 燒 Token
+                                    的速度也是一流。</li>
+                                <li><strong>Open Source Models (如 GPT-OSS 120B)：</strong> 目前額度跟 Claude 共享，因此幾乎沒機會用到。
+                                </li>
+                            </ul>
+
+                            <figure>
+                                <img src="../images/antigravity_model_selection.png" alt="Model Selection Menu"
+                                    class="img-fluid border rounded shadow-sm" style="max-width: 300px;">
+                                <figcaption class="text-muted mt-2">圖 4: 支援多模型切換，適應不同任務需求</figcaption>
+                            </figure>
                         </section>
                     </div>
 
@@ -371,13 +451,13 @@
                         <p>在本篇教學中，我們完成了：</p>
                         <ul>
                             <li>Google Antigravity IDE 的安裝與帳號登入。</li>
-                            <li>理解 Editor View 與 Manager Surface 的區別。</li>
+                            <li>理解 Editor View 與 Agent Manager 的區別。</li>
                             <li>成功指派並執行了第一個 AI 任務。</li>
                         </ul>
                         <p>但是，Agent 的能力遠不止於此。在下一篇教學中，我們將深入探討 <strong>Agent Skills</strong>，學習如何透過自定義技能，讓 Agent
                             學會使用您的專屬工具與 API。</p>
                         <p class="text-end"><a href="antigravity-tutorial-2.html"
-                                class="btn btn-outline-primary">下一篇：Agent Skills 核心概念與安裝 <i
+                                class="btn btn-outline-primary">下一篇：Agent Skills 實戰 - 從概念到進階應用 <i
                                     class="fas fa-arrow-right ms-2"></i></a></p>
                     </div>
                 </article>
