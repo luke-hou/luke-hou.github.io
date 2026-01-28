@@ -333,10 +333,103 @@
         <!-- Filter Tab Bar -->
         <div class="tutorial-filter-bar" id="quick-links">
             <button class="filter-btn active" data-filter="all"><i class="fas fa-th me-2"></i>全部</button>
+            <button class="filter-btn" data-filter="antigravity"><i class="fas fa-rocket me-2"></i>Antigravity</button>
             <button class="filter-btn" data-filter="pm"><i class="fas fa-user-tie me-2"></i>PM x Gemini</button>
             <button class="filter-btn" data-filter="n8n"><i class="fas fa-cogs me-2"></i>n8n 系列</button>
             <!-- <button class="filter-btn" data-filter="opencode"><i class="fas fa-code me-2"></i>Open Code</button> -->
-            <button class="filter-btn" data-filter="antigravity"><i class="fas fa-rocket me-2"></i>Antigravity</button>
+        </div>
+
+        <!-- Google Antigravity Series -->
+        <div class="tutorial-accordion" data-category="antigravity" id="antigravity-series">
+            <div class="tutorial-accordion-header" onclick="toggleAccordion(this.parentElement)">
+                <div class="accordion-title">
+                    <h2><i class="fas fa-rocket me-2"></i>Google Antigravity IDE 系列</h2>
+                    <p>// 探索 Agentic Coding 的未來，讓 AI 成為您的自動化代理人</p>
+                </div>
+                <i class="fas fa-chevron-down accordion-icon"></i>
+            </div>
+            <div class="tutorial-accordion-body">
+                <div class="row g-4">
+                    <!-- Ep 1 -->
+                    <div class="col-md-6" id="antigrav-ep1">
+                        <div class="terminal-card h-100 d-flex flex-column">
+                            <div class="terminal-card-header">
+                                <div class="window-controls">
+                                    <span class="close"></span>
+                                    <span class="minimize"></span>
+                                    <span class="maximize"></span>
+                                </div>
+                                <span class="file-path">~/tutorials/antigravity-01.md</span>
+                            </div>
+                            <img src="images/antigravity_cover_ep1_setup.png" alt="Ep.1 Environment Setup"
+                                class="terminal-card-image">
+                            <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                                <h5 class="terminal-card-title">Ep.1 環境建置與 Agentic Mode 初探</h5>
+                                <p class="terminal-card-desc flex-grow-1">安裝 Google Antigravity IDE，認識 Editor 與
+                                    Manager
+                                    Surface 雙介面。</p>
+                                <div class="terminal-actions">
+                                    <a href="tutorials/antigravity-tutorial-1.html"
+                                        class="btn btn-terminal btn-terminal-primary">cat README.md</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ep 2 -->
+                    <div class="col-md-6" id="antigrav-ep2">
+                        <div class="terminal-card h-100 d-flex flex-column">
+                            <div class="terminal-card-header">
+                                <div class="window-controls">
+                                    <span class="close"></span>
+                                    <span class="minimize"></span>
+                                    <span class="maximize"></span>
+                                </div>
+                                <span class="file-path">~/tutorials/antigravity-02.md</span>
+                            </div>
+                            <img src="images/antigravity_cover_ep2_skills.png" alt="Ep.2 Agent Skills"
+                                class="terminal-card-image">
+                            <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                                <h5 class="terminal-card-title">Ep.2 Agent Skills 實戰攻略</h5>
+                                <p class="terminal-card-desc flex-grow-1">從 Zero Code 打造簡單工具，到手刻「規格書架構師」技能。本篇涵蓋了 Skill
+                                    開發的基礎與進階挑戰。</p>
+                                <div class="terminal-actions">
+                                    <a href="tutorials/antigravity-tutorial-2.html"
+                                        class="btn btn-terminal btn-terminal-primary">cat README.md</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Ep 3 -->
+                    <div class="col-md-6" id="antigrav-ep3">
+                        <div class="terminal-card h-100 d-flex flex-column">
+                            <div class="terminal-card-header">
+                                <div class="window-controls">
+                                    <span class="close"></span>
+                                    <span class="minimize"></span>
+                                    <span class="maximize"></span>
+                                </div>
+                                <span class="file-path">~/tutorials/antigravity-03.md</span>
+                            </div>
+                            <img src="images/antigravity_cover_ep3_prd.png" alt="Ep.3 Workflows"
+                                class="terminal-card-image">
+                            <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                                <h5 class="terminal-card-title">Ep.3 Agentic Workflows & Synergy</h5>
+                                <p class="terminal-card-desc flex-grow-1">【完結篇】將多個 Skills 串聯成標準化流程 (SOP)。學會如何指揮 AI
+                                    團隊，自動完成從資料分析到發布公告的複雜任務。</p>
+                                <div class="terminal-actions">
+                                    <a href="tutorials/antigravity-tutorial-3.html"
+                                        class="btn btn-terminal btn-terminal-primary">cat WORKFLOW.md</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
         </div>
 
         <!-- PM & Gemini CLI 系列 -->
@@ -863,98 +956,7 @@
 
         <!-- Open Code Agent Skills Series (Temporarily Commented Out) -->
 
-        <!-- Google Antigravity Series -->
-        <div class="tutorial-accordion" data-category="antigravity" id="antigravity-series">
-            <div class="tutorial-accordion-header" onclick="toggleAccordion(this.parentElement)">
-                <div class="accordion-title">
-                    <h2><i class="fas fa-rocket me-2"></i>Google Antigravity IDE 系列</h2>
-                    <p>// 探索 Agentic Coding 的未來，讓 AI 成為您的自動化代理人</p>
-                </div>
-                <i class="fas fa-chevron-down accordion-icon"></i>
-            </div>
-            <div class="tutorial-accordion-body">
-                <div class="row g-4">
-                    <!-- Ep 1 -->
-                    <div class="col-md-6" id="antigrav-ep1">
-                        <div class="terminal-card h-100 d-flex flex-column">
-                            <div class="terminal-card-header">
-                                <div class="window-controls">
-                                    <span class="close"></span>
-                                    <span class="minimize"></span>
-                                    <span class="maximize"></span>
-                                </div>
-                                <span class="file-path">~/tutorials/antigravity-01.md</span>
-                            </div>
-                            <img src="images/antigravity_cover_ep1_setup.png" alt="Ep.1 Environment Setup"
-                                class="terminal-card-image">
-                            <div class="terminal-card-body d-flex flex-column flex-grow-1">
-                                <h5 class="terminal-card-title">Ep.1 環境建置與 Agentic Mode 初探</h5>
-                                <p class="terminal-card-desc flex-grow-1">安裝 Google Antigravity IDE，認識 Editor 與
-                                    Manager
-                                    Surface 雙介面。</p>
-                                <div class="terminal-actions">
-                                    <a href="tutorials/antigravity-tutorial-1.html"
-                                        class="btn btn-terminal btn-terminal-primary">cat README.md</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Ep 2 -->
-                    <div class="col-md-6" id="antigrav-ep2">
-                        <div class="terminal-card h-100 d-flex flex-column">
-                            <div class="terminal-card-header">
-                                <div class="window-controls">
-                                    <span class="close"></span>
-                                    <span class="minimize"></span>
-                                    <span class="maximize"></span>
-                                </div>
-                                <span class="file-path">~/tutorials/antigravity-02.md</span>
-                            </div>
-                            <img src="images/antigravity_cover_ep2_skills.png" alt="Ep.2 Agent Skills"
-                                class="terminal-card-image">
-                            <div class="terminal-card-body d-flex flex-column flex-grow-1">
-                                <h5 class="terminal-card-title">Ep.2 Agent Skills 實戰攻略</h5>
-                                <p class="terminal-card-desc flex-grow-1">從 Zero Code 打造簡單工具，到手刻「規格書架構師」技能。本篇涵蓋了 Skill
-                                    開發的基礎與進階挑戰。</p>
-                                <div class="terminal-actions">
-                                    <a href="tutorials/antigravity-tutorial-2.html"
-                                        class="btn btn-terminal btn-terminal-primary">cat README.md</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <!-- Ep 3 -->
-                    <div class="col-md-6" id="antigrav-ep3">
-                        <div class="terminal-card h-100 d-flex flex-column">
-                            <div class="terminal-card-header">
-                                <div class="window-controls">
-                                    <span class="close"></span>
-                                    <span class="minimize"></span>
-                                    <span class="maximize"></span>
-                                </div>
-                                <span class="file-path">~/tutorials/antigravity-03.md</span>
-                            </div>
-                            <img src="images/antigravity_cover_ep3_prd.png" alt="Ep.3 Workflows"
-                                class="terminal-card-image">
-                            <div class="terminal-card-body d-flex flex-column flex-grow-1">
-                                <h5 class="terminal-card-title">Ep.3 Agentic Workflows & Synergy</h5>
-                                <p class="terminal-card-desc flex-grow-1">【完結篇】將多個 Skills 串聯成標準化流程 (SOP)。學會如何指揮 AI
-                                    團隊，自動完成從資料分析到發布公告的複雜任務。</p>
-                                <div class="terminal-actions">
-                                    <a href="tutorials/antigravity-tutorial-3.html"
-                                        class="btn btn-terminal btn-terminal-primary">cat WORKFLOW.md</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
     </main>
     <footer class="terminal-footer">
         <div class="container text-center">
@@ -973,6 +975,17 @@
     <nav class="terminal-floating-nav">
         <div class="terminal-nav-header">./navigation</div>
         <ul class="terminal-tree">
+            <!-- Antigravity Series -->
+            <li class="terminal-tree-item">
+                <a href="#antigravity-series" class="terminal-tree-link">Google Antigravity</a>
+                <ul class="terminal-sub-tree">
+                    <li><a href="#antigrav-ep1" class="terminal-tree-link">|-- Ep.1 環境建置</a></li>
+                    <li><a href="#antigrav-ep2" class="terminal-tree-link">|-- Ep.2 Skill 概念</a></li>
+                    <li><a href="#antigrav-ep3" class="terminal-tree-link">|-- Ep.3 實戰：Spec Architect</a></li>
+                    <li><a href="#antigrav-ep4" class="terminal-tree-link">|-- Ep.4 Workflows</a></li>
+                    <li><a href="#antigrav-ep5" class="terminal-tree-link">L-- Ep.5 綜效：發布團隊</a></li>
+                </ul>
+            </li>
             <!-- PM Series -->
             <li class="terminal-tree-item">
                 <a href="#gemini-pm-series" class="terminal-tree-link">PM x Gemini CLI</a>
@@ -1008,26 +1021,15 @@
                     <li><a href="#adv-ep10" class="terminal-tree-link">L-- Ep.10 快照還原</a></li>
                 </ul>
             </li>
-            <!-- Antigravity Series -->
-            <li class="terminal-tree-item">
-                <a href="#antigravity-series" class="terminal-tree-link">Google Antigravity</a>
-                <ul class="terminal-sub-tree">
-                    <li><a href="#antigrav-ep1" class="terminal-tree-link">|-- Ep.1 環境建置</a></li>
-                    <li><a href="#antigrav-ep2" class="terminal-tree-link">|-- Ep.2 Skill 概念</a></li>
-                    <li><a href="#antigrav-ep3" class="terminal-tree-link">|-- Ep.3 實戰：Spec Architect</a></li>
-                    <li><a href="#antigrav-ep4" class="terminal-tree-link">|-- Ep.4 Workflows</a></li>
-                    <li><a href="#antigrav-ep5" class="terminal-tree-link">L-- Ep.5 綜效：發布團隊</a></li>
-                </ul>
-            </li>
         </ul>
     </nav>
 
     <!-- Mobile Bottom Nav -->
     <nav class="terminal-mobile-nav">
+        <a href="#antigravity-series" class="terminal-mobile-link">[ Antigravity ]</a>
         <a href="#gemini-pm-series" class="terminal-mobile-link">[ PM x Gemini ]</a>
         <a href="#basic-series" class="terminal-mobile-link">[ n8n 基礎 ]</a>
         <a href="#advanced-series" class="terminal-mobile-link">[ n8n 進階 ]</a>
-        <a href="#antigravity-series" class="terminal-mobile-link">[ Antigravity ]</a>
     </nav>
 
     <script>

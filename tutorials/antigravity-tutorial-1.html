@@ -193,7 +193,7 @@
                                     <li>這讓 AI 不只做關鍵字搜尋，而是真正理解程式碼的依賴關係與邏輯。</li>
                                     <li><strong>注意：</strong> 首次開啟大型專案時，索引可能需要幾分鐘，請耐心等待狀態列顯示就緒。</li>
                                 </ul>
-                                <img src="../images/antigravity_indexing_status.png"
+                                <img src="../images/antigravity_indexing_status.jpg"
                                     alt="Indexing Status with green checkmark"
                                     class="img-fluid border rounded shadow-sm">
                                 <figcaption class="text-muted mt-2">圖 2: Indexing 完成後會顯示綠色勾勾</figcaption>
@@ -204,7 +204,7 @@
                                     兩大區塊：</p>
 
                                 <figure>
-                                    <img src="../images/antigravity_settings_panel.png" alt="Antigravity Settings Panel"
+                                    <img src="../images/antigravity_settings_panel.jpg" alt="Antigravity Settings Panel"
                                         class="img-fluid border rounded shadow-sm">
                                     <figcaption class="text-muted mt-2">圖 3: Antigravity 快速設定面板</figcaption>
                                 </figure>
@@ -280,7 +280,7 @@
                                         Google Java Style Guide」。</li>
                                 </ul>
                                 <figure>
-                                    <img src="../images/antigravity_rules_settings.png" alt="Antigravity Rules Settings"
+                                    <img src="../images/antigravity_rules_settings.jpg" alt="Antigravity Rules Settings"
                                         class="img-fluid border rounded shadow-sm">
                                     <figcaption class="text-muted mt-2">圖 4: 設定 Custom Rules 讓 Agent 更懂你的需求</figcaption>
                                 </figure>
@@ -310,6 +310,11 @@
                                     <h5 class="mt-4">1. Editor View (編輯器視角)</h5>
                                     <p>這是您熟悉的程式碼編輯介面，適合進行具體的程式碼修改與閱讀。在這邊，您可以像使用 VS Code 一樣操作檔案，但多了一個強大的 AI
                                         側邊欄，隨時準備協助您修改當前檔案。</p>
+                                    <figure>
+                                        <img src="../images/antigravity_editor_view.jpg" alt="Editor View Interface"
+                                            class="img-fluid border rounded shadow-sm">
+                                        <figcaption class="text-muted mt-2">圖: Editor View 介面 (待補)</figcaption>
+                                    </figure>
 
                                     <h5 class="mt-4">2. Agent Manager (代理程式管理員)</h5>
                                     <p>這就是 Antigravity 的靈魂所在。按下 <kbd>Cmd/Ctrl</kbd> + <kbd>E</kbd> (或點擊右上方的 Open Agent
@@ -362,7 +367,7 @@
                                                 <br>需要測試網頁嗎？直接在 Agent Manager 下令：「打開 localhost:8000 並嘗試登入」。
                                                 <br>Antigravity 會啟動專屬的 <strong>Browser
                                                     Sub-agent</strong>，它能像人類一樣點擊按鈕、輸入文字、甚至截圖回報。這對於驗收測試 (Acceptance
-                                                Testing) 特別有用。
+                                                Testing) 特別有用。請注意不要讓它打開不安全的網站，也不要讓它記憶並輸入您任何帳號密碼。
                                             </li>
                                         </ul>
                                     </div>
@@ -379,13 +384,14 @@
                                         <li><strong>Execution：</strong> Agent 自動建立檔案並寫入程式碼。</li>
                                         <li><strong>Verification：</strong> Agent 嘗試在終端機執行伺服器，確認沒有報錯。</li>
                                     </ol>
-                                    <p>這就是 Agentic Workflow 的基本雛形！</p>
+                                    <p>這就是 Agentic Workflow 的基本雛形，讓您能輕鬆地將任務委派給 AI。</p>
+                                    <p>請注意，Agent Manager 的功能還未完善，請勿在其中進行敏感操作，例如修改重要檔案或執行系統命令。</p>
                                 </div>
                         </section>
 
                         <section class="mb-5">
-                            <h3><i class="fas fa-toolbox text-primary me-2"></i>內建能力：工具與技能 (Tools & Skills)</h3>
-                            <p>Antigravity 的強大之處在於它內建了多種 <strong>Tools (工具)</strong> 與 <strong>Skills (技能)</strong>。這讓
+                            <h3><i class="fas fa-toolbox text-primary me-2"></i>內建能力：工具與技能 (Tools)</h3>
+                            <p>Antigravity 的強大之處在於它內建了多種 <strong>Tools (工具)</strong>。這讓
                                 Agent
                                 不再是封閉在聊天室裡的機器人，而是擁有「雙手」的工程師。</p>
 
