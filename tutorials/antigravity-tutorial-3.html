@@ -106,87 +106,176 @@
             padding: 1rem;
             font-weight: bold;
         }
+
+        /* Sniper Scope Effect */
+        #sniper-scope {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            /* Let clicks pass through */
+            z-index: 9999;
+            display: none;
+            /* Use CSS variables for mouse position */
+            --mouse-x: 50%;
+            --mouse-y: 50%;
+        }
+
+        #sniper-scope.active {
+            display: block;
+            cursor: none;
+            /* Hide default cursor when active */
+        }
+
+        /* Scope overlay (darkening) */
+        #sniper-scope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle 190px at var(--mouse-x) var(--mouse-y),
+                    transparent 180px,
+                    rgba(0, 0, 0, 0.4) 200px,
+                    rgba(0, 0, 0, 0.8) 100%);
+        }
+
+        /* Crosshairs - Horizontal */
+        #sniper-scope .crosshair-h {
+            position: absolute;
+            top: var(--mouse-y);
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 0, 0, 0.5);
+        }
+
+        /* Crosshairs - Vertical */
+        #sniper-scope .crosshair-v {
+            position: absolute;
+            left: var(--mouse-x);
+            top: 0;
+            height: 100%;
+            width: 1px;
+            background: rgba(255, 0, 0, 0.5);
+        }
+
+        /* Magnified Layer (The Lens Content) */
+        #magnified-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            /* height: 100%; REMOVED to allow layer to grow with content (document height) */
+            min-height: 100vh;
+            /* Ensure it covers at least viewport */
+            pointer-events: none;
+            z-index: 9998;
+            /* Below scope overlay (9999), above content */
+            opacity: 0;
+            overflow: hidden;
+            /* Clip the layer to the scope circle */
+            clip-path: circle(190px at var(--mouse-x) var(--mouse-y));
+            -webkit-clip-path: circle(190px at var(--mouse-x) var(--mouse-y));
+        }
+
+        #magnified-layer.active {
+            opacity: 1;
+        }
+
+        #magnified-layer .cloned-content {
+            transform: scale(2);
+            transform-origin: var(--mouse-x) var(--mouse-y);
+            width: 100%;
+            /* Ensure height matches if needed, but usually block flow handles it */
+        }
     </style>
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container">
-                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <main class="container mt-5">
-        <div class="row">
-            <div class="col-lg-10 mx-auto">
-                <article class="blog-post">
-                    <h1 class="mb-3 display-5 border-bottom pb-3">Google Antigravity IDE 教學 (三)：Agentic Workflows -
-                        打造自動化團隊</h1>
-                    <p class="text-muted mb-4">發布日期：2026年1月</p>
-
-                    <div class="tutorial-intro">
-                        <h4>從「超級個體」到「夢幻團隊」</h4>
-                        <p>在上一章，我們學會了如何訓練 Agent 成為特定領域的專家
-                            (Skill)。但如果我們要蓋房子，光有頂尖的木工是不夠的，我們需要的是<strong>藍圖</strong>與<strong>工頭</strong>。</p>
-                        <p>這就是 <strong>Agentic Workflows</strong> 的核心概念：定義一套標準作業程序 (SOP)，指揮多位 AI 專家協同合作，從單兵作戰升級為團隊協作。
-                        </p>
+    <div id="content-wrapper">
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container">
+                    <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                            <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
+                            <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
+                            <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
+                        </ul>
                     </div>
+                </div>
+            </nav>
+        </header>
 
-                    <div class="tutorial-content">
-                        <section class="step-by-step">
-                            <div class="step">
-                                <h3><i class="fas fa-sitemap step-icon"></i>概念篇：專家 (Skill) vs. 經理 (Workflow)</h3>
-                                <p>在 Antigravity 的生態系中，我們應該這樣理解兩者的關係：</p>
-                                <table class="table table-bordered">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th>特性</th>
-                                            <th>Agent Skill (技能)</th>
-                                            <th>Agent Workflow (流程)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><strong>角色定位</strong></td>
-                                            <td><strong>領域專家 (The Specialist)</strong></td>
-                                            <td><strong>專案經理 (The Manager)</strong></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>比喻</strong></td>
-                                            <td>「資深資安工程師」(會看 Code 找漏洞)</td>
-                                            <td>「年度資安稽核流程」(規定何時掃描、何時修補)</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>用途</strong></td>
-                                            <td>解決單點、困難的任務</td>
-                                            <td>串聯多個任務，確保順序與品質</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+        <main class="container mt-5">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <article class="blog-post">
+                        <h1 class="mb-3 display-5 border-bottom pb-3">Google Antigravity IDE 教學 (三)：Agentic Workflows -
+                            打造自動化團隊</h1>
+                        <p class="text-muted mb-4">發布日期：2026年1月</p>
 
-                            <div class="step">
-                                <h3><i class="fas fa-file-alt step-icon"></i>實戰一：建立基本 Workflow</h3>
-                                <p>Workflows 存放於 <code>.agent/workflows/</code> 資料夾中。讓我們來建立一個 PM 每天都要做的流程：<strong>用戶回饋分析
-                                        (Feedback Analysis)</strong>。</p>
+                        <div class="tutorial-intro">
+                            <h4>從「超級個體」到「夢幻團隊」</h4>
+                            <p>在上一章，我們學會了如何訓練 Agent 成為特定領域的專家
+                                (Skill)。但如果我們要蓋房子，光有頂尖的木工是不夠的，我們需要的是<strong>藍圖</strong>與<strong>工頭</strong>。</p>
+                            <p>這就是 <strong>Agentic Workflows</strong> 的核心概念：定義一套標準作業程序 (SOP)，指揮多位 AI
+                                專家協同合作，從單兵作戰升級為團隊協作。
+                            </p>
+                        </div>
 
-                                <p>請使用同樣的方式 (終端機或右鍵) 建立檔案：<code>.agent/workflows/analyze_feedback.md</code></p>
+                        <div class="tutorial-content">
+                            <section class="step-by-step">
+                                <div class="step">
+                                    <h3><i class="fas fa-sitemap step-icon"></i>概念篇：專家 (Skill) vs. 經理 (Workflow)</h3>
+                                    <p>在 Antigravity 的生態系中，我們應該這樣理解兩者的關係：</p>
+                                    <table class="table table-bordered">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>特性</th>
+                                                <th>Agent Skill (技能)</th>
+                                                <th>Agent Workflow (流程)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>角色定位</strong></td>
+                                                <td><strong>領域專家 (The Specialist)</strong></td>
+                                                <td><strong>專案經理 (The Manager)</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>比喻</strong></td>
+                                                <td>「資深資安工程師」(會看 Code 找漏洞)</td>
+                                                <td>「年度資安稽核流程」(規定何時掃描、何時修補)</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>用途</strong></td>
+                                                <td>解決單點、困難的任務</td>
+                                                <td>串聯多個任務，確保順序與品質</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
 
-                                <pre><code class="language-markdown">---
+                                <div class="step">
+                                    <h3><i class="fas fa-file-alt step-icon"></i>實戰一：建立基本 Workflow</h3>
+                                    <p>Workflows 存放於 <code>.agent/workflows/</code> 資料夾中。讓我們來建立一個 PM
+                                        每天都要做的流程：<strong>用戶回饋分析
+                                            (Feedback Analysis)</strong>。</p>
+
+                                    <p>請使用同樣的方式 (終端機或右鍵) 建立檔案：<code>.agent/workflows/analyze_feedback.md</code></p>
+
+                                    <pre><code class="language-markdown">---
 description: 自動分析用戶回饋 CSV 並產出洞察報告
 ---
 1. 讀取回饋資料 (Read Feedback)
@@ -200,66 +289,71 @@ description: 自動分析用戶回饋 CSV 並產出洞察報告
 3. 總結洞察 (Summarize Insights)
    - 統計 Top 3 最頻繁出現的痛點。
    - 挑選 5 條最具代表性的使用者原音 (Quotes)。
-                                   - 輸出報告至 `reports/weekly_insight.md`。</code></pre>
+   - 輸出報告至 `reports/weekly_insight.md`。</code></pre>
 
-                                <h5 class="mt-4 text-primary">如何執行？ (The Slash Command)</h5>
-                                <p>存檔後，在 Agent 對話框中輸入 <code>/</code> (斜線)，您會看到專案中所有可用的 Workflows 列表。選擇
-                                    <strong>analyze_feedback</strong> 即可立即執行。
-                                </p>
-                                <figure class="my-3">
-                                    <img src="../images/t3_slash_command.png" alt="Trigger Workflow using Slash Command"
-                                        class="img-fluid border rounded shadow-sm">
-                                    <figcaption class="text-muted mt-2">圖 4: 使用 Slash Command 快速觸發 Workflow</figcaption>
-                                </figure>
-                                <p>比起用自然語言（例如：「幫我執行那個...」），使用 Slash Command 能確保機器的精確執行，這就是 Professional 的用法。</p>
-
-                                <div class="mt-5 p-3 bg-light rounded border-start border-4 border-success">
-                                    <h6 class="text-success"><i class="fas fa-magic me-2"></i>Zero Code: 讓 Agent 幫你寫
-                                        Workflow</h6>
-                                    <p class="mb-2">跟 Skill 一樣，您可以直接用自然語言請 Agent 幫您規劃工作流。</p>
-                                    <p>試著輸入：</p>
-                                    <pre class="bg-white border text-dark"><code>幫我建立一個 deep_research workflow。
-當我提出深入研究、搜尋等關鍵字時，自動幫我搜尋網路最新最權威資訊並提供前5個最佳結果。
-接著產生素材 .md 檔案，最後根據素材分析摘要成 報告 .md</code></pre>
-                                    <p class="mb-0">Agent 會自動分析您的需求，並產生如下圖的完整工作流定義檔：</p>
-                                    <figure class="mt-3">
-                                        <img src="../images/antigravity_workflow_creation_agent.png"
-                                            alt="Agent creating workflow automatically"
+                                    <h5 class="mt-4 text-primary">如何執行？ (The Slash Command)</h5>
+                                    <p>存檔後，在 Agent 對話框中輸入 <code>/</code> (斜線)，您會看到專案中所有可用的 Workflows 列表。選擇
+                                        <strong>analyze_feedback</strong> 即可立即執行。
+                                    </p>
+                                    <figure class="my-3">
+                                        <img src="../images/t3_slash_command.png"
+                                            alt="Trigger Workflow using Slash Command"
                                             class="img-fluid border rounded shadow-sm">
-                                        <figcaption class="text-muted small mt-2">圖 4.5: 一句話生成複雜的自動化流程</figcaption>
-                                    </figure>
-                                    <p class="mt-3">當您實際執行這個 Deep Research Workflow 時，Agent
-                                        會自動進行聯網搜尋、整理素材，最後產出專業的分析報告（如下圖）：</p>
-                                    <figure class="mt-3">
-                                        <img src="../images/antigravity_deep_research_result.png"
-                                            alt="Deep Research Workflow Execution Result"
-                                            class="img-fluid border rounded shadow-sm">
-                                        <figcaption class="text-muted small mt-2">圖 4.6: Deep Research 實際執行結果與產出報告
+                                        <figcaption class="text-muted mt-2">圖 4: 使用 Slash Command 快速觸發 Workflow
                                         </figcaption>
                                     </figure>
-                                </div>
-                            </div>
+                                    <p>比起用自然語言（例如：「幫我執行那個...」），使用 Slash Command 能確保機器的精確執行，這就是 Professional 的用法。</p>
 
-                            <div class="step">
-                                <h3><i class="fas fa-users step-icon"></i>實戰二：打造醫療資訊商機研究團隊 (Medical Info Research Team)
-                                </h3>
-                                <p>現在我們來玩大的。我們要串聯多個 Skills，打造一個自動化商業研究團隊，從資料蒐集到簡報製作一氣呵成。</p>
-
-                                <h5 class="mt-4">1. 準備兩位專家</h5>
-                                <p>我們需要兩位專家 (請自行建立對應的 <code>SKILL.md</code>)：</p>
-
-                                <div class="card mb-3">
-                                    <div class="card-header bg-light">
-                                        <strong><i class="fas fa-search-dollar me-2"></i>專家 1: Market Researcher
-                                            (市場情報員)</strong>
+                                    <div class="mt-5 p-3 bg-light rounded border-start border-4 border-success">
+                                        <h6 class="text-success"><i class="fas fa-magic me-2"></i>Zero Code: 讓 Agent 幫你寫
+                                            Workflow</h6>
+                                        <p class="mb-2">跟 Skill 一樣，您可以直接用自然語言請 Agent 幫您規劃工作流。</p>
+                                        <p>試著輸入：</p>
+                                        <pre class="bg-white border text-dark"><code>幫我建立一個 deep_research workflow。
+當我提出深入研究、搜尋等關鍵字時，自動幫我搜尋網路最新最權威資訊並提供前5個最佳結果。
+接著產生素材 .md 檔案，最後根據素材分析摘要成 報告 .md</code></pre>
+                                        <p class="mb-0">Agent 會自動分析您的需求，並產生如下圖的完整工作流定義檔：</p>
+                                        <figure class="mt-3">
+                                            <img src="../images/antigravity_workflow_creation_agent.png"
+                                                alt="Agent creating workflow automatically"
+                                                class="img-fluid border rounded shadow-sm">
+                                            <figcaption class="text-muted small mt-2">圖 4.5: 一句話生成複雜的自動化流程</figcaption>
+                                        </figure>
+                                        <p class="mt-3">當您實際執行這個 Deep Research Workflow 時，Agent
+                                            會自動進行聯網搜尋、整理素材，最後產出專業的分析報告（如下圖）：</p>
+                                        <figure class="mt-3">
+                                            <img src="../images/antigravity_deep_research_result.png"
+                                                alt="Deep Research Workflow Execution Result"
+                                                class="img-fluid border rounded shadow-sm">
+                                            <figcaption class="text-muted small mt-2">圖 4.6: Deep Research 實際執行結果與產出報告
+                                            </figcaption>
+                                        </figure>
                                     </div>
-                                    <div class="card-body">
-                                        <p class="card-text text-muted small">負責網路搜尋，並將發現的商機資訊結構化存檔 (Search & Archive)。
-                                        </p>
-                                        <details>
-                                            <summary class="btn btn-sm btn-outline-secondary mb-2">點擊展開完整 SKILL.md 源碼
-                                            </summary>
-                                            <pre><code class="language-markdown">---
+                                </div>
+
+                                <div class="step">
+                                    <h3><i class="fas fa-users step-icon"></i>實戰二：打造醫療資訊商機研究團隊 (Medical Info Research
+                                        Team)
+                                    </h3>
+                                    <p>現在我們來玩大的。我們要串聯多個 Skills，打造一個自動化商業研究團隊，從資料蒐集到簡報製作一氣呵成。</p>
+
+                                    <h5 class="mt-4">1. 準備兩位專家</h5>
+                                    <p>我們需要兩位專家 (請自行建立對應的 <code>SKILL.md</code>)：</p>
+
+                                    <div class="card mb-3">
+                                        <div class="card-header bg-light">
+                                            <strong><i class="fas fa-search-dollar me-2"></i>專家 1: Market Researcher
+                                                (市場情報員)</strong>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-text text-muted small">負責網路搜尋，並將發現的商機資訊結構化存檔 (Search &
+                                                Archive)。
+                                            </p>
+                                            <details>
+                                                <summary class="btn btn-sm btn-outline-secondary mb-2">點擊展開完整 SKILL.md
+                                                    源碼
+                                                </summary>
+                                                <pre><code class="language-markdown">---
 name: market_researcher
 description: 搜尋指定領域的最新商機，並保存為 Raw Data。
 ---
@@ -271,21 +365,22 @@ description: 搜尋指定領域的最新商機，並保存為 Raw Data。
 2.  **Filter**: 找出排名前 5 的高相關性新聞或報告。
 3.  **Archive**: 將標題、連結、摘要整理為 JSON 格式。
 4.  **Save**: 寫入檔案 `raw_data/market_scan.json`。</code></pre>
-                                        </details>
+                                            </details>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="card mb-3">
-                                    <div class="card-header bg-light">
-                                        <strong><i class="fas fa-chart-pie me-2"></i>專家 2: Slide Generator
-                                            (簡報製作師)</strong>
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="card-text text-muted small">讀取分析報告，自動生成 HTML 格式的投影片 (Present)。</p>
-                                        <details>
-                                            <summary class="btn btn-sm btn-outline-secondary mb-2">點擊展開完整 SKILL.md 源碼
-                                            </summary>
-                                            <pre><code class="language-markdown">---
+                                    <div class="card mb-3">
+                                        <div class="card-header bg-light">
+                                            <strong><i class="fas fa-chart-pie me-2"></i>專家 2: Slide Generator
+                                                (簡報製作師)</strong>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-text text-muted small">讀取分析報告，自動生成 HTML 格式的投影片 (Present)。</p>
+                                            <details>
+                                                <summary class="btn btn-sm btn-outline-secondary mb-2">點擊展開完整 SKILL.md
+                                                    源碼
+                                                </summary>
+                                                <pre><code class="language-markdown">---
 name: slide_generator
 description: 將文字報告轉換為 HTML Reveal.js 投影片。
 ---
@@ -301,13 +396,13 @@ description: 將文字報告轉換為 HTML Reveal.js 投影片。
     -   Agenda: 大綱
     -   Key Findings: 3-5 個重點 (Bullet points)
     -   Conclusion: 建議策略</code></pre>
-                                        </details>
+                                            </details>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <h5 class="mt-4">2. 制定協作流程 (The Workflow)</h5>
-                                <p>建立 <code>.agent/workflows/medical_research.md</code>，定義這條價值生產線：</p>
-                                <pre><code class="language-markdown">---
+                                    <h5 class="mt-4">2. 制定協作流程 (The Workflow)</h5>
+                                    <p>建立 <code>.agent/workflows/medical_research.md</code>，定義這條價值生產線：</p>
+                                    <pre><code class="language-markdown">---
 description: 醫療資訊系統商機研究流程
 ---
 1. 搜尋商機 (Search & Archive)
@@ -323,72 +418,162 @@ description: 醫療資訊系統商機研究流程
    - 執行 `slide_generator`。
    - 讀取分析報告，產出 `presentation.html`。</code></pre>
 
-                                <h5 class="mt-4">3. 見證奇蹟 (Synergy)</h5>
-                                <p>當你運行這個 Workflow 時，你會看到 Agent 自動完成從蒐集資料到做簡報的所有工作：</p>
-                                <figure>
-                                    <div
-                                        style="width: 100%; height: auto; background-color: #212529; color: #0f0; font-family: monospace; padding: 1rem; border-radius: 8px; overflow: hidden;">
-                                        > Executing workflow: medical_research<br>
-                                        [v] Step 1: Market Research...<br>
-                                        &nbsp;&nbsp;&nbsp;> Agent (Researcher): Found 5 opportunities in Taiwan HIS
-                                        market.<br>
-                                        &nbsp;&nbsp;&nbsp;> Agent (Researcher): Saved to raw_data/market_scan.json<br>
-                                        [v] Step 2: Analyzing Data...<br>
-                                        &nbsp;&nbsp;&nbsp;> Agent (Analyst): Identifying market gaps... Done.<br>
-                                        <span style="color: yellow;">[!] Triggering slide_generator skill...</span><br>
-                                        &nbsp;&nbsp;&nbsp;> Agent (Designer): Generating HTML slides...<br>
-                                        [v] Step 3: presentation.html created.<br>
-                                    </div>
-                                    <figcaption class="text-muted mt-2">圖 5: 從網路搜尋到投影片生成的全自動化流程</figcaption>
-                                </figure>
-                            </div>
+                                    <h5 class="mt-4">3. 見證奇蹟 (Synergy)</h5>
+                                    <p>當你運行這個 Workflow 時，你會看到 Agent 自動完成從蒐集資料到做簡報的所有工作：</p>
+                                    <figure>
+                                        <div
+                                            style="width: 100%; height: auto; background-color: #212529; color: #0f0; font-family: monospace; padding: 1rem; border-radius: 8px; overflow: hidden;">
+                                            > Executing workflow: medical_research<br>
+                                            [v] Step 1: Market Research...<br>
+                                            &nbsp;&nbsp;&nbsp;> Agent (Researcher): Found 5 opportunities in Taiwan HIS
+                                            market.<br>
+                                            &nbsp;&nbsp;&nbsp;> Agent (Researcher): Saved to
+                                            raw_data/market_scan.json<br>
+                                            [v] Step 2: Analyzing Data...<br>
+                                            &nbsp;&nbsp;&nbsp;> Agent (Analyst): Identifying market gaps... Done.<br>
+                                            <span style="color: yellow;">[!] Triggering slide_generator
+                                                skill...</span><br>
+                                            &nbsp;&nbsp;&nbsp;> Agent (Designer): Generating HTML slides...<br>
+                                            [v] Step 3: presentation.html created.<br>
+                                        </div>
+                                        <figcaption class="text-muted mt-2">圖 5: 從網路搜尋到投影片生成的全自動化流程</figcaption>
+                                    </figure>
+                                </div>
 
-                            <div class="step">
-                                <h3><i class="fas fa-desktop step-icon"></i>可視化監控：Agent Manager</h3>
-                                <p>當這條「生產線」在背景執行時，您不需要一直盯著終端機。Antigravity 提供了強大的 <strong>Agent Manager</strong> 介面：</p>
-                                <ul>
-                                    <li>按下 <strong><code>Cmd/Ctrl + E</code></strong> 開啟 Agent Manager。</li>
-                                    <li>切換到 <strong>"Active Tasks"</strong> 分頁。</li>
-                                    <li>您會看到 <code>medical_research</code> 正在執行，並即時顯示當前步驟。</li>
-                                </ul>
-                                <figure>
-                                    <img src="../images/manager_active_tasks.png" alt="Manager Active Tasks"
-                                        class="img-fluid border rounded shadow-sm">
-                                    <figcaption class="text-muted mt-2">圖 6: 在 Agent Manager 監控流程執行狀況</figcaption>
-                                </figure>
-                            </div>
-                        </section>
+                                <div class="step">
+                                    <h3><i class="fas fa-desktop step-icon"></i>可視化監控：Agent Manager</h3>
+                                    <p>當這條「生產線」在背景執行時，您不需要一直盯著終端機。Antigravity 提供了強大的 <strong>Agent Manager</strong> 介面：
+                                    </p>
+                                    <ul>
+                                        <li>按下 <strong><code>Cmd/Ctrl + E</code></strong> 開啟 Agent Manager。</li>
+                                        <li>切換到 <strong>"Active Tasks"</strong> 分頁。</li>
+                                        <li>您會看到 <code>medical_research</code> 正在執行，並即時顯示當前步驟。</li>
+                                    </ul>
+                                    <figure>
+                                        <img src="../images/manager_active_tasks.png" alt="Manager Active Tasks"
+                                            class="img-fluid border rounded shadow-sm">
+                                        <figcaption class="text-muted mt-2">圖 6: 在 Agent Manager 監控流程執行狀況</figcaption>
+                                    </figure>
+                                </div>
+                            </section>
+                        </div>
+
+                        <div class="tutorial-summary">
+                            <h4>系列完結：您的 Agentic 之旅才正要開始</h4>
+                            <p>恭喜您讀完了 Google Antigravity IDE 的完整教學系列！</p>
+                            <p>從環境設定 (Tutorial 1)、技能擴充 (Tutorial 2)，到今天的自動化團隊 (Tutorial 3)，您已經具備了成為 AI 時代技術領導者的核心能力。</p>
+                            <p>Agentic Coding 不只是寫程式變快，而是改變我們思考「工作與協作」的方式。現在，打開您的 IDE，開始打造屬於您的 AI 夢幻隊吧！</p>
+                            <p class="text-end">
+                                <a href="antigravity-tutorial-2.html" class="btn btn-outline-secondary me-2"><i
+                                        class="fas fa-arrow-left ms-2"></i>上一篇</a>
+                                <a href="../tutorials.html" class="btn btn-primary">返回教學首頁 <i
+                                        class="fas fa-home ms-2"></i></a>
+                            </p>
+                        </div>
+                    </article>
+
+                    <div class="mt-5 text-center">
+                        <a href="../tutorials.html#antigravity-series" class="btn btn-primary btn-lg"><i
+                                class="fas fa-list me-2"></i>返回 教學列表</a>
                     </div>
-
-                    <div class="tutorial-summary">
-                        <h4>系列完結：您的 Agentic 之旅才正要開始</h4>
-                        <p>恭喜您讀完了 Google Antigravity IDE 的完整教學系列！</p>
-                        <p>從環境設定 (Tutorial 1)、技能擴充 (Tutorial 2)，到今天的自動化團隊 (Tutorial 3)，您已經具備了成為 AI 時代技術領導者的核心能力。</p>
-                        <p>Agentic Coding 不只是寫程式變快，而是改變我們思考「工作與協作」的方式。現在，打開您的 IDE，開始打造屬於您的 AI 夢幻隊吧！</p>
-                        <p class="text-end">
-                            <a href="antigravity-tutorial-2.html" class="btn btn-outline-secondary me-2"><i
-                                    class="fas fa-arrow-left ms-2"></i>上一篇</a>
-                            <a href="../tutorials.html" class="btn btn-primary">返回教學首頁 <i
-                                    class="fas fa-home ms-2"></i></a>
-                        </p>
-                    </div>
-                </article>
-
-                <div class="mt-5 text-center">
-                    <a href="../tutorials.html#antigravity-series" class="btn btn-primary btn-lg"><i
-                            class="fas fa-list me-2"></i>返回 教學列表</a>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
 
-    <footer class="bg-light mt-5 py-3">
-        <div class="container text-center">
-            <p>&copy; 2026 侯俊嘉(Luke Hou). All rights reserved.</p>
-        </div>
-    </footer>
+        <footer class="bg-light mt-5 py-3">
+            <div class="container text-center">
+                <p>&copy; 2026 侯俊嘉(Luke Hou). All rights reserved.</p>
+            </div>
+        </footer>
+    </div> <!-- End of #content-wrapper -->
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>
+
+    <!-- Sniper Scope Container -->
+    <div id="sniper-scope">
+        <div class="crosshair-h"></div>
+        <div class="crosshair-v"></div>
+    </div>
+
+    <!-- Magnified Layer Container -->
+    <div id="magnified-layer"></div>
+
+    <!-- Sniper Scope Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const scope = document.getElementById('sniper-scope');
+            const wrapper = document.getElementById('content-wrapper');
+            const magnifiedLayer = document.getElementById('magnified-layer');
+            let isSniping = false;
+
+            // Clone content for magnification
+            // We do this once on load. Dynamic updates won't be reflected without re-cloning.
+            const clonedContent = wrapper.cloneNode(true);
+            clonedContent.id = ''; // Remove ID to avoid duplicates
+            clonedContent.classList.add('cloned-content');
+            // FIX: Force the cloned content to have the exact same width as the original
+            // to prevent text reflow differences due to scrollbars or absolute positioning context.
+            clonedContent.style.width = wrapper.offsetWidth + 'px';
+            magnifiedLayer.appendChild(clonedContent);
+
+            // Track mouse movement
+            document.addEventListener('mousemove', (e) => {
+                if (isSniping) {
+                    scope.style.setProperty('--mouse-x', e.clientX + 'px'); // Scope is fixed
+                    scope.style.setProperty('--mouse-y', e.clientY + 'px');
+
+                    magnifiedLayer.style.setProperty('--mouse-x', e.pageX + 'px'); // Layer is absolute
+                    magnifiedLayer.style.setProperty('--mouse-y', e.pageY + 'px');
+                }
+            });
+
+            let suppressMenu = false;
+
+            // Listen for window resize to update cloned content width
+            window.addEventListener('resize', () => {
+                clonedContent.style.width = wrapper.offsetWidth + 'px';
+            });
+
+            // Activate on Right Click Hold
+            document.addEventListener('mousedown', (e) => {
+                if (e.button === 2) { // Right click
+                    isSniping = true;
+                    suppressMenu = true;
+                    scope.classList.add('active');
+                    magnifiedLayer.classList.add('active');
+                    document.body.style.cursor = 'none';
+
+                    // Initial update
+                    scope.style.setProperty('--mouse-x', e.clientX + 'px');
+                    scope.style.setProperty('--mouse-y', e.clientY + 'px');
+                    magnifiedLayer.style.setProperty('--mouse-x', e.pageX + 'px');
+                    magnifiedLayer.style.setProperty('--mouse-y', e.pageY + 'px');
+                }
+            });
+
+            // Deactivate on Mouse Up
+            document.addEventListener('mouseup', (e) => {
+                if (e.button === 2) {
+                    isSniping = false;
+                    scope.classList.remove('active');
+                    magnifiedLayer.classList.remove('active');
+                    document.body.style.cursor = '';
+
+                    setTimeout(() => {
+                        suppressMenu = false;
+                    }, 100);
+                }
+            });
+
+            // Prevent Context Menu
+            document.addEventListener('contextmenu', (e) => {
+                if (suppressMenu) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

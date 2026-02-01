@@ -100,460 +100,682 @@
             border-color: #bee5eb;
             color: #0c5460;
         }
+
+        /* Sniper Scope Effect */
+        #sniper-scope {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            /* Let clicks pass through */
+            z-index: 9999;
+            display: none;
+            /* Use CSS variables for mouse position */
+            --mouse-x: 50%;
+            --mouse-y: 50%;
+        }
+
+        #sniper-scope.active {
+            display: block;
+            cursor: none;
+            /* Hide default cursor when active */
+        }
+
+        /* Scope overlay (darkening) */
+        #sniper-scope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle 190px at var(--mouse-x) var(--mouse-y),
+                    transparent 180px,
+                    rgba(0, 0, 0, 0.4) 200px,
+                    rgba(0, 0, 0, 0.8) 100%);
+        }
+
+        /* Crosshairs - Horizontal */
+        #sniper-scope .crosshair-h {
+            position: absolute;
+            top: var(--mouse-y);
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 0, 0, 0.5);
+        }
+
+        /* Crosshairs - Vertical */
+        #sniper-scope .crosshair-v {
+            position: absolute;
+            left: var(--mouse-x);
+            top: 0;
+            height: 100%;
+            width: 1px;
+            background: rgba(255, 0, 0, 0.5);
+        }
+
+        /* Magnified Layer (The Lens Content) */
+        #magnified-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            /* height: 100%; REMOVED to allow layer to grow with content (document height) */
+            min-height: 100vh;
+            /* Ensure it covers at least viewport */
+            pointer-events: none;
+            z-index: 9998;
+            /* Below scope overlay (9999), above content */
+            opacity: 0;
+            overflow: hidden;
+            /* Clip the layer to the scope circle */
+            clip-path: circle(190px at var(--mouse-x) var(--mouse-y));
+            -webkit-clip-path: circle(190px at var(--mouse-x) var(--mouse-y));
+        }
+
+        #magnified-layer.active {
+            opacity: 1;
+        }
+
+        #magnified-layer .cloned-content {
+            transform: scale(2);
+            transform-origin: var(--mouse-x) var(--mouse-y);
+            width: 100%;
+            /* Ensure height matches if needed, but usually block flow handles it */
+        }
     </style>
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container">
-                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <main class="container mt-5">
-        <div class="row">
-            <div class="col-lg-10 mx-auto">
-                <article class="blog-post">
-                    <h1 class="mb-3 display-5 border-bottom pb-3">Google Antigravity IDE 教學 (一)：環境建置與 Agentic Mode 初探
-                    </h1>
-                    <p class="text-muted mb-4">發布日期：2026年1月</p>
-
-                    <div class="tutorial-intro">
-                        <h4>歡迎來到 Agentic Coding 的新時代！</h4>
-                        <p>Google Antigravity IDE 不僅僅是一個編輯器，它是一個「Agent-First」的開發平台。在這裡，AI 不再只是提供建議的副駕駛
-                            (Co-pilot)，而是能夠獨立思考、規劃並執行任務的代理人 (Agent)。本系列教學將帶您從零開始，掌握這個強大的工具。</p>
-
-                        <h5 class="mt-4"><i class="fas fa-bolt text-warning me-2"></i>為什麼 Antigravity 這麼強大？</h5>
-                        <p>傳統的 AI 輔助工具（如 Copilot）主要是「自動補全（Auto-complete）」，你寫一行，它猜下一行。但 Antigravity
-                            的邏輯是「<strong>自動完成（Auto-complete Task）</strong>」。</p>
-                        <ul>
-                            <li><strong>全域認知 (Global Context)：</strong> Agent 不是只看當前檔案，而是透過 <strong>Project
-                                    Indexing</strong> 隨時掌握整個專案的架構、依賴關係與商業邏輯。</li>
-                            <li><strong>多步推理 (Multi-step Reasoning)：</strong> 當你說「重構這個模組」時，Agent
-                                會先分析影響範圍、規劃步驟、修改程式碼、最後執行測試，這是一個完整的思考迴路。</li>
-                            <li><strong>工具使用 (Tool Use)：</strong> Agent 不只會寫 Code，還會跑 Terminal 指令、瀏覽網頁、甚至操作資料庫。</li>
+    <div id="content-wrapper">
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container">
+                    <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                            <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
+                            <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
+                            <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
                         </ul>
                     </div>
+                </div>
+            </nav>
+        </header>
+
+        <main class="container mt-5">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <article class="blog-post">
+                        <h1 class="mb-3 display-5 border-bottom pb-3">Google Antigravity IDE 教學 (一)：環境建置與 Agentic Mode
+                            初探
+                        </h1>
+                        <p class="text-muted mb-4">發布日期：2026年1月</p>
+
+                        <div class="tutorial-intro">
+                            <h4>歡迎來到 Agentic Coding 的新時代！</h4>
+                            <p>Google Antigravity IDE 不僅僅是一個編輯器，它是一個「Agent-First」的開發平台。在這裡，AI 不再只是提供建議的副駕駛
+                                (Co-pilot)，而是能夠獨立思考、規劃並執行任務的代理人 (Agent)。本系列教學將帶您從零開始，掌握這個強大的工具。</p>
+
+                            <h5 class="mt-4"><i class="fas fa-bolt text-warning me-2"></i>為什麼 Antigravity 這麼強大？</h5>
+                            <p>傳統的 AI 輔助工具（如 Copilot）主要是「自動補全（Auto-complete）」，你寫一行，它猜下一行。但 Antigravity
+                                的邏輯是「<strong>自動完成（Auto-complete Task）</strong>」。</p>
+                            <ul>
+                                <li><strong>全域認知 (Global Context)：</strong> Agent 不是只看當前檔案，而是透過 <strong>Project
+                                        Indexing</strong> 隨時掌握整個專案的架構、依賴關係與商業邏輯。</li>
+                                <li><strong>多步推理 (Multi-step Reasoning)：</strong> 當你說「重構這個模組」時，Agent
+                                    會先分析影響範圍、規劃步驟、修改程式碼、最後執行測試，這是一個完整的思考迴路。</li>
+                                <li><strong>工具使用 (Tool Use)：</strong> Agent 不只會寫 Code，還會跑 Terminal 指令、瀏覽網頁、甚至操作資料庫。</li>
+                            </ul>
+                        </div>
 
 
 
-                    <div class="alert alert-gemini alert-dismissible fade show" role="alert">
-                        <strong><i class="fas fa-robot me-2"></i>核心概念：</strong> 與傳統 IDE 不同，Antigravity 的核心在於對 AI Agent
-                        下達「任務 (Task)」而非單純的編寫代碼。請準備好轉換您的開發思維！
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
+                        <div class="alert alert-gemini alert-dismissible fade show" role="alert">
+                            <strong><i class="fas fa-robot me-2"></i>核心概念：</strong> 與傳統 IDE 不同，Antigravity 的核心在於對 AI
+                            Agent
+                            下達「任務 (Task)」而非單純的編寫代碼。請準備好轉換您的開發思維！
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
 
-                    <div class="tutorial-content">
-                        <section class="step-by-step">
-                            <div class="step">
-                                <h3><i class="fas fa-download step-icon"></i>步驟一：下載與安裝</h3>
-                                <p>目前 Google Antigravity IDE 處於預覽階段 (Preview)。請前往官方網站申請試用或下載安裝檔。</p>
-                                <p><a href="https://antigravity.google" target="_blank" class="btn btn-primary"><i
-                                            class="fas fa-external-link-alt me-2"></i>前往 Google Antigravity 官網</a></p>
-                                <p>下載適用於 Windows 的安裝檔後，執行安裝程序。安裝過程與 VS Code 類似，會自動配置必要的環境路徑。</p>
-                            </div>
-
-                            <div class="step">
-                                <h3><i class="fas fa-key step-icon"></i>步驟二：登入與權限設定</h3>
-                                <p>首次啟動 Antigravity IDE 時，系統會要求您登入 Google 帳號以存取 Gemini 模型服務。</p>
-                                <ol>
-                                    <li>點擊歡迎畫面上的 <strong>"Sign in with Google"</strong>。</li>
-                                    <li>在彈出的瀏覽器視窗中完成驗證。</li>
-                                    <li>回到 IDE，您會看到右下角的連線狀態顯示為 <span class="badge bg-success">Connected</span>。</li>
-                                </ol>
-                                <div class="alert alert-info-custom" role="alert">
-                                    <i class="fas fa-info-circle me-2"></i><strong>注意：</strong> Antigravity
-                                    深度整合了雲端推理能力，請確保您的網路連線穩定，並已啟用 Gemini Advanced 或相關企業方案以獲得最佳體驗。
+                        <div class="tutorial-content">
+                            <section class="step-by-step">
+                                <div class="step">
+                                    <h3><i class="fas fa-download step-icon"></i>步驟一：下載與安裝</h3>
+                                    <p>目前 Google Antigravity IDE 處於預覽階段 (Preview)。請前往官方網站申請試用或下載安裝檔。</p>
+                                    <p><a href="https://antigravity.google" target="_blank" class="btn btn-primary"><i
+                                                class="fas fa-external-link-alt me-2"></i>前往 Google Antigravity 官網</a>
+                                    </p>
+                                    <p>下載適用於 Windows 的安裝檔後，執行安裝程序。安裝過程與 VS Code 類似，會自動配置必要的環境路徑。</p>
                                 </div>
-                            </div>
-
-                            <div class="step">
-                                <h3><i class="fas fa-sliders-h step-icon"></i>步驟三：關鍵設定與環境調校</h3>
-                                <p>安裝完成並登入後，為了讓 Agent 發揮最大戰力，我們需要調整幾個關鍵設定。請點擊左下角的齒輪圖示 <i class="fas fa-cog"></i> 進入
-                                    Settings。</p>
-
-                                <h5 class="mt-4">1. Project Indexing (專案索引)</h5>
-                                <p>這是 Antigravity 的「大腦」來源。Antigravity 會自動對您的專案進行索引，以便 Agent 理解程式碼結構。</p>
-                                <ul>
-                                    <li>Antigravity 會在背景建立專案的語意索引 (Semantic Index)。</li>
-                                    <li>這讓 AI 不只做關鍵字搜尋，而是真正理解程式碼的依賴關係與邏輯。</li>
-                                    <li><strong>注意：</strong> 首次開啟大型專案時，索引可能需要幾分鐘，請耐心等待狀態列顯示就緒。</li>
-                                </ul>
-                                <img src="../images/antigravity_indexing_status.jpg"
-                                    alt="Indexing Status with green checkmark"
-                                    class="img-fluid border rounded shadow-sm">
-                                <figcaption class="text-muted mt-2">圖 2: Indexing 完成後會顯示綠色勾勾</figcaption>
-                                </figure>
-
-                                <h5 class="mt-4">2. 快速設定面板 (Quick Settings)</h5>
-                                <p>點擊 IDE 右下角的狀態列或齒輪圖示，會彈出快速設定面板（如下圖）。這裡分為 <strong>Agent</strong> 與 <strong>Tab</strong>
-                                    兩大區塊：</p>
-
-                                <figure>
-                                    <img src="../images/antigravity_settings_panel.jpg" alt="Antigravity Settings Panel"
-                                        class="img-fluid border rounded shadow-sm">
-                                    <figcaption class="text-muted mt-2">圖 3: Antigravity 快速設定面板</figcaption>
-                                </figure>
-
-                                <h6 class="mt-3 text-primary"><i class="fas fa-robot me-2"></i>Agent 設定 (代理程式行為)</h6>
-                                <p>這區塊控制主要 Agent 的自主權與行為模式：</p>
-                                <ul>
-                                    <li><strong>Agent Auto-Fix Lints (自動修復程式碼問題)：</strong>
-                                        <ul>
-                                            <li><code>On</code>：Agent 偵測到簡單的 Linter 錯誤（如縮排錯誤、未使用的變數）時，會自動嘗試修復。</li>
-                                            <li><code>Off</code>：關閉自動修復功能。</li>
-                                        </ul>
-                                    </li>
-                                    <li><strong>Auto Execution (自動執行指令)：</strong>
-                                        <ul>
-                                            <li><code>Always Continue</code>：Agent 可以自動執行終端機指令（如 <code>ls</code>,
-                                                <code>npm install</code>），不需詢問。
-                                            </li>
-                                            <li><code>Request Review</code>：Agent 想執行指令前，必須先獲得您的批准。（預設推薦）</li>
-                                        </ul>
-                                    </li>
-                                    <li><strong>Review Policy (實作計畫審查)：</strong>
-                                        <ul>
-                                            <li><code>Always Continue</code>：Agent 產生的 Implementation Plan 會直接執行，不等待審查。
-                                            </li>
-                                            <li><code>Request Review</code>：Agent 必須先提交計畫讓您看過，您點擊 "Approve" 後才會開始寫 Code。
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-
-                                <h6 class="mt-3 text-primary"><i class="fas fa-keyboard me-2"></i>Tab 設定 (智慧補全)</h6>
-                                <p>這區塊控制編輯器中的 "Ghost Text" 自動補全體驗：</p>
-                                <ul>
-                                    <li><strong>Tab Gitignore Access：</strong>
-                                        <ul>
-                                            <li><code>Off</code>：智慧補全模型<strong>不會</strong>讀取被 gitignore 排除的檔案（保護敏感資料）。
-                                            </li>
-                                            <li><code>On</code>：允許讀取，能增加補全的上下文準確度，但需注意隱私。</li>
-                                        </ul>
-                                    </li>
-                                    <li><strong>Tab Speed：</strong>
-                                        <ul>
-                                            <li><code>Fast</code>：使用較輕量的模型，延遲極低，適合快速打字。</li>
-                                            <li><code>Smart</code> (若有)：使用較強模型，補全品質較高但稍慢。</li>
-                                        </ul>
-                                    </li>
-                                    <li><strong>Tab to Import：</strong>
-                                        <ul>
-                                            <li><code>On</code>：當補全建議使用了尚未 import 的套件時，按下 Tab 會自動幫您補上 import 語句。</li>
-                                        </ul>
-                                    </li>
-                                    <li><strong>Tab to Jump：</strong>
-                                        <ul>
-                                            <li><code>On</code>：允許使用 Tab 鍵在建議的程式碼片段 placeholder 之間跳轉。</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-
-                                <h5 class="mt-4">3. Custom Rules (自定義規則)</h5>
-                                <p>Antigravity 允許您設定「規則」來引導 Agent 的行為。這就像是給您的 AI 助手一份「員工守則」。</p>
-                                <p><strong>如何開啟設定：</strong> 點擊 Agent Manager 右上角的 <code>...</code> 選單，選擇
-                                    <strong>Customizations</strong>。
-                                </p>
-                                <figure>
-                                    <img src="../images/antigravity_rules_menu.png" alt="Opening Customizations Menu"
-                                        class="img-fluid border rounded shadow-sm" style="max-width: 300px;">
-                                    <figcaption class="text-muted mt-2">圖 4-1: 透過選單進入 Customizations</figcaption>
-                                </figure>
-                                <ul>
-                                    <li><strong>Global Rules (全域規則)：</strong> 適用於所有專案。例如：「一律使用繁體中文回應」、「程式碼必須加上註解」。</li>
-                                    <li><strong>Workspace Rules (工作區規則)：</strong> 僅適用於當前專案。例如：「在此專案中使用 TailwindCSS」、「依循
-                                        Google Java Style Guide」。</li>
-                                </ul>
-                                <figure>
-                                    <img src="../images/antigravity_rules_settings.jpg" alt="Antigravity Rules Settings"
-                                        class="img-fluid border rounded shadow-sm">
-                                    <figcaption class="text-muted mt-2">圖 4: 設定 Custom Rules 讓 Agent 更懂你的需求</figcaption>
-                                </figure>
-
-                                <h5 class="mt-4">4. MCP Store (擴充功能商店)</h5>
-                                <p>想讓您的 Agent 能力更強大嗎？<strong>MCP (Model Context Protocol)</strong> 是 Antigravity
-                                    支援的一種開放標準，允許 Agent 連接外部工具與資料源。</p>
-                                <p>點擊左側邊欄的 <strong>MCP Store</strong> 圖示，您可以一鍵安裝各類官方與社群開發的擴充功能，例如：</p>
-                                <ul>
-                                    <li><strong>Cloud Run / Firebase：</strong> 讓 Agent 直接幫您部署應用程式。</li>
-                                    <li><strong>BigQuery / PostgreSQL：</strong> 讓 Agent 能查詢資料庫並進行分析。</li>
-                                    <li><strong>Linear / JIRA：</strong> 讓 Agent 讀取工單並更新狀態。</li>
-                                </ul>
-                                <figure>
-                                    <img src="../images/antigravity_mcp_store.png" alt="Antigravity MCP Store"
-                                        class="img-fluid border rounded shadow-sm" style="max-width: 400px;">
-                                    <figcaption class="text-muted mt-2">圖 4-2: MCP Store 充滿了無限可能</figcaption>
-                                </figure>
-
-
 
                                 <div class="step">
-                                    <h3><i class="fas fa-columns step-icon"></i>步驟四：認識雙介面 (Editor vs. Agent Manager)
-                                    </h3>
-                                    <p>Antigravity 最大的特色在於它擁有兩種核心檢視模式，分別對應不同的工作層級：</p>
+                                    <h3><i class="fas fa-key step-icon"></i>步驟二：登入與權限設定</h3>
+                                    <p>首次啟動 Antigravity IDE 時，系統會要求您登入 Google 帳號以存取 Gemini 模型服務。</p>
+                                    <ol>
+                                        <li>點擊歡迎畫面上的 <strong>"Sign in with Google"</strong>。</li>
+                                        <li>在彈出的瀏覽器視窗中完成驗證。</li>
+                                        <li>回到 IDE，您會看到右下角的連線狀態顯示為 <span class="badge bg-success">Connected</span>。</li>
+                                    </ol>
+                                    <div class="alert alert-info-custom" role="alert">
+                                        <i class="fas fa-info-circle me-2"></i><strong>注意：</strong> Antigravity
+                                        深度整合了雲端推理能力，請確保您的網路連線穩定，並已啟用 Gemini Advanced 或相關企業方案以獲得最佳體驗。
+                                    </div>
+                                </div>
 
-                                    <h5 class="mt-4">1. Editor View (編輯器視角)</h5>
-                                    <p>這是您熟悉的程式碼編輯介面，適合進行具體的程式碼修改與閱讀。在這邊，您可以像使用 VS Code 一樣操作檔案，但多了一個強大的 AI
-                                        側邊欄，隨時準備協助您修改當前檔案。</p>
-                                    <figure>
-                                        <img src="../images/antigravity_editor_view.jpg" alt="Editor View Interface"
-                                            class="img-fluid border rounded shadow-sm">
-                                        <figcaption class="text-muted mt-2">圖: Editor View 介面 (待補)</figcaption>
+                                <div class="step">
+                                    <h3><i class="fas fa-sliders-h step-icon"></i>步驟三：關鍵設定與環境調校</h3>
+                                    <p>安裝完成並登入後，為了讓 Agent 發揮最大戰力，我們需要調整幾個關鍵設定。請點擊左下角的齒輪圖示 <i class="fas fa-cog"></i> 進入
+                                        Settings。</p>
+
+                                    <h5 class="mt-4">1. Project Indexing (專案索引)</h5>
+                                    <p>這是 Antigravity 的「大腦」來源。Antigravity 會自動對您的專案進行索引，以便 Agent 理解程式碼結構。</p>
+                                    <ul>
+                                        <li>Antigravity 會在背景建立專案的語意索引 (Semantic Index)。</li>
+                                        <li>這讓 AI 不只做關鍵字搜尋，而是真正理解程式碼的依賴關係與邏輯。</li>
+                                        <li><strong>注意：</strong> 首次開啟大型專案時，索引可能需要幾分鐘，請耐心等待狀態列顯示就緒。</li>
+                                    </ul>
+                                    <img src="../images/antigravity_indexing_status.jpg"
+                                        alt="Indexing Status with green checkmark"
+                                        class="img-fluid border rounded shadow-sm">
+                                    <figcaption class="text-muted mt-2">圖 2: Indexing 完成後會顯示綠色勾勾</figcaption>
                                     </figure>
 
-                                    <h5 class="mt-4">2. Agent Manager (代理程式管理員)</h5>
-                                    <p>這就是 Antigravity 的靈魂所在。按下 <kbd>Cmd/Ctrl</kbd> + <kbd>E</kbd> (或點擊右上方的 Open Agent
-                                        Manager 按鈕) 進入此模式。這是一個以「任務 (Task)」為核心的控制台，介面採用高效的<strong>三欄式佈局 (Three-Column
-                                            Layout)</strong>：</p>
+                                    <h5 class="mt-4">2. 快速設定面板 (Quick Settings)</h5>
+                                    <p>點擊 IDE 右下角的狀態列或齒輪圖示，會彈出快速設定面板（如下圖）。這裡分為 <strong>Agent</strong> 與
+                                        <strong>Tab</strong>
+                                        兩大區塊：
+                                    </p>
+
+                                    <figure>
+                                        <img src="../images/antigravity_settings_panel.jpg"
+                                            alt="Antigravity Settings Panel" class="img-fluid border rounded shadow-sm">
+                                        <figcaption class="text-muted mt-2">圖 3: Antigravity 快速設定面板</figcaption>
+                                    </figure>
+
+                                    <h6 class="mt-3 text-primary"><i class="fas fa-robot me-2"></i>Agent 設定 (代理程式行為)
+                                    </h6>
+                                    <p>這區塊控制主要 Agent 的自主權與行為模式：</p>
                                     <ul>
-                                        <li><strong>左側：導覽面板 (Navigation)：</strong>
+                                        <li><strong>Agent Auto-Fix Lints (自動修復程式碼問題)：</strong>
                                             <ul>
-                                                <li><strong>Inbox：</strong> 查看所有歷史對話與任務。</li>
-                                                <li><strong>Workspaces：</strong> 管理您的專案工作區。</li>
-                                                <li><strong>Playground：</strong> 快速測試 Prompt 或進行非專案相關的對話。</li>
+                                                <li><code>On</code>：Agent 偵測到簡單的 Linter 錯誤（如縮排錯誤、未使用的變數）時，會自動嘗試修復。</li>
+                                                <li><code>Off</code>：關閉自動修復功能。</li>
                                             </ul>
                                         </li>
-                                        <li><strong>中間：主控台 (Task Stream)：</strong> Agent 執行任務的核心區域。
+                                        <li><strong>Auto Execution (自動執行指令)：</strong>
                                             <ul>
-                                                <li>顯示當前任務進度、執行的指令以及 Agent 的思考過程。</li>
-                                                <li>底部輸入框可隨時下達新指令或補充需求。</li>
+                                                <li><code>Always Continue</code>：Agent 可以自動執行終端機指令（如 <code>ls</code>,
+                                                    <code>npm install</code>），不需詢問。
+                                                </li>
+                                                <li><code>Request Review</code>：Agent 想執行指令前，必須先獲得您的批准。（預設推薦）</li>
                                             </ul>
                                         </li>
-                                        <li><strong>右側：上下文預覽 (Context Panel)：</strong>
+                                        <li><strong>Review Policy (實作計畫審查)：</strong>
                                             <ul>
-                                                <li>即時預覽 Agent 正在編輯的檔案內容、Diff 差異或 Markdown 渲染結果。</li>
-                                                <li>讓您在同一畫面就能完成「指令 -> 執行 -> 審核」的完整迴圈。</li>
+                                                <li><code>Always Continue</code>：Agent 產生的 Implementation Plan
+                                                    會直接執行，不等待審查。
+                                                </li>
+                                                <li><code>Request Review</code>：Agent 必須先提交計畫讓您看過，您點擊 "Approve" 後才會開始寫
+                                                    Code。
+                                                </li>
                                             </ul>
                                         </li>
                                     </ul>
+
+                                    <h6 class="mt-3 text-primary"><i class="fas fa-keyboard me-2"></i>Tab 設定 (智慧補全)</h6>
+                                    <p>這區塊控制編輯器中的 "Ghost Text" 自動補全體驗：</p>
+                                    <ul>
+                                        <li><strong>Tab Gitignore Access：</strong>
+                                            <ul>
+                                                <li><code>Off</code>：智慧補全模型<strong>不會</strong>讀取被 gitignore
+                                                    排除的檔案（保護敏感資料）。
+                                                </li>
+                                                <li><code>On</code>：允許讀取，能增加補全的上下文準確度，但需注意隱私。</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Tab Speed：</strong>
+                                            <ul>
+                                                <li><code>Fast</code>：使用較輕量的模型，延遲極低，適合快速打字。</li>
+                                                <li><code>Smart</code> (若有)：使用較強模型，補全品質較高但稍慢。</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Tab to Import：</strong>
+                                            <ul>
+                                                <li><code>On</code>：當補全建議使用了尚未 import 的套件時，按下 Tab 會自動幫您補上 import 語句。
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Tab to Jump：</strong>
+                                            <ul>
+                                                <li><code>On</code>：允許使用 Tab 鍵在建議的程式碼片段 placeholder 之間跳轉。</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+
+                                    <h5 class="mt-4">3. Custom Rules (自定義規則)</h5>
+                                    <p>Antigravity 允許您設定「規則」來引導 Agent 的行為。這就像是給您的 AI 助手一份「員工守則」。</p>
+                                    <p><strong>如何開啟設定：</strong> 點擊 Agent Manager 右上角的 <code>...</code> 選單，選擇
+                                        <strong>Customizations</strong>。
+                                    </p>
                                     <figure>
-                                        <img src="../images/antigravity_agent_manager_task_view.png"
-                                            alt="Agent Manager Dashboard" class="img-fluid border rounded shadow-sm">
-                                        <figcaption class="text-muted mt-2">圖 1: Agent Manager 三欄式介面 - 導覽、執行、審閱一目瞭然
+                                        <img src="../images/antigravity_rules_menu.png"
+                                            alt="Opening Customizations Menu" class="img-fluid border rounded shadow-sm"
+                                            style="max-width: 300px;">
+                                        <figcaption class="text-muted mt-2">圖 4-1: 透過選單進入 Customizations</figcaption>
+                                    </figure>
+                                    <ul>
+                                        <li><strong>Global Rules (全域規則)：</strong> 適用於所有專案。例如：「一律使用繁體中文回應」、「程式碼必須加上註解」。
+                                        </li>
+                                        <li><strong>Workspace Rules (工作區規則)：</strong> 僅適用於當前專案。例如：「在此專案中使用
+                                            TailwindCSS」、「依循
+                                            Google Java Style Guide」。</li>
+                                    </ul>
+                                    <figure>
+                                        <img src="../images/antigravity_rules_settings.jpg"
+                                            alt="Antigravity Rules Settings" class="img-fluid border rounded shadow-sm">
+                                        <figcaption class="text-muted mt-2">圖 4: 設定 Custom Rules 讓 Agent 更懂你的需求
                                         </figcaption>
                                     </figure>
 
-                                    <div class="mt-4 p-3 bg-light rounded border-start border-4 border-info">
-                                        <h6 class="text-info"><i class="fas fa-lightbulb me-2"></i>Agent Manager 實戰應用場景
-                                        </h6>
-                                        <p class="mb-2">根據官方建議，您可以這樣運用 Agent Manager：</p>
+                                    <h5 class="mt-4">4. MCP Store (擴充功能商店)</h5>
+                                    <p>想讓您的 Agent 能力更強大嗎？<strong>MCP (Model Context Protocol)</strong> 是 Antigravity
+                                        支援的一種開放標準，允許 Agent 連接外部工具與資料源。</p>
+                                    <p>點擊左側邊欄的 <strong>MCP Store</strong> 圖示，您可以一鍵安裝各類官方與社群開發的擴充功能，例如：</p>
+                                    <ul>
+                                        <li><strong>Cloud Run / Firebase：</strong> 讓 Agent 直接幫您部署應用程式。</li>
+                                        <li><strong>BigQuery / PostgreSQL：</strong> 讓 Agent 能查詢資料庫並進行分析。</li>
+                                        <li><strong>Linear / JIRA：</strong> 讓 Agent 讀取工單並更新狀態。</li>
+                                    </ul>
+                                    <figure>
+                                        <img src="../images/antigravity_mcp_store.png" alt="Antigravity MCP Store"
+                                            class="img-fluid border rounded shadow-sm" style="max-width: 400px;">
+                                        <figcaption class="text-muted mt-2">圖 4-2: MCP Store 充滿了無限可能</figcaption>
+                                    </figure>
+
+
+
+                                    <div class="step">
+                                        <h3><i class="fas fa-columns step-icon"></i>步驟四：認識雙介面 (Editor vs. Agent Manager)
+                                        </h3>
+                                        <p>Antigravity 最大的特色在於它擁有兩種核心檢視模式，分別對應不同的工作層級：</p>
+
+                                        <h5 class="mt-4">1. Editor View (編輯器視角)</h5>
+                                        <p>這是您熟悉的程式碼編輯介面，適合進行具體的程式碼修改與閱讀。在這邊，您可以像使用 VS Code 一樣操作檔案，但多了一個強大的 AI
+                                            側邊欄，隨時準備協助您修改當前檔案。</p>
+                                        <figure>
+                                            <img src="../images/antigravity_editor_view.jpg" alt="Editor View Interface"
+                                                class="img-fluid border rounded shadow-sm">
+                                            <figcaption class="text-muted mt-2">圖: Editor View 介面 (待補)</figcaption>
+                                        </figure>
+
+                                        <h5 class="mt-4">2. Agent Manager (代理程式管理員)</h5>
+                                        <p>這就是 Antigravity 的靈魂所在。按下 <kbd>Cmd/Ctrl</kbd> + <kbd>E</kbd> (或點擊右上方的 Open
+                                            Agent
+                                            Manager 按鈕) 進入此模式。這是一個以「任務 (Task)」為核心的控制台，介面採用高效的<strong>三欄式佈局 (Three-Column
+                                                Layout)</strong>：</p>
                                         <ul>
-                                            <li><strong>Playground (草稿區)：</strong>
-                                                <br>不確定問題如何描述？先在 Playground 與 Agent 聊聊。這裡像是一個沙盒，等到對話內容成熟後，可以一鍵
-                                                <strong>"Open Workspace"</strong> 將對話轉為正式專案任務，甚至直接生成檔案。
+                                            <li><strong>左側：導覽面板 (Navigation)：</strong>
+                                                <ul>
+                                                    <li><strong>Inbox：</strong> 查看所有歷史對話與任務。</li>
+                                                    <li><strong>Workspaces：</strong> 管理您的專案工作區。</li>
+                                                    <li><strong>Playground：</strong> 快速測試 Prompt 或進行非專案相關的對話。</li>
+                                                </ul>
                                             </li>
-                                            <li><strong>Editor Synergy (無縫協作)：</strong>
-                                                <br>雖然在 Agent Manager 可以看預覽，但您可以隨時點擊 <strong>"Open Editor"</strong>
-                                                切換回編輯器。
-                                                <br><em>進階技巧：</em> 在編輯器中，您可以直接在程式碼裡寫下註解或偽代碼 (Pseudo-code)，然後切回 Agent
-                                                Manager 告訴 Agent：「請實作我剛剛寫的註解」，Agent 會讀取檔案上下文並精準補完程式碼。
+                                            <li><strong>中間：主控台 (Task Stream)：</strong> Agent 執行任務的核心區域。
+                                                <ul>
+                                                    <li>顯示當前任務進度、執行的指令以及 Agent 的思考過程。</li>
+                                                    <li>底部輸入框可隨時下達新指令或補充需求。</li>
+                                                </ul>
                                             </li>
-                                            <li><strong>Browser Automation (瀏覽器自動化)：</strong>
-                                                <br>需要測試網頁嗎？直接在 Agent Manager 下令：「打開 localhost:8000 並嘗試登入」。
-                                                <br>Antigravity 會啟動專屬的 <strong>Browser
-                                                    Sub-agent</strong>，它能像人類一樣點擊按鈕、輸入文字、甚至截圖回報。這對於驗收測試 (Acceptance
-                                                Testing) 特別有用。請注意不要讓它打開不安全的網站，也不要讓它記憶並輸入您任何帳號密碼。
+                                            <li><strong>右側：上下文預覽 (Context Panel)：</strong>
+                                                <ul>
+                                                    <li>即時預覽 Agent 正在編輯的檔案內容、Diff 差異或 Markdown 渲染結果。</li>
+                                                    <li>讓您在同一畫面就能完成「指令 -> 執行 -> 審核」的完整迴圈。</li>
+                                                </ul>
                                             </li>
                                         </ul>
+                                        <figure>
+                                            <img src="../images/antigravity_agent_manager_task_view.png"
+                                                alt="Agent Manager Dashboard"
+                                                class="img-fluid border rounded shadow-sm">
+                                            <figcaption class="text-muted mt-2">圖 1: Agent Manager 三欄式介面 - 導覽、執行、審閱一目瞭然
+                                            </figcaption>
+                                        </figure>
+
+                                        <div class="mt-4 p-3 bg-light rounded border-start border-4 border-info">
+                                            <h6 class="text-info"><i class="fas fa-lightbulb me-2"></i>Agent Manager
+                                                實戰應用場景
+                                            </h6>
+                                            <p class="mb-2">根據官方建議，您可以這樣運用 Agent Manager：</p>
+                                            <ul>
+                                                <li><strong>Playground (草稿區)：</strong>
+                                                    <br>不確定問題如何描述？先在 Playground 與 Agent 聊聊。這裡像是一個沙盒，等到對話內容成熟後，可以一鍵
+                                                    <strong>"Open Workspace"</strong> 將對話轉為正式專案任務，甚至直接生成檔案。
+                                                </li>
+                                                <li><strong>Editor Synergy (無縫協作)：</strong>
+                                                    <br>雖然在 Agent Manager 可以看預覽，但您可以隨時點擊 <strong>"Open Editor"</strong>
+                                                    切換回編輯器。
+                                                    <br><em>進階技巧：</em> 在編輯器中，您可以直接在程式碼裡寫下註解或偽代碼 (Pseudo-code)，然後切回 Agent
+                                                    Manager 告訴 Agent：「請實作我剛剛寫的註解」，Agent 會讀取檔案上下文並精準補完程式碼。
+                                                </li>
+                                                <li><strong>Browser Automation (瀏覽器自動化)：</strong>
+                                                    <br>需要測試網頁嗎？直接在 Agent Manager 下令：「打開 localhost:8000 並嘗試登入」。
+                                                    <br>Antigravity 會啟動專屬的 <strong>Browser
+                                                        Sub-agent</strong>，它能像人類一樣點擊按鈕、輸入文字、甚至截圖回報。這對於驗收測試 (Acceptance
+                                                    Testing) 特別有用。請注意不要讓它打開不安全的網站，也不要讓它記憶並輸入您任何帳號密碼。
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="step">
-                                    <h3><i class="fas fa-play-circle step-icon"></i>步驟五：發布您的第一個任務</h3>
-                                    <p>讓我們來試試看 Agent 的能力。在 Agent Manager 中，點擊 <strong>"New Task"</strong>：</p>
-                                    <pre><code>任務：請幫我建立一個簡單的 Python "Hello World" 網頁伺服器，並寫一份 README 說明如何執行。</code></pre>
-                                    <p>您會看到 Agent 開始思考：</p>
-                                    <ol>
-                                        <li><strong>Planning：</strong> 它會生成一份計畫，列出需要建立 `server.py` 和 `README.md`。</li>
-                                        <li><strong>Approval：</strong> 您點擊 "Approve" 同意計畫。</li>
-                                        <li><strong>Execution：</strong> Agent 自動建立檔案並寫入程式碼。</li>
-                                        <li><strong>Verification：</strong> Agent 嘗試在終端機執行伺服器，確認沒有報錯。</li>
-                                    </ol>
-                                    <p>這就是 Agentic Workflow 的基本雛形，讓您能輕鬆地將任務委派給 AI。</p>
-                                    <p>請注意，Agent Manager 的功能還未完善，請勿在其中進行敏感操作，例如修改重要檔案或執行系統命令。</p>
-                                </div>
-                        </section>
+                                    <div class="step">
+                                        <h3><i class="fas fa-play-circle step-icon"></i>步驟五：發布您的第一個任務</h3>
+                                        <p>讓我們來試試看 Agent 的能力。在 Agent Manager 中，點擊 <strong>"New Task"</strong>：</p>
+                                        <pre><code>任務：請幫我建立一個簡單的 Python "Hello World" 網頁伺服器，並寫一份 README 說明如何執行。</code></pre>
+                                        <p>您會看到 Agent 開始思考：</p>
+                                        <ol>
+                                            <li><strong>Planning：</strong> 它會生成一份計畫，列出需要建立 `server.py` 和 `README.md`。
+                                            </li>
+                                            <li><strong>Approval：</strong> 您點擊 "Approve" 同意計畫。</li>
+                                            <li><strong>Execution：</strong> Agent 自動建立檔案並寫入程式碼。</li>
+                                            <li><strong>Verification：</strong> Agent 嘗試在終端機執行伺服器，確認沒有報錯。</li>
+                                        </ol>
+                                        <p>這就是 Agentic Workflow 的基本雛形，讓您能輕鬆地將任務委派給 AI。</p>
+                                        <p>請注意，Agent Manager 的功能還未完善，請勿在其中進行敏感操作，例如修改重要檔案或執行系統命令。</p>
+                                    </div>
+                            </section>
 
-                        <section class="mb-5">
-                            <h3><i class="fas fa-toolbox text-primary me-2"></i>內建能力：工具與技能 (Tools)</h3>
-                            <p>Antigravity 的強大之處在於它內建了多種 <strong>Tools (工具)</strong>。這讓
-                                Agent
-                                不再是封閉在聊天室裡的機器人，而是擁有「雙手」的工程師。</p>
+                            <section class="mb-5">
+                                <h3><i class="fas fa-toolbox text-primary me-2"></i>內建能力：工具與技能 (Tools)</h3>
+                                <p>Antigravity 的強大之處在於它內建了多種 <strong>Tools (工具)</strong>。這讓
+                                    Agent
+                                    不再是封閉在聊天室裡的機器人，而是擁有「雙手」的工程師。</p>
 
-                            <img src="../images/antigravity_builtin_mcps.png" alt="Built-in MCP Capabilities"
-                                class="img-fluid border rounded shadow-sm mb-4">
+                                <img src="../images/antigravity_builtin_mcps.png" alt="Built-in MCP Capabilities"
+                                    class="img-fluid border rounded shadow-sm mb-4">
 
-                            <p>以下是您最常會用到的內建工具：</p>
+                                <p>以下是您最常會用到的內建工具：</p>
 
-                            <div class="row g-4 mt-2">
-                                <div class="col-md-4">
-                                    <div class="card h-100 border-0 shadow-sm bg-light">
-                                        <div class="card-body text-center">
-                                            <i class="fas fa-globe fa-3x text-info mb-3"></i>
-                                            <h5 class="card-title">聯網搜尋 (Web Search)</h5>
-                                            <p class="card-text small text-muted">當遇到未知的錯誤或是新出的 Library，Agent 會自動上網
-                                                Google，閱讀 StackOverflow 或官方文件，找出最佳解法。</p>
+                                <div class="row g-4 mt-2">
+                                    <div class="col-md-4">
+                                        <div class="card h-100 border-0 shadow-sm bg-light">
+                                            <div class="card-body text-center">
+                                                <i class="fas fa-globe fa-3x text-info mb-3"></i>
+                                                <h5 class="card-title">聯網搜尋 (Web Search)</h5>
+                                                <p class="card-text small text-muted">當遇到未知的錯誤或是新出的 Library，Agent 會自動上網
+                                                    Google，閱讀 StackOverflow 或官方文件，找出最佳解法。</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card h-100 border-0 shadow-sm bg-light">
+                                            <div class="card-body text-center">
+                                                <i class="fas fa-file-code fa-3x text-warning mb-3"></i>
+                                                <h5 class="card-title">檔案操作 (File Ops)</h5>
+                                                <p class="card-text small text-muted">Agent 可以自由地瀏覽專案目錄
+                                                    (<code>list_dir</code>)、讀取檔案內容 (<code>view_file</code>)，甚至進行跨檔案的重構
+                                                    (<code>replace_file_content</code>)。</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card h-100 border-0 shadow-sm bg-light">
+                                            <div class="card-body text-center">
+                                                <i class="fas fa-terminal fa-3x text-danger mb-3"></i>
+                                                <h5 class="card-title">終端機控制 (Terminal)</h5>
+                                                <p class="card-text small text-muted">安裝套件
+                                                    (<code>npm install</code>)、執行測試
+                                                    (<code>pytest</code>)、或是部署應用程式。Agent 能像您一樣操作 Shell。</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="alert alert-secondary mt-4">
+                                    <i class="fas fa-lightbulb me-2"></i><strong>Tips:</strong> 您不需要記住指令。只要說「幫我安裝
+                                    Flask」或「查一下這個 error」，Agent 就會自動選擇對應的工具。
+                                </div>
+                            </section>
+
+                            <section id="environment-setup" class="mb-5">
+                                <h3><i class="fas fa-sliders-h text-primary me-2"></i>核心觀念：模式與模型</h3>
+                                <p>在開始之前，您需要了解 IDE 介面上的兩個關鍵開關，這決定了您的 AI 副駕駛會如何工作。</p>
+
+                                <h5 class="mt-4"><i class="fas fa-toggle-on text-success me-2"></i>1. 操作模式切換 (Mode
+                                    Switching)</h5>
+                                <p>Antigravity 提供了兩種互動模式，您可以在代理程式側邊面板中進行切換：</p>
+                                <ul>
+                                    <li><strong>Fast Mode (快速模式 / Chat)</strong>：
+                                        <ul>
+                                            <li>類似 ChatGPT 的問答體驗。</li>
+                                            <li><strong>適用時機</strong>：詢問語法、解釋程式碼、或進行簡單的一問一答。</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Planning Mode (規劃模式 / Agentic)</strong>：
+                                        <ul>
+                                            <li>這是 Antigravity 的靈魂。AI 不會直接寫 Code，而是先產出一份
+                                                <code>implementation_plan.md</code>。
+                                            </li>
+                                            <li><strong>PM 必用</strong>：這就像是您請工程師寫 Code 前，要求他先提「規劃書」。您可以在這階段審核邏輯，同意後 AI
+                                                才會開始執行。</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+
+
+                                <h5 class="mt-4"><i class="fas fa-microchip text-danger me-2"></i>2. 模型選擇 (Model
+                                    Selection)
+                                </h5>
+                                <p>在 Agent 聊天輸入框的右下方，您可以自由切換 AI 大腦。Antigravity 內建了多種頂尖模型：</p>
+                                <ul>
+                                    <li><strong>Google Gemini 3 系列：</strong>
+                                        <ul>
+                                            <li><code>Gemini 3 Pro</code>：推理能力最強，適合複雜的架構規劃與 Refactoring。</li>
+                                            <li><code>Gemini 3 Flash</code>：速度極快，適合簡單的 Bug Fix 或解釋程式碼。</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Claude Sonnet / Opus：</strong> 複雜任務(研究、重構程式、Code Review) 的首選，但 Opus 燒
+                                        Token
+                                        的速度也是一流。</li>
+                                    <li><strong>Open Source Models (如 GPT-OSS 120B)：</strong> 目前額度跟 Claude 共享，因此幾乎沒機會用到。
+                                    </li>
+                                </ul>
+
+                                <figure>
+                                    <img src="../images/antigravity_model_selection.png" alt="Model Selection Menu"
+                                        class="img-fluid border rounded shadow-sm" style="max-width: 300px;">
+                                    <figcaption class="text-muted mt-2">圖 4: 支援多模型切換，適應不同任務需求</figcaption>
+                                </figure>
+                            </section>
+                            </section>
+                        </div>
+
+                        <div class="mt-4 p-4 bg-white border border-info rounded shadow-sm mb-5">
+                            <h5 class="text-info border-bottom pb-2 mb-3"><i class="fas fa-bullhorn me-2"></i> ✨ Latest
+                                Updates (Changelog)</h5>
+                            <p class="mb-2">Google Antigravity 持續進化中，以下是近期重大更新摘要 (Updated: 2026/01)：</p>
+                            <div class="row">
                                 <div class="col-md-4">
-                                    <div class="card h-100 border-0 shadow-sm bg-light">
-                                        <div class="card-body text-center">
-                                            <i class="fas fa-file-code fa-3x text-warning mb-3"></i>
-                                            <h5 class="card-title">檔案操作 (File Ops)</h5>
-                                            <p class="card-text small text-muted">Agent 可以自由地瀏覽專案目錄
-                                                (<code>list_dir</code>)、讀取檔案內容 (<code>view_file</code>)，甚至進行跨檔案的重構
-                                                (<code>replace_file_content</code>)。</p>
-                                        </div>
-                                    </div>
+                                    <h6 class="fw-bold"><i class="fas fa-flag-checkered text-warning me-1"></i> Public
+                                        Preview</h6>
+                                    <p class="small text-muted mb-1">2025/11/20 正式啟動</p>
+                                    <p class="small">開啟 Agent-First IDE 時代，整合編輯器與 Agent Manager。</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="card h-100 border-0 shadow-sm bg-light">
-                                        <div class="card-body text-center">
-                                            <i class="fas fa-terminal fa-3x text-danger mb-3"></i>
-                                            <h5 class="card-title">終端機控制 (Terminal)</h5>
-                                            <p class="card-text small text-muted">安裝套件 (<code>npm install</code>)、執行測試
-                                                (<code>pytest</code>)、或是部署應用程式。Agent 能像您一樣操作 Shell。</p>
-                                        </div>
-                                    </div>
+                                    <h6 class="fw-bold"><i class="fas fa-shield-alt text-success me-1"></i> Core
+                                        Features
+                                    </h6>
+                                    <p class="small">新增 <strong>Agent Skills</strong> (自定義技能)、<strong>Secure
+                                            Mode</strong>
+                                        (安全執行模式) 與 Knowledge Management。</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <h6 class="fw-bold"><i class="fas fa-microchip text-primary me-1"></i> Model Support
+                                    </h6>
+                                    <p class="small">全面支援 <strong>Gemini 3 Pro</strong> (Free during
+                                        preview)、<strong>Claude
+                                            Sonnet 3.5/4.5</strong> 及 OpenAI GPT-OSS。</p>
                                 </div>
                             </div>
-
-                            <div class="alert alert-secondary mt-4">
-                                <i class="fas fa-lightbulb me-2"></i><strong>Tips:</strong> 您不需要記住指令。只要說「幫我安裝
-                                Flask」或「查一下這個 error」，Agent 就會自動選擇對應的工具。
-                            </div>
-                        </section>
-
-                        <section id="environment-setup" class="mb-5">
-                            <h3><i class="fas fa-sliders-h text-primary me-2"></i>核心觀念：模式與模型</h3>
-                            <p>在開始之前，您需要了解 IDE 介面上的兩個關鍵開關，這決定了您的 AI 副駕駛會如何工作。</p>
-
-                            <h5 class="mt-4"><i class="fas fa-toggle-on text-success me-2"></i>1. 操作模式切換 (Mode
-                                Switching)</h5>
-                            <p>Antigravity 提供了兩種互動模式，您可以在代理程式側邊面板中進行切換：</p>
-                            <ul>
-                                <li><strong>Fast Mode (快速模式 / Chat)</strong>：
-                                    <ul>
-                                        <li>類似 ChatGPT 的問答體驗。</li>
-                                        <li><strong>適用時機</strong>：詢問語法、解釋程式碼、或進行簡單的一問一答。</li>
-                                    </ul>
-                                </li>
-                                <li><strong>Planning Mode (規劃模式 / Agentic)</strong>：
-                                    <ul>
-                                        <li>這是 Antigravity 的靈魂。AI 不會直接寫 Code，而是先產出一份
-                                            <code>implementation_plan.md</code>。
-                                        </li>
-                                        <li><strong>PM 必用</strong>：這就像是您請工程師寫 Code 前，要求他先提「規劃書」。您可以在這階段審核邏輯，同意後 AI
-                                            才會開始執行。</li>
-                                    </ul>
-                                </li>
-                            </ul>
-
-
-                            <h5 class="mt-4"><i class="fas fa-microchip text-danger me-2"></i>2. 模型選擇 (Model Selection)
-                            </h5>
-                            <p>在 Agent 聊天輸入框的右下方，您可以自由切換 AI 大腦。Antigravity 內建了多種頂尖模型：</p>
-                            <ul>
-                                <li><strong>Google Gemini 3 系列：</strong>
-                                    <ul>
-                                        <li><code>Gemini 3 Pro</code>：推理能力最強，適合複雜的架構規劃與 Refactoring。</li>
-                                        <li><code>Gemini 3 Flash</code>：速度極快，適合簡單的 Bug Fix 或解釋程式碼。</li>
-                                    </ul>
-                                </li>
-                                <li><strong>Claude Sonnet / Opus：</strong> 複雜任務(研究、重構程式、Code Review) 的首選，但 Opus 燒 Token
-                                    的速度也是一流。</li>
-                                <li><strong>Open Source Models (如 GPT-OSS 120B)：</strong> 目前額度跟 Claude 共享，因此幾乎沒機會用到。
-                                </li>
-                            </ul>
-
-                            <figure>
-                                <img src="../images/antigravity_model_selection.png" alt="Model Selection Menu"
-                                    class="img-fluid border rounded shadow-sm" style="max-width: 300px;">
-                                <figcaption class="text-muted mt-2">圖 4: 支援多模型切換，適應不同任務需求</figcaption>
-                            </figure>
-                        </section>
-                        </section>
-                    </div>
-
-                    <div class="mt-4 p-4 bg-white border border-info rounded shadow-sm mb-5">
-                        <h5 class="text-info border-bottom pb-2 mb-3"><i class="fas fa-bullhorn me-2"></i> ✨ Latest
-                            Updates (Changelog)</h5>
-                        <p class="mb-2">Google Antigravity 持續進化中，以下是近期重大更新摘要 (Updated: 2026/01)：</p>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <h6 class="fw-bold"><i class="fas fa-flag-checkered text-warning me-1"></i> Public
-                                    Preview</h6>
-                                <p class="small text-muted mb-1">2025/11/20 正式啟動</p>
-                                <p class="small">開啟 Agent-First IDE 時代，整合編輯器與 Agent Manager。</p>
-                            </div>
-                            <div class="col-md-4">
-                                <h6 class="fw-bold"><i class="fas fa-shield-alt text-success me-1"></i> Core Features
-                                </h6>
-                                <p class="small">新增 <strong>Agent Skills</strong> (自定義技能)、<strong>Secure Mode</strong>
-                                    (安全執行模式) 與 Knowledge Management。</p>
-                            </div>
-                            <div class="col-md-4">
-                                <h6 class="fw-bold"><i class="fas fa-microchip text-primary me-1"></i> Model Support
-                                </h6>
-                                <p class="small">全面支援 <strong>Gemini 3 Pro</strong> (Free during preview)、<strong>Claude
-                                        Sonnet 3.5/4.5</strong> 及 OpenAI GPT-OSS。</p>
+                            <div class="mt-2 text-end">
+                                <a href="https://antigravity.google/changelog" target="_blank"
+                                    class="btn btn-sm btn-outline-info">
+                                    查看完整官方 Changelog <i class="fas fa-external-link-alt ms-1"></i>
+                                </a>
                             </div>
                         </div>
-                        <div class="mt-2 text-end">
-                            <a href="https://antigravity.google/changelog" target="_blank"
-                                class="btn btn-sm btn-outline-info">
-                                查看完整官方 Changelog <i class="fas fa-external-link-alt ms-1"></i>
-                            </a>
+
+                        <div class="tutorial-summary">
+                            <h4>本章總結</h4>
+                            <p>在本篇教學中，我們完成了：</p>
+                            <ul>
+                                <li>Google Antigravity IDE 的安裝與帳號登入。</li>
+                                <li>理解 Editor View 與 Agent Manager 的區別。</li>
+                                <li>成功指派並執行了第一個 AI 任務。</li>
+                            </ul>
+                            <p>但是，Agent 的能力遠不止於此。在下一篇教學中，我們將深入探討 <strong>Agent Skills</strong>，學習如何透過自定義技能，讓 Agent
+                                學會使用您的專屬工具與 API。</p>
+                            <p class="text-end"><a href="antigravity-tutorial-2.html"
+                                    class="btn btn-outline-primary">下一篇：Agent Skills 實戰 - 從概念到進階應用 <i
+                                        class="fas fa-arrow-right ms-2"></i></a></p>
                         </div>
-                    </div>
+                    </article>
 
-                    <div class="tutorial-summary">
-                        <h4>本章總結</h4>
-                        <p>在本篇教學中，我們完成了：</p>
-                        <ul>
-                            <li>Google Antigravity IDE 的安裝與帳號登入。</li>
-                            <li>理解 Editor View 與 Agent Manager 的區別。</li>
-                            <li>成功指派並執行了第一個 AI 任務。</li>
-                        </ul>
-                        <p>但是，Agent 的能力遠不止於此。在下一篇教學中，我們將深入探討 <strong>Agent Skills</strong>，學習如何透過自定義技能，讓 Agent
-                            學會使用您的專屬工具與 API。</p>
-                        <p class="text-end"><a href="antigravity-tutorial-2.html"
-                                class="btn btn-outline-primary">下一篇：Agent Skills 實戰 - 從概念到進階應用 <i
-                                    class="fas fa-arrow-right ms-2"></i></a></p>
+                    <div class="mt-5 text-center">
+                        <a href="../tutorials.html#antigravity-series" class="btn btn-primary btn-lg"><i
+                                class="fas fa-list me-2"></i>返回 教學列表</a>
                     </div>
-                </article>
-
-                <div class="mt-5 text-center">
-                    <a href="../tutorials.html#antigravity-series" class="btn btn-primary btn-lg"><i
-                            class="fas fa-list me-2"></i>返回 教學列表</a>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
 
-    <footer class="bg-light mt-5 py-3">
-        <div class="container text-center">
-            <p>&copy; 2026 侯俊嘉(Luke Hou). All rights reserved.</p>
-        </div>
-    </footer>
+        <footer class="bg-light mt-5 py-3">
+            <div class="container text-center">
+                <p>&copy; 2026 侯俊嘉(Luke Hou). All rights reserved.</p>
+            </div>
+        </footer>
+    </div> <!-- End of #content-wrapper -->
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>
+
+    <!-- Sniper Scope Container -->
+    <div id="sniper-scope">
+        <div class="crosshair-h"></div>
+        <div class="crosshair-v"></div>
+    </div>
+
+    <!-- Magnified Layer Container -->
+    <div id="magnified-layer"></div>
+
+    <!-- Sniper Scope Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const scope = document.getElementById('sniper-scope');
+            const wrapper = document.getElementById('content-wrapper');
+            const magnifiedLayer = document.getElementById('magnified-layer');
+            let isSniping = false;
+
+            // Clone content for magnification
+            // We do this once on load. Dynamic updates won't be reflected without re-cloning.
+            const clonedContent = wrapper.cloneNode(true);
+            clonedContent.id = ''; // Remove ID to avoid duplicates
+            clonedContent.classList.add('cloned-content');
+            // FIX: Force the cloned content to have the exact same width as the original
+            // to prevent text reflow differences due to scrollbars or absolute positioning context.
+            clonedContent.style.width = wrapper.offsetWidth + 'px';
+            magnifiedLayer.appendChild(clonedContent);
+
+            // Track mouse movement
+            document.addEventListener('mousemove', (e) => {
+                if (isSniping) {
+                    // Coordinates relative to viewport for fixed scope/clip-path? 
+                    // Wait, our wrapper is normal flow. 
+                    // If we use fixed overlay for scope, mouse clientX/Y is correct.
+                    // But for the magnified layer (absolute), we need to consider scroll if it's absolute.
+                    // Actually, if visual viewport matches, clientX/Y is fine for clip-path fixed?
+                    // CSS clip-path on absolute element uses coordinates relative to that element.
+                    // If magnified-layer is top:0 left:0 width:100% height:100% (of document), 
+                    // then we need pageX/pageY for the clip-path center!
+
+                    // However, the scope is fixed position (screen coordinates).
+                    // The lens needs to match the scope.
+                    // If the user scrolls, the scope stays on screen. The lens should too?
+                    // NO. The user asks for a "Sniper Scope". Usually you move the scope over the document.
+                    // If I scroll, the scope might stay fixed or scroll with me?
+                    // Our #sniper-scope is "position: fixed". So it stays on screen.
+                    // So the Magnified Layer must conceptually be "fixed" too?
+                    // BUT inside it, we see the document magnified.
+
+                    // Let's settle on: Scope follows mouse on SCREEN.
+                    // Magnified view shows content at that SCREEN position.
+
+                    // If #magnified-layer is absolute (covering document), it scrolls with document.
+                    // Then e.pageX is correct for positioning the clip-circle on the layer.
+
+                    scope.style.setProperty('--mouse-x', e.clientX + 'px'); // Scope is fixed
+                    scope.style.setProperty('--mouse-y', e.clientY + 'px');
+
+                    magnifiedLayer.style.setProperty('--mouse-x', e.pageX + 'px'); // Layer is absolute
+                    magnifiedLayer.style.setProperty('--mouse-y', e.pageY + 'px');
+                }
+            });
+
+            let suppressMenu = false;
+
+            // Listen for window resize to update cloned content width
+            window.addEventListener('resize', () => {
+                clonedContent.style.width = wrapper.offsetWidth + 'px';
+            });
+
+            // Activate on Right Click Hold
+            document.addEventListener('mousedown', (e) => {
+                if (e.button === 2) { // Right click
+                    isSniping = true;
+                    suppressMenu = true;
+                    scope.classList.add('active');
+                    magnifiedLayer.classList.add('active');
+                    document.body.style.cursor = 'none';
+
+                    // Initial update
+                    scope.style.setProperty('--mouse-x', e.clientX + 'px');
+                    scope.style.setProperty('--mouse-y', e.clientY + 'px');
+                    magnifiedLayer.style.setProperty('--mouse-x', e.pageX + 'px');
+                    magnifiedLayer.style.setProperty('--mouse-y', e.pageY + 'px');
+                }
+            });
+
+            // Deactivate on Mouse Up
+            document.addEventListener('mouseup', (e) => {
+                if (e.button === 2) {
+                    isSniping = false;
+                    scope.classList.remove('active');
+                    magnifiedLayer.classList.remove('active');
+                    document.body.style.cursor = '';
+
+                    setTimeout(() => {
+                        suppressMenu = false;
+                    }, 100);
+                }
+            });
+
+            // Prevent Context Menu
+            document.addEventListener('contextmenu', (e) => {
+                if (suppressMenu) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

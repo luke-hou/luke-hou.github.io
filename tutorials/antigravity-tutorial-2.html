@@ -93,143 +93,235 @@
             border-color: #d6d8db;
             color: #383d41;
         }
+
+        /* Sniper Scope Effect */
+        #sniper-scope {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            /* Let clicks pass through */
+            z-index: 9999;
+            display: none;
+            /* Use CSS variables for mouse position */
+            --mouse-x: 50%;
+            --mouse-y: 50%;
+        }
+
+        #sniper-scope.active {
+            display: block;
+            cursor: none;
+            /* Hide default cursor when active */
+        }
+
+        /* Scope overlay (darkening) */
+        #sniper-scope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle 190px at var(--mouse-x) var(--mouse-y),
+                    transparent 180px,
+                    rgba(0, 0, 0, 0.4) 200px,
+                    rgba(0, 0, 0, 0.8) 100%);
+        }
+
+        /* Crosshairs - Horizontal */
+        #sniper-scope .crosshair-h {
+            position: absolute;
+            top: var(--mouse-y);
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 0, 0, 0.5);
+        }
+
+        /* Crosshairs - Vertical */
+        #sniper-scope .crosshair-v {
+            position: absolute;
+            left: var(--mouse-x);
+            top: 0;
+            height: 100%;
+            width: 1px;
+            background: rgba(255, 0, 0, 0.5);
+        }
+
+        /* Magnified Layer (The Lens Content) */
+        #magnified-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            /* height: 100%; REMOVED to allow layer to grow with content (document height) */
+            min-height: 100vh;
+            /* Ensure it covers at least viewport */
+            pointer-events: none;
+            z-index: 9998;
+            /* Below scope overlay (9999), above content */
+            opacity: 0;
+            overflow: hidden;
+            /* Clip the layer to the scope circle */
+            clip-path: circle(190px at var(--mouse-x) var(--mouse-y));
+            -webkit-clip-path: circle(190px at var(--mouse-x) var(--mouse-y));
+        }
+
+        #magnified-layer.active {
+            opacity: 1;
+        }
+
+        #magnified-layer .cloned-content {
+            transform: scale(2);
+            transform-origin: var(--mouse-x) var(--mouse-y);
+            width: 100%;
+            /* Ensure height matches if needed, but usually block flow handles it */
+        }
     </style>
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container">
-                <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <main class="container mt-5">
-        <div class="row">
-            <div class="col-lg-10 mx-auto">
-                <article class="blog-post">
-                    <h1 class="mb-3 display-5 border-bottom pb-3">Google Antigravity IDE 教學 (二)：Agent Skills 實戰 -
-                        從概念到進階應用
-                    </h1>
-                    <p class="text-muted mb-4">發布日期：2026年1月</p>
-
-                    <div class="tutorial-intro">
-                        <h4>如何讓 Agent 更聰明？</h4>
-                        <p>在上一篇教學中，我們見識了 Agent 執行基本任務的能力。但如果 Agent 遇到它不懂的領域怎麼辦？例如：它不知道你們公司的部署流程，也不知道如何查詢內部資料庫。</p>
-                        <p>這時候，我們就需要使用 <strong>Agent Skills</strong> 來教會它。</p>
+    <div id="content-wrapper">
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container">
+                    <a class="navbar-brand" href="https://www.luke.ninja">Luke Hou 侯俊嘉個人網站</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                            <li class="nav-item"><a class="nav-link" href="../tutorials.html">教學</a></li>
+                            <li class="nav-item"><a class="nav-link" href="../portfolio.html">作品</a></li>
+                            <li class="nav-item"><a class="nav-link" href="../blog.html">分享</a></li>
+                        </ul>
                     </div>
+                </div>
+            </nav>
+        </header>
 
-                    <div class="tutorial-content">
-                        <section class="step-by-step">
-                            <div class="step">
-                                <h3><i class="fas fa-brain step-icon"></i>概念：什麼是 Agent Skill？</h3>
-                                <p>Agent Skill 本質上是一份「操作手冊 SOP」，讓 AI 在遇到特定問題或情境時，能夠自動感知並知道該如何處理。</p>
+        <main class="container mt-5">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <article class="blog-post">
+                        <h1 class="mb-3 display-5 border-bottom pb-3">Google Antigravity IDE 教學 (二)：Agent Skills 實戰 -
+                            從概念到進階應用
+                        </h1>
+                        <p class="text-muted mb-4">發布日期：2026年1月</p>
 
-                                <h4 class="mt-4">2. Agent Skills 如何運作？— Antigravity 環境下的協作模式</h4>
-                                <p>要讓這些強大的 Skills 發揮作用，我們需要一個舞台，這個舞台就是 <strong>Antigravity</strong>。它是一個免費 Agentic
-                                    IDE，你可以把它想像成一個專為 AI 互動設計的超級整合開發工具，是所有
-                                    Agent Skills 運作的家。</p>
+                        <div class="tutorial-intro">
+                            <h4>如何讓 Agent 更聰明？</h4>
+                            <p>在上一篇教學中，我們見識了 Agent 執行基本任務的能力。但如果 Agent 遇到它不懂的領域怎麼辦？例如：它不知道你們公司的部署流程，也不知道如何查詢內部資料庫。</p>
+                            <p>這時候，我們就需要使用 <strong>Agent Skills</strong> 來教會它。</p>
+                        </div>
 
-                                <h5 class="mt-4">剖析 Skill 的結構</h5>
-                                <p>每個 Skill 的核心都是一個名為 <code>SKILL.md</code> 的文件。這個文件像是一份標準化的「技能說明書」，其內部結構被巧妙地分成了三層，讓 AI
-                                    能夠清晰地理解和執行。</p>
+                        <div class="tutorial-content">
+                            <section class="step-by-step">
+                                <div class="step">
+                                    <h3><i class="fas fa-brain step-icon"></i>概念：什麼是 Agent Skill？</h3>
+                                    <p>Agent Skill 本質上是一份「操作手冊 SOP」，讓 AI 在遇到特定問題或情境時，能夠自動感知並知道該如何處理。</p>
 
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">層級</th>
-                                                <th scope="col">名稱</th>
-                                                <th scope="col">核心作用</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>第一層</td>
-                                                <td>元數據層 (Metadata Layer)</td>
-                                                <td>包含技能的「名稱」和「簡短描述」。這是 AI 用來快速判斷是否需要啟用此技能的<strong>「JD」</strong>。</td>
-                                            </tr>
-                                            <tr>
-                                                <td>第二層</td>
-                                                <td>指令層 (Instruction Layer)</td>
-                                                <td>包含給 AI 的具體指令和提示詞（Prompt），是技能執行的<strong>「大腦」</strong>，也是必不可少的部分。</td>
-                                            </tr>
-                                            <tr>
-                                                <td>第三層</td>
-                                                <td>資源層 (Resource Layer)</td>
-                                                <td>(可選) 存放執行任務所需的額外文件，如程式腳本（Scripts）、參考文檔或圖片等資源。</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <h4 class="mt-4">2. Agent Skills 如何運作？— Antigravity 環境下的協作模式</h4>
+                                    <p>要讓這些強大的 Skills 發揮作用，我們需要一個舞台，這個舞台就是 <strong>Antigravity</strong>。它是一個免費 Agentic
+                                        IDE，你可以把它想像成一個專為 AI 互動設計的超級整合開發工具，是所有
+                                        Agent Skills 運作的家。</p>
+
+                                    <h5 class="mt-4">剖析 Skill 的結構</h5>
+                                    <p>每個 Skill 的核心都是一個名為 <code>SKILL.md</code> 的文件。這個文件像是一份標準化的「技能說明書」，其內部結構被巧妙地分成了三層，讓
+                                        AI
+                                        能夠清晰地理解和執行。</p>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">層級</th>
+                                                    <th scope="col">名稱</th>
+                                                    <th scope="col">核心作用</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>第一層</td>
+                                                    <td>元數據層 (Metadata Layer)</td>
+                                                    <td>包含技能的「名稱」和「簡短描述」。這是 AI 用來快速判斷是否需要啟用此技能的<strong>「JD」</strong>。
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>第二層</td>
+                                                    <td>指令層 (Instruction Layer)</td>
+                                                    <td>包含給 AI 的具體指令和提示詞（Prompt），是技能執行的<strong>「大腦」</strong>，也是必不可少的部分。
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>第三層</td>
+                                                    <td>資源層 (Resource Layer)</td>
+                                                    <td>(可選) 存放執行任務所需的額外文件，如程式腳本（Scripts）、參考文檔或圖片等資源。</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <p>正是這種「JD（元數據）- 大腦（指令）- 公事包（資源）」的標準化結構，才讓 Antigravity 能夠在接下來的運作流程中實現高效的技能調用。</p>
+
+                                    <figure>
+                                        <img src="../images/skill_structure.jpg" alt="結構示意圖"
+                                            class="img-fluid border rounded shadow-sm">
+                                        <figcaption class="text-muted mt-2">圖: Skill 的結構示意圖</figcaption>
+                                    </figure>
+
+                                    <h5 class="mt-4">解釋運作流程</h5>
+                                    <p>當你在 Antigravity 中與 AI 互動時，Agent Skills 的運作流程如下：</p>
+                                    <ol>
+                                        <li><strong>使用者下達指令</strong>：你用自然語言輸入一個指令，例如：「幫我整理一下下載文件夾」。</li>
+                                        <li><strong>Antigravity 理解意圖</strong>：Antigravity 內建的 AI 模型會分析你的需求，理解你想要「整理文件」。
+                                        </li>
+                                        <li><strong>匹配並調用 Skill</strong>：Antigravity 會快速掃描所有已安裝的 Agent Skills
+                                            的「JD」（元數據層），找到描述最匹配「文件整理」的那個 Skill。一旦找到，它就會加載並執行該 Skill
+                                            的「大腦」（指令層），從而完成自動整理文件的任務。</li>
+                                    </ol>
+
+                                    <h4 class="mt-4">3. 為什麼「按需加載」是個聰明的設計？— 輕巧又高效的秘密</h4>
+                                    <p>「按需加載」（On-Demand Loading）是 Agent Skills 背後一個極其優雅且高效的設計哲學。</p>
+                                    <p>我們可以將它比喻成一位聰明的秘書。當你需要某方面的資料時，他不會把整個厚厚的資料夾都搬到你面前，而是先理解你的需求（元數據），然後<strong>精準地找出你需要的那一份資料（具體指令）</strong>遞給你(LLM)，讓你快速準確地完成任務。
+                                    </p>
+
+                                    <p>這個機制的運作過程非常清晰：</p>
+                                    <ol>
+                                        <li><strong>第一步：快速掃描</strong><br>當使用者提出請求時，Antigravity 不會去讀取所有 Skills
+                                            的完整內容（那樣會非常沒效率）。它只會快速掃描所有 <code>SKILL.md</code>
+                                            文件中的元數據層（即技能的名稱和簡短描述），從而找到最合適的 Skill。這個過程極其輕量，幾乎不消耗資源。</li>
+                                        <li><strong>第二步：精準加載</strong><br>只有當某個 Skill 的元數據與使用者的需求高度相關時，Antigravity
+                                            才會去加載其詳細的指令層。不相關的 Skills 則完全不會被觸發，靜靜地待在文件夾中。</li>
+                                        <li><strong>第三步：執行技能</strong><br>當 Antigravity 找到最合適的 Skill 後，它會執行該 Skill 的
+                                            指令層，從而完成任務。</li>
+                                    </ol>
+
+                                    <p>這種設計帶來了幾個顯著的核心優勢：</p>
+                                    <ul>
+                                        <li><strong>高效</strong>：避免了在每次對話中加載所有 Skills 的完整指令，極大地減少了系統的負擔，確保了快速的響應速度。</li>
+                                        <li><strong>智能</strong>：讓 AI 能夠在擁有海量技能庫的情況下，依然能準確、快速地找到並使用最合適的工具來解決問題。</li>
+                                        <li><strong>省錢</strong>：Token 就是金錢，按需加載可以有效減少不必要的 Token 使用，從而節省成本。</li>
+                                        <li><strong>純淨</strong>：避免資訊過載，影響 LLM 的注意力跟思考品質。</li>
+                                    </ul>
+
+                                    <div class="alert alert-skill" role="alert">
+                                        <i class="fas fa-lightbulb me-2"></i><strong>總結：</strong>
+                                        這種智能的調用方式，避免了不必要的資源浪費，讓 AI
+                                        即使在擁有海量技能庫的情況下，依然能準確、快速地找到最合適的工具，這正是讓 AI 變得『更懂人話』的秘密所在。
+                                    </div>
                                 </div>
 
-                                <p>正是這種「JD（元數據）- 大腦（指令）- 公事包（資源）」的標準化結構，才讓 Antigravity 能夠在接下來的運作流程中實現高效的技能調用。</p>
-
-                                <figure>
-                                    <img src="../images/skill_structure.jpg" alt="結構示意圖"
-                                        class="img-fluid border rounded shadow-sm">
-                                    <figcaption class="text-muted mt-2">圖: Skill 的結構示意圖</figcaption>
-                                </figure>
-
-                                <h5 class="mt-4">解釋運作流程</h5>
-                                <p>當你在 Antigravity 中與 AI 互動時，Agent Skills 的運作流程如下：</p>
-                                <ol>
-                                    <li><strong>使用者下達指令</strong>：你用自然語言輸入一個指令，例如：「幫我整理一下下載文件夾」。</li>
-                                    <li><strong>Antigravity 理解意圖</strong>：Antigravity 內建的 AI 模型會分析你的需求，理解你想要「整理文件」。</li>
-                                    <li><strong>匹配並調用 Skill</strong>：Antigravity 會快速掃描所有已安裝的 Agent Skills
-                                        的「JD」（元數據層），找到描述最匹配「文件整理」的那個 Skill。一旦找到，它就會加載並執行該 Skill
-                                        的「大腦」（指令層），從而完成自動整理文件的任務。</li>
-                                </ol>
-
-                                <h4 class="mt-4">3. 為什麼「按需加載」是個聰明的設計？— 輕巧又高效的秘密</h4>
-                                <p>「按需加載」（On-Demand Loading）是 Agent Skills 背後一個極其優雅且高效的設計哲學。</p>
-                                <p>我們可以將它比喻成一位聰明的秘書。當你需要某方面的資料時，他不會把整個厚厚的資料夾都搬到你面前，而是先理解你的需求（元數據），然後<strong>精準地找出你需要的那一份資料（具體指令）</strong>遞給你(LLM)，讓你快速準確地完成任務。
-                                </p>
-
-                                <p>這個機制的運作過程非常清晰：</p>
-                                <ol>
-                                    <li><strong>第一步：快速掃描</strong><br>當使用者提出請求時，Antigravity 不會去讀取所有 Skills
-                                        的完整內容（那樣會非常沒效率）。它只會快速掃描所有 <code>SKILL.md</code>
-                                        文件中的元數據層（即技能的名稱和簡短描述），從而找到最合適的 Skill。這個過程極其輕量，幾乎不消耗資源。</li>
-                                    <li><strong>第二步：精準加載</strong><br>只有當某個 Skill 的元數據與使用者的需求高度相關時，Antigravity
-                                        才會去加載其詳細的指令層。不相關的 Skills 則完全不會被觸發，靜靜地待在文件夾中。</li>
-                                    <li><strong>第三步：執行技能</strong><br>當 Antigravity 找到最合適的 Skill 後，它會執行該 Skill 的
-                                        指令層，從而完成任務。</li>
-                                </ol>
-
-                                <p>這種設計帶來了幾個顯著的核心優勢：</p>
-                                <ul>
-                                    <li><strong>高效</strong>：避免了在每次對話中加載所有 Skills 的完整指令，極大地減少了系統的負擔，確保了快速的響應速度。</li>
-                                    <li><strong>智能</strong>：讓 AI 能夠在擁有海量技能庫的情況下，依然能準確、快速地找到並使用最合適的工具來解決問題。</li>
-                                    <li><strong>省錢</strong>：Token 就是金錢，按需加載可以有效減少不必要的 Token 使用，從而節省成本。</li>
-                                    <li><strong>純淨</strong>：避免資訊過載，影響 LLM 的注意力跟思考品質。</li>
-                                </ul>
-
-                                <div class="alert alert-skill" role="alert">
-                                    <i class="fas fa-lightbulb me-2"></i><strong>總結：</strong> 這種智能的調用方式，避免了不必要的資源浪費，讓 AI
-                                    即使在擁有海量技能庫的情況下，依然能準確、快速地找到最合適的工具，這正是讓 AI 變得『更懂人話』的秘密所在。
-                                </div>
-                            </div>
-
-                            <div class="step">
-                                <h3><i class="fas fa-folder-open step-icon"></i>步驟一：Skill 的安裝位置</h3>
-                                <p>Agent Skills 存放於專案根目錄下的 <code>.agent/skills</code> 資料夾中。Antigravity IDE
-                                    會自動掃描這個目錄。(各家的 skills 放置資料夾不同，這裡不展開說明。)
-                                </p>
-                                <pre><code>my-project/
+                                <div class="step">
+                                    <h3><i class="fas fa-folder-open step-icon"></i>步驟一：Skill 的安裝位置</h3>
+                                    <p>Agent Skills 存放於專案根目錄下的 <code>.agent/skills</code> 資料夾中。Antigravity IDE
+                                        會自動掃描這個目錄。(各家的 skills 放置資料夾不同，這裡不展開說明。)
+                                    </p>
+                                    <pre><code>my-project/
 ├── .agent/
 │   └── skills/
 │       ├── daily_report/       <-- 技能 A
@@ -239,25 +331,25 @@
 │           └── migrate.py
 ├── src/
 └── README.md</code></pre>
-                                <p>當您想要「安裝」一個新技能時，只需要將該技能的資料夾複製、貼上到 <code>.agent/skills</code> 即可。</p>
+                                    <p>當您想要「安裝」一個新技能時，只需要將該技能的資料夾複製、貼上到 <code>.agent/skills</code> 即可。</p>
 
-                                <div class="alert alert-info-custom mt-3" role="alert">
-                                    <i class="fas fa-search me-2"></i><strong>找不到資料夾？</strong>
-                                    <p class="mb-0 mt-2">對於非工程背景的使用者，請注意 <code>.agent</code> 開頭的資料夾通常被視為「隱藏設定檔」。
-                                    </p>
-                                    <ul class="mb-0">
-                                        <li>在左側檔案總管 (Explorer) 中，請確保您已展開專案根目錄。</li>
-                                        <li>若真的找不到，可以直接在 Agent Manager 中對 Agent 說：「開啟 agent skills
-                                            資料夾」，它會自動幫您在編輯器中列出或導航到該位置。
-                                        </li>
-                                    </ul>
+                                    <div class="alert alert-info-custom mt-3" role="alert">
+                                        <i class="fas fa-search me-2"></i><strong>找不到資料夾？</strong>
+                                        <p class="mb-0 mt-2">對於非工程背景的使用者，請注意 <code>.agent</code> 開頭的資料夾通常被視為「隱藏設定檔」。
+                                        </p>
+                                        <ul class="mb-0">
+                                            <li>在左側檔案總管 (Explorer) 中，請確保您已展開專案根目錄。</li>
+                                            <li>若真的找不到，可以直接在 Agent Manager 中對 Agent 說：「開啟 agent skills
+                                                資料夾」，它會自動幫您在編輯器中列出或導航到該位置。
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="step">
-                                <h3><i class="fas fa-file-code step-icon"></i>步驟二：解剖 SKILL.md</h3>
-                                <p>讓我們來看一個最簡單的 <code>SKILL.md</code> 範例。假設我們要教 Agent 如何生成「每日工作日報」。</p>
-                                <pre><code>---
+                                <div class="step">
+                                    <h3><i class="fas fa-file-code step-icon"></i>步驟二：解剖 SKILL.md</h3>
+                                    <p>讓我們來看一個最簡單的 <code>SKILL.md</code> 範例。假設我們要教 Agent 如何生成「每日工作日報」。</p>
+                                    <pre><code>---
 name: generate_daily_report
 description: 當使用者要求總結今日工作或撰寫日報時使用此技能。
 ---
@@ -275,61 +367,62 @@ description: 當使用者要求總結今日工作或撰寫日報時使用此技�
    - 工時占比
    - 遭遇困難
    - 未來計畫</code></pre>
-                                <p><strong>關鍵點解析：</strong></p>
-                                </ul>
+                                    <p><strong>關鍵點解析：</strong></p>
+                                    </ul>
 
-                                <div class="mt-4 p-3 bg-light rounded border-start border-4 border-info">
-                                    <h6 class="text-info"><i class="fas fa-play-circle me-2"></i>模擬執行過程</h6>
-                                    <div class="d-flex align-items-start mb-3">
-                                        <div class="bg-primary text-white rounded-circle p-2 me-2"><i
-                                                class="fas fa-user"></i></div>
-                                        <div class="bg-white p-2 rounded shadow-sm border">
-                                            <strong>User:</strong> 幫我寫今天的日報
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-start mb-3">
-                                        <div class="bg-dark text-white rounded-circle p-2 me-2"><i
-                                                class="fas fa-robot"></i></div>
-                                        <div class="bg-white p-2 rounded shadow-sm border w-100">
-                                            <div class="text-muted small mb-2"><i
-                                                    class="fas fa-cog fa-spin me-1"></i>System: 偵測到關鍵字 "日報"，匹配技能
-                                                <code>generate_daily_report</code>...
+                                    <div class="mt-4 p-3 bg-light rounded border-start border-4 border-info">
+                                        <h6 class="text-info"><i class="fas fa-play-circle me-2"></i>模擬執行過程</h6>
+                                        <div class="d-flex align-items-start mb-3">
+                                            <div class="bg-primary text-white rounded-circle p-2 me-2"><i
+                                                    class="fas fa-user"></i></div>
+                                            <div class="bg-white p-2 rounded shadow-sm border">
+                                                <strong>User:</strong> 幫我寫今天的日報
                                             </div>
-                                            <hr class="my-1">
-                                            <div class="markdown-preview mt-2">
-                                                <strong>今日工作日報 (2026-01-29)</strong>
-                                                <ul class="mb-0 ps-3">
-                                                    <li><strong>完成事項</strong>：
-                                                        <ul>
-                                                            <li>修復 Dashboard 圖表渲染錯誤 (#1024)</li>
-                                                            <li>更新 AntiGravity 教學文件 EP2</li>
-                                                        </ul>
-                                                    </li>
-                                                    <li><strong>工時占比</strong>：Coding (60%), Doc (30%), Meeting (10%)
-                                                    </li>
-                                                    <li><strong>遭遇困難</strong>：Chrome 暫存導致預覽沒有即時更新，已清理 Cache 解決。</li>
-                                                    <li><strong>未來計畫</strong>：研究 Agentic Workflow 的串接方式。</li>
-                                                </ul>
+                                        </div>
+                                        <div class="d-flex align-items-start mb-3">
+                                            <div class="bg-dark text-white rounded-circle p-2 me-2"><i
+                                                    class="fas fa-robot"></i></div>
+                                            <div class="bg-white p-2 rounded shadow-sm border w-100">
+                                                <div class="text-muted small mb-2"><i
+                                                        class="fas fa-cog fa-spin me-1"></i>System: 偵測到關鍵字 "日報"，匹配技能
+                                                    <code>generate_daily_report</code>...
+                                                </div>
+                                                <hr class="my-1">
+                                                <div class="markdown-preview mt-2">
+                                                    <strong>今日工作日報 (2026-01-29)</strong>
+                                                    <ul class="mb-0 ps-3">
+                                                        <li><strong>完成事項</strong>：
+                                                            <ul>
+                                                                <li>修復 Dashboard 圖表渲染錯誤 (#1024)</li>
+                                                                <li>更新 AntiGravity 教學文件 EP2</li>
+                                                            </ul>
+                                                        </li>
+                                                        <li><strong>工時占比</strong>：Coding (60%), Doc (30%), Meeting (10%)
+                                                        </li>
+                                                        <li><strong>遭遇困難</strong>：Chrome 暫存導致預覽沒有即時更新，已清理 Cache 解決。</li>
+                                                        <li><strong>未來計畫</strong>：研究 Agentic Workflow 的串接方式。</li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="step">
-                                <h3><i class="fas fa-dna step-icon"></i>SKILL.md 結構解密</h3>
-                                <p>一個標準的 Skill 由三個核心部分組成，我們可以把它想像成一個「三明治」結構：</p>
+                                <div class="step">
+                                    <h3><i class="fas fa-dna step-icon"></i>SKILL.md 結構解密</h3>
+                                    <p>一個標準的 Skill 由三個核心部分組成，我們可以把它想像成一個「三明治」結構：</p>
 
-                                <figure>
-                                    <img src="../images/skill_anatomy_diagram.png" alt="Skill Anatomy Diagram"
-                                        class="img-fluid border rounded shadow-sm">
-                                    <figcaption class="text-muted mt-2">圖 1: Skill Anatomy (技能解剖圖) - 三明治結構</figcaption>
-                                </figure>
+                                    <figure>
+                                        <img src="../images/skill_anatomy_diagram.png" alt="Skill Anatomy Diagram"
+                                            class="img-fluid border rounded shadow-sm">
+                                        <figcaption class="text-muted mt-2">圖 1: Skill Anatomy (技能解剖圖) - 三明治結構
+                                        </figcaption>
+                                    </figure>
 
-                                <h5><i class="fas fa-mug-hot text-warning me-2"></i>小試身手：工程術語翻譯機 (Jargon Simplifier)
-                                </h5>
-                                <p>在進入複雜的專案前，我們先看一個 PM 必備的神技。這是一個能把「工程師的報錯訊息」翻譯成「人話」的迷你 Skill：</p>
-                                <pre><code class="language-markdown">---
+                                    <h5><i class="fas fa-mug-hot text-warning me-2"></i>小試身手：工程術語翻譯機 (Jargon Simplifier)
+                                    </h5>
+                                    <p>在進入複雜的專案前，我們先看一個 PM 必備的神技。這是一個能把「工程師的報錯訊息」翻譯成「人話」的迷你 Skill：</p>
+                                    <pre><code class="language-markdown">---
 name: jargon_simplifier
 description: 當使用者貼上看不懂的 Error Log 或工程術語時使用。
 ---
@@ -340,111 +433,116 @@ description: 當使用者貼上看不懂的 Error Log 或工程術語時使用�
 1. 讀取使用者提供的錯誤訊息 (e.g., "502 Bad Gateway", "CORS Error")。
 2. 用最白話的比喻解釋發生了什麼事 (例如：用「餐廳廚房忙不過來」解釋 502)。
 3. 提供一個「建議行動」(例如：「請工程師檢查 Nginx 設定」)。</code></pre>
-                                <p>就是這麼簡單！存檔後，下次當你看到一堆紅字報錯，只要貼給 Agent，它就會告訴你發生了什麼事，讓你不再被術語呼攏。</p>
+                                    <p>就是這麼簡單！存檔後，下次當你看到一堆紅字報錯，只要貼給 Agent，它就會告訴你發生了什麼事，讓你不再被術語呼攏。</p>
 
-                                <div class="mt-4 p-3 bg-light rounded border-start border-4 border-success">
-                                    <h6 class="text-success"><i class="fas fa-magic me-2"></i>Zero Code: 讓 Agent 幫你寫
-                                        Skill</h6>
-                                    <p class="mb-2">覺得寫 YAML 和 Markdown 太麻煩？其實你可以直接用講的！</p>
-                                    <p>試著在 Agent Manager 中輸入：</p>
-                                    <pre class="bg-white border text-dark"><code>請幫我建立一個名為 "jargon_simplifier" 的技能。
+                                    <div class="mt-4 p-3 bg-light rounded border-start border-4 border-success">
+                                        <h6 class="text-success"><i class="fas fa-magic me-2"></i>Zero Code: 讓 Agent 幫你寫
+                                            Skill</h6>
+                                        <p class="mb-2">覺得寫 YAML 和 Markdown 太麻煩？其實你可以直接用講的！</p>
+                                        <p>試著在 Agent Manager 中輸入：</p>
+                                        <pre class="bg-white border text-dark"><code>請幫我建立一個名為 "jargon_simplifier" 的技能。
 功能是：當我貼上錯誤訊息時，請扮演技術 PM，用非技術人員聽得懂的比喻來解釋它。</code></pre>
-                                    <p class="mb-0">Agent 會自動生成符合格式的 <code>SKILL.md</code> 並幫您存到正確的位置。這就是 Agentic Coding
-                                        的魅力！</p>
-                                    <figure class="mt-3">
-                                        <img src="../images/antigravity_skill_creation_agent.png"
-                                            alt="Agent creating skill automatically"
-                                            class="img-fluid border rounded shadow-sm">
-                                        <figcaption class="text-muted small mt-2">圖 2: 一句話叫 Agent 幫你寫 Skill，完全不用動手
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                            </div>
-                            <div class="step">
-                                <h3><i class="fas fa-check-circle step-icon"></i>步驟三：驗證技能是否生效</h3>
-                                <p>在測試之前，請確保您已完成技能安裝。對於非工程師，我們建議採用以下兩種方式之一：</p>
-                                <div class="alert alert-light border">
-                                    <strong><i class="fas fa-star text-warning me-2"></i>方法一 (推薦)：</strong> 參考上方的 Zero
-                                    Code 區塊，直接請 Agent 幫您建立。
-                                    <figure class="mt-3 text-center">
-                                        <img src="../images/antigravity_skill_file_explorer.png"
-                                            alt="File Explorer showing created skill"
-                                            class="img-fluid border rounded shadow-sm" style="max-width: 80%;">
-                                        <figcaption class="text-muted small mt-2">圖 3: Agent 自動建立後，您應該能在資料夾中看到它
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                                <div class="alert alert-light border">
-                                    <strong><i class="fas fa-wrench text-secondary me-2"></i>方法二 (手動)：</strong>
-                                    <ol class="mb-0 small">
-                                        <li>在 IDE 左側檔案列表找到 <code>.agent/skills</code> 資料夾。</li>
-                                        <li>按右鍵選擇 "New Folder"，命名為 <code>jargon_simplifier</code>。</li>
-                                        <li>在該資料夾內建立新檔案 <code>SKILL.md</code>。</li>
-                                        <li>將上方的 Markdown 內容複製貼上並儲存。</li>
-                                    </ol>
-                                    <figure class="mt-3 text-center">
-                                        <img src="../images/antigravity_skill_manual_creation.png"
-                                            alt="Manual creation of SKILL.md in IDE"
-                                            class="img-fluid border rounded shadow-sm" style="max-width: 80%;">
-                                        <figcaption class="text-muted small mt-2">圖 4: 手動建立 SKILL.md 的畫面示範
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                                <p class="mt-4">安裝完成後，我們可以來測試看看：</p>
-                                <ol>
-                                    <li>打開 Agent Manager (<code>Cmd/Ctrl + E</code>)。</li>
-                                    <li>隨意貼上一段報錯訊息，例如：<code>502 Bad Gateway</code> 或 <code>CORS policy blocked</code>。
-                                    </li>
-                                    <li>觀察 Agent 的思考過程，它應該會顯示 <code>Using skill: jargon_simplifier</code>。</li>
-                                    <li>Agent 隨後會用「餐廳廚房」等淺顯易懂的比喻來解釋這個錯誤，這證明了它已成功掛載了這項技能。</li>
-                                </ol>
-
-                                <div class="mt-4 p-3 bg-light rounded border-start border-4 border-info">
-                                    <h6 class="text-info"><i class="fas fa-play-circle me-2"></i>模擬執行過程</h6>
-                                    <div class="d-flex align-items-start mb-3">
-                                        <div class="bg-primary text-white rounded-circle p-2 me-2"><i
-                                                class="fas fa-user"></i></div>
-                                        <div class="bg-white p-2 rounded shadow-sm border">
-                                            <strong>User:</strong> 502 Bad Gateway
-                                        </div>
+                                        <p class="mb-0">Agent 會自動生成符合格式的 <code>SKILL.md</code> 並幫您存到正確的位置。這就是 Agentic
+                                            Coding
+                                            的魅力！</p>
+                                        <figure class="mt-3">
+                                            <img src="../images/antigravity_skill_creation_agent.png"
+                                                alt="Agent creating skill automatically"
+                                                class="img-fluid border rounded shadow-sm">
+                                            <figcaption class="text-muted small mt-2">圖 2: 一句話叫 Agent 幫你寫 Skill，完全不用動手
+                                            </figcaption>
+                                        </figure>
                                     </div>
-                                    <div class="d-flex align-items-start mb-3">
-                                        <div class="bg-dark text-white rounded-circle p-2 me-2"><i
-                                                class="fas fa-robot"></i></div>
-                                        <div class="bg-white p-2 rounded shadow-sm border w-100">
-                                            <div class="text-muted small mb-2"><i
-                                                    class="fas fa-cog fa-spin me-1"></i>System: 偵測到錯誤訊息，匹配技能
-                                                <code>jargon_simplifier</code>...</div>
-                                            <hr class="my-1">
-                                            <div class="markdown-preview mt-2">
-                                                <p><strong><i
-                                                            class="fas fa-exclamation-triangle text-warning me-2"></i>發生什麼事了？</strong>
-                                                </p>
-                                                <p>這就像是<strong>「餐廳廚房忙不過來」</strong>。</p>
-                                                <p>你點了菜（發送請求），服務生（伺服器）也收到了，但是後面的廚師（後端服務）可能太忙、或者如果不舒服請假了，導致做不出菜來。所以服務生只好跑回來告訴你：「抱歉，廚房現在沒辦法出餐」。
-                                                </p>
-                                                <hr>
-                                                <p><strong><i class="fas fa-tools text-primary me-2"></i>建議行動：</strong>
-                                                </p>
-                                                <ul>
-                                                    <li>請稍後再試（有時候廚房消化完訂單就好了）。</li>
-                                                    <li>如果持續發生，請聯絡網站管理員檢查後端伺服器狀態。</li>
-                                                </ul>
+                                </div>
+                                <div class="step">
+                                    <h3><i class="fas fa-check-circle step-icon"></i>步驟三：驗證技能是否生效</h3>
+                                    <p>在測試之前，請確保您已完成技能安裝。對於非工程師，我們建議採用以下兩種方式之一：</p>
+                                    <div class="alert alert-light border">
+                                        <strong><i class="fas fa-star text-warning me-2"></i>方法一 (推薦)：</strong> 參考上方的
+                                        Zero
+                                        Code 區塊，直接請 Agent 幫您建立。
+                                        <figure class="mt-3 text-center">
+                                            <img src="../images/antigravity_skill_file_explorer.png"
+                                                alt="File Explorer showing created skill"
+                                                class="img-fluid border rounded shadow-sm" style="max-width: 80%;">
+                                            <figcaption class="text-muted small mt-2">圖 3: Agent 自動建立後，您應該能在資料夾中看到它
+                                            </figcaption>
+                                        </figure>
+                                    </div>
+                                    <div class="alert alert-light border">
+                                        <strong><i class="fas fa-wrench text-secondary me-2"></i>方法二 (手動)：</strong>
+                                        <ol class="mb-0 small">
+                                            <li>在 IDE 左側檔案列表找到 <code>.agent/skills</code> 資料夾。</li>
+                                            <li>按右鍵選擇 "New Folder"，命名為 <code>jargon_simplifier</code>。</li>
+                                            <li>在該資料夾內建立新檔案 <code>SKILL.md</code>。</li>
+                                            <li>將上方的 Markdown 內容複製貼上並儲存。</li>
+                                        </ol>
+                                        <figure class="mt-3 text-center">
+                                            <img src="../images/antigravity_skill_manual_creation.png"
+                                                alt="Manual creation of SKILL.md in IDE"
+                                                class="img-fluid border rounded shadow-sm" style="max-width: 80%;">
+                                            <figcaption class="text-muted small mt-2">圖 4: 手動建立 SKILL.md 的畫面示範
+                                            </figcaption>
+                                        </figure>
+                                    </div>
+                                    <p class="mt-4">安裝完成後，我們可以來測試看看：</p>
+                                    <ol>
+                                        <li>打開 Agent Manager (<code>Cmd/Ctrl + E</code>)。</li>
+                                        <li>隨意貼上一段報錯訊息，例如：<code>502 Bad Gateway</code> 或
+                                            <code>CORS policy blocked</code>。
+                                        </li>
+                                        <li>觀察 Agent 的思考過程，它應該會顯示 <code>Using skill: jargon_simplifier</code>。</li>
+                                        <li>Agent 隨後會用「餐廳廚房」等淺顯易懂的比喻來解釋這個錯誤，這證明了它已成功掛載了這項技能。</li>
+                                    </ol>
+
+                                    <div class="mt-4 p-3 bg-light rounded border-start border-4 border-info">
+                                        <h6 class="text-info"><i class="fas fa-play-circle me-2"></i>模擬執行過程</h6>
+                                        <div class="d-flex align-items-start mb-3">
+                                            <div class="bg-primary text-white rounded-circle p-2 me-2"><i
+                                                    class="fas fa-user"></i></div>
+                                            <div class="bg-white p-2 rounded shadow-sm border">
+                                                <strong>User:</strong> 502 Bad Gateway
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-start mb-3">
+                                            <div class="bg-dark text-white rounded-circle p-2 me-2"><i
+                                                    class="fas fa-robot"></i></div>
+                                            <div class="bg-white p-2 rounded shadow-sm border w-100">
+                                                <div class="text-muted small mb-2"><i
+                                                        class="fas fa-cog fa-spin me-1"></i>System: 偵測到錯誤訊息，匹配技能
+                                                    <code>jargon_simplifier</code>...
+                                                </div>
+                                                <hr class="my-1">
+                                                <div class="markdown-preview mt-2">
+                                                    <p><strong><i
+                                                                class="fas fa-exclamation-triangle text-warning me-2"></i>發生什麼事了？</strong>
+                                                    </p>
+                                                    <p>這就像是<strong>「餐廳廚房忙不過來」</strong>。</p>
+                                                    <p>你點了菜（發送請求），服務生（伺服器）也收到了，但是後面的廚師（後端服務）可能太忙、或者如果不舒服請假了，導致做不出菜來。所以服務生只好跑回來告訴你：「抱歉，廚房現在沒辦法出餐」。
+                                                    </p>
+                                                    <hr>
+                                                    <p><strong><i
+                                                                class="fas fa-tools text-primary me-2"></i>建議行動：</strong>
+                                                    </p>
+                                                    <ul>
+                                                        <li>請稍後再試（有時候廚房消化完訂單就好了）。</li>
+                                                        <li>如果持續發生，請聯絡網站管理員檢查後端伺服器狀態。</li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="step">
-                                <h3><i class="fas fa-level-up-alt step-icon"></i>進階挑戰：實戰規格書架構師 (Spec Architect)</h3>
-                                <p>既然您已經學會了基礎，現在讓我們來挑戰一個更複雜的真實案例：打造一個能幫 PM 自動撰寫 PRD 初稿的助手。</p>
-                                <p>這次我們不再手把手教您建立資料夾，請試著運用剛剛學到的技巧 (Zero Code 或 手動建立)，安裝以下技能：</p>
+                                <div class="step">
+                                    <h3><i class="fas fa-level-up-alt step-icon"></i>進階挑戰：實戰規格書架構師 (Spec Architect)</h3>
+                                    <p>既然您已經學會了基礎，現在讓我們來挑戰一個更複雜的真實案例：打造一個能幫 PM 自動撰寫 PRD 初稿的助手。</p>
+                                    <p>這次我們不再手把手教您建立資料夾，請試著運用剛剛學到的技巧 (Zero Code 或 手動建立)，安裝以下技能：</p>
 
-                                <div class="card bg-light mb-3">
-                                    <div class="card-header"><strong>SKILL.md (內容範本)</strong></div>
-                                    <div class="card-body">
-                                        <pre><code class="language-markdown">---
+                                    <div class="card bg-light mb-3">
+                                        <div class="card-header"><strong>SKILL.md (內容範本)</strong></div>
+                                        <div class="card-body">
+                                            <pre><code class="language-markdown">---
 name: spec_architect
 description: 當使用者要求整理會議記錄、需求筆記，或撰寫產品規格書 (PRD) 時使用此技能。
 ---
@@ -465,49 +563,139 @@ description: 當使用者要求整理會議記錄、需求筆記，或撰寫產�
 
 3. **Tone (語氣)**:
    - 保持專業、精簡、無廢話。</code></pre>
+                                        </div>
                                     </div>
+
+                                    <p><strong>試煉任務：</strong> 安裝完成後，請對 Agent 說：</p>
+                                    <blockquote class="blockquote border-start border-4 border-primary ps-3">
+                                        <p>「把這份會議記錄整理成 PRD。內容是關於一個新的『深色模式』功能...」</p>
+                                    </blockquote>
+                                    <p>如果 Agent 成功吐出了一份結構完整的 PRD，恭喜您！您已經是一位合格的 Agent 導師了。</p>
                                 </div>
+                            </section>
+                        </div>
 
-                                <p><strong>試煉任務：</strong> 安裝完成後，請對 Agent 說：</p>
-                                <blockquote class="blockquote border-start border-4 border-primary ps-3">
-                                    <p>「把這份會議記錄整理成 PRD。內容是關於一個新的『深色模式』功能...」</p>
-                                </blockquote>
-                                <p>如果 Agent 成功吐出了一份結構完整的 PRD，恭喜您！您已經是一位合格的 Agent 導師了。</p>
-                            </div>
-                        </section>
+                        <div class="tutorial-summary">
+                            <h4>本章總結</h4>
+                            <p>恭喜您！您已經掌握了從基礎到進階的 Agent Skill 開發技巧。從簡單的名詞解釋到複雜的文件生成，Agent 的能力邊界完全取決於您的想像力與 Prompt
+                                Engineering
+                                功力。</p>
+                            <p>在下一篇教學中，我們將進入更激動人心的領域：<strong>Agentic Workflows</strong>。我們將學習如何串聯多個步驟，讓 Agent
+                                自動完成一整套複雜的工作流！
+                            </p>
+                            <p class="text-end">
+                                <a href="antigravity-tutorial-1.html" class="btn btn-outline-secondary me-2"><i
+                                        class="fas fa-arrow-left ms-2"></i>上一篇</a>
+                                <a href="antigravity-tutorial-3.html" class="btn btn-outline-primary">下一篇：Agentic
+                                    Workflows
+                                    - 打造自動化團隊
+                                    <i class="fas fa-arrow-right ms-2"></i></a>
+                            </p>
+                        </div>
+                    </article>
+
+                    <div class="mt-5 text-center">
+                        <a href="../tutorials.html#antigravity-series" class="btn btn-primary btn-lg"><i
+                                class="fas fa-list me-2"></i>返回 教學列表</a>
                     </div>
-
-                    <div class="tutorial-summary">
-                        <h4>本章總結</h4>
-                        <p>恭喜您！您已經掌握了從基礎到進階的 Agent Skill 開發技巧。從簡單的名詞解釋到複雜的文件生成，Agent 的能力邊界完全取決於您的想像力與 Prompt Engineering
-                            功力。</p>
-                        <p>在下一篇教學中，我們將進入更激動人心的領域：<strong>Agentic Workflows</strong>。我們將學習如何串聯多個步驟，讓 Agent 自動完成一整套複雜的工作流！
-                        </p>
-                        <p class="text-end">
-                            <a href="antigravity-tutorial-1.html" class="btn btn-outline-secondary me-2"><i
-                                    class="fas fa-arrow-left ms-2"></i>上一篇</a>
-                            <a href="antigravity-tutorial-3.html" class="btn btn-outline-primary">下一篇：Agentic Workflows
-                                - 打造自動化團隊
-                                <i class="fas fa-arrow-right ms-2"></i></a>
-                        </p>
-                    </div>
-                </article>
-
-                <div class="mt-5 text-center">
-                    <a href="../tutorials.html#antigravity-series" class="btn btn-primary btn-lg"><i
-                            class="fas fa-list me-2"></i>返回 教學列表</a>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
 
-    <footer class="bg-light mt-5 py-3">
-        <div class="container text-center">
-            <p>&copy; 2026 侯俊嘉(Luke Hou). All rights reserved.</p>
-        </div>
-    </footer>
+        <footer class="bg-light mt-5 py-3">
+            <div class="container text-center">
+                <p>&copy; 2026 侯俊嘉(Luke Hou). All rights reserved.</p>
+            </div>
+        </footer>
+    </div> <!-- End of #content-wrapper -->
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>
+
+    <!-- Sniper Scope Container -->
+    <div id="sniper-scope">
+        <div class="crosshair-h"></div>
+        <div class="crosshair-v"></div>
+    </div>
+
+    <!-- Magnified Layer Container -->
+    <div id="magnified-layer"></div>
+
+    <!-- Sniper Scope Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const scope = document.getElementById('sniper-scope');
+            const wrapper = document.getElementById('content-wrapper');
+            const magnifiedLayer = document.getElementById('magnified-layer');
+            let isSniping = false;
+
+            // Clone content for magnification
+            // We do this once on load. Dynamic updates won't be reflected without re-cloning.
+            const clonedContent = wrapper.cloneNode(true);
+            clonedContent.id = ''; // Remove ID to avoid duplicates
+            clonedContent.classList.add('cloned-content');
+            // FIX: Force the cloned content to have the exact same width as the original
+            // to prevent text reflow differences due to scrollbars or absolute positioning context.
+            clonedContent.style.width = wrapper.offsetWidth + 'px';
+            magnifiedLayer.appendChild(clonedContent);
+
+            // Track mouse movement
+            document.addEventListener('mousemove', (e) => {
+                if (isSniping) {
+                    scope.style.setProperty('--mouse-x', e.clientX + 'px'); // Scope is fixed
+                    scope.style.setProperty('--mouse-y', e.clientY + 'px');
+
+                    magnifiedLayer.style.setProperty('--mouse-x', e.pageX + 'px'); // Layer is absolute
+                    magnifiedLayer.style.setProperty('--mouse-y', e.pageY + 'px');
+                }
+            });
+
+            let suppressMenu = false;
+
+            // Listen for window resize to update cloned content width
+            window.addEventListener('resize', () => {
+                clonedContent.style.width = wrapper.offsetWidth + 'px';
+            });
+
+            // Activate on Right Click Hold
+            document.addEventListener('mousedown', (e) => {
+                if (e.button === 2) { // Right click
+                    isSniping = true;
+                    suppressMenu = true;
+                    scope.classList.add('active');
+                    magnifiedLayer.classList.add('active');
+                    document.body.style.cursor = 'none';
+
+                    // Initial update
+                    scope.style.setProperty('--mouse-x', e.clientX + 'px');
+                    scope.style.setProperty('--mouse-y', e.clientY + 'px');
+                    magnifiedLayer.style.setProperty('--mouse-x', e.pageX + 'px');
+                    magnifiedLayer.style.setProperty('--mouse-y', e.pageY + 'px');
+                }
+            });
+
+            // Deactivate on Mouse Up
+            document.addEventListener('mouseup', (e) => {
+                if (e.button === 2) {
+                    isSniping = false;
+                    scope.classList.remove('active');
+                    magnifiedLayer.classList.remove('active');
+                    document.body.style.cursor = '';
+
+                    setTimeout(() => {
+                        suppressMenu = false;
+                    }, 100);
+                }
+            });
+
+            // Prevent Context Menu
+            document.addEventListener('contextmenu', (e) => {
+                if (suppressMenu) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
