@@ -79,13 +79,206 @@
             <p class="terminal-prompt mb-3">ls -la --filter=</p>
             <button class="btn btn-terminal-active" data-filter="all">*</button>
             <button class="btn btn-terminal-outline" data-filter="full-product">🎯 Full Product</button>
-            <button class="btn btn-terminal-outline" data-filter="automation">🔄 Automation</button>
             <button class="btn btn-terminal-outline" data-filter="ai-powered">🧠 AI-Powered</button>
             <button class="btn btn-terminal-outline" data-filter="line-bot">📱 LINE Bot</button>
+            <button class="btn btn-terminal-outline" data-filter="n8n">⚡ n8n</button>
+            <button class="btn btn-terminal-outline" data-filter="rag">📚 RAG</button>
         </div>
 
         <!-- Portfolio Grid -->
         <div class="row g-4" id="portfolio-grid">
+            <!-- PRD AI Generation -->
+            <div class="col-lg-6 portfolio-item" data-categories="automation ai-powered n8n rag">
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/prd-ai-gen</span>
+                    </div>
+                    <img src="images/prd-ai-test-case-generation-flow-5.jpg" alt="PRD AI Generation"
+                        class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">🚀 PRD 時間 -80%</span>
+                        <h5 class="terminal-card-title">從一句話到一份 PRD：多智能體生成</h5>
+                        <p class="terminal-card-desc">結合多 AI 代理與 RAG，將需求轉化為完整 Confluence 文件初稿。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">AI Agent</span>
+                            <span class="terminal-tag">RAG</span>
+                        </div>
+                        <div class="terminal-actions">
+                            <a href="projects/prd-ai-generation-business.html"
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/prd-ai-generation.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Line Chat Record AI Summary -->
+            <div class="col-lg-6 portfolio-item" data-categories="automation ai-powered n8n">
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/line-ai-summary</span>
+                    </div>
+                    <img src="images/LineChatRecord_AI_Summary_output.jpg" alt="Line Chat AI Summary"
+                        class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">📉 遺漏率 0%</span>
+                        <h5 class="terminal-card-title">Line 對話紀錄 AI 自動摘要</h5>
+                        <p class="terminal-card-desc">從散亂對話到結構化日報，全自動監控、AI 摘要、郵件派送。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">AI</span>
+                            <span class="terminal-tag">Gmail</span>
+                        </div>
+                        <div class="terminal-actions">
+                            <a href="projects/line-chat-record-ai-summary-business.html"
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/line-chat-record-ai-summary.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Go-Live Jira Automation -->
+            <div class="col-lg-6 portfolio-item" data-categories="automation n8n">
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/golive-jira</span>
+                    </div>
+                    <img src="images/golive_jira_automation/teams.jpg" alt="Go-Live Jira" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">✅ 回報錯誤率 0%</span>
+                        <h5 class="terminal-card-title">Go-Live: Sheet to Jira 自動化</h5>
+                        <p class="terminal-card-desc">從雜亂回報到結構化 Jira 工單，零人工、高品質、即時通知。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">Jira</span>
+                            <span class="terminal-tag">Sheets</span>
+                        </div>
+                        <div class="terminal-actions">
+                            <a href="projects/golive-jira-automation-business.html"
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/golive-jira-automation.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- n8n LINE 名片王 -->
+            <div class="col-lg-6 portfolio-item" data-categories="automation ai-powered line-bot n8n">
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/line-card-bot</span>
+                    </div>
+                    <img src="images/n8n-line-business-card-automation/n8n-card-bot-workflow.jpg" alt="LINE 名片王"
+                        class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">⏱️ 建檔 3分→10秒</span>
+                        <h5 class="terminal-card-title">LINE + AI 個人 CRM：名片王</h5>
+                        <p class="terminal-card-desc">拍照即建檔，AI 自動分析，讓你的人脈活起來。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">LINE Bot</span>
+                            <span class="terminal-tag">AI</span>
+                        </div>
+                        <div class="terminal-actions">
+                            <a href="projects/n8n-line-business-card-automation-business.html"
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/n8n-line-business-card-automation.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- n8n AI Release Notes -->
+            <div class="col-lg-6 portfolio-item" data-categories="automation ai-powered n8n">
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/release-notes</span>
+                    </div>
+                    <img src="images/n8n-ai-release-notes-automation/n8n-ai-release-notes-workflow.jpg"
+                        alt="Release Notes" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">✍️ 節省 93% 時間</span>
+                        <h5 class="terminal-card-title">n8n + AI Release Notes 生成</h5>
+                        <p class="terminal-card-desc">抓取 Jira Ticket，AI 自動生成版本摘要與 QA 測試重點。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">AI</span>
+                            <span class="terminal-tag">Jira</span>
+                        </div>
+                        <div class="terminal-actions">
+                            <a href="projects/n8n-ai-release-notes-automation-business.html"
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/n8n-ai-release-notes-automation.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRD AI Test Case -->
+            <div class="col-lg-6 portfolio-item" data-categories="automation ai-powered n8n rag">
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/prd-testcase</span>
+                    </div>
+                    <img src="images/prd-ai-test-case-generation-main.png" alt="PRD Test Case"
+                        class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">🧪 測試案例 +10x</span>
+                        <h5 class="terminal-card-title">PRD→Jira：AI 測試案例生成</h5>
+                        <p class="terminal-card-desc">導入 AI 多智能體，從 PRD 自動生成 Jira 測試案例。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">Multi-Agent</span>
+                            <span class="terminal-tag">RAG</span>
+                            <span class="terminal-tag">Confluence</span>
+                        </div>
+                        <div class="terminal-actions">
+                            <a href="projects/prd-ai-test-case-generation-business.html"
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/prd-ai-test-case-generation.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Line Bot MVP -->
             <div class="col-lg-6 portfolio-item" data-categories="full-product ai-powered line-bot">
                 <div class="terminal-card h-100 d-flex flex-column">
@@ -180,229 +373,8 @@
                 </div>
             </div>
 
-            <!-- PRD AI Generation -->
-            <div class="col-lg-6 portfolio-item" data-categories="automation ai-powered">
-                <div class="terminal-card h-100 d-flex flex-column">
-                    <div class="terminal-card-header">
-                        <div class="window-controls">
-                            <span class="close"></span>
-                            <span class="minimize"></span>
-                            <span class="maximize"></span>
-                        </div>
-                        <span class="file-path">~/projects/prd-ai-gen</span>
-                    </div>
-                    <img src="images/prd-ai-test-case-generation-flow-5.jpg" alt="PRD AI Generation"
-                        class="terminal-card-image">
-                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
-                        <span class="terminal-impact">🚀 PRD 時間 -80%</span>
-                        <h5 class="terminal-card-title">從一句話到一份 PRD：多智能體生成</h5>
-                        <p class="terminal-card-desc">結合多 AI 代理與 RAG，將需求轉化為完整 Confluence 文件初稿。</p>
-                        <div class="terminal-tags">
-                            <span class="terminal-tag">n8n</span>
-                            <span class="terminal-tag">AI Agent</span>
-                            <span class="terminal-tag">RAG</span>
-                        </div>
-                        <div class="terminal-actions">
-                            <a href="projects/prd-ai-generation-business.html"
-                                class="btn btn-terminal btn-terminal-primary">--business</a>
-                            <a href="projects/prd-ai-generation.html"
-                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Line Chat Record AI Summary -->
-            <div class="col-lg-6 portfolio-item" data-categories="automation ai-powered">
-                <div class="terminal-card h-100 d-flex flex-column">
-                    <div class="terminal-card-header">
-                        <div class="window-controls">
-                            <span class="close"></span>
-                            <span class="minimize"></span>
-                            <span class="maximize"></span>
-                        </div>
-                        <span class="file-path">~/projects/line-ai-summary</span>
-                    </div>
-                    <img src="images/LineChatRecord_AI_Summary_output.jpg" alt="Line Chat AI Summary"
-                        class="terminal-card-image">
-                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
-                        <span class="terminal-impact">📉 遺漏率 0%</span>
-                        <h5 class="terminal-card-title">Line 對話紀錄 AI 自動摘要</h5>
-                        <p class="terminal-card-desc">從散亂對話到結構化日報，全自動監控、AI 摘要、郵件派送。</p>
-                        <div class="terminal-tags">
-                            <span class="terminal-tag">n8n</span>
-                            <span class="terminal-tag">AI</span>
-                            <span class="terminal-tag">Gmail</span>
-                        </div>
-                        <div class="terminal-actions">
-                            <a href="projects/line-chat-record-ai-summary-business.html"
-                                class="btn btn-terminal btn-terminal-primary">--business</a>
-                            <a href="projects/line-chat-record-ai-summary.html"
-                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Go-Live Jira Automation -->
-            <div class="col-lg-6 portfolio-item" data-categories="automation">
-                <div class="terminal-card h-100 d-flex flex-column">
-                    <div class="terminal-card-header">
-                        <div class="window-controls">
-                            <span class="close"></span>
-                            <span class="minimize"></span>
-                            <span class="maximize"></span>
-                        </div>
-                        <span class="file-path">~/projects/golive-jira</span>
-                    </div>
-                    <img src="images/golive_jira_automation/teams.jpg" alt="Go-Live Jira" class="terminal-card-image">
-                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
-                        <span class="terminal-impact">✅ 回報錯誤率 0%</span>
-                        <h5 class="terminal-card-title">Go-Live: Sheet to Jira 自動化</h5>
-                        <p class="terminal-card-desc">從雜亂回報到結構化 Jira 工單，零人工、高品質、即時通知。</p>
-                        <div class="terminal-tags">
-                            <span class="terminal-tag">n8n</span>
-                            <span class="terminal-tag">Jira</span>
-                            <span class="terminal-tag">Sheets</span>
-                        </div>
-                        <div class="terminal-actions">
-                            <a href="projects/golive-jira-automation-business.html"
-                                class="btn btn-terminal btn-terminal-primary">--business</a>
-                            <a href="projects/golive-jira-automation.html"
-                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Gmail Digest -->
-            <div class="col-lg-6 portfolio-item" data-categories="automation">
-                <div class="terminal-card h-100 d-flex flex-column">
-                    <div class="terminal-card-header">
-                        <div class="window-controls">
-                            <span class="close"></span>
-                            <span class="minimize"></span>
-                            <span class="maximize"></span>
-                        </div>
-                        <span class="file-path">~/projects/gmail-digest</span>
-                    </div>
-                    <img src="images/gmail-digest/output.jpg" alt="Gmail Digest" class="terminal-card-image">
-                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
-                        <span class="terminal-impact">📧 每日過濾 200+ 封</span>
-                        <h5 class="terminal-card-title">Gmail 重要郵件自動彙報</h5>
-                        <p class="terminal-card-desc">每日掃描 Gmail，篩選帳單收據，透過 Telegram 推播摘要。</p>
-                        <div class="terminal-tags">
-                            <span class="terminal-tag">n8n</span>
-                            <span class="terminal-tag">Gmail</span>
-                            <span class="terminal-tag">Telegram</span>
-                        </div>
-                        <div class="terminal-actions">
-                            <a href="projects/gmail-telegram-digest-business.html"
-                                class="btn btn-terminal btn-terminal-primary">--business</a>
-                            <a href="projects/gmail-telegram-digest.html"
-                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Notion AI Summary -->
-            <div class="col-lg-6 portfolio-item" data-categories="automation ai-powered">
-                <div class="terminal-card h-100 d-flex flex-column">
-                    <div class="terminal-card-header">
-                        <div class="window-controls">
-                            <span class="close"></span>
-                            <span class="minimize"></span>
-                            <span class="maximize"></span>
-                        </div>
-                        <span class="file-path">~/projects/notion-ai</span>
-                    </div>
-                    <img src="images/notion-ai-summary/workflow.jpg" alt="Notion AI" class="terminal-card-image">
-                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
-                        <span class="terminal-impact">🧠 知識庫增長 3x</span>
-                        <h5 class="terminal-card-title">Notion AI 閱讀助理</h5>
-                        <p class="terminal-card-desc">自動讀取文章連結，AI 生成摘要與標題，打造全自動知識庫。</p>
-                        <div class="terminal-tags">
-                            <span class="terminal-tag">n8n</span>
-                            <span class="terminal-tag">Notion</span>
-                            <span class="terminal-tag">Gemini</span>
-                        </div>
-                        <div class="terminal-actions">
-                            <a href="projects/notion-ai-summary-business.html"
-                                class="btn btn-terminal btn-terminal-primary">--business</a>
-                            <a href="projects/notion-ai-summary.html"
-                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- n8n LINE 名片王 -->
-            <div class="col-lg-6 portfolio-item" data-categories="automation ai-powered line-bot">
-                <div class="terminal-card h-100 d-flex flex-column">
-                    <div class="terminal-card-header">
-                        <div class="window-controls">
-                            <span class="close"></span>
-                            <span class="minimize"></span>
-                            <span class="maximize"></span>
-                        </div>
-                        <span class="file-path">~/projects/line-card-bot</span>
-                    </div>
-                    <img src="images/n8n-line-business-card-automation/n8n-card-bot-workflow.jpg" alt="LINE 名片王"
-                        class="terminal-card-image">
-                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
-                        <span class="terminal-impact">⏱️ 建檔 3分→10秒</span>
-                        <h5 class="terminal-card-title">LINE + AI 個人 CRM：名片王</h5>
-                        <p class="terminal-card-desc">拍照即建檔，AI 自動分析，讓你的人脈活起來。</p>
-                        <div class="terminal-tags">
-                            <span class="terminal-tag">n8n</span>
-                            <span class="terminal-tag">LINE Bot</span>
-                            <span class="terminal-tag">AI</span>
-                        </div>
-                        <div class="terminal-actions">
-                            <a href="projects/n8n-line-business-card-automation-business.html"
-                                class="btn btn-terminal btn-terminal-primary">--business</a>
-                            <a href="projects/n8n-line-business-card-automation.html"
-                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- n8n AI Release Notes -->
-            <div class="col-lg-6 portfolio-item" data-categories="automation ai-powered">
-                <div class="terminal-card h-100 d-flex flex-column">
-                    <div class="terminal-card-header">
-                        <div class="window-controls">
-                            <span class="close"></span>
-                            <span class="minimize"></span>
-                            <span class="maximize"></span>
-                        </div>
-                        <span class="file-path">~/projects/release-notes</span>
-                    </div>
-                    <img src="images/n8n-ai-release-notes-automation/n8n-ai-release-notes-workflow.jpg"
-                        alt="Release Notes" class="terminal-card-image">
-                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
-                        <span class="terminal-impact">✍️ 節省 93% 時間</span>
-                        <h5 class="terminal-card-title">n8n + AI Release Notes 生成</h5>
-                        <p class="terminal-card-desc">抓取 Jira Ticket，AI 自動生成版本摘要與 QA 測試重點。</p>
-                        <div class="terminal-tags">
-                            <span class="terminal-tag">n8n</span>
-                            <span class="terminal-tag">AI</span>
-                            <span class="terminal-tag">Jira</span>
-                        </div>
-                        <div class="terminal-actions">
-                            <a href="projects/n8n-ai-release-notes-automation-business.html"
-                                class="btn btn-terminal btn-terminal-primary">--business</a>
-                            <a href="projects/n8n-ai-release-notes-automation.html"
-                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- n8n Line Bot to Jira -->
-            <div class="col-lg-6 portfolio-item" data-categories="automation line-bot">
+            <div class="col-lg-6 portfolio-item" data-categories="automation line-bot n8n">
                 <div class="terminal-card h-100 d-flex flex-column">
                     <div class="terminal-card-header">
                         <div class="window-controls">
@@ -434,7 +406,7 @@
             </div>
 
             <!-- n8n + AI Jira to Excel -->
-            <div class="col-lg-6 portfolio-item" data-categories="automation ai-powered">
+            <div class="col-lg-6 portfolio-item" data-categories="automation ai-powered n8n">
                 <div class="terminal-card h-100 d-flex flex-column">
                     <div class="terminal-card-header">
                         <div class="window-controls">
@@ -464,8 +436,8 @@
                 </div>
             </div>
 
-            <!-- PRD AI Test Case -->
-            <div class="col-lg-6 portfolio-item" data-categories="automation ai-powered">
+            <!-- QA Report Automation -->
+            <div class="col-lg-6 portfolio-item" data-categories="automation ai-powered n8n">
                 <div class="terminal-card h-100 d-flex flex-column">
                     <div class="terminal-card-header">
                         <div class="window-controls">
@@ -473,23 +445,115 @@
                             <span class="minimize"></span>
                             <span class="maximize"></span>
                         </div>
-                        <span class="file-path">~/projects/prd-testcase</span>
+                        <span class="file-path">~/projects/qa-report</span>
                     </div>
-                    <img src="images/prd-ai-test-case-generation-main.png" alt="PRD Test Case"
-                        class="terminal-card-image">
+                    <img src="images/qa-report-automation-flow-1.png" alt="QA Report" class="terminal-card-image">
                     <div class="terminal-card-body d-flex flex-column flex-grow-1">
-                        <span class="terminal-impact">🧪 測試案例 +10x</span>
-                        <h5 class="terminal-card-title">PRD→Jira：AI 測試案例生成</h5>
-                        <p class="terminal-card-desc">導入 AI 多智能體，從 PRD 自動生成 Jira 測試案例。</p>
+                        <span class="terminal-impact">🕒 2小時→5分鐘</span>
+                        <h5 class="terminal-card-title">n8n + AI：QA 週報自動生成</h5>
+                        <p class="terminal-card-desc">整合多系統數據，AI 驅動報告生成，週報製作全自動化。</p>
                         <div class="terminal-tags">
                             <span class="terminal-tag">n8n</span>
-                            <span class="terminal-tag">Multi-Agent</span>
-                            <span class="terminal-tag">Confluence</span>
+                            <span class="terminal-tag">AI</span>
+                            <span class="terminal-tag">Jira</span>
                         </div>
                         <div class="terminal-actions">
-                            <a href="projects/prd-ai-test-case-generation-business.html"
+                            <a href="projects/qa-report-automation-business.html"
                                 class="btn btn-terminal btn-terminal-primary">--business</a>
-                            <a href="projects/prd-ai-test-case-generation.html"
+                            <a href="projects/qa-report-automation.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NHI Notice Automation -->
+            <div class="col-lg-6 portfolio-item" data-categories="automation ai-powered n8n">
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/nhi-monitor</span>
+                    </div>
+                    <img src="images/nhi-notice-automation-main.png" alt="NHI Monitor" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">⚡ 政策回應 &lt;24hr</span>
+                        <h5 class="terminal-card-title">n8n 健保公告自動監控</h5>
+                        <p class="terminal-card-desc">為醫療產業打造，確保關鍵政策變動即時掌握。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">AI</span>
+                            <span class="terminal-tag">Scraping</span>
+                        </div>
+                        <div class="terminal-actions">
+                            <a href="projects/nhi-notice-automation-business.html"
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/nhi-notice-automation.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gmail Digest -->
+            <div class="col-lg-6 portfolio-item" data-categories="automation n8n">
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/gmail-digest</span>
+                    </div>
+                    <img src="images/gmail-digest/output.jpg" alt="Gmail Digest" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">📧 每日過濾 200+ 封</span>
+                        <h5 class="terminal-card-title">Gmail 重要郵件自動彙報</h5>
+                        <p class="terminal-card-desc">每日掃描 Gmail，篩選帳單收據，透過 Telegram 推播摘要。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">Gmail</span>
+                            <span class="terminal-tag">Telegram</span>
+                        </div>
+                        <div class="terminal-actions">
+                            <a href="projects/gmail-telegram-digest-business.html"
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/gmail-telegram-digest.html"
+                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notion AI Summary -->
+            <div class="col-lg-6 portfolio-item" data-categories="automation ai-powered n8n">
+                <div class="terminal-card h-100 d-flex flex-column">
+                    <div class="terminal-card-header">
+                        <div class="window-controls">
+                            <span class="close"></span>
+                            <span class="minimize"></span>
+                            <span class="maximize"></span>
+                        </div>
+                        <span class="file-path">~/projects/notion-ai</span>
+                    </div>
+                    <img src="images/notion-ai-summary/workflow.jpg" alt="Notion AI" class="terminal-card-image">
+                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                        <span class="terminal-impact">🧠 知識庫增長 3x</span>
+                        <h5 class="terminal-card-title">Notion AI 閱讀助理</h5>
+                        <p class="terminal-card-desc">自動讀取文章連結，AI 生成摘要與標題，打造全自動知識庫。</p>
+                        <div class="terminal-tags">
+                            <span class="terminal-tag">n8n</span>
+                            <span class="terminal-tag">Notion</span>
+                            <span class="terminal-tag">Gemini</span>
+                        </div>
+                        <div class="terminal-actions">
+                            <a href="projects/notion-ai-summary-business.html"
+                                class="btn btn-terminal btn-terminal-primary">--business</a>
+                            <a href="projects/notion-ai-summary.html"
                                 class="btn btn-terminal btn-terminal-secondary">--tech</a>
                         </div>
                     </div>
@@ -521,68 +585,6 @@
                             <a href="projects/vibe-ai-video-summary-business.html"
                                 class="btn btn-terminal btn-terminal-primary">--business</a>
                             <a href="projects/vibe-ai-video-summary.html"
-                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- QA Report Automation -->
-            <div class="col-lg-6 portfolio-item" data-categories="automation ai-powered">
-                <div class="terminal-card h-100 d-flex flex-column">
-                    <div class="terminal-card-header">
-                        <div class="window-controls">
-                            <span class="close"></span>
-                            <span class="minimize"></span>
-                            <span class="maximize"></span>
-                        </div>
-                        <span class="file-path">~/projects/qa-report</span>
-                    </div>
-                    <img src="images/qa-report-automation-flow-1.png" alt="QA Report" class="terminal-card-image">
-                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
-                        <span class="terminal-impact">🕒 2小時→5分鐘</span>
-                        <h5 class="terminal-card-title">n8n + AI：QA 週報自動生成</h5>
-                        <p class="terminal-card-desc">整合多系統數據，AI 驅動報告生成，週報製作全自動化。</p>
-                        <div class="terminal-tags">
-                            <span class="terminal-tag">n8n</span>
-                            <span class="terminal-tag">AI</span>
-                            <span class="terminal-tag">Jira</span>
-                        </div>
-                        <div class="terminal-actions">
-                            <a href="projects/qa-report-automation-business.html"
-                                class="btn btn-terminal btn-terminal-primary">--business</a>
-                            <a href="projects/qa-report-automation.html"
-                                class="btn btn-terminal btn-terminal-secondary">--tech</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- NHI Notice Automation -->
-            <div class="col-lg-6 portfolio-item" data-categories="automation ai-powered">
-                <div class="terminal-card h-100 d-flex flex-column">
-                    <div class="terminal-card-header">
-                        <div class="window-controls">
-                            <span class="close"></span>
-                            <span class="minimize"></span>
-                            <span class="maximize"></span>
-                        </div>
-                        <span class="file-path">~/projects/nhi-monitor</span>
-                    </div>
-                    <img src="images/nhi-notice-automation-main.png" alt="NHI Monitor" class="terminal-card-image">
-                    <div class="terminal-card-body d-flex flex-column flex-grow-1">
-                        <span class="terminal-impact">⚡ 政策回應 &lt;24hr</span>
-                        <h5 class="terminal-card-title">n8n 健保公告自動監控</h5>
-                        <p class="terminal-card-desc">為醫療產業打造，確保關鍵政策變動即時掌握。</p>
-                        <div class="terminal-tags">
-                            <span class="terminal-tag">n8n</span>
-                            <span class="terminal-tag">AI</span>
-                            <span class="terminal-tag">Scraping</span>
-                        </div>
-                        <div class="terminal-actions">
-                            <a href="projects/nhi-notice-automation-business.html"
-                                class="btn btn-terminal btn-terminal-primary">--business</a>
-                            <a href="projects/nhi-notice-automation.html"
                                 class="btn btn-terminal btn-terminal-secondary">--tech</a>
                         </div>
                     </div>
