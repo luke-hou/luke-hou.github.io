@@ -6,6 +6,7 @@ run_gemini.bat
 GEMINI.md
 Podcast_Playgorund/
 local_plan/*
+PlayGround/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
