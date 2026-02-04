@@ -18,6 +18,9 @@
 
 此頁面隸屬於「作品」。每個專案都提供「商業視角說明」與「技術視角說明」兩種版本。
 
+- **Notion Crawler：企業級自動化資料遷移引擎**
+  - 技術視角說明: `projects/notion-crawler.html`
+  - 商業視角說明: `projects/notion-crawler-business.html`
 - **半小時從 0 到上線：Google AI Studio 打造 HIS 搜尋神器**
   - 技術視角說明: `projects/kuromi-his-search.html`
   - 商業視角說明: `projects/kuromi-his-search-business.html`

@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notion Crawler | 企業級自動化資料遷移引擎</title>
+    <meta name="description" content="專為工程師打造的 Notion 逆向爬蟲與資料遷移工具。支援結構遞迴、斷點續傳與 Confluence 生成。">
+    <meta name="author" content="Luke Hou">
+    <link rel="canonical" href="https://luke-hou.github.io/projects/notion-crawler.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://luke-hou.github.io/projects/notion-crawler.html">
+    <meta property="og:title" content="Notion Crawler | 企業級自動化資料遷移引擎">
+    <meta property="og:description" content="專為工程師打造的 Notion 逆向爬蟲與資料遷移工具。支援結構遞迴、斷點續傳與 Confluence 生成。">
+    <meta property="og:image" content="https://luke-hou.github.io/images/projects/notion_crawler_tech_hero_bg.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://luke-hou.github.io/projects/notion-crawler.html">
+    <meta property="twitter:title" content="Notion Crawler | 企業級自動化資料遷移引擎">
+    <meta property="twitter:description" content="專為工程師打造的 Notion 逆向爬蟲與資料遷移工具。支援結構遞迴、斷點續傳與 Confluence 生成。">
+    <meta property="twitter:image" content="https://luke-hou.github.io/images/projects/notion_crawler_tech_hero_bg.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --tech-primary: #00ff9d;
+            --tech-secondary: #00b8ff;
+            --terminal-bg: #0d1117;
+            --terminal-header: #161b22;
+            --code-font: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            background-color: var(--terminal-bg);
+            color: #c9d1d9;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .font-monospace {
+            font-family: var(--code-font) !important;
+        }
+
+        /* Tech Navbar */
+        .navbar {
+            background-color: rgba(13, 17, 23, 0.9) !important;
+            border-bottom: 1px solid #30363d;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Hero Section */
+        .tech-hero {
+            background: linear-gradient(180deg, rgba(13, 17, 23, 0.8) 0%, #0d1117 100%),
+                url('file:///C:/Users/user/.gemini/antigravity/brain/f46ee672-2c0b-430a-830b-af80bf312f2a/notion_crawler_tech_hero_bg_1769847009242.png') no-repeat center center;
+            background-size: cover;
+            padding: 8rem 0 6rem;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .hero-title {
+            font-family: var(--code-font);
+            font-weight: 700;
+            color: var(--tech-primary);
+            letter-spacing: -1px;
+            text-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
+        }
+
+        /* Terminal Window */
+        .terminal-window {
+            background: var(--terminal-bg);
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 2rem;
+        }
+
+        .terminal-header {
+            background: var(--terminal-header);
+            padding: 8px 16px;
+            border-bottom: 1px solid #30363d;
+            display: flex;
+            align-items: center;
+        }
+
+        .terminal-dots span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .terminal-body {
+            padding: 1.5rem;
+            font-family: var(--code-font);
+            font-size: 0.9rem;
+        }
+
+        /* Architecture Section */
+        .arch-diagram {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+            filter: hue-rotate(15deg);
+            /* Match theme */
+        }
+
+        /* Feature Badge */
+        .feature-badge {
+            background: rgba(56, 139, 253, 0.1);
+            color: #58a6ff;
+            border: 1px solid rgba(56, 139, 253, 0.4);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-family: var(--code-font);
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        /* Debug Console Card */
+        .debug-console {
+            background: #000;
+            border: 1px solid #30363d;
+            color: #3fb950;
+            font-family: var(--code-font);
+            padding: 1rem;
+            border-radius: 6px;
+            height: 100%;
+        }
+
+        .cmd-prompt::before {
+            content: "$ ";
+            color: #8b949e;
+        }
+
+        .floating-toggle-btn {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            z-index: 1050;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            padding: 1rem 0.5rem;
+            background: var(--tech-secondary);
+            color: black;
+            font-weight: bold;
+            border: none;
+            box-shadow: 0 0 15px rgba(0, 184, 255, 0.4);
+        }
+
+        .floating-toggle-btn:hover {
+            background: #fff;
+            color: var(--tech-secondary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="notion-crawler-business.html" class="btn btn-primary floating-toggle-btn rounded-start" title="切換至商業視角">
+        <i class="bi bi-briefcase-fill mb-2"></i>Business View
+    </a>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand font-monospace fw-bold" href="../index.html">
+                    <span class="text-secondary">&lt;</span>LukeHou<span class="text-secondary">/&gt;</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto font-monospace">
+                        <li class="nav-item"><a class="nav-link" href="#benchmark">Metrics</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#architecture">Architecture</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#debug">Debug</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#usage">Usage</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#fallback">Fallback</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#testing">Testing</a></li>
+                        <li class="nav-item"><a class="nav-link text-white ms-3" href="../portfolio.html">Return to
+                                Portfolio</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Tech Hero -->
+        <section class="tech-hero">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-7">
+                        <div class="feature-badge">v1.2.0-stable</div>
+                        <h1 class="display-3 fw-bold hero-title mb-4">ENGINEERING<br>DATA SOVEREIGNTY.</h1>
+                        <p class="lead text-secondary mb-5 font-monospace">
+                            逆向工程 Notion Internal API，實現超速資料遷移。<br>
+                            遞迴爬取、斷點續傳，文件優化以及全自動化的 Confluence 整合。
+                        </p>
+                        <div class="d-flex gap-3">
+                            <a href="#usage" class="btn btn-outline-light font-monospace px-4 py-2">
+                                <i class="bi bi-terminal me-2"></i>Get Started
+                            </a>
+                            <a href="https://github.com/luke-hou"
+                                class="btn btn-dark font-monospace px-4 py-2 border border-secondary">
+                                <i class="bi bi-github me-2"></i>Source Code
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 d-none d-lg-block">
+                        <div class="terminal-window">
+                            <div class="terminal-header">
+                                <div class="terminal-dots">
+                                    <span style="background:#ff5f56"></span>
+                                    <span style="background:#ffbd2e"></span>
+                                    <span style="background:#27c93f"></span>
+                                </div>
+                                <div class="text-secondary small ms-2 font-monospace">zsh — node-1</div>
+                            </div>
+                            <div class="terminal-body text-light">
+                                <div class="mb-2"><span class="text-success">➜</span> <span class="text-info">~</span>
+                                    python crawl_notion_api.py</div>
+                                <div class="text-secondary mb-1">[INFO] Initializing reverse API connection...</div>
+                                <div class="text-secondary mb-1">[INFO] Authenticated as user_8a2d...</div>
+                                <div class="text-secondary mb-1">[INFO] Found 517 pages in workspace.</div>
+                                <div class="text-white mb-1">> Processing Page: 'API Specification' (ID: a1b2...)</div>
+                                <div class="text-white mb-1">> Recursively fetching children... [OK]</div>
+                                <div class="text-success blinking-cursor">_</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project README.md / Philosophy -->
+        <section class="py-5 bg-black border-bottom border-secondary" id="readme">
+            <div class="container py-4">
+                <div class="row">
+                    <div class="col-lg-10 mx-auto">
+                        <div class="p-4 border border-secondary rounded-2" style="background: rgba(22, 27, 34, 0.5);">
+                            <h2 class="h5 font-monospace text-secondary mb-3">// README.md: THE_WHY</h2>
+                            <figure class="mb-0">
+                                <blockquote class="blockquote text-white fs-5 font-monospace">
+                                    <p class="mb-4">
+                                        "In the era of AI & Vibe Coding, building tools is faster than ever.
+                                        But <span class="text-warning">Token costs and Time are real.</span>"
+                                    </p>
+                                </blockquote>
+                                <figcaption class="blockquote-footer text-secondary font-monospace">
+                                    AI 大時代讓很多事情變的更快速更輕鬆，所以我們更必須計算 ROI，從真實痛點出發，而非為了 AI 而 AI。<br><br>
+                                    <span class="text-white">我們必須找到問題點，然後評估是否划算，然後幹掉它：</span><br>
+                                    手動遷移 500+ Notion 頁面 = <span class="text-danger">120+ 小時</span> 無腦勞動。(每次成本)<br>
+                                    開發爬蟲與自動化管道 = <span class="text-success">一次性</span> 開發成本 + <span
+                                        class="text-success">1 小時</span> 執行)<br>
+                                    <br>
+                                    這就是為什麼我們快速用 AI 寫工具程式：<span class="text-info">為了將人類從重複勞動中解放，去解決更困難的問題。</span>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Benchmark -->
+        <section class="py-5 bg-black" id="benchmark">
+            <div class="container py-5">
+                <h2 class="h3 font-monospace text-white mb-5 border-start border-4 border-danger ps-3">
+                    PERFORMANCE_METRICS</h2>
+
+                <div class="row align-items-center">
+                    <div class="col-lg-5">
+                        <div class="terminal-window mb-4 mb-lg-0">
+                            <div class="terminal-header">
+                                <div class="text-secondary small font-monospace">benchmark_result.json</div>
+                            </div>
+                            <div class="terminal-body font-monospace">
+                                <div class="mb-4">
+                                    <div class="text-secondary small mb-1">MANUAL_MIGRATION (est.)</div>
+                                    <div class="d-flex align-items-center mb-1">
+                                        <div style="width: 100%; height: 2px; background: #30363d;">
+                                            <div style="width: 100%; height: 100%; background: #ff5f56;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="text-white">Time: <span class="text-danger">129.0 hrs</span></div>
+                                </div>
+
+                                <div class="mb-2">
+                                    <div class="text-secondary small mb-1">NOTION_CRAWLER (v1.2)</div>
+                                    <div class="d-flex align-items-center mb-1">
+                                        <div style="width: 100%; height: 2px; background: #30363d;">
+                                            <div style="width: 1%; height: 100%; background: #00ff9d;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="text-white">Time: <span class="text-success">0.5 hrs</span></div>
+                                </div>
+                                <hr class="border-secondary my-3">
+                                <div class="text-success small">
+                                    > Speedup Factor: <b>258x</b><br>
+                                    > Data Integrity: <b>100%</b><br>
+                                    > Memory Usage: <b>&lt;150MB</b> (Streaming)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 ms-auto">
+                        <h3 class="h4 text-white font-monospace mb-4"><i
+                                class="bi bi-speedometer2 me-3 text-danger"></i>Exponential Efficiency</h3>
+                        <p class="text-secondary mb-4">
+                            基於 500+ 個頁面的真實遷移數據測試。人工搬運不僅耗時 (預估 9 分鐘/頁)，且容易遺漏層級結構。
+                            Notion Crawler 透過並行處理與自動化轉換，將數週的工作縮短至 1 小時內完成。
+                        </p>
+                        <div class="d-flex gap-4 text-center">
+                            <div>
+                                <div class="h2 text-white fw-bold mb-0">517</div>
+                                <div class="text-secondary small font-monospace">PAGES PROCESSED</div>
+                            </div>
+                            <div>
+                                <div class="h2 text-white fw-bold mb-0">0</div>
+                                <div class="text-secondary small font-monospace">DATA LOSS</div>
+                            </div>
+                            <div>
+                                <div class="h2 text-white fw-bold mb-0">258x</div>
+                                <div class="text-secondary small font-monospace">FASTER</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- System Architecture -->
+        <section class="py-5" id="architecture">
+            <div class="container py-5">
+                <h2 class="h3 font-monospace mb-5 text-white border-start border-4 border-success ps-3">
+                    SYSTEM_ARCHITECTURE</h2>
+
+                <div class="row g-5 align-items-center mb-5">
+                    <div class="col-lg-6">
+                        <img src="file:///C:/Users/user/.gemini/antigravity/brain/f46ee672-2c0b-430a-830b-af80bf312f2a/notion_crawler_arch_1769847031889.png"
+                            alt="Notion Crawler System Architecture Diagram showing Recursive Crawler, Markdown Transpiler, and Confluence Integrator data flow"
+                            class="arch-diagram">
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="d-flex mb-4">
+                            <div class="me-3 text-success h3"><i class="bi bi-1-square"></i></div>
+                            <div>
+                                <h3 class="text-white h5 font-monospace">Recursive Crawler Engine</h3>
+                                <ul class="text-secondary small list-unstyled mt-2">
+                                    <li class="mb-2"><i class="bi bi-check2 me-2"></i><b>Reverse Internal API</b>：直接串接
+                                        `loadPageChunk` 取得結構化 Block 資料，速度比 Playwright 快 10 倍。</li>
+                                    <li class="mb-2"><i class="bi bi-check2 me-2"></i><b>遞迴遍歷 (Recursive)</b>：自動解析子頁面
+                                        (Sub-pages) 與 Database Rows，精確保留無限層級結構。</li>
+                                    <li class="mb-1"><i class="bi bi-check2 me-2"></i><b>反偵測機制</b>：實作 Exponential
+                                        Backoff 與 Jitter 隨機延遲，有效規避 429 Rate Limit。</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-4">
+                            <div class="me-3 text-info h3"><i class="bi bi-2-square"></i></div>
+                            <div>
+                                <h3 class="text-white h5 font-monospace">Markdown Transpiler</h3>
+                                <ul class="text-secondary small list-unstyled mt-2">
+                                    <li class="mb-2"><i class="bi bi-check2 me-2"></i><b>AST 解析</b>：將原始 JSON 解析為抽象語法樹，確保
+                                        Table, Callout, Code Block 等複雜元件精確渲染。</li>
+                                    <li class="mb-2"><i class="bi bi-check2 me-2"></i><b>Knowledge
+                                            Stitcher</b>：自動識別並縫合分散的 API 參數頁面 (Input/Output/Schema)，重組為單一 Truth。</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-4">
+                            <div class="me-3 text-warning h3"><i class="bi bi-3-square"></i></div>
+                            <div>
+                                <h3 class="text-white h5 font-monospace">Resilience & Failover</h3>
+                                <ul class="text-secondary small list-unstyled mt-2">
+                                    <li class="mb-2"><i class="bi bi-check2 me-2"></i><b>Dual-Domain Failover</b>：優先嘗試
+                                        `notion.so`，遇錯自動切換至 `notion.site` 鏡像域名，確保 99.9% 可用性。</li>
+                                    <li class="mb-2"><i class="bi bi-check2 me-2"></i><b>Connection Pooling</b>：使用
+                                        `requests.Session` 維持 TCP 連線池，減少 TLS 握手開銷，提升大量爬取效能。</li>
+                                    <li class="mb-1"><i class="bi bi-check2 me-2"></i><b>Granular
+                                            Checkpoints</b>：SQLite/JSON 記錄 Page ID 狀態，實現 100% 斷點續傳。</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="me-3 text-danger h3"><i class="bi bi-4-square"></i></div>
+                            <div>
+                                <h3 class="text-white h5 font-monospace">Confluence Integrator</h3>
+                                <ul class="text-secondary small list-unstyled mt-2">
+                                    <li class="mb-2"><i class="bi bi-check2 me-2"></i><b>BFS
+                                            Traversal</b>：採用廣度優先策略上傳，確保父頁面絕對優先於子頁面建立，避免 Orphan Pages。</li>
+                                    <li class="mb-2"><i class="bi bi-check2 me-2"></i><b>Smart Transform</b>：自動將 Mermaid
+                                        區塊轉換為 Confluence Macro，並修復頁面間的相對連結 (Internal Links)。</li>
+                                    <li class="mb-1"><i class="bi bi-check2 me-2"></i><b>Auto-Root Management</b>：自動在
+                                        Space 根目錄建立 `Notion_KB`，支援 `--clean` 遞迴刪除以進行乾淨重部署。</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-4">
+                            <div class="me-3 text-secondary h3"><i class="bi bi-5-square"></i></div>
+                            <div>
+                                <h3 class="text-white h5 font-monospace">Legacy Mode (Fallback)</h3>
+                                <ul class="text-secondary small list-unstyled mt-2">
+                                    <li class="mb-2"><i class="bi bi-check2 me-2"></i><b>Playwright
+                                            Renderer</b>：完整瀏覽器模擬，透過 DOM 解析 Breadcrumb 決定路徑，解決 API 無法處理的特殊 Edge Case。
+                                    </li>
+                                    <li class="mb-2"><i class="bi bi-check2 me-2"></i><b>Interactive Crawling</b>：支援
+                                        Auto-Scroll 觸發 Lazy Loading、自動展開 Toggle、載入 Database。</li>
+                                    <li class="mb-1"><i class="bi bi-check2 me-2"></i><b>Stealth Mode</b>：使用 Headed
+                                        模式與隨機延遲 (3-10s) 繞過 Cloudflare 驗證。</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-4">
+                            <div class="me-3 h3" style="color:#58a6ff"><i class="bi bi-6-square"></i></div>
+                            <div>
+                                <h3 class="text-white h5 font-monospace">Test Suite (Quality Gate)</h3>
+                                <ul class="text-secondary small list-unstyled mt-2">
+                                    <li class="mb-2"><i class="bi bi-check2 me-2"></i><b>130 Unit Tests</b>：使用 pytest
+                                        覆蓋三大核心模組的純函式、渲染邏輯與合併策略，確保每次變更不破壞既有行為。</li>
+                                    <li class="mb-2"><i class="bi bi-check2 me-2"></i><b>Zero-IO Pure
+                                            Testing</b>：RichText 轉換、Block 渲染、標題消歧等核心邏輯皆為純函式測試，無需 Mock 外部服務。</li>
+                                    <li class="mb-1"><i class="bi bi-check2 me-2"></i><b>Filesystem
+                                            Isolation</b>：合併與樹建構測試使用 pytest <code>tmp_path</code> fixture，完全隔離不污染真實檔案系統。
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Debug & Dev Experience -->
+        <section class="py-5 bg-dark-subtle" id="debug" style="background:#161b22">
+            <div class="container py-5">
+                <div class="d-flex justify-content-between align-items-end mb-5">
+                    <h2 class="h3 font-monospace text-white border-start border-4 border-warning ps-3">DEV_EXPERIENCE
+                        (DX)</h2>
+                    <span class="text-secondary font-monospace small">開發者的時光機：快速迭代工具</span>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="debug-console">
+                            <div class="text-secondary mb-2 small">// DEBUG MODE: OFFLINE</div>
+                            <div class="cmd-prompt text-light">enable --offline-replay</div>
+                            <div class="mt-3 text-secondary small">
+                                > Loading snapshot `dump_20250131.json`<br>
+                                > Mocking API responses...<br>
+                                > <span class="text-success">Ready. (0ms latency)</span>
+                            </div>
+                        </div>
+                        <h5 class="text-white mt-3 h6 font-monospace">Offline Replay</h5>
+                        <p class="text-secondary small">開發解析邏輯時直接讀取本地 Snapshot，<b>完全無需聯網</b>，讓迭代速度提升 100 倍。</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="debug-console">
+                            <div class="text-secondary mb-2 small">// PRE-FLIGHT CHECK</div>
+                            <div class="cmd-prompt text-light">run --dry-run</div>
+                            <div class="mt-3 text-secondary small">
+                                > Simulating write operations...<br>
+                                > [SKIP] POST /wiki/rest/api/content<br>
+                                > <span class="text-warning">No changes applied.</span>
+                            </div>
+                        </div>
+                        <h5 class="text-white mt-3 h6 font-monospace">Dry Run Mode</h5>
+                        <p class="text-secondary small">模擬轉譯與上傳流程，只輸出日誌而不執行寫入，確保與現有 Confluence 資料無衝突。</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="debug-console">
+                            <div class="text-secondary mb-2 small">// ERROR RECOVERY</div>
+                            <div class="cmd-prompt text-light">status --checkpoints</div>
+                            <div class="mt-3 text-secondary small">
+                                > Pending: 42 pages<br>
+                                > Failed: 3 pages (Rate Limited)<br>
+                                > <span class="text-success">Resuming from last success...</span>
+                            </div>
+                        </div>
+                        <h5 class="text-white mt-3 h6 font-monospace">Smart Resume</h5>
+                        <p class="text-secondary small">程式重啟時自動讀取 Checkpoint，跳過已成功 (Success) 的頁面，僅重試失敗項目。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Usage / CLI -->
+        <section class="py-5" id="usage">
+            <div class="container py-5">
+                <h2 class="h3 font-monospace text-white mb-5 border-start border-4 border-primary ps-3">CLI_COMMANDS
+                </h2>
+
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="mb-4">
+                            <label class="text-secondary font-monospace mb-2 small">01. Initialize & Crawl (API
+                                Mode)</label>
+                            <p class="text-secondary small mb-2">使用逆向 API 快速爬取，無需瀏覽器介面。適用於大批量資料抓取。</p>
+                            <div class="terminal-window mb-0">
+                                <div class="terminal-body py-3">
+                                    <div class="d-flex justify-content-between text-secondary mb-2 small">
+                                        <span>INPUT</span>
+                                        <i class="bi bi-clipboard cursor-pointer"></i>
+                                    </div>
+                                    <code
+                                        class="text-light">python crawl_notion_api.py --token $NOTION_TOKEN_V2 --page $ROOT_PAGE_ID</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="text-secondary font-monospace mb-2 small">02. Build Knowledge Base &
+                                Serve</label>
+                            <p class="text-secondary small mb-2">將零散檔案合併為 API 文件，並啟動 MkDocs 本地伺服器預覽。</p>
+                            <div class="terminal-window mb-0">
+                                <div class="terminal-body py-3">
+                                    <div class="d-flex justify-content-between text-secondary mb-2 small">
+                                        <span>INPUT</span>
+                                        <i class="bi bi-clipboard cursor-pointer"></i>
+                                    </div>
+                                    <code class="text-light">python build_knowledge_base.py && mkdocs serve</code>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="text-secondary font-monospace mb-2 small">03. Deploy to Confluence</label>
+                            <p class="text-secondary small mb-2">自動讀取 output 目錄並上傳至指定 Space。`--source all` 代表全量上傳。</p>
+                            <div class="terminal-window mb-0">
+                                <div class="terminal-body py-3">
+                                    <div class="d-flex justify-content-between text-secondary mb-2 small">
+                                        <span>INPUT</span>
+                                        <i class="bi bi-clipboard cursor-pointer"></i>
+                                    </div>
+                                    <code
+                                        class="text-light">python upload_to_confluence.py --source all --space ENGINEERING</code>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Playwright Fallback -->
+        <section class="py-5 bg-black" id="fallback">
+            <div class="container py-5">
+                <h2 class="h3 font-monospace text-white mb-5 border-start border-4 border-secondary ps-3">
+                    FALLBACK_STRATEGY</h2>
+
+                <div class="row g-5 align-items-start">
+                    <div class="col-lg-6">
+                        <div class="feature-badge mb-3">PLAN B — WHEN API FAILS</div>
+                        <h3 class="h4 text-white font-monospace mb-3"><i
+                                class="bi bi-shield-exclamation me-2 text-warning"></i>Why We Need a Fallback</h3>
+                        <p class="text-secondary mb-4">
+                            Notion 內部 API (<code>loadPageChunk</code>) 屬於非公開端點，隨時可能變更格式、加入驗證或限流。
+                            若爬蟲被識別為自動化工具，API 請求將直接返回 403 或 429。<br><br>
+                            因此本專案內建 <b class="text-white">Playwright 瀏覽器模式</b>作為完整備援方案：
+                            以真實瀏覽器渲染頁面，完全繞過 API 層，確保在任何情境下都能完成資料遷移。
+                        </p>
+
+                        <div class="d-flex flex-column gap-3">
+                            <div class="d-flex align-items-start gap-3 p-3 rounded-2 border border-secondary"
+                                style="background:rgba(22,27,34,.5)">
+                                <i class="bi bi-browser-chrome text-info h4 mb-0 mt-1"></i>
+                                <div>
+                                    <div class="text-white small fw-bold font-monospace mb-1">Headed Browser Mode</div>
+                                    <div class="text-secondary small">使用非 Headless Chromium 渲染，完整執行 JavaScript，繞過
+                                        Cloudflare Bot Detection。</div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start gap-3 p-3 rounded-2 border border-secondary"
+                                style="background:rgba(22,27,34,.5)">
+                                <i class="bi bi-clock-history text-warning h4 mb-0 mt-1"></i>
+                                <div>
+                                    <div class="text-white small fw-bold font-monospace mb-1">Randomized Delay (3-10s)
+                                    </div>
+                                    <div class="text-secondary small">每次請求間隔 3~10 秒隨機延遲，模擬人類瀏覽行為，避免固定節奏被偵測。</div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start gap-3 p-3 rounded-2 border border-secondary"
+                                style="background:rgba(22,27,34,.5)">
+                                <i class="bi bi-arrows-fullscreen text-success h4 mb-0 mt-1"></i>
+                                <div>
+                                    <div class="text-white small fw-bold font-monospace mb-1">Auto-Scroll & Expand</div>
+                                    <div class="text-secondary small">自動觸發 Lazy Loading、展開 Toggle Block、載入 Database
+                                        完整列表，不遺漏任何內容。</div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start gap-3 p-3 rounded-2 border border-secondary"
+                                style="background:rgba(22,27,34,.5)">
+                                <i class="bi bi-signpost-split text-danger h4 mb-0 mt-1"></i>
+                                <div>
+                                    <div class="text-white small fw-bold font-monospace mb-1">Breadcrumb Path Resolution
+                                    </div>
+                                    <div class="text-secondary small">解析頁面 DOM 中的 Breadcrumb 導覽列，精確還原頁面層級結構與儲存路徑。</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="terminal-window mb-4">
+                            <div class="terminal-header">
+                                <div class="terminal-dots">
+                                    <span style="background:#ff5f56"></span>
+                                    <span style="background:#ffbd2e"></span>
+                                    <span style="background:#27c93f"></span>
+                                </div>
+                                <div class="text-secondary small ms-2 font-monospace">crawl_notion.py — Playwright</div>
+                            </div>
+                            <div class="terminal-body" style="font-size:.8rem;line-height:1.7">
+                                <div class="text-secondary mb-1">$ python crawl_notion.py</div>
+                                <div class="text-white mb-1">[INFO] Launching Chromium (headed mode)...</div>
+                                <div class="text-white mb-1">[INFO] User-Agent: Chrome/131.0 (Windows)</div>
+                                <div class="text-white mb-1">[INFO] Navigating to notion.site/...</div>
+                                <div class="text-warning mb-1">[INFO] Waiting 6.2s (random delay)...</div>
+                                <div class="text-white mb-1">[INFO] Auto-scrolling page content...</div>
+                                <div class="text-white mb-1">[INFO] Expanding 3 toggle blocks...</div>
+                                <div class="text-white mb-1">[INFO] Breadcrumb: Project &gt; Auth &gt; Login</div>
+                                <div class="text-success mb-1">[INFO] Saved: output/Project/Auth/Login.md</div>
+                                <div class="text-warning mb-1">[INFO] Waiting 4.8s (random delay)...</div>
+                                <div class="text-white mb-1">[INFO] Processing next page...</div>
+                                <div class="text-success">_</div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-2 border border-secondary" style="background:rgba(22,27,34,.5)">
+                            <h5 class="font-monospace text-white h6 mb-3"><i
+                                    class="bi bi-arrow-left-right me-2 text-warning"></i>API vs Playwright 比較</h5>
+                            <table class="table table-sm table-borderless mb-0" style="font-size:.82rem">
+                                <thead>
+                                    <tr class="text-secondary font-monospace" style="font-size:.7rem">
+                                        <th></th>
+                                        <th class="text-center">API Mode</th>
+                                        <th class="text-center">Playwright</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-secondary">
+                                    <tr>
+                                        <td>速度</td>
+                                        <td class="text-center"><span class="text-success fw-bold">~10 min</span></td>
+                                        <td class="text-center"><span class="text-warning fw-bold">~3 hrs</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>反偵測</td>
+                                        <td class="text-center">Header 偽裝</td>
+                                        <td class="text-center"><span class="text-success">真實瀏覽器</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>API 依賴</td>
+                                        <td class="text-center"><span class="text-danger">非公開 API</span></td>
+                                        <td class="text-center"><span class="text-success">零 API 依賴</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cloudflare</td>
+                                        <td class="text-center">可能被攔截</td>
+                                        <td class="text-center"><span class="text-success">完全繞過</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>斷點續傳</td>
+                                        <td class="text-center"><span class="text-success">&#10003;</span></td>
+                                        <td class="text-center"><span class="text-success">&#10003;</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>記憶體</td>
+                                        <td class="text-center"><span class="text-success">&lt;50MB</span></td>
+                                        <td class="text-center">~500MB</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testing / Quality Assurance -->
+        <section class="py-5 bg-dark-subtle" id="testing" style="background:#161b22">
+            <div class="container py-5">
+                <div class="d-flex justify-content-between align-items-end mb-5">
+                    <h2 class="h3 font-monospace text-white border-start border-4 border-info ps-3">TEST_SUITE</h2>
+                    <span class="text-secondary font-monospace small">pytest — 130 tests across 3 core modules</span>
+                </div>
+
+                <div class="row g-4 mb-5">
+                    <!-- KPI Cards -->
+                    <div class="col-6 col-md-3">
+                        <div class="text-center p-4 border border-secondary rounded-2"
+                            style="background:rgba(22,27,34,.5)">
+                            <div class="h1 fw-bold mb-1" style="color:var(--tech-primary)">130</div>
+                            <div class="text-secondary small font-monospace">TEST CASES</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="text-center p-4 border border-secondary rounded-2"
+                            style="background:rgba(22,27,34,.5)">
+                            <div class="h1 fw-bold text-info mb-1">3</div>
+                            <div class="text-secondary small font-monospace">MODULES COVERED</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="text-center p-4 border border-secondary rounded-2"
+                            style="background:rgba(22,27,34,.5)">
+                            <div class="h1 fw-bold text-warning mb-1">0.3s</div>
+                            <div class="text-secondary small font-monospace">EXECUTION TIME</div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="text-center p-4 border border-secondary rounded-2"
+                            style="background:rgba(22,27,34,.5)">
+                            <div class="h1 fw-bold mb-1" style="color:var(--tech-primary)">100%</div>
+                            <div class="text-secondary small font-monospace">PASS RATE</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Terminal: pytest output -->
+                    <div class="col-lg-6">
+                        <div class="terminal-window mb-0" style="height:100%">
+                            <div class="terminal-header">
+                                <div class="terminal-dots">
+                                    <span style="background:#ff5f56"></span>
+                                    <span style="background:#ffbd2e"></span>
+                                    <span style="background:#27c93f"></span>
+                                </div>
+                                <div class="text-secondary small ms-2 font-monospace">pytest -v --tb=short</div>
+                            </div>
+                            <div class="terminal-body" style="font-size:.8rem;line-height:1.7">
+                                <div class="text-secondary mb-1">$ pytest -v --tb=short</div>
+                                <div class="text-secondary mb-1">======================== test session starts
+                                    ========================</div>
+                                <div class="text-white mb-1">collected <b>130 items</b></div>
+                                <div class="mb-1">&nbsp;</div>
+                                <div class="text-success mb-0">
+                                    test_crawl_notion_api.py::TestSanitizeFilename::test_basic <b>PASSED</b></div>
+                                <div class="text-success mb-0">test_crawl_notion_api.py::TestRichTextConvert::test_bold
+                                    <b>PASSED</b></div>
+                                <div class="text-success mb-0">
+                                    test_crawl_notion_api.py::TestApplyDecorations::test_equation <b>PASSED</b></div>
+                                <div class="text-success mb-0">
+                                    test_crawl_notion_api.py::TestBlockToMarkdown::test_table_2x2 <b>PASSED</b></div>
+                                <div class="text-success mb-0">
+                                    test_build_knowledge_base.py::TestStripH1::test_removes_h1 <b>PASSED</b></div>
+                                <div class="text-success mb-0">
+                                    test_build_knowledge_base.py::TestMergeStandardSplit::test_basic <b>PASSED</b></div>
+                                <div class="text-success mb-0">
+                                    test_upload_to_confluence.py::TestEscapeXml::test_ampersand <b>PASSED</b></div>
+                                <div class="text-success mb-0">test_upload_to_confluence.py::TestConvertMd::test_mermaid
+                                    <b>PASSED</b></div>
+                                <div class="text-secondary mb-0">... 122 more passed ...</div>
+                                <div class="mb-1">&nbsp;</div>
+                                <div class="text-success fw-bold">======================== 130 passed in 0.32s
+                                    ========================</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Module breakdown -->
+                    <div class="col-lg-6">
+                        <div class="p-4 border border-secondary rounded-2 mb-4" style="background:rgba(22,27,34,.5)">
+                            <h5 class="font-monospace text-white h6 mb-3"><i
+                                    class="bi bi-bar-chart me-2 text-info"></i>MODULE COVERAGE</h5>
+
+                            <!-- crawl_notion_api -->
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span class="font-monospace small text-warning">crawl_notion_api.py</span>
+                                    <span class="font-monospace small text-white">44 tests</span>
+                                </div>
+                                <div style="height:8px;background:#30363d;border-radius:4px;overflow:hidden">
+                                    <div style="width:100%;height:100%;background:#ffbd2e;border-radius:4px"></div>
+                                </div>
+                                <div class="text-secondary mt-1" style="font-size:.72rem">RichTextConverter &bull;
+                                    BlockToMarkdown &bull; sanitize_filename &bull; page ID helpers</div>
+                            </div>
+
+                            <!-- upload_to_confluence -->
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span class="font-monospace small text-info">upload_to_confluence.py</span>
+                                    <span class="font-monospace small text-white">34 tests</span>
+                                </div>
+                                <div style="height:8px;background:#30363d;border-radius:4px;overflow:hidden">
+                                    <div style="width:77%;height:100%;background:#58a6ff;border-radius:4px"></div>
+                                </div>
+                                <div class="text-secondary mt-1" style="font-size:.72rem">_escape_xml &bull; PageNode
+                                    tree &bull; title conflicts &bull; MD→Confluence conversion</div>
+                            </div>
+
+                            <!-- build_knowledge_base -->
+                            <div class="mb-0">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span class="font-monospace small"
+                                        style="color:#d2a8ff">build_knowledge_base.py</span>
+                                    <span class="font-monospace small text-white">32 tests</span>
+                                </div>
+                                <div style="height:8px;background:#30363d;border-radius:4px;overflow:hidden">
+                                    <div style="width:73%;height:100%;background:#d2a8ff;border-radius:4px"></div>
+                                </div>
+                                <div class="text-secondary mt-1" style="font-size:.72rem">strip_h1 &bull;
+                                    extract_api_meta &bull; Mermaid generators &bull; merge functions (tmp_path)</div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 border border-secondary rounded-2" style="background:rgba(22,27,34,.5)">
+                            <h5 class="font-monospace text-white h6 mb-3"><i
+                                    class="bi bi-shield-check me-2 text-success"></i>TEST CATEGORIES</h5>
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <i class="bi bi-check-circle text-success small"></i>
+                                        <span class="text-secondary small">Pure Functions</span>
+                                        <span class="ms-auto font-monospace text-white small">~50</span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <i class="bi bi-check-circle text-success small"></i>
+                                        <span class="text-secondary small">Rich Text Parsing</span>
+                                        <span class="ms-auto font-monospace text-white small">~27</span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <i class="bi bi-check-circle text-success small"></i>
+                                        <span class="text-secondary small">Block Rendering</span>
+                                        <span class="ms-auto font-monospace text-white small">~16</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <i class="bi bi-check-circle text-success small"></i>
+                                        <span class="text-secondary small">File Merge (I/O)</span>
+                                        <span class="ms-auto font-monospace text-white small">~9</span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <i class="bi bi-check-circle text-success small"></i>
+                                        <span class="text-secondary small">Tree Building</span>
+                                        <span class="ms-auto font-monospace text-white small">~12</span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <i class="bi bi-check-circle text-success small"></i>
+                                        <span class="text-secondary small">MD→Confluence</span>
+                                        <span class="ms-auto font-monospace text-white small">~5</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Run command -->
+                <div class="row mt-5">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="terminal-window mb-0">
+                            <div class="terminal-body py-3">
+                                <div class="d-flex justify-content-between text-secondary mb-2 small">
+                                    <span>RUN TESTS</span>
+                                    <i class="bi bi-clipboard cursor-pointer"></i>
+                                </div>
+                                <code class="text-light">pip install pytest && pytest -v --tb=short</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="py-5 border-top border-secondary text-center">
+            <div class="container">
+                <p class="text-secondary font-monospace small mb-3">Designed for reliability. Built with Python.</p>
+                <div class="d-flex justify-content-center gap-4 text-secondary">
+                    <span><i class="bi bi-filetype-py me-2"></i>Python 3.10</span>
+                    <span><i class="bi bi-box-seam me-2"></i>Playwright</span>
+                    <span><i class="bi bi-markdown me-2"></i>MkDocs</span>
+                </div>
+                <p class="mt-5 text-muted small">&copy; 2025 Luke Hou.</p>
+            </div>
+        </footer>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -7,6 +7,7 @@ GEMINI.md
 Podcast_Playgorund/
 local_plan/*
 PlayGround/*
+OpenCodeSkillsTutorial/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -215,3 +216,4 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+IMPLEMENTMENT_CHECKPOINT.md

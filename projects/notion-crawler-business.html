@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知識解放：Notion Crawler 自動化遷移 | Luke Hou</title>
+    <meta name="description" content="企業級知識遷移解決方案。自動化爬取、結構保留、MkDocs 生成，從根本上解決 Vendor Lock-in 風險。">
+    <meta name="author" content="Luke Hou">
+    <link rel="canonical" href="https://luke-hou.github.io/projects/notion-crawler-business.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://luke-hou.github.io/projects/notion-crawler-business.html">
+    <meta property="og:title" content="知識解放：Notion Crawler 自動化遷移 | Luke Hou">
+    <meta property="og:description" content="企業級知識遷移解決方案。自動化爬取、結構保留、MkDocs 生成，從根本上解決 Vendor Lock-in 風險。">
+    <meta property="og:image" content="https://luke-hou.github.io/images/projects/notion_crawler_hero_bg.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://luke-hou.github.io/projects/notion-crawler-business.html">
+    <meta property="twitter:title" content="知識解放：Notion Crawler 自動化遷移 | Luke Hou">
+    <meta property="twitter:description" content="企業級知識遷移解決方案。自動化爬取、結構保留、MkDocs 生成，從根本上解決 Vendor Lock-in 風險。">
+    <meta property="twitter:image" content="https://luke-hou.github.io/images/projects/notion_crawler_hero_bg.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+            --secondary-gradient: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            --hero-overlay: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, #0d1117 100%);
+            --card-bg: #161b22;
+            --border-color: #30363d;
+        }
+
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* Navbar Override */
+        .navbar {
+            background-color: rgba(13, 17, 23, 0.85) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            background: var(--hero-overlay), url('file:///C:/Users/user/.gemini/antigravity/brain/f46ee672-2c0b-430a-830b-af80bf312f2a/notion_crawler_hero_bg_1769845147104.png') no-repeat center center;
+            background-size: cover;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            background: -webkit-linear-gradient(left, #ffffff, #a5b4fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-gradient {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 12px 32px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0, 114, 255, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 114, 255, 0.6);
+            color: white;
+        }
+
+        .btn-outline-glow {
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            background: rgba(255, 255, 255, 0.05);
+            font-weight: 600;
+            padding: 12px 32px;
+            border-radius: 50px;
+            transition: all 0.2s;
+        }
+
+        .btn-outline-glow:hover {
+            border-color: #8b949e;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        /* Feature Cards */
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: transform 0.3s, border-color 0.3s;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: #58a6ff;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: -webkit-linear-gradient(45deg, #00c6ff, #0072ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Workflow Section */
+        .workflow-img {
+            max-width: 100%;
+            filter: drop-shadow(0 0 30px rgba(0, 198, 255, 0.2));
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* ROI Section */
+        .roi-stat-main {
+            font-size: 5rem;
+            font-weight: 800;
+            color: #2ea043;
+            line-height: 1;
+        }
+
+        .roi-stat-label {
+            color: #8b949e;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .comparison-bar {
+            height: 24px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        .floating-toggle-btn {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            z-index: 1050;
+            background: rgba(22, 27, 34, 0.9);
+            border: 1px solid #30363d;
+            color: white;
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            color: #58a6ff;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Floating Tech Toggle -->
+    <a href="notion-crawler.html" class="btn btn-sm btn-outline-glow floating-toggle-btn rounded-pill px-3 py-2"
+        title="切換至技術視角說明">
+        <i class="bi bi-cpu-fill me-2"></i>Technical View
+    </a>
+
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="../index.html">Luke Hou</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="../portfolio.html">Works</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <span
+                            class="badge rounded-pill bg-primary bg-opacity-10 text-primary border border-primary mb-3 px-3 py-2">
+                            <i class="bi bi-stars me-2"></i>AI Vibe Coding 自動化知識遷移引擎
+                        </span>
+                        <h1 class="hero-title">別讓你的知識<br>被平台綁架。</h1>
+                        <p class="lead text-secondary mb-5 fs-4" style="max-width: 600px;">
+                            使用 AI Vibe Coding 打造你的工具，將 Notion 知識庫完美轉換為結構化 Markdown，自動生成 Confluence 文件。 </p>
+                        <div class="d-flex gap-3">
+                            <a href="#roi" class="btn btn-gradient btn-lg">查看效益分析</a>
+                            <a href="notion-crawler.html" class="btn btn-outline-glow btn-lg">查看技術架構</a>
+                        </div>
+                        <div class="mt-5 text-secondary small">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>保留層級結構
+                            <span class="mx-3">|</span>
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>MkDocs 原生支援
+                            <span class="mx-3">|</span>
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>100% 離線備份
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROI Section (Moved to Top) -->
+        <section class="py-5" id="roi">
+            <div class="container py-5">
+                <div class="p-5 rounded-5"
+                    style="background: linear-gradient(180deg, #161b22 0%, #0d1117 100%); border: 1px solid #30363d;">
+                    <div class="row align-items-center">
+                        <div class="col-lg-5 mb-5 mb-lg-0 text-center">
+                            <div class="text-start mb-4">
+                                <span class="section-tag">COST ANALYSIS</span>
+                                <h2 class="fw-bold text-white">效率提升 <span class="text-success">100+</span> 倍</h2>
+                                <p class="text-secondary">基於 500+
+                                    頁面的真實專案數據。自動化將數週的苦工縮短為一杯咖啡的時間，並可重複執行無數次(你絕不會再想用人工做一次的)。
+                                </p>
+                            </div>
+
+                            <div class="display-1 fw-bold text-white mb-2">129<span
+                                    class="fs-4 text-secondary ms-2">hr</span></div>
+                            <div class="progress mb-2" style="height: 30px;">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: 100%">人工手動 (Manual)
+                                </div>
+                            </div>
+
+                            <div class="py-3">VS</div>
+
+                            <div class="display-1 fw-bold text-success mb-2">1<span
+                                    class="fs-4 text-secondary ms-2">hr</span></div>
+                            <div class="progress" style="height: 30px;">
+                                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                                    role="progressbar" style="width: 5%">自動化 (Auto)</div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-1"></div>
+
+                        <div class="col-lg-6">
+                            <div class="table-responsive">
+                                <table class="table table-dark table-hover table-bordered border-secondary mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="text-secondary fw-normal ps-3">比較項目</th>
+                                            <th scope="col" class="text-secondary fw-normal">人工手動</th>
+                                            <th scope="col" class="text-success fw-bold">自動化工具</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="py-3 ps-3">自動爬取與備份</td>
+                                            <td class="py-3 text-secondary">34 hr</td>
+                                            <td class="py-3 text-success">
+                                                < 30 min</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-3 ps-3">知識庫整理 (Re-structure)</td>
+                                            <td class="py-3 text-secondary">52 hr</td>
+                                            <td class="py-3 text-success">一鍵完成</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-3 ps-3">Confluence/Web 自動上傳</td>
+                                            <td class="py-3 text-secondary">43 hr</td>
+                                            <td class="py-3 text-success">
+                                                < 30 min</td>
+                                        </tr>
+                                        <tr class="table-active">
+                                            <td class="py-3 fw-bold ps-3">總計工時</td>
+                                            <td class="py-3 fw-bold text-danger">129 hr</td>
+                                            <td class="py-3 fw-bold text-success">~ 1 hr <br><span
+                                                    class="small fw-normal">(人工介入 1 分鐘)</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p class="text-secondary small mt-2 fst-italic text-end opacity-75">
+                                    * 估算基準：人工爬取並存下一頁 4 分鐘；人工建立 Confluence Page 約 5 分鐘。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Problem/Solution Grid -->
+        <section class="py-5" id="features">
+            <div class="container py-5">
+                <div class="text-center section-header">
+                    <span class="section-tag">WHY IT MATTERS</span>
+                    <h2 class="display-5 fw-bold text-white">為什麼你需要「知識逃生艙」？</h2>
+                    <p class="text-secondary mt-3 fs-5">手動搬運 500+ 頁面是不可能的任務，而自動化工具卻能輕鬆完成。</p>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <i class="bi bi-diagram-3 feature-icon"></i>
+                            <h3 class="h4 text-white">結構完整重現</h3>
+                            <p class="text-secondary">Notion 的無限層級是雙面刃。人工匯出並還原結構是極其繁瑣又容易出錯的任務，而我們能<b>完美復刻</b>原始的層級關係。
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <i class="bi bi-braces feature-icon"></i>
+                            <h3 class="h4 text-white">API 文件縫合</h3>
+                            <p class="text-secondary">將分散在不同頁面的 Request/Response 範例，自動識別並縫合為單一的 Markdown 文件 (Single
+                                Source of Truth)，不僅爬取，還做到優化，直擊痛點。</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <i class="bi bi-shield-check feature-icon"></i>
+                            <h3 class="h4 text-white">企業級架構</h3>
+                            <p class="text-secondary">符合企業對知識資產管理的要求。不依賴第三方雲端，將資料掌控權完全握在自己手中。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Workflow Visualization -->
+        <section class="py-5 bg-dark-subtle" style="background: #0d1117;">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 mb-5 mb-lg-0">
+                        <span class="section-tag">THE ALCHEMY</span>
+                        <h2 class="display-5 fw-bold text-white mb-4">Data to Information.<br>煉金術般的價值躍升。</h2>
+                        <ul class="list-unstyled text-secondary mt-4">
+                            <li class="mb-4 d-flex">
+                                <i class="bi bi-1-circle-fill text-primary mt-1 me-3 fs-4"></i>
+                                <div>
+                                    <strong class="text-white d-block fs-5">Snapshot</strong>
+                                    快照擷取原始數據，建立本地 Checkpoint，支援斷點續傳。
+                                </div>
+                            </li>
+                            <li class="mb-4 d-flex">
+                                <i class="bi bi-2-circle-fill text-primary mt-1 me-3 fs-4"></i>
+                                <div>
+                                    <strong class="text-white d-block fs-5">Structure</strong>
+                                    解析頁面屬性，重組為 9 大功能模組，生成語意化導覽樹。
+                                </div>
+                            </li>
+                            <li class="mb-4 d-flex">
+                                <i class="bi bi-3-circle-fill text-primary mt-1 me-3 fs-4"></i>
+                                <div>
+                                    <strong class="text-white d-block fs-5">Site Gen</strong>
+                                    一鍵生成 MkDocs 靜態網站，具備全文搜索與 Mermaid圖表支援。
+                                </div>
+                            </li>
+                            <li class="mb-4 d-flex">
+                                <i class="bi bi-4-circle-fill text-primary mt-1 me-3 fs-4"></i>
+                                <div>
+                                    <strong class="text-white d-block fs-5">Confluence Sync</strong>
+                                    自動化上傳管道 (Pipeline)，支援 Mermaid 圖表轉換、內部連結修復與頁面衝突處理。
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <img src="file:///C:/Users/user/.gemini/antigravity/brain/f46ee672-2c0b-430a-830b-af80bf312f2a/notion_crawler_workflow_1769845171502.png"
+                            alt="Notion Crawler Workflow Diagram illustrating Snapshot, Structure Parsing, Site Generation, and Confluence Sync steps"
+                            class="workflow-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Footer -->
+        <section class="py-5 text-center border-top border-secondary">
+            <div class="container py-4">
+                <h2 class="h1 text-white fw-bold mb-3">準備好動嘴 (Vibe Coding) 了嗎？</h2>
+                <p class="lead text-secondary mb-4">查看完整的技術實作細節，或直接聯絡我討論實作方案。</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="notion-crawler.html" class="btn btn-outline-light btn-lg px-4 rounded-pill">技術架構詳情</a>
+                    <a href="../portfolio.html" class="btn btn-primary btn-lg px-4 rounded-pill">返回作品集</a>
+                </div>
+                <p class="mt-5 text-secondary small">&copy; 2025 Luke Hou. All rights reserved.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
