@@ -1,12 +1,12 @@
 
 #
 todo.md
-linkedin_post.md
+.agent/
 run_gemini.bat
 GEMINI.md
 Podcast_Playgorund/
+PlayGround/
 local_plan/*
-PlayGround/*
 OpenCodeSkillsTutorial/*
 
 # Byte-compiled / optimized / DLL files
