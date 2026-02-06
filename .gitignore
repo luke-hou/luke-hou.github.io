@@ -4,6 +4,7 @@ todo.md
 .agent/
 run_gemini.bat
 GEMINI.md
+CLAUDE.md
 Podcast_Playgorund/
 PlayGround/
 local_plan/*
@@ -217,3 +218,4 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 IMPLEMENTMENT_CHECKPOINT.md
+linkedin_post.md
