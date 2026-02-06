@@ -303,7 +303,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="index.html">~/home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="podcast.html">~/podcast</a></li>
+
                         <li class="nav-item"><a class="nav-link active" href="tutorials.html">~/tutorials</a></li>
                         <li class="nav-item"><a class="nav-link" href="portfolio.html">~/projects</a></li>
                         <li class="nav-item"><a class="nav-link" href="blog.html">~/blog</a></li>
@@ -336,6 +336,7 @@
             <button class="filter-btn" data-filter="antigravity"><i class="fas fa-rocket me-2"></i>Antigravity</button>
             <button class="filter-btn" data-filter="pm"><i class="fas fa-user-tie me-2"></i>PM x Gemini</button>
             <button class="filter-btn" data-filter="n8n"><i class="fas fa-cogs me-2"></i>n8n 系列</button>
+            <button class="filter-btn" data-filter="podcast"><i class="fas fa-headphones-alt me-2"></i>Podcast</button>
             <!-- <button class="filter-btn" data-filter="opencode"><i class="fas fa-code me-2"></i>Open Code</button> -->
         </div>
 
@@ -432,6 +433,43 @@
             </div>
         </div>
 
+        <!-- Podcast Series -->
+        <div class="tutorial-accordion" data-category="podcast" id="podcast-series">
+            <div class="tutorial-accordion-header" onclick="toggleAccordion(this.parentElement)">
+                <div class="accordion-title">
+                    <h2><i class="fas fa-headphones-alt me-2"></i>Podcast - 下課！十分鐘的AI</h2>
+                    <p>// 專為 PM 設計的 AI 協作聽覺饗宴</p>
+                </div>
+                <i class="fas fa-chevron-down accordion-icon"></i>
+            </div>
+            <div class="tutorial-accordion-body">
+                <div class="row g-4">
+                    <div class="col-md-6" id="podcast-main">
+                        <div class="terminal-card h-100 d-flex flex-column">
+                            <div class="terminal-card-header">
+                                <div class="window-controls">
+                                    <span class="close"></span>
+                                    <span class="minimize"></span>
+                                    <span class="maximize"></span>
+                                </div>
+                                <span class="file-path">~/tutorials/podcast.html</span>
+                            </div>
+                            <img src="images/index.jpg" alt="Podcast Series" class="terminal-card-image">
+                            <div class="terminal-card-body d-flex flex-column flex-grow-1">
+                                <h5 class="terminal-card-title">Podcast - 下課！十分鐘的AI</h5>
+                                <p class="terminal-card-desc flex-grow-1">一個專為產品經理、專案經理，以及任何想在 AI 時代提升工作效率的你，所設計的 AI
+                                    協作技巧 Podcast。每集十分鐘，為你的工作流超級充電。</p>
+                                <div class="terminal-actions">
+                                    <a href="tutorials/podcast.html" class="btn btn-terminal btn-terminal-primary">cat
+                                        READ.md</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- PM & Gemini CLI 系列 -->
         <div class="tutorial-accordion" data-category="pm" id="gemini-pm-series">
             <div class="tutorial-accordion-header" onclick="toggleAccordion(this.parentElement)">
@@ -460,7 +498,7 @@
                             您的瀏覽器不支援 audio 標籤。
                         </audio>
                         <div class="text-center mt-3">
-                            <a href="podcast.html" class="btn btn-terminal btn-terminal-primary">
+                            <a href="tutorials/podcast.html" class="btn btn-terminal btn-terminal-primary">
                                 <i class="fas fa-podcast me-2"></i>前往 Podcast 首頁
                             </a>
                         </div>
