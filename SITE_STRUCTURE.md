@@ -18,6 +18,11 @@
 
 此頁面隸屬於「作品」。每個專案都提供「商業視角說明」與「技術視角說明」兩種版本。
 
+- **LineBot AI 協作時光機 (MVP)**
+  - 主頁: `projects/line-bot-mvp.html`
+  - AI 治理: `projects/line-bot-ai.html`
+  - 搜尋功能: `projects/line-bot-search.html`
+  - 工作流自動化: `projects/line-bot-workflow.html`
 - **Notion Crawler：企業級自動化資料遷移引擎**
   - 技術視角說明: `projects/notion-crawler.html`
   - 商業視角說明: `projects/notion-crawler-business.html`
@@ -66,11 +71,7 @@
 - **n8n 健保公告自動監控與通知**
   - 技術視角說明: `projects/nhi-notice-automation.html`
   - 商業視角說明: `projects/nhi-notice-automation-business.html`
-- **🎄 Line Bot MVP：有溫度的 LineBot AI 協作時光機 (2025 聖誕特輯)**
-  - 系列首頁: `projects/line-bot-mvp.html`
-  - Ep.1 時光機：對話資產管理: `projects/line-bot-search.html`
-  - Ep.2 協作橋梁：自動化工單: `projects/line-bot-workflow.html`
-  - Ep.3 AI 守護者：主動治理: `projects/line-bot-ai.html`
+
 
 ## 部落格文章 (Blog Articles)
 
